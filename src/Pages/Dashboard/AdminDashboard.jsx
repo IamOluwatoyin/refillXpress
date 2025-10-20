@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Private = () => {
+const AdminDashboard = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const Private = () => {
   )
 }
 
-export default Private
+export default AdminDashboard
