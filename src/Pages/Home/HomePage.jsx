@@ -1,11 +1,16 @@
-import React from 'react'
+import React from "react";
+import Hero from "./Hero";
+import CartRefill from "./CartRefill";
+import CartGas from "./CartGas";
 
 const HomePage = () => {
   return (
     <div>
-      This is home
+      <Hero />
+      <CartRefill />
+      <CartGas />
     </div>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;
