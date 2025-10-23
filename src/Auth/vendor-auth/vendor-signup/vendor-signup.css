@@ -7,7 +7,7 @@
 .form-container {
   width: 60%;
   height: max-content;
-  background-color: aqua;
+  /* background-color: aqua; */
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -17,12 +17,11 @@
   display: flex;
   margin-top: 20px;
   padding-left: 30px;
-
- 
 }
 
-.image{
-  background-color: #F44336;
+.image {
+  width: 40px;
+  height: 30px;
 }
 .form-container > header > h1 {
   font-size: 20px;
@@ -39,17 +38,18 @@
 .cardBodyWrapper {
   width: 100%;
   display: flex;
-  align-items: center;
+  padding: 20px;
   justify-content: center;
-  background-color: yellow;
+  /* background-color: yellow; */
   height: 58rem;
 }
 
 .cardBody {
   width: 48.875rem;
-  height: 52rem;
+  height: 56rem;
   padding: 2rem;
-  background-color: red;
+  /* background-color: red; */
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
   article {
     display: flex;
@@ -83,4 +83,37 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+.spinnerimgholder {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+  padding: 0 1rem;
+}
+.spinnerimg {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  border-radius: 8px;
+}
+.spinnerimg svg,
+.spinnerimg img {
+  animation: spin 1s linear infinite;
+  transform-origin: center;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
