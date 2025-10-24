@@ -1,8 +1,7 @@
-import HomePage from "../pages/Home/HomePage";
-
 import { createBrowserRouter } from "react-router";
 import Layout from "../routes/Layout";
 import RouteErr from "./RouteErr";
+import HomePage from "../Pages/Home/HomePage";
 
 export const router = createBrowserRouter([
   {

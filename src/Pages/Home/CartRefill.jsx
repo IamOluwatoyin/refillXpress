@@ -47,7 +47,7 @@ export default CartRefill;
 
 const Container = styled.div`
   width: 100%;
-  height: 100%;
+  height: 70vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -64,6 +64,8 @@ const Wrapper = styled.div`
 
   h3 {
     color: #2887db;
+    margin-top: 50px;
+
     span {
       color: #ff7f11;
     }
@@ -72,6 +74,7 @@ const Wrapper = styled.div`
   p {
     width: 650px;
     text-align: center;
+    margin-top: 30px;
   }
 `;
 
@@ -87,6 +90,8 @@ const CardHolder = styled.div`
 const Card1 = styled.div`
   width: 422px;
   height: 237px;
+  border-radius: 10px;
+
   background-color: pink;
   padding: 10px;
   /* margin-top: 10px; */
@@ -101,7 +106,9 @@ const Card1 = styled.div`
 const Card2 = styled.div`
   width: 422px;
   height: 237px;
-  background-color: green;
+  border-radius: 10px;
+
+  /* background-color: green; */
   padding: 10px;
   /* margin-top: 10px; */
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
@@ -114,7 +121,8 @@ const Card2 = styled.div`
 const Card3 = styled.div`
   width: 422px;
   height: 237px;
-  background-color: orange;
+  border-radius: 10px;
+  /* background-color: orange; */
   padding: 10px;
   padding-top: 40px;
 
