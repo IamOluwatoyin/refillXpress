@@ -1,16 +1,30 @@
 import styled from "styled-components";
 import logo from "../../assets/logo.svg";
+import { useState } from "react";
 
 const Header = () => {
+  const [loginDrop, setDrop] = useState(false);
+  const [getStated, setGetStated] = useState(false);
+  console.log(loginDrop);
+  const handleLoginDrop = () => {
+    setGetStated(false);
+    setDrop(!loginDrop);
+  };
+
+  console.log(getStated);
+  const handleGetstated = () => {
+    setDrop(false);
+    setGetStated(!getStated);
+  };
   return (
     <Container>
       <ContainerWrapper>
         <LogoHolder>
-          <imgHolder>
+          <ImgHolder>
             <img src={logo} alt="logo" />
-          </imgHolder>
+          </ImgHolder>
           <h3>
-            Refill <spam>Xpress</spam>
+            Refill <span>Xpress</span>
           </h3>
         </LogoHolder>
         <MidContainer>
@@ -21,8 +35,25 @@ const Header = () => {
           </ul>
         </MidContainer>
         <ButtonHolder>
-          <button className="box1"> Sign in</button>
-          <button className="box2">Get Stated</button>
+          <button className="box1" onClick={handleLoginDrop}>
+            Sign in
+          </button>
+          <button className="box2" onClick={handleGetstated}>
+            Get Stated
+          </button>
+          {loginDrop && (
+            <div className="drop">
+              <button className="customer_button">As Customer</button>
+              <button className="vendor_button">As Vendor</button>
+            </div>
+          )}
+
+          {getStated && (
+            <div className="drop2">
+              <button className="customer_button1">As Customer</button>
+              <button className="vendor_button1">As Vendor</button>
+            </div>
+          )}
         </ButtonHolder>
       </ContainerWrapper>
     </Container>
@@ -37,6 +68,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 `;
 
 const ContainerWrapper = styled.div`
@@ -54,7 +86,7 @@ const LogoHolder = styled.div`
 
   h3 {
     color: #2887db;
-    spam {
+    span {
       color: #ff7f11;
     }
   }
@@ -75,6 +107,37 @@ const ButtonHolder = styled.div`
   justify-content: space-between;
   align-items: center;
 
+  .drop {
+    width: 150px;
+    height: 120px;
+    background-color: white;
+    border-radius: 10px;
+    position: absolute;
+    right: 150px;
+    top: 85px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px;
+  }
+  .drop2 {
+    width: 150px;
+    height: 120px;
+    background-color: white;
+    border-radius: 10px;
+    position: absolute;
+    right: 15px;
+    top: 85px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px;
+  }
+
   .box1 {
     width: 90px;
     height: 50px;
@@ -82,6 +145,11 @@ const ButtonHolder = styled.div`
     color: #2887db;
     border-radius: 8px;
     cursor: pointer;
+  }
+
+  .box1:hover {
+    color: white;
+    background-color: #2887db;
   }
   .box2 {
     width: 130px;
@@ -92,4 +160,55 @@ const ButtonHolder = styled.div`
     border-radius: 8px;
     cursor: pointer;
   }
+
+  .box2:hover {
+    background-color: #ee750cc0;
+  }
+
+  .customer_button {
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+  }
+  .customer_button:hover {
+    background-color: #ff7f11;
+    color: white;
+  }
+  .vendor_button {
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+  }
+  .vendor_button:hover {
+    cursor: pointer;
+    background-color: #ff7f11;
+    color: white;
+  }
+  .customer_button1 {
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+  }
+  .customer_button1:hover {
+    background-color: #ff7f11;
+    color: white;
+  }
+  .vendor_button1 {
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+  }
+  .vendor_button1:hover {
+    cursor: pointer;
+    background-color: #ff7f11;
+    color: white;
+  }
 `;
+
+const ImgHolder = styled.div``;

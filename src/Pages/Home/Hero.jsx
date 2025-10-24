@@ -15,10 +15,10 @@ const Hero = () => {
         <p>Never run out of gas again </p>
         <p>We deliver gas to your door step</p>
         <ButtonHolder>
-          <button className="box2">
+          <button className="box1">
             Order now <IoIosArrowRoundForward style={{ fontSize: "17px" }} />
           </button>
-          <button className="box1">Become a vendor</button>
+          <button className="box2">Become a vendor</button>
         </ButtonHolder>
       </Wrapper>
     </Container>
@@ -74,23 +74,22 @@ const ButtonHolder = styled.div`
   .box1 {
     width: 170px;
     height: 50px;
-    border: 1px solid white;
-    color: #fff;
-    border-radius: 8px;
-    cursor: pointer;
-    background: transparent;
-  }
-  .box2 {
-    width: 170px;
-    height: 50px;
     background-color: #ff7f11;
     color: #fff;
     border: none;
     border-radius: 8px;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 5px;
+  }
+
+  .box2 {
+    width: 170px;
+    height: 50px;
+    border: 1px solid white;
+    color: #fff;
+    border-radius: 8px;
+    background: transparent;
   }
 `;
