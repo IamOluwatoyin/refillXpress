@@ -5,51 +5,36 @@ import { Link, NavLink, useNavigate } from "react-router";
 import Password from "antd/es/input/Password";
 import SpinnerModal from "../spinner-modal-auth";
 import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
+import { message } from "antd";
 
 const Vendorlogin = () => {
   const [showPassword, setShowPassword] = useState(false);
    const[showModal, setShowModal] = useState(false)
    const navigate = useNavigate()
  
-  const[errors, setErrors] = useState({})
+
   
     const  [loginData, setLoginData] = useState({
       email:"",
       password:""
     })
-    const validate =(e)=>{
-      e.preventDefault()
-      let newErr={}
-       if (!/\S+@\S+\.\S+/.test(loginData.email)) {
-    newErr.email = "Please enter a valid email address.";
-  }
-  if (
-    !/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/.test(loginData.password)
-  ) {
-    newErr.password =
-      "Password must be at least 8 characters and include letters, numbers, and special characters.";
-  }
-  setErrors(newErr)
-    
-      if (Object.keys(newErr).length > 0) {
-        toast.error("Please fill all required fields.");
-        setShowModal(false)
-        return; 
-      }
-    
-    
-      toast.success("User successfully Signin")
-      setShowModal(true)
-    
-           setTimeout(() => {
-        setShowModal(false);
-        navigate("/vendorDashboard");
-      }, 2000);
+    const {register, handleSubmit, formState:{errors}}=useForm()
+    const submit = (data)=>{
+     console.log("formData",data)
+
+      toast.success("Account successfully created");
+         setShowModal(true);
+     
+         setTimeout(() => {
+           setShowModal(false);
+           navigate("/vendor-dashboard");
+         }, 2000);
     }
   return (
     <>
-     {showModal ? (<SpinnerModal/>):
-    (<div className="form-wrapperlogin">
+     
+    <div className="form-wrapperlogin">
       <div className="form-containerlogin">
         <header>
           <img src="/src/assets/logo.svg" alt="logo" className="image" />
@@ -71,7 +56,7 @@ const Vendorlogin = () => {
                   flexDirection: "column",
                   gap: "20px",
                 }}
-                onSubmit={validate}
+                onSubmit={handleSubmit(submit)}
               >
                 <div
                   style={{
@@ -86,17 +71,22 @@ const Vendorlogin = () => {
                     placeholder="Your email here..."
                     type="email"
                     name="email"
-                    value={loginData.email}
-                    onChange={(e)=>setLoginData({...loginData,email:e.target.value})}
+                    {...register("email",{required:"email is required",
+                        pattern:{
+                          value: /\S+@\S+\.\S+/,
+                          message:"Enter a valid email address"
+                        }
+                      })
+                      }
                     style={{
-                      padding: "8px",
+                      padding: "12px",
                       borderRadius: "4px",
                       border: "1px solid #ccc",
                        width: "39.3125rem",
                       background: "#F2F6F5",
                     }}
                   />
-                   {errors.email && <p style={{color:"red"}}>{errors.email}</p>}
+                   {errors.email && <p style={{color:"red"}}>{errors.email.message}</p>}
                 </div>
                 <div
                   style={{
@@ -108,7 +98,7 @@ const Vendorlogin = () => {
                   <label> Input Your Password</label>
                   <div
                     style={{
-                      padding: "8px 4px",
+                      padding: "12px 6px",
                       borderRadius: "4px",
                       border: "1px solid #9b9191cc",
                       width: "39.3125rem",
@@ -120,8 +110,12 @@ const Vendorlogin = () => {
                       placeholder=" Password ( 8 or more characters)"
                       type={showPassword ? "text" : "password"}
                       name="password"
-                      value={loginData.password}
-                      onChange={(e)=>setLoginData({...loginData, password:e.target.value})}
+                      {...register("password",{required:"Password is required",
+                        pattern:{
+                         value:  /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/,
+                        message:"Password ( 8 or more characters)"
+                        }
+                      })}
                       style={{
                         border: "none",
                         outline: "none",
@@ -136,7 +130,7 @@ const Vendorlogin = () => {
                     )}
                   </div>
                 </div>
-                 {errors.password && <p style={{color:"red"}}>{errors.password}</p>}
+                 {errors.password && <p style={{color:"red"}}>{errors.password.message}</p>}
                 <span style={{textAlign:"right", }}>
                   <NavLink to={"/forgetpassword"} style={{textDecoration:"none", color:"#1BB970"}}>
                   Forgot password?
@@ -144,6 +138,7 @@ const Vendorlogin = () => {
                  </span>
                  <button
                   className="btnlogin"
+                  type="submit"
                 >
                  Sign in
                 </button>
@@ -169,7 +164,7 @@ const Vendorlogin = () => {
         </section>
       </div>
     </div>
-)}
+{/* )} */}
     </>
   );
 };

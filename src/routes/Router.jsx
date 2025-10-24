@@ -5,18 +5,23 @@ import VendorSignup from "../auth/vendor-auth/vendor-signup/vendor-signup";
 import Vendorlogin from "../auth/vendor-auth/vendor-login/vendor-login";
 import VendorForgotPassword from "../auth/vendor-auth/forgot-password";
 import VendorDashboard from "../pages/Dashboard/VendorDashboard";
+import HomePage from "../pages/Home/HomePage";
 
 export const router = createBrowserRouter([
   {
     path: "homepage",
     element: (
       <Layout>
-        <HomePage />
+        <HomePage/>
       </Layout>
     ),
   },
   {
     path: "/",
+    element: <HomePage />,
+  },
+  {
+    path: "vendorsignup",
     element: <VendorSignup />,
   },
   {
@@ -28,7 +33,7 @@ export const router = createBrowserRouter([
     element: <VendorForgotPassword />,
   },
   {
-    path: "vendorDashboard",
+    path: "vendor-dashboard",
     element: <VendorDashboard />,
   },
   {
