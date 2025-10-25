@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NavLink } from "react-router";
 import "./forgot-password.css";
 import { toast } from "react-toastify";
-import SpinnerModal from "./spinner-modal-auth";
+import SpinnerModal from "../spinner-modal-auth";
 const ForgotPassword = () => {
   const [forgotPassword, setForgotPassword] = useState({ email: "" });
   const [errors, setErrors] = useState({});

@@ -97,14 +97,15 @@
   z-index: 50;
   padding: 0 1rem;
 }
-.spinnerimg {
+.spinnerimgContainer {
   width: 200px;
   height: 200px;
   position: relative;
+  background-color: #fff;
   border-radius: 8px;
 }
-.spinnerimg svg,
-.spinnerimg img {
+
+.spinnerimgContainer img {
   animation: spin 1s linear infinite;
   transform-origin: center;
 }

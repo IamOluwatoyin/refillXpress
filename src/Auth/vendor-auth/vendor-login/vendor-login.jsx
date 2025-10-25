@@ -113,7 +113,7 @@ const Vendorlogin = () => {
                       {...register("password",{required:"Password is required",
                         pattern:{
                          value:  /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/,
-                        message:"Password ( 8 or more characters)"
+                        message: "Password must be at least 8 characters and include letters, numbers, and special characters."
                         }
                       })}
                       style={{

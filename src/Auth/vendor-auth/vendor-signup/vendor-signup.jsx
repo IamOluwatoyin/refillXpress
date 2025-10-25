@@ -7,11 +7,11 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
 import SpinnerModal from "../spinner-modal-auth";
 import { Link, NavLink, useNavigate } from "react-router";
+import { useForm } from "react-hook-form";
 
 const vendorsignup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [cshowPassword, csetShowPassword] = useState(false);
-  const [errors, setErrors] = useState({});
   // const [loading,setloading] = useState(false)
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
@@ -28,56 +28,9 @@ const vendorsignup = () => {
   // console.log(formData)
   const navigate = useNavigate();
 
-  const validate = (e) => {
-    e.preventDefault();
-    const newErrors = {};
-    if (!formData.businessName.trim()) {
-      newErrors.businessName = "Business name is required";
-    }
-
-    if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address.";
-    }
-
-    if (!/^\d+$/.test(formData.phone)) {
-      newErrors.phone = "Phone number must contain only digits";
-    } else if (formData.phone.length !== 10) {
-      newErrors.phone = "10 digit phone number is required";
-    }
-    if (!formData.address.trim()) {
-      newErrors.address = "Enter your business address";
-    }
-
-    if (!formData.vendorFirstName.trim()) {
-      newErrors.vendorFirstName = "Enter your first name";
-    }
-
-    if (!formData.vendorLastName.trim()) {
-      newErrors.vendorLastName = "Enter your last name";
-    }
-
-    if (
-      !/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/.test(formData.password)
-    ) {
-      newErrors.password =
-        "Password must be at least 8 characters and include letters, numbers, and special characters.";
-    }
-
-    if (formData.confirmPassword !== formData.password) {
-      newErrors.confirmPassword = "Passwords do not match.";
-    }
-
-    if (!formData.agree) {
-      newErrors.agree = "You must agree to the terms.";
-    }
-
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length > 0) {
-      toast.error("Please fill all required fields.");
-      setShowModal(false);
-      return;
-    }
+  const{register, handleSubmit, formState:{errors}} = useForm()
+  const submit = (data)=>{
+    console.log("formData",data)
 
     toast.success("Account successfully created");
     setShowModal(true);
@@ -87,19 +40,8 @@ const vendorsignup = () => {
       navigate("/vendorlogin");
     }, 2000);
 
-    //  setloading(true)
-    setFormData({
-      businessName: "",
-      email: "",
-      phone: "",
-      address: "",
-      vendorFirstName: "",
-      vendorLastName: "",
-      confirmPassword: "",
-      password: "",
-      agree: false,
-    });
-  };
+
+  }
 
   return (
     <div className="form-wrapper">
@@ -131,7 +73,7 @@ const vendorsignup = () => {
                   flexDirection: "column",
                   gap: "20px",
                 }}
-                onSubmit={validate}
+                onSubmit={handleSubmit(submit)}
               >
                 <div
                   style={{
@@ -145,13 +87,11 @@ const vendorsignup = () => {
                     placeholder=" Max gas"
                     type="text"
                     name="businessName"
-                    value={formData.businessName}
-                    onChange={(e) =>
-                      setFormData({ ...formData, businessName: e.target.value })
-                    }
+                   {...register("businessName",{required:"Your business name is required",
+                   })}
                     id="vendorName"
                     style={{
-                      padding: "8px",
+                      padding: "12px",
                       borderRadius: "8px",
                       border: "1px solid #ccc",
                       width: "30.9375rem",
@@ -160,7 +100,7 @@ const vendorsignup = () => {
                     }}
                   />
                   {errors.businessName && (
-                    <p style={{ color: "red" }}>{errors.businessName}</p>
+                    <p style={{ color: "red" }}>{errors.businessName.message}</p>
                   )}
                 </div>
 
@@ -178,12 +118,15 @@ const vendorsignup = () => {
                       placeholder="Maxgas@gmail.com"
                       type="email"
                       name="email"
-                      value={formData.email}
-                      onChange={(e) =>
-                        setFormData({ ...formData, email: e.target.value })
-                      }
+                      {...register("email",{required:"email is required",
+                         pattern:{
+                        value: /\S+@\S+\.\S+/,
+                       message:"Enter a valid email address"
+                        }
+                        })
+                        }
                       style={{
-                        padding: "8px",
+                        padding: "13px 6px",
                         borderRadius: "8px",
                         border: "1px solid #ccc",
                         width: " 18.875rem",
@@ -192,7 +135,7 @@ const vendorsignup = () => {
                       }}
                     />
                     {errors.email && (
-                      <p style={{ color: "red" }}>{errors.email}</p>
+                      <p style={{ color: "red" }}>{errors.email.message}</p>
                     )}
                   </div>
 
@@ -232,7 +175,7 @@ const vendorsignup = () => {
                       {/* Divider */}
                       <div
                         style={{
-                          height: "30px",
+                          height: "40px",
                           width: "1px",
                           backgroundColor: "#000",
                           margin: " 0px 3px",
@@ -246,21 +189,27 @@ const vendorsignup = () => {
                         name="phone"
                         type="text"
                         placeholder="8012345678"
-                        value={formData.phone}
-                        onChange={(e) =>
-                          setFormData({ ...formData, phone: e.target.value })
-                        }
+                        {
+                          ...register("phone",{required:"Phone number is required",
+                            pattern:{
+                              value:/^\d+$/,
+                              message: "Phone number must contain only digits",
+                            },
+                          validate: (value) =>
+                          value.length === 10 || "Phone number must be exactly 10 digits",
+                          
+                          })}
                         style={{
                           border: "none",
                           outline: "none",
-                          padding: "8px 4px",
+                          padding: "12px 6px",
                           fontSize: "1rem",
                           background: "#F2F6F5",
                         }}
                       />
                     </div>
                     {errors.phone && (
-                      <p style={{ color: "red" }}>{errors.phone}</p>
+                      <p style={{ color: "red" }}>{errors.phone.message}</p>
                     )}
                   </div>
                 </div>
@@ -276,12 +225,9 @@ const vendorsignup = () => {
                   <input
                     type="text"
                     name="vendorAddress"
-                    value={formData.address}
-                    onChange={(e) =>
-                      setFormData({ ...formData, address: e.target.value })
-                    }
+                    {...register("address",{required:"Business address is required"})}
                     style={{
-                      padding: "8px",
+                      padding: "12px",
                       borderRadius: "8px",
                       border: "1px solid #ccc",
                       width: "39.3125rem",
@@ -291,7 +237,7 @@ const vendorsignup = () => {
                   />
                 </div>
                 {errors.address && (
-                  <p style={{ color: "red" }}>{errors.address}</p>
+                  <p style={{ color: "red" }}>{errors.address.message}</p>
                 )}
 
                 <h4> Owner’s/manager Information</h4>
@@ -308,15 +254,9 @@ const vendorsignup = () => {
                       id="vendorFirstName"
                       type="text"
                       name="vendorFirstName"
-                      value={formData.vendorFirstName}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          vendorFirstName: e.target.value,
-                        })
-                      }
+                      {...register("vendorFirstName",{required:"Enter your first name"})}
                       style={{
-                        padding: "8px",
+                        padding: "12px",
                         borderRadius: "8px",
                         border: "1px solid #ccc",
                         width: " 18.875rem",
@@ -325,7 +265,7 @@ const vendorsignup = () => {
                       }}
                     />
                     {errors.vendorFirstName && (
-                      <p style={{ color: "red" }}>{errors.vendorFirstName}</p>
+                      <p style={{ color: "red" }}>{errors.vendorFirstName.message}</p>
                     )}
                   </div>
 
@@ -341,15 +281,9 @@ const vendorsignup = () => {
                       id="vendorLastName"
                       type="text"
                       name="vendorLastName"
-                      value={formData.vendorLastName}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          vendorLastName: e.target.value,
-                        })
-                      }
+                       {...register("vendorLastName",{required:"Enter your last name"})}
                       style={{
-                        padding: "8px",
+                        padding: "12px",
                         borderRadius: "8px",
                         border: "1px solid #ccc",
                         width: " 18.875rem",
@@ -358,7 +292,7 @@ const vendorsignup = () => {
                       }}
                     />
                     {errors.vendorLastName && (
-                      <p style={{ color: "red" }}>{errors.vendorLastName}</p>
+                      <p style={{ color: "red" }}>{errors.vendorLastName.message}</p>
                     )}
                   </div>
                 </div>
@@ -373,7 +307,7 @@ const vendorsignup = () => {
                   <label> Input Your Password</label>
                   <div
                     style={{
-                      padding: "8px 4px",
+                      padding: "12px 6px",
                       borderRadius: "8px",
                       border: "1px solid #ccc",
                       width: "39.3125rem",
@@ -385,10 +319,12 @@ const vendorsignup = () => {
                       placeholder=" Password ( 8 or more characters)"
                       type={showPassword ? "text" : "password"}
                       name="password"
-                      value={formData.password}
-                      onChange={(e) =>
-                        setFormData({ ...formData, password: e.target.value })
-                      }
+                     {...register("password",{required:"Password is required",
+                       pattern:{
+                       value:  /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/,
+                       message: "Password must be at least 8 characters and include letters, numbers, and special characters."
+                        }
+                        })}
                       style={{
                         border: "none",
                         outline: "none",
@@ -404,7 +340,7 @@ const vendorsignup = () => {
                   </div>
                 </div>
                 {errors.password && (
-                  <p style={{ color: "red" }}>{errors.password}</p>
+                  <p style={{ color: "red" }}>{errors.password.message}</p>
                 )}
                 <div
                   style={{
@@ -416,7 +352,7 @@ const vendorsignup = () => {
                   <label> Comfirm Password</label>
                   <div
                     style={{
-                      padding: "8px",
+                       padding: "12px 6px",
                       borderRadius: "8px",
                       border: "1px solid #ccc",
                       background: "#F2F6F5",
@@ -428,13 +364,11 @@ const vendorsignup = () => {
                       placeholder="  Enter your same password here"
                       type={cshowPassword ? "text" : "password"}
                       name="confirmPassword"
-                      value={formData.confirmPassword}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          confirmPassword: e.target.value,
-                        })
-                      }
+                      {...register("confirmPassword",{required:"Password confirmation is required",
+                         validate:(value) =>
+                        value !== formData.password || "Passwords do not match."
+                         ,
+                       })}
                       style={{
                         outline: "none",
                         border: "none",
@@ -450,17 +384,13 @@ const vendorsignup = () => {
                   </div>
                 </div>
                 {errors.confirmPassword && (
-                  <p style={{ color: "red" }}>{errors.confirmPassword}</p>
+                  <p style={{ color: "red" }}>{errors.confirmPassword.message}</p>
                 )}
 
                 <div style={{ display: "flex", gap: "3px" }}>
                   <input
                     type="checkbox"
-                    name="agree"
-                    checked={formData.agree}
-                    onChange={(e) =>
-                      setFormData({ ...formData, agree: e.target.checked })
-                    }
+                 {...register("agree", { required: "You must agree to the terms." })}
                   />
                   <span>
                     {" "}
@@ -473,10 +403,10 @@ const vendorsignup = () => {
                     </a>
                   </span>
                 </div>
-                {errors.agree && <p style={{ color: "red" }}>{errors.agree}</p>}
+                {errors.agree && <p style={{ color: "red" }}>{errors.agree.message}</p>}
                 <button
                   style={{
-                    padding: "10px 12px",
+                    padding: "12px 10px",
                     borderRadius: "8px",
                     cursor: "pointer",
                     background: "#FF7F11",
