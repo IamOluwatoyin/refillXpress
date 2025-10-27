@@ -116,17 +116,19 @@ const QuestionCard = styled.div`
 `;
 const AnswerCard = styled.div`
   width: 100%;
-  height: 68px;
+  height: 75px;
   min-height: max-content;
-  background-color: #eee;
-  padding-inline: 25px;
+  background-color: white;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  padding-inline: 28px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 20px;
 `;
 
 const QuestionText = styled.h4`
-  font-size: 40px;
-  font-weight: 700;
+  font-size: 24px;
+  font-weight: 360;
   color: white;
 `;

@@ -4,8 +4,9 @@ import CartRefill from "./CartRefill";
 import CartGas from "./CartGas";
 import About from "./About";
 import Freq from "./Freq";
-import ContantUs from "../ContantUs";
 import Review from "./Review";
+import Network from "./Network";
+import ContantUs from "../ContantUs";
 
 const HomePage = () => {
   return (
@@ -14,9 +15,10 @@ const HomePage = () => {
       <CartRefill />
       <CartGas />
       <About />
+      <Network />
       <Freq />
-      <ContantUs />
       <Review />
+      <ContantUs />
     </div>
   );
 };

@@ -5,6 +5,7 @@ import VendorSignup from "../auth/vendor-auth/vendor-signup/vendor-signup";
 import Vendorlogin from "../auth/vendor-auth/vendor-login/vendor-login";
 import VendorForgotPassword from "../auth/vendor-auth/forgot-password";
 import VendorDashboard from "../pages/Dashboard/VendorDashboard";
+import HomePage from "../Pages/Home/HomePage";
 
 export const router = createBrowserRouter([
   {

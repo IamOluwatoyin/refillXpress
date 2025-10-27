@@ -28,11 +28,19 @@
 }
 
 .top {
-  width: 100%;
+  width: 90%;
   height: max-content;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: flex-start;
+}
+
+.top_left {
+  width: 60%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .column-one,

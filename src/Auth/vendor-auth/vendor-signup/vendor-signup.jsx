@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from "react";
 import "./vendor-signup.css";
 import { MdCheckBoxOutlineBlank } from "react-icons/md";
@@ -515,5 +516,3 @@ const vendorsignup = () => {
 };
 
 export default vendorsignup;
-
-

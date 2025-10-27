@@ -56,7 +56,6 @@ const Container = styled.div`
 const Wrapper = styled.div`
   width: 100%;
   height: 25rem;
-  /* background-color: blue; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -64,7 +63,7 @@ const Wrapper = styled.div`
 
   h3 {
     color: #2887db;
-    margin-top: 50px;
+    margin-top: 30px;
 
     span {
       color: #ff7f11;
@@ -91,46 +90,48 @@ const Card1 = styled.div`
   width: 422px;
   height: 237px;
   border-radius: 10px;
-
-  background-color: pink;
   padding: 10px;
-  /* margin-top: 10px; */
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  padding-top: 40px;
+  padding-top: 20px;
   p {
     width: 85%;
     text-align: start;
-    margin-bottom: 20px;
+  }
+
+  h4 {
+    margin-top: 20px;
   }
 `;
 const Card2 = styled.div`
   width: 422px;
   height: 237px;
   border-radius: 10px;
-
-  /* background-color: green; */
   padding: 10px;
-  /* margin-top: 10px; */
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  padding-top: 40px;
+  padding-top: 20px;
   p {
     width: 85%;
     text-align: start;
+    margin-bottom: 20px;
+  }
+
+  h4 {
+    margin-top: 20px;
   }
 `;
 const Card3 = styled.div`
   width: 422px;
   height: 237px;
   border-radius: 10px;
-  /* background-color: orange; */
   padding: 10px;
-  padding-top: 40px;
-
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-
+  padding-top: 20px;
   p {
     width: 85%;
     text-align: start;
-    padding-top: 10px;
+  }
+
+  h4 {
+    margin-top: 20px;
   }
 `;
