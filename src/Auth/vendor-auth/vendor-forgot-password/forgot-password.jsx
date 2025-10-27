@@ -1,30 +1,47 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./forgot-password.css";
 import { toast } from "react-toastify";
 import SpinnerModal from "../spinner-modal-auth";
+import { useForm } from "react-hook-form";
+import { vendorForgotPassword } from "../../../api/mutation";
 const ForgotPassword = () => {
-  const [forgotPassword, setForgotPassword] = useState({ email: "" });
-  const [errors, setErrors] = useState({});
   const [showModal, setShowModal] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const navigate = useNavigate();
 
-  const validate = (e) => {
-    e.preventDefault();
-    let newErrors = {};
-    if (!/\S+@\S+\.\S+/.test(forgotPassword.email)) {
-      newErrors.email = "Please enter a valid email address.";
-    }
-    setErrors(newErrors);
+  const submit = async (data) => {
+    // e.preventDefault()
 
-    if (Object.keys(newErrors).length > 0) {
-      toast.error("Enter a valid email");
-      setShowModal(false)
-      return;
+    const businessEmail = localStorage.setItem(
+      "vendorEmail",
+      data.businessEmail
+    );
+    console.log(businessEmail);
+
+    try {
+      const res = await vendorForgotPassword(data);
+      console.log("forgot", res.data.message);
+
+      toast.success("Verification code has been sent to your email");
+      setShowModal(true);
+
+      setTimeout(() => {
+        setShowModal(false);
+        navigate("/vendor-verify-email");
+      }, 2000);
+    } catch (error) {
+      console.log("not working", error);
+
+      toast.error(error.response?.data?.message || "Something went wrong!");
+      setShowModal(false);
     }
-    toast.success("Verification code has been sent to your email");
-    setShowModal(true)
-    setForgotPassword({ email: "" });
   };
+
   return (
     <div className="form-wrapperpassword">
       <div className="form-containerpassword">
@@ -53,7 +70,7 @@ const ForgotPassword = () => {
                   flexDirection: "column",
                   gap: "20px",
                 }}
-                onSubmit={validate}
+                onSubmit={handleSubmit(submit)}
               >
                 <div
                   style={{
@@ -67,14 +84,14 @@ const ForgotPassword = () => {
                     id="vendorEmail"
                     placeholder="Your email here..."
                     type="email"
-                    name="email"
-                    value={forgotPassword.email}
-                    onChange={(e) =>
-                      setForgotPassword({
-                        ...forgotPassword,
-                        email: e.target.value,
-                      })
-                    }
+                    name="businessEmail"
+                    {...register("businessEmail", {
+                      required: "email is required",
+                      pattern: {
+                        value: /\S+@\S+\.\S+/,
+                        message: "Enter a valid email address",
+                      },
+                    })}
                     style={{
                       padding: "8px",
                       borderRadius: "4px",
@@ -83,16 +100,12 @@ const ForgotPassword = () => {
                       background: "#F2F6F5",
                     }}
                   />
-                  {errors.email && (
-                    <p style={{ color: "red" }}>{errors.email}</p>
+                  {errors.businessEmail && (
+                    <p style={{ color: "red" }}>{errors.businessEmail.message}</p>
                   )}
                 </div>
                 <div className="btnHolder">
-                  <button
-                    className="btnpassword"
-                    type="submit"
-                    onClick={() => setShowModal(true)}
-                  >
+                  <button className="btnpassword" type="submit">
                     Send Verification code
                   </button>
                 </div>
@@ -107,7 +120,7 @@ const ForgotPassword = () => {
                 >
                   <span>Remeber Password?</span>
                   <NavLink
-                    to={"/vendorlogin"}
+                    to={"/vendor-login"}
                     style={{ textDecoration: "none", color: "#1BB970" }}
                   >
                     Sign in

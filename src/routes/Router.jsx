@@ -7,6 +7,7 @@ import ForgotPassword from "../auth/vendor-auth/vendor-forgot-password/forgot-pa
 import VendorDashboard from "../pages/Dashboard/VendorDashboard";
 import HomePage from "../pages/Home/HomePage";
 import Verify from "../auth/vendor-auth/verify-email/verify-email";
+import VendorResetPassword from "../auth/vendor-auth/vendor-reset-password/vendor-reset-password";
 
 export const router = createBrowserRouter([
   {
@@ -21,16 +22,17 @@ export const router = createBrowserRouter([
     path: "/",
     element: <HomePage />,
   },
+  
   {
-    path: "vendorsignup",
+    path: "vendor-signup",
     element: <VendorSignup />,
   },
   {
-    path: "vendorlogin",
+    path: "vendor-login",
     element: <Vendorlogin />,
   },
   {
-    path: "forgetpassword",
+    path: "vendor-forget-password",
     element: <ForgotPassword />,
   },
   {
@@ -40,6 +42,10 @@ export const router = createBrowserRouter([
    {
     path: "vendor-verify-email",
     element: <Verify />,
+  },
+   {
+    path: "vendor-reset-password",
+    element: <VendorResetPassword />,
   },
   
   {
