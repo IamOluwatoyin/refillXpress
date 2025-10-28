@@ -91,10 +91,16 @@
   flex-direction: column;
   
 }
-.btnlogin {padding: 8px 10px;
+.btnlogin {padding: 12px 10px;
    border-radius: 8px;
    cursor: pointer;
    background: #FF7F11;
    border: none;
    width: 39.3125rem;
    }
+   .btnlogin:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #ccc;
+  transition: all 0.2s ease;
+}
