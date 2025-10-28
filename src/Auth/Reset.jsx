@@ -19,21 +19,20 @@ const [form, setForm] = useState({
 const handleRequest = async (e) => {
     e.preventDefault()
     const token = localStorage.getItem("token")
-    console.log(token)
     try {
-        const res = await axios.post(`${BASEURL}/user/reset/password/${token}`, form,
+        const res = await axios.post(`${BASEURL}/user/reset/password`, form,
             {
                 headers: {
                         "Content-Type": "application/json",
-                       
+                        // Authorization: `Bearer ${token}`
                     },
             }
         )
         toast.success(res.data.message)
         nav("/userlogin")
     } catch (err) {
-        toast.error(err.data.response.message)
-        console.error("please login")
+        toast.error(err.data)
+        console.error(err)
         // nav("/userlogin")
     }    
 }
