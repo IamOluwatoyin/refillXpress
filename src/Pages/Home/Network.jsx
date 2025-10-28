@@ -2,7 +2,7 @@ import React from "react";
 import { GoContainer } from "react-icons/go";
 import styled from "styled-components";
 import { HiArrowLongDown } from "react-icons/hi2";
-import network1 from "../../assets/network1.png";
+import Hero from "../../assets/Hero1.png";
 import network2 from "../../assets/network2.png";
 
 function Network() {
@@ -26,7 +26,7 @@ function Network() {
             <ContainerButton>Partner with us</ContainerButton>
           </LeftContainer>
           <RightContainer>
-            <img src={network1} alt="" />
+            <img src={Hero} alt="" />
           </RightContainer>
         </DataContainer>
         <DataContainer1>
@@ -132,6 +132,6 @@ const RightContainer = styled.div`
   &img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
   }
 `;

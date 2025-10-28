@@ -4,7 +4,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f3f3f3;
+  background-color: #053055;
+  color: #fff;
 }
 .logo-heading {
   color: orange;
@@ -104,7 +105,7 @@ ul {
 }
 
 .bottom {
-  width: 100%;
+  width: 90%;
   height: max-content;
   display: flex;
   justify-content: space-between;
@@ -115,7 +116,7 @@ ul {
 }
 
 .right {
-  width: 15%;
+  width: 10%;
   height: max-content;
   display: flex;
   justify-content: space-between;

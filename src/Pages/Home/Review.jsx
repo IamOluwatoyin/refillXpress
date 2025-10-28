@@ -141,11 +141,9 @@ const Card = styled.div`
   width: 422px;
   height: 237px;
   border-radius: 10px;
-
-  /* background-color: pink; */
   padding: 10px;
-  /* margin-top: 10px; */
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  background-color: #f2f6f5;
 
   p {
     margin-top: 20px;

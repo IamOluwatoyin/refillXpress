@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import "./vendor-login.css";
+import "./RiderLogin.css";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { Link, NavLink, useNavigate } from "react-router";
 import Password from "antd/es/input/Password";
-import SpinnerModal from "../spinner-modal-auth";
 import { toast } from "react-toastify";
+import SpinnerModal from "../../vendor-auth/spinner-modal-auth";
 
-const Vendorlogin = () => {
+const RiderLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -187,4 +187,4 @@ const Vendorlogin = () => {
   );
 };
 
-export default Vendorlogin;
+export default RiderLogin;

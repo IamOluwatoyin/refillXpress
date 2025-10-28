@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import logo from "../../assets/logo.svg";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 const Header = () => {
   const [loginDrop, setDrop] = useState(false);
   const [getStated, setGetStated] = useState(false);
+  const nav = useNavigate();
   console.log(loginDrop);
   const handleLoginDrop = () => {
     setGetStated(false);
@@ -44,16 +46,36 @@ const Header = () => {
           {loginDrop && (
             <div className="drop">
               <button className="customer_button">As Customer</button>
-              <button className="vendor_button">As Vendor</button>
-              <button className="vendor_button">As Rider</button>
+              <button
+                className="vendor_button"
+                onClick={() => nav("/vendorlogin")}
+              >
+                As Vendor
+              </button>
+              <button
+                className="vendor_button"
+                onClick={() => nav("/riderlogin")}
+              >
+                As Rider
+              </button>
             </div>
           )}
 
           {getStated && (
             <div className="drop2">
               <button className="customer_button1">As Customer</button>
-              <button className="vendor_button1">As Vendor</button>
-              <button className="vendor_button1">As Rider</button>
+              <button
+                className="vendor_button1"
+                onClick={() => nav("/vendorsignup")}
+              >
+                As Vendor
+              </button>
+              <button
+                className="vendor_button1"
+                onClick={() => nav("/ridersignup")}
+              >
+                As Rider
+              </button>
             </div>
           )}
         </ButtonHolder>

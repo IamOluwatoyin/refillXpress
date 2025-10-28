@@ -1,9 +1,8 @@
 import React from "react";
 import "./footer.css";
-import { BsWhatsapp, BsTwitterX } from "react-icons/bs";
-import { FaFacebook } from "react-icons/fa";
-import { GrLinkedin } from "react-icons/gr";
-import Instagram from "../../assets/instagram.png";
+import { CiFacebook } from "react-icons/ci";
+import { MdOutlineWhatsapp } from "react-icons/md";
+import { BsInstagram } from "react-icons/bs";
 
 const Footer = () => {
   return (
@@ -61,11 +60,9 @@ const Footer = () => {
             </h2>
           </div>
           <div className="right">
-            <BsWhatsapp className="wa-icon" />
-            <FaFacebook className="fb-icon" />
-            <img src={Instagram} className="ig-icon" />
-            <BsTwitterX />
-            <GrLinkedin className="li-icon" />
+            <CiFacebook />
+            <MdOutlineWhatsapp />
+            <BsInstagram />
           </div>
         </section>
       </footer>

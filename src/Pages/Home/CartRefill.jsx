@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import badge from "../../assets/badge.png";
 import clock from "../../assets/clock.png";
-import table_badge from "../../assets/tabler_badge.png";
+import table from "../../assets/table.png";
 const CartRefill = () => {
   return (
     <Container>
@@ -33,7 +33,7 @@ const CartRefill = () => {
             </p>
           </Card2>
           <Card3>
-            <img src={table_badge} alt="" />
+            <img src={table} alt="" />
             <h4>Best Pricing</h4>
             <p>Competitive pricing with transparent rates. No hiden charges</p>
           </Card3>
@@ -79,7 +79,7 @@ const Wrapper = styled.div`
 
 const CardHolder = styled.div`
   width: 93%;
-  height: 240px;
+  height: 200px;
   display: flex;
   gap: 8px;
   align-items: center;
@@ -93,9 +93,11 @@ const Card1 = styled.div`
   padding: 10px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   padding-top: 20px;
+
   p {
     width: 85%;
     text-align: start;
+    margin-bottom: 100px;
   }
 
   h4 {
