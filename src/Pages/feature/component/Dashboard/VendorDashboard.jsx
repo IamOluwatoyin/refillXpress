@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import SpinnerModal from "../../../../auth/vendor-auth/spinner-modal/spinner-modal-auth";
-
+import "./VendorDashboard.css"
 const VendorDashboard = () => {
  
   return <>
-  <div>welcome!</div>
+  <div className="dashboard-wrapper">
+    welcome!</div>
   </>;
 };
 

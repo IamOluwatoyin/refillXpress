@@ -12,6 +12,8 @@ import DashboardLayout from "../pages/feature/Dashboard-Layout";
 import OrderManagement from "../pages/feature/component/order";
 import ProfileManagement from "../pages/feature/component/profile";
 import VerifyForgetPasswordEmail from "../auth/vendor-auth/vendor-forgot-password/vendor-verify-forgetpassword-email";
+import AnalyticsManagement from "../pages/feature/component/analytics";
+import SettingsMangement from "../pages/feature/component/settings";
 
 export const router = createBrowserRouter([
   {
@@ -65,9 +67,17 @@ export const router = createBrowserRouter([
         path: "vendor-order",
         element: <OrderManagement/>
       },
+       {
+        path: "vendor-analytics",
+        element: <AnalyticsManagement/>
+      },
       {
         path: "vendor-profile",
         element: <ProfileManagement/>
+      },
+      {
+        path: "vendor-settings",
+        element: <SettingsMangement/>
       }
     ],
   },

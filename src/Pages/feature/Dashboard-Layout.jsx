@@ -5,15 +5,15 @@ import { Outlet } from "react-router-dom";
 
 const DashboardLayout = () => {
   return (
-    <div>
+    <div style={{ width:'100%', height:"100vh"}}>
       <div>
         <DashboardHeader />
       </div>
-      <div>
-        <div>
+      <div style={{ width:'100%', background:"yellow", display:"flex"}}>
+        <div style={{ width:'20%', background:"blue"}}>
           <Sidebar/>
         </div>
-        <div>
+        <div style={{ width:'80%', background:"red"}}>
            <Outlet/>
         </div>
       </div>

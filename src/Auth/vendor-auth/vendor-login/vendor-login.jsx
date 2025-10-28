@@ -25,9 +25,9 @@ const Vendorlogin = () => {
     try {
       setButtonDisabled(true);
       const response = await loginVendor(data);
-
+       
       console.log("formData", response);
-
+       localStorage.setItem(import.meta.env.VITE_VENDOR_TOKEN,response.data.token)
       toast.success("Account successfully created");
       setShowModal(true);
 

@@ -157,7 +157,7 @@ const VerifyForgetPasswordEmail = () => {
 
                   <div className="btnHolder">
                     <button
-                      className="btn-forgetpassword"
+                      className="btn-verify-forgetpassword"
                       type="submit"
                       disabled={buttonDisabled || showModal}
                     >
