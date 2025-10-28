@@ -8,9 +8,12 @@
     justify-content: center;
     align-items: center;
 }
+.space {
+    gap: 4rem;
+}
 
 .article {
-    width: 95%;
+    width: 97%;
     height: 95%;
     display: flex;
     flex-direction: column;
@@ -19,11 +22,13 @@
 }
 
 .header {
-    width: 90%;
-    height: 4rem;
+    width: 95%;
+    height: 6rem;
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    position: sticky;
+    top: 0;
     
 .fire {
     width: 3rem;
@@ -45,27 +50,33 @@
     justify-content: flex-start;
     align-items: center;
     gap: 2rem;
-    box-shadow: 1px 1px 4px #bbb8b8;
+    box-shadow: 0 2px 20px 0 #00000018;
     padding-bottom: 2rem;
     box-sizing: border-box;
+    margin-bottom: 2rem;
+}
+ .defined-height {
+    height: 70%;
 }
 
 .logo-heading {
-    color: orange;
+    color: blue;
     margin: 0 0;
     text-transform: capitalize;
-    font-size: 2rem;
+    font-size: 1.3rem;
     display: flex;
+    align-items: center;
 }
 .logo-style {
-    color: blue;
-    font-size: 2rem;
+    color: #FF7F11;
+    font-size: 1.3rem;
     text-transform: capitalize;
 }
 
 .form-heading {
     width: 100%;
     height: max-content;
+    margin-block: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -74,8 +85,12 @@
 
     h1 {
         text-transform: capitalize;
-        margin-block: 0.8rem;   
+        margin-bottom: 0.8rem;  
+        margin-top: 1.6rem; 
     }
+}
+.wrap {
+    width: 50%;
 }
 
 .row-input {
@@ -89,7 +104,7 @@
 
 .input-container {
     width: 85%;
-    height: 4rem;
+    height: 4.5rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -99,7 +114,7 @@ label {
     text-transform: capitalize;
 }
 .eye {
-    width: 10%;
+    width: max-content;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -118,7 +133,7 @@ label {
     background-color: #f5f5f5;
 
     input {
-        width: 80%;
+        width: 95%;
         height: 100%;
         outline: none;
         border: none;
@@ -151,14 +166,28 @@ label {
     justify-content: center;
     border-radius: 0.3rem;
     border-style: none;
-    background: orange;
+    background: #ff7700;
     color: #fff;
     font-size: 1rem;
     cursor: pointer;
     text-transform: capitalize;
 }
+.submit:disabled {
+    background: #ff7700bd;
+}
+.resend-btn {
+    border: none;
+    background: none;
+    color: #FF7F11;
+    cursor: pointer;
+    font-size: 1rem;
+}
 p {
-    margin-block: 0.6rem8
+    margin-block: 0.8rem;
+}
+
+.small {
+    width: 50%;
 }
 
 .checkbox {
@@ -204,4 +233,12 @@ input[type="checkbox"]::before {
 input[type="checkbox"]:checked::before {
   transform: scale(1) rotate(45deg);
 }
+/* Hides Edge's default password reveal icon */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
 
+.link {
+    color: green;
+}
