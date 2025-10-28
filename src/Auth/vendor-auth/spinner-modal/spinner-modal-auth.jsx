@@ -1,10 +1,11 @@
 import React from 'react'
+import "./spinner-modal-auth.css"
 
 const SpinnerModal = () => {
   return (
    <div className="spinnerimgholder">
-  <div className="spinnerimg">
-    <img src="/src/assets/loading loop.svg" alt="Loading..." />
+  <div className="spinnerimgContainer">
+    <img src="/Images/loading_loop.jpg" alt="Loading..." />
   </div>
 </div>
   )
