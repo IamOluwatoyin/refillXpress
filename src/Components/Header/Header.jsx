@@ -48,7 +48,7 @@ const Header = () => {
               <button className="customer_button">As Customer</button>
               <button
                 className="vendor_button"
-                onClick={() => nav("/vendorlogin")}
+                onClick={() => nav("/vendor-login")}
               >
                 As Vendor
               </button>
@@ -66,7 +66,7 @@ const Header = () => {
               <button className="customer_button1">As Customer</button>
               <button
                 className="vendor_button1"
-                onClick={() => nav("/vendorsignup")}
+                onClick={() => nav("/vendor-signup")}
               >
                 As Vendor
               </button>

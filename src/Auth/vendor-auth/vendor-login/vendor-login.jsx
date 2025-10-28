@@ -75,6 +75,10 @@ const Vendorlogin = () => {
                       flexDirection: "column",
                       gap: "5px",
                     }}
+<<<<<<< HEAD
+=======
+                    
+>>>>>>> ec743e5257df3f767885ea88e1989e2e665f1820
                   >
                     <label>Email Address</label>
                     <input

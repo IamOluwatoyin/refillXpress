@@ -13,7 +13,6 @@ import OrderManagement from "../pages/feature/component/order";
 import ProfileManagement from "../pages/feature/component/profile";
 import VerifyForgetPasswordEmail from "../auth/vendor-auth/vendor-forgot-password/vendor-verify-forgetpassword-email";
 import RiderSignup from "../Auth/Rider/Rider-signup/RiderSignup";
-import RiderLogin from "../Auth/Rider/Rider-login/RiderLogin";
 
 export const router = createBrowserRouter([
   {
@@ -34,7 +33,7 @@ export const router = createBrowserRouter([
     element: <VendorSignup />,
   },
   {
-    path: "vendorLogin",
+    path: "vendor-login",
     element: <Vendorlogin />,
   },
   {
