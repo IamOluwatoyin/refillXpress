@@ -5,7 +5,7 @@ import CartGas from "./CartGas";
 import About from "./About";
 import Freq from "./Freq";
 import Review from "./Review";
-import Network from "./Network";
+import Network from "../../Pages/Home/Network";
 import ContantUs from "../ContantUs";
 
 const HomePage = () => {
@@ -19,6 +19,7 @@ const HomePage = () => {
       <Freq />
       <Review />
       <ContantUs />
+      <Review />
     </div>
   );
 };

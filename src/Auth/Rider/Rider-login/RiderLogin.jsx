@@ -4,7 +4,7 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { Link, NavLink, useNavigate } from "react-router";
 import Password from "antd/es/input/Password";
 import { toast } from "react-toastify";
-import SpinnerModal from "../../vendor-auth/spinner-modal-auth";
+import SpinnerModal from "../../vendor-auth/spinner-modal/spinner-modal-auth";
 
 const RiderLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
