@@ -2,7 +2,7 @@ import React from 'react'
 
 const UserDashboard = () => {
   return (
-    <div>
+    <div className='userdashboard'>
       
     </div>
   )
