@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import logo from "../../assets/logo.svg";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 const Header = () => {
   const [loginDrop, setDrop] = useState(false);
   const [getStated, setGetStated] = useState(false);
+  const nav = useNavigate();
   console.log(loginDrop);
   const handleLoginDrop = () => {
     setGetStated(false);
@@ -44,14 +46,36 @@ const Header = () => {
           {loginDrop && (
             <div className="drop">
               <button className="customer_button">As Customer</button>
-              <button className="vendor_button">As Vendor</button>
+              <button
+                className="vendor_button"
+                onClick={() => nav("/vendor-login")}
+              >
+                As Vendor
+              </button>
+              <button
+                className="vendor_button"
+                onClick={() => nav("/riderlogin")}
+              >
+                As Rider
+              </button>
             </div>
           )}
 
           {getStated && (
             <div className="drop2">
               <button className="customer_button1">As Customer</button>
-              <button className="vendor_button1">As Vendor</button>
+              <button
+                className="vendor_button1"
+                onClick={() => nav("/vendor-signup")}
+              >
+                As Vendor
+              </button>
+              <button
+                className="vendor_button1"
+                onClick={() => nav("/ridersignup")}
+              >
+                As Rider
+              </button>
             </div>
           )}
         </ButtonHolder>
@@ -68,7 +92,10 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: white;
 `;
 
 const ContainerWrapper = styled.div`
@@ -145,6 +172,7 @@ const ButtonHolder = styled.div`
     color: #2887db;
     border-radius: 8px;
     cursor: pointer;
+    background-color: #fff;
   }
 
   .box1:hover {
@@ -155,7 +183,7 @@ const ButtonHolder = styled.div`
     width: 130px;
     height: 50px;
     background-color: #ff7f11;
-    color: #fff;
+    color: white;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -171,21 +199,21 @@ const ButtonHolder = styled.div`
     border-radius: 10px;
     border: none;
     cursor: pointer;
+    background-color: white;
   }
   .customer_button:hover {
-    background-color: #ff7f11;
-    color: white;
+    color: #ff7f11;
   }
   .vendor_button {
     width: 100%;
     height: 40px;
     border-radius: 10px;
     border: none;
+    background-color: white;
   }
   .vendor_button:hover {
     cursor: pointer;
-    background-color: #ff7f11;
-    color: white;
+    color: #ff7f11;
   }
   .customer_button1 {
     width: 100%;
@@ -193,21 +221,21 @@ const ButtonHolder = styled.div`
     border-radius: 10px;
     border: none;
     cursor: pointer;
+    background-color: white;
   }
   .customer_button1:hover {
-    background-color: #ff7f11;
-    color: white;
+    color: #ff7f11;
   }
   .vendor_button1 {
     width: 100%;
     height: 40px;
     border-radius: 10px;
     border: none;
+    background-color: white;
   }
   .vendor_button1:hover {
     cursor: pointer;
-    background-color: #ff7f11;
-    color: white;
+    color: #ff7f11;
   }
 `;
 

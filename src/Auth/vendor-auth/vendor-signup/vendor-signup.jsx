@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from "react";
 import "./vendor-signup.css";
 import { RiArrowDropDownLine } from "react-icons/ri";

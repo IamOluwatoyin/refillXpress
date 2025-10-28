@@ -11,7 +11,7 @@ const CartGas = () => {
       <h3>
         Get Your Gas in <span>simple 4 steps</span>
       </h3>
-      <p>
+      <p className="first">
         Ordering gas has never been this easier follow these simple steps and
         enjoy hassle - free delivery.
       </p>
@@ -23,20 +23,36 @@ const CartGas = () => {
       </BallHolder>
       <CardHolder>
         <Cards>
-          <img src={phone} alt="" />
-          {/* <h4>Register</h4> */}
-          {/* <p>
+          <Subcard>
+            <img src={phone} alt="" />
+          </Subcard>
+          <h4>Register</h4>
+          <p>
             Visit the webapp and create your account in less than 2 miniutes
-          </p> */}
+          </p>
         </Cards>
         <Cards>
-          <img src={search} alt="" />
+          <Subcard>
+            <img src={truck} alt="" />
+          </Subcard>
+          <h4>Find Vendors</h4>
+          <p>Browse verified vendors in you area and compare prices</p>
         </Cards>
         <Cards>
-          <img src={check} alt="" />
+          <Subcard>
+            <img src={check} alt="" />
+          </Subcard>
+          <h4>Place Order</h4>
+          <p>select you gas cylinder type and quantiy</p>
         </Cards>
         <Cards>
-          <img src={truck} alt="" />
+          <Subcard>
+            <img src={search} alt="" />
+          </Subcard>
+          <h4>Get Delivered</h4>
+          <p>
+            Sit back and relax. Your gas will be delivered at your door step
+          </p>
         </Cards>
       </CardHolder>
     </Container>
@@ -62,7 +78,7 @@ const Container = styled.div`
     }
   }
 
-  p {
+  .first {
     margin-top: 30px;
   }
 `;
@@ -76,14 +92,14 @@ const Card = styled.div`
   justify-content: center;
   color: #ff7f11;
   border-radius: 20px;
-  margin-top: 25px;
+  margin-top: 40px;
 `;
 
 const BallHolder = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-evenly;
-  margin-top: 50px;
+  justify-content: space-around;
+  margin-top: 80px;
   border-bottom: 2px solid #808080;
 `;
 
@@ -99,26 +115,46 @@ const Ball1 = styled.div`
   border: 4px solid blue;
   font-size: 40px;
   color: blue;
+  margin-bottom: 20px;
 `;
 
 const CardHolder = styled.div`
   width: 100%;
+  height: 50%;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   margin-top: 10px;
   padding-top: 35px;
 `;
 
 const Cards = styled.div`
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background-color: white;
+  width: 18%;
+  height: max-content;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
   color: black;
-  border: 4px solid blue;
-  font-size: 40px;
-  color: blue;
+
+  h4 {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 20px;
+  }
+
+  p {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 17px;
+    color: #808080;
+  }
+`;
+const Subcard = styled.div`
+  width: 105px;
+  height: 105px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;

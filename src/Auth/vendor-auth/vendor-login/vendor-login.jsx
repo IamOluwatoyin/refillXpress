@@ -75,6 +75,7 @@ const Vendorlogin = () => {
                       flexDirection: "column",
                       gap: "5px",
                     }}
+                    
                   >
                     <label>Email Address</label>
                     <input

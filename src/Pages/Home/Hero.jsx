@@ -12,8 +12,12 @@ const Hero = () => {
         <h3>
           Refill <span>Xpress</span>
         </h3>
-        <p>Never run out of gas again </p>
-        <p>We deliver gas to your door step</p>
+        <p>
+          Never run out of gas again. We bring clean and verified gas right to
+          your doorstep, fast and safely, so you can cook, relax, and enjoy your
+          day without any worry.
+        </p>
+
         <ButtonHolder>
           <button className="box1">
             Order now <IoIosArrowRoundForward style={{ fontSize: "17px" }} />
@@ -54,6 +58,8 @@ const Wrapper = styled.div`
 
   p {
     color: white;
+    font-size: 16px;
+    width: 35%;
   }
 
   h3 {
@@ -82,6 +88,7 @@ const ButtonHolder = styled.div`
     align-items: center;
     justify-content: center;
     gap: 5px;
+    cursor: pointer;
   }
 
   .box2 {
@@ -91,5 +98,11 @@ const ButtonHolder = styled.div`
     color: #fff;
     border-radius: 8px;
     background: transparent;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #fff;
+      color: #2887db;
+    }
   }
 `;

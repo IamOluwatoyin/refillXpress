@@ -12,10 +12,13 @@ import DashboardLayout from "../pages/feature/Dashboard-Layout";
 import OrderManagement from "../pages/feature/component/order";
 import ProfileManagement from "../pages/feature/component/profile";
 import VerifyForgetPasswordEmail from "../auth/vendor-auth/vendor-forgot-password/vendor-verify-forgetpassword-email";
+import RiderSignup from "../auth/Rider/Rider-signup/RiderSignup";
+import RiderLogin from "../auth/Rider/Rider-login/RiderLogin";
+
 
 export const router = createBrowserRouter([
   {
-    path: "homepage",
+    path: "/",
     element: (
       <Layout>
         <HomePage />
@@ -76,4 +79,20 @@ export const router = createBrowserRouter([
     path: "*",
     element: <RouteErr />,
   },
+
+  {
+    path: "/ridersignup",
+    element: <RiderSignup/>
+    
+   
+  },
+  {
+    path: "/riderlogin",
+    element: <RiderLogin />,
+  },
+
+  // {
+  //   path: "forgetpassword",
+  //   element: <RiderForgotPassword />,
+  // },
 ]);

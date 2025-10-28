@@ -65,7 +65,7 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-  width: 95%;
+  width: 90%;
   display: flex;
   align-items: center;
   margin-top: 10px;

@@ -1,18 +1,30 @@
 import React from "react";
 import styled from "styled-components";
+import vector from "../assets/Vector (1).png";
 
 const ContantUs = () => {
   return (
     <Container>
       <Wrapper>
-        <h1>
-          Contant <span>Us</span>
-        </h1>
-        <h3>
-          Contact us on <span>+23481665694 & +2340760994040</span>(9 AM – 9PM
-          except Sundays ) or email us at{" "}
-          <span> customerservice@refillXpress.ng</span>
-        </h3>
+        <MailBox>
+          <h3>
+            <img src={vector} alt="" />{" "}
+            <span> Subscribe to our newsletter</span>
+          </h3>
+          <p>
+            Get the latest updates, news, and special offers delivered to your
+            inbox.
+          </p>
+        </MailBox>
+        <SubBox>
+          <Box>
+            <input type="text" placeholder="Email Address" />
+            <button>Subscribe</button>
+          </Box>
+          <Text>
+            By subscribing you agree to our <span>Terms & Conditions</span>
+          </Text>
+        </SubBox>
       </Wrapper>
     </Container>
   );
@@ -26,25 +38,48 @@ const Container = styled.div`
   background-color: #f5f8fc;
   display: flex;
   justify-content: center;
+  margin-bottom: 20px;
 `;
 
 const Wrapper = styled.div`
   width: 90%;
+  margin-top: 45px;
+  display: flex;
+  justify-content: space-between;
 
-  h1 {
-    color: #2887db;
-    margin-top: 35px;
-    font-size: 45px;
+  span {
+    color: #ff7f11;
+  }
+  p {
+    margin-top: 15px;
+  }
+`;
 
-    span {
-      color: #ff7f11;
-    }
+const MailBox = styled.div``;
+
+const SubBox = styled.div``;
+
+const Box = styled.div`
+  input {
+    width: 300px;
+    height: 45px;
+    border: none;
+    outline: none;
+    padding: 15px;
+    font-size: 15px;
   }
 
-  h3 {
-    margin-top: 35px;
-    span {
-      color: #ff7f11;
-    }
+  button {
+    width: 120px;
+    height: 45px;
+    color: #fff;
+    background-color: #ff7f11;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
   }
+`;
+
+const Text = styled.div`
+  margin-top: 10px;
 `;
