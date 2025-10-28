@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Flex, Input, Typography } from "antd";
 const { Title } = Typography;
-import "./verify-email.css";
+import "./vendor-verify-forgot-password-email.css";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import SpinnerModal from "../spinner-modal/spinner-modal-auth";
+import { useForm, Controller } from "react-hook-form";
 import {
-  vendorEmailVerify,
-  vendorEmailVerifyResend,
+  vendorForgotPasswordOtpResend,
   vendorForgotPasswordVerify,
 } from "../../../api/mutation";
-import { useForm, Controller } from "react-hook-form";
 
-const Verify = () => {
+const VerifyForgetPasswordEmail = () => {
   const [showModal, setShowModal] = useState(false);
-  // const [otp, setOtp] = useState("");
+
   const [timeLeft, setTimeLeft] = useState(60);
+
   const onChange = (value) => setOtp(value);
   const navigate = useNavigate();
   // const onInput = value => {
@@ -32,19 +32,19 @@ const Verify = () => {
     reset,
     formState: { errors },
   } = useForm({ defaultValues: { otp: "" } });
-
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [resendDisabled, setResendDisabled] = useState(false);
-
   const submit = async (data) => {
     setButtonDisabled(true);
     const { otp } = data;
-
     try {
       const businessEmail = localStorage.getItem("vendorEmail");
       console.log(businessEmail);
 
-      const res = await vendorEmailVerify({ businessEmail, otp });
+      setShowModal(true);
+
+      const res = await vendorForgotPasswordVerify({ businessEmail, otp });
+
       console.log("verify", res.data.message);
 
       toast.success("Verified Successfully");
@@ -52,7 +52,7 @@ const Verify = () => {
 
       setTimeout(() => {
         setShowModal(false);
-        navigate("/vendor-login");
+        navigate("/vendor-reset-password");
       }, 2000);
     } catch (error) {
       console.log("not working", error);
@@ -70,21 +70,22 @@ const Verify = () => {
     }
   }, [timeLeft]);
 
-  const resendEmailOTP = async (e) => {
+  const resendForgotPasswordOTP = async (e) => {
     e.preventDefault();
     setResendDisabled(true);
     setButtonDisabled(true);
     try {
       const businessEmail = localStorage.getItem("vendorEmail");
       console.log(businessEmail);
-
-      const res = await vendorEmailVerifyResend({ businessEmail });
+      setShowModal(true);
+      const res = await vendorForgotPasswordOtpResend({ businessEmail });
 
       console.log("verify", res.data.message);
 
       toast.success("OTP resent Successfully");
       setShowModal(true);
       reset({ otp: "" });
+      setTimeLeft(60);
       setTimeout(() => {
         setShowModal(false);
         setResendDisabled(false);
@@ -102,24 +103,24 @@ const Verify = () => {
 
   return (
     <div>
-      <div className="form-wrapper-verify">
-        <div className="form-container-verify">
+      <div className="form-wrapper-verify-forgetpassword">
+        <div className="form-container-verify-forgetpassword">
           <header>
             <img src="/src/assets/logo.svg" alt="logo" className="image" />
             <h1>
               Refill<span>Xpress</span>
             </h1>
           </header>
-          <section className="cardBodyWrapper-verify">
-            <main className="cardBody-verify">
+          <section className="cardBodyWrapper-verify-forgetpassword">
+            <main className="cardBody-verify-forgetpassword">
               <article>
-                <h3> Verify Account</h3>
+                <h3> Verify Email</h3>
                 <p>
                   A verification code has been sent to your email <br />
                   address.Please enter it to continue
                 </p>
               </article>
-              <section className="formWrapper-verify">
+              <section className="formWrapper-verify-forgetpassword">
                 <form
                   style={{
                     display: "flex",
@@ -153,9 +154,10 @@ const Verify = () => {
                       {errors.otp.message}
                     </p>
                   )}
+
                   <div className="btnHolder">
                     <button
-                      className="btn-verify"
+                      className="btn-forgetpassword"
                       type="submit"
                       disabled={buttonDisabled || showModal}
                     >
@@ -178,10 +180,9 @@ const Verify = () => {
                       </p>
                     ) : (
                       <p
-                        onClick={resendEmailOTP}
+                        onClick={resendForgotPasswordOTP}
                         style={{ color: "#1BB970", cursor: "pointer" }}
                       >
-                        {" "}
                         Resend Verification
                       </p>
                     )}
@@ -196,4 +197,4 @@ const Verify = () => {
   );
 };
 
-export default Verify;
+export default VerifyForgetPasswordEmail;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "./forgot-password.css";
 import { toast } from "react-toastify";
-import SpinnerModal from "../spinner-modal-auth";
+import SpinnerModal from "../spinner-modal/spinner-modal-auth";
 import { useForm } from "react-hook-form";
 import { vendorForgotPassword } from "../../../api/mutation";
 const ForgotPassword = () => {
@@ -13,10 +13,11 @@ const ForgotPassword = () => {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
+  const [buttonDisabled, setButtonDisabled] = useState(false);
 
   const submit = async (data) => {
     // e.preventDefault()
-
+    setButtonDisabled(true);
     const businessEmail = localStorage.setItem(
       "vendorEmail",
       data.businessEmail
@@ -32,13 +33,14 @@ const ForgotPassword = () => {
 
       setTimeout(() => {
         setShowModal(false);
-        navigate("/vendor-verify-email");
+        navigate("/vendor-forget-password-verify");
       }, 2000);
     } catch (error) {
       console.log("not working", error);
 
       toast.error(error.response?.data?.message || "Something went wrong!");
       setShowModal(false);
+      setButtonDisabled(false);
     }
   };
 
@@ -101,11 +103,17 @@ const ForgotPassword = () => {
                     }}
                   />
                   {errors.businessEmail && (
-                    <p style={{ color: "red" }}>{errors.businessEmail.message}</p>
+                    <p style={{ color: "red" }}>
+                      {errors.businessEmail.message}
+                    </p>
                   )}
                 </div>
                 <div className="btnHolder">
-                  <button className="btnpassword" type="submit">
+                  <button
+                    className="btnpassword"
+                    type="submit"
+                    disabled={showModal || buttonDisabled}
+                  >
                     Send Verification code
                   </button>
                 </div>

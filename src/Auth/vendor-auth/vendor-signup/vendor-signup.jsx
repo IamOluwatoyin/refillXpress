@@ -3,7 +3,7 @@ import "./vendor-signup.css";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
-import SpinnerModal from "../spinner-modal-auth";
+import SpinnerModal from "../spinner-modal/spinner-modal-auth";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { signupVendor } from "../../../api/mutation";
@@ -14,6 +14,7 @@ const VendorSignup = () => {
   const [showModal, setShowModal] = useState(false);
 
   const navigate = useNavigate();
+  const [buttonDisabled, setButtonDisabled] = useState(false);
 
   const {
     register,
@@ -21,30 +22,29 @@ const VendorSignup = () => {
     watch,
     formState: { errors },
   } = useForm();
-const password = watch("password","")
+  const password = watch("password", "");
 
   const submit = async (data) => {
-    try { const response = await signupVendor(data);
-    console.log("formData", response);
-    localStorage.setItem("vendorEmail" ,data.businessEmail)
+    setButtonDisabled(true);
+    try {
+      const response = await signupVendor(data);
+      console.log("formData", response);
+      localStorage.setItem("vendorEmail", data.businessEmail);
 
-    toast.success("Account successfully created");
-    setShowModal(true);
+      toast.success("Account successfully created");
+      setShowModal(true);
 
-    setTimeout(() => {
-      setShowModal(false);
-      navigate("/vendor-verify-email");
-    }, 2000);
-      
+      setTimeout(() => {
+        setShowModal(false);
+        navigate("/vendor-verify-email");
+      }, 2000);
     } catch (error) {
-      console.log('error', error)
-       toast.error(error.response?.data?.message || "Something went wrong!");
-       setShowModal(false)
-  } 
-      
+      console.log("error", error);
+      toast.error(error.response?.data?.message || "Something went wrong!");
+      setShowModal(false);
+      setButtonDisabled(false);
     }
-   
-  
+  };
 
   return (
     <div className="form-wrapper">
@@ -176,7 +176,6 @@ const password = watch("password","")
                         }}
                       >
                         <img src="/Images/ngflag.jpg" />
-                        {/* <RiArrowDropDownLine size={20} /> */}
                       </div>
 
                       {/* Divider */}
@@ -387,8 +386,7 @@ const password = watch("password","")
                       {...register("confirmPassword", {
                         required: "Password confirmation is required",
                         validate: (value) =>
-                          value === password ||
-                          "Passwords do not match.",
+                          value === password || "Passwords do not match.",
                       })}
                       style={{
                         outline: "none",
@@ -432,16 +430,9 @@ const password = watch("password","")
                   <p style={{ color: "red" }}>{errors.agree.message}</p>
                 )}
                 <button
-                  style={{
-                    padding: "12px 10px",
-                    borderRadius: "8px",
-                    cursor: "pointer",
-                    background: "#FF7F11",
-                    border: "none",
-                    width: "39.3125rem",
-                    boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-                  }}
+                  className="btnsignup"
                   type="submit"
+                  disabled={showModal || buttonDisabled}
                 >
                   Create Account
                 </button>

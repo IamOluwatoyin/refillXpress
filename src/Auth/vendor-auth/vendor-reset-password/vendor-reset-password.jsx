@@ -1,16 +1,19 @@
 import React, { useState } from "react";
-// import "./vendor-login.css";
+
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import SpinnerModal from "../spinner-modal-auth";
+import SpinnerModal from "../spinner-modal/spinner-modal-auth";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
+import { vendorResetPassword } from "../../../api/mutation";
+import "./vendor-reset-password.css"
 
 
 
 const VendorResetPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
    const [cshowPassword, csetShowPassword] = useState(false);
+   const [buttonDisabled, setButtonDisabled] = useState(false);
    const[showModal, setShowModal] = useState(false)
    const navigate = useNavigate()
  
@@ -19,20 +22,39 @@ const VendorResetPassword = () => {
 
     const password = watch("password","")
 
-    const submit = async () => {
-     try {
-      
-     toast.success("Reset Password Successful");
-         setShowModal(true);
-     
-         setTimeout(() => {
-           setShowModal(false);
-           navigate("/vendor-login");
-         }, 2000);
+    const submit = async (data) => {
+
+    try {
+          setButtonDisabled(true)
+          const businessEmail = localStorage.getItem("vendorEmail")
+           console.log("vendorEmail")
+            const apiData = {
+              businessEmail,
+              newPassword: data.password
+            }
+           setShowModal(true);
+    
+            const res = await vendorResetPassword(apiData)
+    
+        console.log("verify",res.data.message)
+    
+        toast.success("Reset password successfully");
+            setShowModal(true);
+        
+            setTimeout(() => {
+              setShowModal(false);
+              navigate("/vendor-login");
+            }, 2000);
           
-     } catch (error) {
-      
-     }
+        } catch (error) {
+          console.log("not working",error)
+    
+           toast.error(error.response?.data?.message || "Something went wrong!");
+           setShowModal(false)
+           setButtonDisabled(false)
+          
+          
+        }
       
 
       
@@ -40,8 +62,8 @@ const VendorResetPassword = () => {
   return (
     <>
      
-    <div className="form-wrapperlogin">
-      <div className="form-containerlogin">
+    <div className="form-wrapperReset">
+      <div className="form-containerReset">
         <header>
           <img src="/src/assets/logo.svg" alt="logo" className="image" />
 
@@ -49,13 +71,13 @@ const VendorResetPassword = () => {
             Refill<span>Xpress</span>
           </h1>
         </header>
-        <section className="cardBodyWrapperlogin">
-          <main className="cardBodylogin" >
+        <section className="cardBodyWrapperReset">
+          <main className="cardBodyReset" >
             <article>
               <h3> Reset Password</h3>
               <p>Enter a new password for your account. Make <br/> sure it’s strong and easy for you<br/> to remember.</p>
             </article>
-            <section className="formWrapperlogin">
+            <section className="formWrapperReset">
               <form
                 style={{
                   display: "flex",
@@ -156,8 +178,9 @@ const VendorResetPassword = () => {
               )}
                 
                  <button
-                  className="btnlogin"
+                  className="btnReset"
                   type="submit"
+                  disabled={showModal || buttonDisabled} 
                 >
                  Reset Password
                 </button>

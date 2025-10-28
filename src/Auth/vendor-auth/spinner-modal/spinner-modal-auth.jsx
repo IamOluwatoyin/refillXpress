@@ -1,4 +1,5 @@
 import React from 'react'
+import "./spinner-modal-auth.css"
 
 const SpinnerModal = () => {
   return (

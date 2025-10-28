@@ -10,6 +10,8 @@ export const vendorEmailVerifyResend = (data) => api.post("/vendor/resend-otp",d
 
 export const vendorForgotPassword = (data) => api.post("/vendor/forgot-password",data)
 
-export const vendorForgotPasswordVerify = (data) => api.post("vendor_verify_forgot_password_otp")
+export const vendorForgotPasswordVerify = (data) => api.post("/vendor/verify-forgot-password-otp", data)
 
-export const vendorResetPassword = (data,config) => api.post("/vendor/reset-password/",data, config)
+export const vendorForgotPasswordOtpResend  = (data) => api.post("/vendor/vendorForgotPasswordOtpResend",data)
+
+export const vendorResetPassword = (data) => api.post("/vendor/reset-password",data)
