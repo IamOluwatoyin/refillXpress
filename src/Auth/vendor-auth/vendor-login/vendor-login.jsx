@@ -3,10 +3,9 @@ import "./vendor-login.css";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { Link, NavLink, useNavigate } from "react-router";
 import Password from "antd/es/input/Password";
-import SpinnerModal from "../spinner-modal/spinner-modal-auth";
+import SpinnerModal from "../spinner-modal";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import { message } from "antd";
 import { loginVendor } from "../../../api/mutation";
 
 const Vendorlogin = () => {
@@ -75,7 +74,6 @@ const Vendorlogin = () => {
                       flexDirection: "column",
                       gap: "5px",
                     }}
-                    
                   >
                     <label>Email Address</label>
                     <input

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import badge from "../../assets/badge.png";
 import clock from "../../assets/clock.png";
 import table from "../../assets/table.png";
-const CartRefill = () => {
+const RefillCart = () => {
   return (
     <Container>
       <Wrapper>
@@ -43,7 +43,7 @@ const CartRefill = () => {
   );
 };
 
-export default CartRefill;
+export default RefillCart;
 
 const Container = styled.div`
   width: 100%;

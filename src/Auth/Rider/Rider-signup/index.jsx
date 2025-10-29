@@ -6,7 +6,7 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { Link, NavLink, useNavigate } from "react-router";
-import SpinnerModal from "../../vendor-auth/spinner-modal/spinner-modal-auth";
+import SpinnerModal from "../../vendor-auth/spinner-modal";
 
 const RiderSignup = () => {
   const [showPassword, setShowPassword] = useState(false);
