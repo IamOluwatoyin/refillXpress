@@ -1,27 +1,22 @@
 import React from "react";
 import Hero from "./Hero";
-import CartRefill from "./CartRefill";
-import CartGas from "./CartGas";
+import CartGas from "./cart-gas";
 import About from "./About";
 import Freq from "./Freq";
-import ContantUs from "../ContantUs";
 import Review from "./Review";
-
-import Footer from "../../components/Footer/Footer";
-import Header from "../../components/Header/Header";
+import Network from "./Network";
+import RefillCart from "./RefillCart";
 
 const HomePage = () => {
   return (
     <div>
-      <Header/>
       <Hero />
-      <CartRefill />
+      <RefillCart />
       <CartGas />
       <About />
+      <Network />
       <Freq />
-      <ContantUs />
       <Review />
-      <Footer/>
     </div>
   );
 };

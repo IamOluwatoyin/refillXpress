@@ -14,10 +14,12 @@ import ProfileManagement from "../pages/feature/component/profile";
 import VerifyForgetPasswordEmail from "../auth/vendor-auth/vendor-forgot-password/vendor-verify-forgetpassword-email";
 import AnalyticsManagement from "../pages/feature/component/analytics";
 import SettingsMangement from "../pages/feature/component/settings";
+import RiderSignup from "../auth/Rider/Rider-signup";
+import RiderLogin from "../auth/Rider/Rider-login";
 
 export const router = createBrowserRouter([
   {
-    path: "homepage",
+    path: "/",
     element: (
       <Layout>
         <HomePage />
@@ -41,11 +43,11 @@ export const router = createBrowserRouter([
     path: "vendor-forget-password",
     element: <ForgotPassword />,
   },
-    {
+  {
     path: "vendor-forget-password-verify",
     element: <VerifyForgetPasswordEmail />,
   },
-   {
+  {
     path: "vendor-verify-email",
     element: <Verify />,
   },
@@ -65,7 +67,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "vendor-order",
-        element: <OrderManagement/>
+        element: <OrderManagement />,
       },
        {
         path: "vendor-analytics",
@@ -81,9 +83,23 @@ export const router = createBrowserRouter([
       }
     ],
   },
- 
+
   {
     path: "*",
     element: <RouteErr />,
   },
+
+  {
+    path: "/ridersignup",
+    element: <RiderSignup />,
+  },
+  {
+    path: "/riderlogin",
+    element: <RiderLogin />,
+  },
+
+  // {
+  //   path: "forgetpassword",
+  //   element: <RiderForgotPassword />,
+  // },
 ]);

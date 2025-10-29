@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "./forgot-password.css";
 import { toast } from "react-toastify";
-import SpinnerModal from "../spinner-modal/spinner-modal-auth";
+import SpinnerModal from "../spinner-modal";
 import { useForm } from "react-hook-form";
 import { vendorForgotPassword } from "../../../api/mutation";
 const ForgotPassword = () => {
