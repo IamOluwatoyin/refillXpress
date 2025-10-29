@@ -4,7 +4,7 @@ import "./vendor-signup.css";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
-import SpinnerModal from "../spinner-modal/spinner-modal-auth";
+import SpinnerModal from "../spinner-modal";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { signupVendor } from "../../../api/mutation";

@@ -4,31 +4,22 @@ const { Title } = Typography;
 import "./verify-email.css";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import SpinnerModal from "../spinner-modal/spinner-modal-auth";
+import SpinnerModal from "../spinner-modal";
 import {
   vendorEmailVerify,
   vendorEmailVerifyResend,
-  vendorForgotPasswordVerify,
 } from "../../../api/mutation";
 import { useForm, Controller } from "react-hook-form";
 
 const Verify = () => {
   const [showModal, setShowModal] = useState(false);
-  // const [otp, setOtp] = useState("");
+
   const [timeLeft, setTimeLeft] = useState(60);
-  const onChange = (value) => setOtp(value);
   const navigate = useNavigate();
-  // const onInput = value => {
-  //   console.log('onInput:', value);
-  // };
-  const sharedProps = {
-    onChange,
-  };
 
   const {
     control,
     handleSubmit,
-    setValue,
     reset,
     formState: { errors },
   } = useForm({ defaultValues: { otp: "" } });

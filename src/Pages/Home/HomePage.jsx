@@ -1,25 +1,22 @@
 import React from "react";
 import Hero from "./Hero";
-import CartRefill from "./CartRefill";
-import CartGas from "./CartGas";
+import CartGas from "./cart-gas";
 import About from "./About";
 import Freq from "./Freq";
 import Review from "./Review";
 import Network from "./Network";
-
+import RefillCart from "./RefillCart";
 
 const HomePage = () => {
   return (
     <div>
-      
       <Hero />
-      <CartRefill />
+      <RefillCart />
       <CartGas />
       <About />
       <Network />
       <Freq />
       <Review />
-      
     </div>
   );
 };
