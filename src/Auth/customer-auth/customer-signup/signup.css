@@ -1,0 +1,243 @@
+* {
+    font-family: "Roboto", sans-serif;
+}
+.signup {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.space {
+    gap: 4rem;
+}
+
+.article {
+    width: 97%;
+    height: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.header {
+    width: 95%;
+    height: 6rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    
+    
+.fire {
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: orangered;
+    color: #fff;
+    border-radius: 0.3rem;
+    margin-inline: 0.5rem;
+}
+}
+.form {
+    width: 45rem;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2rem;
+    box-shadow: 0 2px 20px 0 #00000018;
+    padding-bottom: 2rem;
+    box-sizing: border-box;
+    margin-bottom: 2rem;
+}
+ .defined-height {
+    height: 70%;
+}
+
+.logo-heading {
+    color: blue;
+    margin: 0 0;
+    text-transform: capitalize;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+}
+.logo-style {
+    color: #FF7F11;
+    font-size: 1.3rem;
+    text-transform: capitalize;
+}
+
+.form-heading {
+    width: 100%;
+    height: max-content;
+    margin-block: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    h1 {
+        text-transform: capitalize;
+        margin-bottom: 0.8rem;  
+        margin-top: 1.6rem; 
+    }
+}
+.wrap {
+    width: 50%;
+}
+
+.row-input {
+    width: 85%;
+    height: max-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.input-container {
+    width: 85%;
+    height: 4.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.7rem;
+}
+label {
+    text-transform: capitalize;
+}
+.eye {
+    width: max-content;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4rem;
+}
+.input-div {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-inline: 10px;
+    border-radius: 0.4rem;
+    border-style: none;
+    background-color: #f5f5f5;
+
+    input {
+        width: 95%;
+        height: 100%;
+        outline: none;
+        border: none;
+        background: none;
+    }
+}
+.small-input {
+    width: 45%;
+}
+
+::placeholder {
+    font-size: 1rem;
+}
+.submit-section {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    span {
+    color: green;
+}
+}
+.submit {
+    width: 85%;
+    height: 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.3rem;
+    border-style: none;
+    background: #ff7700;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    text-transform: capitalize;
+}
+.submit:disabled {
+    background: #ff7700bd;
+}
+.resend-btn {
+    border: none;
+    background: none;
+    color: #FF7F11;
+    cursor: pointer;
+    font-size: 1rem;
+}
+p {
+    margin-block: 0.8rem;
+}
+
+.small {
+    width: 50%;
+}
+
+.checkbox {
+  width: 85%;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  span {
+    color: green;
+}
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid gray;
+  border-radius: 4px;
+  background-color: transparent;
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+
+
+input[type="checkbox"]:checked {
+  border-color: lime;
+}
+
+input[type="checkbox"]::before {
+  content: "";
+  width: 5px;
+  height: 10px;
+  border-right: 2px solid lime;
+  border-bottom: 2px solid lime;
+  transform: scale(0) rotate(45deg);
+  transition: all 0.2s ease-in-out;
+}
+
+input[type="checkbox"]:checked::before {
+  transform: scale(1) rotate(45deg);
+}
+/* Hides Edge's default password reveal icon */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+.link {
+    color: green;
+}

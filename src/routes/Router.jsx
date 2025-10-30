@@ -1,6 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../routes/Layout";
 import RouteErr from "./RouteErr";
+import Signup from "../Auth/customer-auth/customer-signup/Signup"
+import Login from "../Auth/customer-auth/customer-login/Login"
+import OtpSignup from "../Auth/customer-auth/customer-signupverify/OtpSignup";
+import Reset from "../Auth/customer-auth/customer-resetpassword/Reset";
+import OtpForgot from "../Auth/customer-auth/customer-forgotverify/OtpForgot";
+import Forgot from "../Auth/customer-auth/customer-forgotpassword/Forgot";
 import VendorSignup from "../auth/vendor-auth/vendor-signup/vendor-signup";
 import Vendorlogin from "../auth/vendor-auth/vendor-login/vendor-login";
 import ForgotPassword from "../auth/vendor-auth/vendor-forgot-password/forgot-password";
@@ -28,7 +34,30 @@ export const router = createBrowserRouter([
     path: "/",
     element: <HomePage />,
   },
-
+  {
+    path: "userverify",
+    element: <OtpSignup />,
+  },
+  {
+    path: "userlogin",
+    element: <Login />,
+  },
+  {
+    path: "forgot",
+    element: <Forgot />,
+  },
+  {
+    path: "forgot-verify",
+    element: <OtpForgot />,
+  },
+  {
+     path: "userreset",
+    element: <Reset />,
+  },
+  {
+     path: "usersignup",
+    element: <Signup />,
+  },
   {
     path: "vendor-signup",
     element: <VendorSignup />,

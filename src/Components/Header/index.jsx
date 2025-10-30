@@ -7,13 +7,11 @@ const Header = () => {
   const [loginDrop, setDrop] = useState(false);
   const [getStated, setGetStated] = useState(false);
   const nav = useNavigate();
-  console.log(loginDrop);
   const handleLoginDrop = () => {
     setGetStated(false);
     setDrop(!loginDrop);
   };
 
-  console.log(getStated);
   const handleGetstated = () => {
     setDrop(false);
     setGetStated(!getStated);
@@ -45,7 +43,7 @@ const Header = () => {
           </button>
           {loginDrop && (
             <div className="drop">
-              <button className="customer_button">As Customer</button>
+              <button onClick={()=> nav("/userlogin")} className="customer_button">As Customer</button>
               <button
                 className="vendor_button"
                 onClick={() => nav("/vendor-login")}
@@ -63,7 +61,7 @@ const Header = () => {
 
           {getStated && (
             <div className="drop2">
-              <button className="customer_button1">As Customer</button>
+              <button onClick={()=> nav("/usersignup")} className="customer_button1">As Customer</button>
               <button
                 className="vendor_button1"
                 onClick={() => nav("/vendor-signup")}
