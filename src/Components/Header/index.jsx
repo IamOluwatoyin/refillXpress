@@ -33,7 +33,7 @@ const Header = () => {
           <ul>
             <li>Home</li>
             <li>How it works</li>
-            <li>Contant Us</li>
+            <li>Contact Us</li>
           </ul>
         </MidContainer>
         <ButtonHolder>

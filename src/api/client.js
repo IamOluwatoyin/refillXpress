@@ -12,8 +12,18 @@ api.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization =`Bearer ${token}`;
   }
+  
   return config;
 });
 
+api.interceptors.request.use((config) => {
+  const vendorId = localStorage.getItem(import.meta.env.VITE_VENDOR_ID);
+  
+  if (vendorId) {
+    config.headers.Authorization = `Bearer ${vendorId}`;
+  }
+
+  return config;
+});
 
 export default api;

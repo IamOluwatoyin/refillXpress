@@ -2,8 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import HeroImage from "../../assets/Hero.jpg";
 import { IoIosArrowRoundForward } from "react-icons/io";
+import { useNavigate } from "react-router"
 
 const Hero = () => {
+  const nav = useNavigate()
   return (
     <Container>
       <img src={HeroImage} alt="Hero" />
@@ -19,10 +21,10 @@ const Hero = () => {
         </p>
 
         <ButtonHolder>
-          <button className="box1">
+          <button className="box1"  onClick={()=>nav("/vendor-login")}>
             Order now <IoIosArrowRoundForward style={{ fontSize: "17px" }} />
           </button>
-          <button className="box2">Become a vendor</button>
+          <button className="box2" onClick={()=>nav("/vendor-signup")}>Become a vendor</button>
         </ButtonHolder>
       </Wrapper>
     </Container>
