@@ -6,7 +6,7 @@ import { BsInstagram } from "react-icons/bs";
 
 const Footer = () => {
   return (
-    <div className="footer-container">
+    <div className="footer-container" id="contact">
       <footer className="footer">
         <section className="top">
           <div className="column-one">

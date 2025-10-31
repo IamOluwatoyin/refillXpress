@@ -6,7 +6,7 @@ import check from "../../assets/check.png";
 
 const CartGas = () => {
   return (
-    <Container>
+    <Container id="how">
       <Card>HOW IT WORKS</Card>
       <h3>
         Get Your Gas in <span>simple 4 steps</span>
