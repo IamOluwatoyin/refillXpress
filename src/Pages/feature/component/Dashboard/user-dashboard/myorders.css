@@ -1,0 +1,112 @@
+.myorders {
+    width: 100%;
+    height: max-content;
+    height: 100vh;
+    display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: 1rem;
+      background-color: #f2f2f2;
+      h3 {
+        margin-block: 1rem;
+        font-size: 2rem;
+        text-transform: capitalize;
+      }
+}
+
+.deliver {
+    background-color: transparent;
+    color: black;
+    border: 1px solid #00000050;
+    width: max-content;
+    padding-inline: 0.3rem;
+    font-size: 0.8rem;
+}
+.shrink {
+    gap: 0;
+}
+.order-title {
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.for-time {
+    width: 95%;
+
+}
+.order-type {
+    width: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    }
+    .icon-details {
+        width: max-content;
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 0.5rem;
+        display: flex;
+        .desc-icon {
+                color: #00000050;
+                font-size: 1.2rem;
+            }
+        .desc {
+            width: max-content;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            
+            span {
+                text-transform: capitalize;
+                color: #00000050;   
+            }
+            p {
+                margin:  0 0;
+            }
+        }
+    }
+    div.hr {
+        width: 95%;
+        height: 2rem;
+        display: flex;
+        align-items: center;
+
+    }
+    hr {
+        width: 100%;
+    }
+    .delivery-info {
+        width: 95%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .driver-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+    .complete-track {
+        width: max-content;
+        padding-inline: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+    }
+    .total {
+        width: 95%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-transform: capitalize;
+        p {
+            display: flex;
+            align-items: center;
+        }
+    }
