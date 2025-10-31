@@ -24,9 +24,9 @@ const Vendorlogin = () => {
     try {
       setButtonDisabled(true);
       const response = await loginVendor(data);
-
+       
       console.log("formData", response);
-
+       localStorage.setItem(import.meta.env.VITE_VENDOR_TOKEN,response.data.token)
       toast.success("Account successfully created");
       setShowModal(true);
 
@@ -47,7 +47,7 @@ const Vendorlogin = () => {
       <div className="form-wrapperlogin">
         <div className="form-containerlogin">
           <header>
-            <img src="/src/assets/logo.svg" alt="logo" className="image" />
+            <img src="/src/assets/logo.svg" alt="logo" className="image" onClick={()=>navigate("/")}/>
 
             <h1>
               Refill<span>Xpress</span>

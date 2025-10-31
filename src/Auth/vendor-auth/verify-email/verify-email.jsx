@@ -96,7 +96,7 @@ const Verify = () => {
       <div className="form-wrapper-verify">
         <div className="form-container-verify">
           <header>
-            <img src="/src/assets/logo.svg" alt="logo" className="image" />
+            <img src="/src/assets/logo.svg" alt="logo" className="image" onClick={()=>navigate("/")}/>
             <h1>
               Refill<span>Xpress</span>
             </h1>

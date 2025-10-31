@@ -59,7 +59,7 @@ const VendorResetPassword = () => {
       <div className="form-wrapperReset">
         <div className="form-containerReset">
           <header>
-            <img src="/src/assets/logo.svg" alt="logo" className="image" />
+            <img src="/src/assets/logo.svg" alt="logo" className="image" onClick={()=>navigate("/")} />
 
             <h1>
               Refill<span>Xpress</span>

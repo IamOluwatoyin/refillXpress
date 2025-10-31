@@ -1,0 +1,122 @@
+.orderOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.orderModal {
+  position: relative;
+  background: #fff;
+  width: 30rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  padding: 25px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family: "Inter", sans-serif;
+  animation: fadeIn 0.25s ease;
+}
+
+
+
+
+.closeBtn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  color: #374151;
+  cursor: pointer;
+}
+
+
+.orderHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 15px;
+}
+
+.orderCode h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #111827;
+}
+
+.orderCode p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+
+.completedBtn {
+  color:green;
+  border: 1px solid green;
+  font-size: 13px;
+  padding: 6px 14px;
+  width: 20%;
+  height: 20%;
+  border-radius: 6px;
+  text-align: center;
+
+}
+
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.section h5 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 5px;
+}
+
+.customerDetails p {
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.6;
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #374151;
+}
+
+.totalRow {
+  font-weight: 600;
+  color: #111827;
+}
+
+
+.singleBtnContainer {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.closeFullBtn {
+  width: 100%;
+  padding: 12px 0;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  color: #111827;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+}

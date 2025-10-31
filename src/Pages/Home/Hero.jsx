@@ -21,7 +21,7 @@ const Hero = () => {
         </p>
 
         <ButtonHolder>
-          <button className="box1">
+          <button className="box1"  onClick={()=>nav("/vendor-login")}>
             Order now <IoIosArrowRoundForward style={{ fontSize: "17px" }} />
           </button>
           <button className="box2" onClick={() => nav("/vendor-signup")}>
