@@ -11,7 +11,7 @@ import {
   vendorForgotPasswordVerify,
 } from "../../../api/mutation";
 
-const VerifyForgetPasswordEmail = () => {
+const VendorVerifyForgetPasswordEmail = () => {
   const [showModal, setShowModal] = useState(false);
 
   const [timeLeft, setTimeLeft] = useState(60);
@@ -190,4 +190,4 @@ const VerifyForgetPasswordEmail = () => {
   );
 };
 
-export default VerifyForgetPasswordEmail;
+export default VendorVerifyForgetPasswordEmail;
