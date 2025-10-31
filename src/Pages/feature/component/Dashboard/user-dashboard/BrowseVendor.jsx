@@ -31,14 +31,14 @@ const BrowseVendor = () => {
         <p className="preview-title">nearby vendors</p>
     </div>
     <div className="order-holder">
-        <div className="order">
+        <div className="my-order">
             <div className='vendor-status'>
                 <p>QuickGas express  </p><span className='available'>available</span> <span className='verified'><MdVerified />verified </span>
             </div>
             <div className='info'>
             <small><GoStar className='star' />4.8</small>
             <small>2.1km</small>
-            <small><TbCurrencyNaira className='currency' /><span className='price'>1,500/kg</span></small>
+            <small><TbCurrencyNaira className='the-currency' /><span className='the-price'>1,500/kg</span></small>
             </div>
             <p>
                 <span><BiTimeFive /></span>
@@ -59,14 +59,14 @@ const BrowseVendor = () => {
         <p className="preview-title">nearby vendors</p>
     </div>
     <div className="order-holder">
-        <div className="order">
+        <div className="my-order">
             <div className='vendor-status'>
                 <p>QuickGas express  </p><span className='available'>available</span> <span className='verified'><MdVerified />verified </span>
             </div>
             <div className='info'>
             <small><GoStar className='star' />4.8</small>
             <small>2.1km</small>
-            <small><TbCurrencyNaira className='currency' /><span className='price'>1,500/kg</span></small>
+            <small><TbCurrencyNaira className='the-currency' /><span className='the-price'>1,500/kg</span></small>
             </div>
             <p>
                 <span><BiTimeFive /></span>
@@ -87,14 +87,14 @@ const BrowseVendor = () => {
         <p className="preview-title">nearby vendors</p>
     </div>
     <div className="order-holder">
-        <div className="order">
+        <div className="my-order">
             <div className='vendor-status'>
                 <p>QuickGas express  </p><span className='available'>available</span> <span className='verified'><MdVerified />verified </span>
             </div>
             <div className='info'>
             <small><GoStar className='star' />4.8</small>
             <small>2.1km</small>
-            <small><TbCurrencyNaira className='currency' /><span className='price'>1,500/kg</span></small>
+            <small><TbCurrencyNaira className='the-currency' /><span className='the-price'>1,500/kg</span></small>
             </div>
             <p>
                 <span><BiTimeFive /></span>

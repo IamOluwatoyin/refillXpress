@@ -39,7 +39,7 @@ const HomeContent = () => {
                 <button className="view-all">view all <BsArrowRight /></button>
             </div>
             <div className="order-holder">
-                <div className="order">
+                <div className="my-order">
                     <p>ORD-1024</p>
                     <p>LPG 12kg Quick gas express</p>
                     <small>August 30, 2025</small>
@@ -49,7 +49,7 @@ const HomeContent = () => {
                 </div>
             </div>
             <div className="order-holder">
-                <div className="order">
+                <div className="my-order">
                     <p>ORD-1023</p>
                     <p>LPG 12kg City gas.co</p>
                     <small>July 4, 2025</small>
@@ -65,14 +65,14 @@ const HomeContent = () => {
                 <button className="view-all">view all <BsArrowRight /></button>
             </div>
             <div className="order-holder">
-                <div className="order">
+                <div className="my-order">
                     <div className='vendor-status'>
                         <p>QuickGas express  </p><span className='available'>available</span> <span className='verified'><MdVerified />verified </span>
                     </div>
                     <div className='info'>
                     <small><GoStar className='star' />4.8</small>
                     <small>2.1km</small>
-                    <small><TbCurrencyNaira className='currency' /><span className='price'>1,500/kg</span></small>
+                    <small><TbCurrencyNaira className='the-currency' /><span className="the-price">1,500/kg</span></small>
                     </div>
                     <p>
                         <span><BiTimeFive /></span>
@@ -87,14 +87,14 @@ const HomeContent = () => {
                 </div>
             </div>
              <div className="order-holder">
-                <div className="order">
+                <div className="my-order">
                     <div className='vendor-status'>
                         <p>MaxGas supply  </p><span className='available'>available</span> <span className='verified'><MdVerified />verified </span>
                     </div>
                     <div className='info'>
                     <small><GoStar className='star' />4.6</small>
                     <small>2.1km</small>
-                    <small><TbCurrencyNaira className='currency' /><span className='price'>1,000/kg</span></small>
+                    <small><TbCurrencyNaira className='the-currency' /><span className='the-price'>1,000/kg</span></small>
                     </div>
                     <p>
                         <span><BiTimeFive /></span>
@@ -109,14 +109,14 @@ const HomeContent = () => {
                 </div>
             </div>
              <div className="order-holder">
-                <div className="order">
+                <div className="my-order">
                     <div className='vendor-status'>
                         <p>QuickGas express  </p><span className='available out-of-stock'>out of stock</span> 
                     </div>
                     <div className='info'>
                     <small><GoStar className='star' />4.8</small>
                     <small>2.1km</small>
-                    <small><TbCurrencyNaira className='currency' /><span className='price'>1,500/kg</span></small>
+                    <small><TbCurrencyNaira className='the-currency' /><span className='the-price'>1,500/kg</span></small>
                     </div>
                     <p>
                         <span><BiTimeFive /></span>

@@ -38,7 +38,7 @@ export const UserProvider = ({ children }) => {
                 toast.success(res.data.message)
                 nav("/userverify")
             } catch (err) {
-                toast.error(err.response.data.message)
+                toast.error(err.message)
                 console.log(err)
                 console.log(user)
 
@@ -61,6 +61,7 @@ export const UserProvider = ({ children }) => {
                     return  
                 }
         try {
+            setLoading(true)
             const res = await axios.post(`${BASEURL}/api/v1/user/login`, credentials, {
                 headers: {
                     "Content-Type": "application/json"
@@ -75,8 +76,10 @@ export const UserProvider = ({ children }) => {
             navigate("/userdashboard")
             
         } catch(err) {
-            console.error(err.message)
+            toast.error(err.message)
             throw err
+        } finally {
+            setLoading(false)   
         }
         }
         const logout = () => {  

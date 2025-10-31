@@ -1,16 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, } from 'react'
 import "../customer-signup/signup.css"
 import "./forgot.css"
 import { HiFire } from "react-icons/hi";
 import { BASEURL } from '../../../api/base';
 import { toast } from 'react-toastify';
 import { useNavigate, Link } from 'react-router';
+import SpinnerModal from '../../vendor-auth/spinner-modal';
 import axios from 'axios';
 
 const Forgot = () => {
-const nav = useNavigate()
+    const nav = useNavigate()
+    const [email, setEmail] = useState("")
+    const [loading, setLoading] = useState(false)
         const requestCode = async (e) => {
-            e.preventDefault()
+            e.preventDefault()  
            
             const savedUser = JSON.parse(localStorage.getItem("user"))
             if(!email) {
@@ -18,6 +21,7 @@ const nav = useNavigate()
                 return
             }
             try {
+                setLoading(true)
                 const res = await axios.post(`${BASEURL}/api/v1/user/forgot-password`, {
                     email: email
                 }, {
@@ -27,23 +31,26 @@ const nav = useNavigate()
                 toast.success("successful")
                 nav("/forgot-verify")
             } catch(err) {
-                
                 toast.error("failed, please try again" )
+            }  finally {
+                setLoading(false)
             }
         } 
 
-    const [email, setEmail] = useState("")
   return (
     <div className='forgot'>
-      <article className="article space">
-        <header className="header">
-        <h6 className="logo-heading">
-            <span className="fire">
-                <HiFire />
-            </span>
-            Refill<span className="logo-style">Xpress</span>
-        </h6>
-      </header>
+      {loading && <SpinnerModal />} 
+           <article className="article">
+                <header className="form-header">
+                    <div className="inner-header">
+                        <h4 className='logo-heading'>
+                    <span className='fire'>
+                        <HiFire /> 
+                    </span>
+                    Refill<span className='logo-style'>Xpress</span>
+                    </h4>
+                    </div>
+                </header>
       <form className="form">
         <div className="form-heading wrap">
             <h1>forgot password</h1>
@@ -62,7 +69,7 @@ const nav = useNavigate()
                 </div>
             </div>
             <div className='submit-section small'>
-                <button onClick={requestCode} className="submit">send verification code</button>
+                <button onClick={requestCode} className="submit">send code</button>
                 <p>Remember password? <Link className="link" to="/userlogin">sign in</Link></p>
             </div>
       </form>

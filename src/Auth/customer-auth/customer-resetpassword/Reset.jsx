@@ -8,7 +8,9 @@ import {BASEURL} from '../../../api/base';
 import { UserContext } from '../../../context/UserContext';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
+import SpinnerModal from '../../vendor-auth/spinner-modal';
 const Reset = () => {
+    const [loading, setLoading] = useState(false)
     const [show, setShow] = useState(false)
     const nav = useNavigate()
 const [form, setForm] = useState({
@@ -20,6 +22,7 @@ const handleRequest = async (e) => {
     e.preventDefault()
      const email = localStorage.getItem("email")
     try {
+        setLoading(true)
         const res = await axios.post(`${BASEURL}/api/v1/user/resetpassword`, {
             email,
              newPassword: form.newPassword,
@@ -33,22 +36,27 @@ const handleRequest = async (e) => {
         toast.success("successful")
         nav("/userlogin")
     } catch (err) {
-        toast.error(err.data)
+        toast.error(err.message)
         console.error(err)
-    }    
+    }    finally {
+        setLoading(false)
+    }
 }
 
 
     return (
         <div className='reset'>
-            <article className="article space">
-                <header className="header">
-                    <h4 className='logo-heading'>
+                         {loading && <SpinnerModal />} 
+           <article className="article">
+                <header className="form-header">
+                    <div className="inner-header">
+                        <h4 className='logo-heading'>
                     <span className='fire'>
                         <HiFire /> 
                     </span>
                     Refill<span className='logo-style'>Xpress</span>
-                    </h4>                
+                    </h4>
+                    </div>
                 </header>
                 <form className="form">
                     <div className="form-heading wrap">

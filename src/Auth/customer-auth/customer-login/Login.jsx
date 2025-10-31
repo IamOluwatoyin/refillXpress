@@ -21,16 +21,18 @@ const Login = () => {
     }
   return (
     <div className='login'>
-      <article className="article space">
-                     {loading && <SpinnerModal />} 
-        <header className="header">
-        <h6 className="logo-heading">
-            <span className="fire">
-                <HiFire />
-            </span>
-            Refill<span className="logo-style">Xpress</span>
-        </h6>
-      </header>
+      {loading && <SpinnerModal />} 
+           <article className="article">
+                <header className="form-header">
+                    <div className="inner-header">
+                        <h4 className='logo-heading'>
+                    <span className='fire'>
+                        <HiFire /> 
+                    </span>
+                    Refill<span className='logo-style'>Xpress</span>
+                    </h4>
+                    </div>
+                </header>
       <form className="form">
         <div className="form-heading wrap">
             <h1>welcome back</h1>
@@ -68,7 +70,7 @@ const Login = () => {
         </div>
             <div className='submit-section small'>
                 <button onClick={(e)=> login(e, formData, navigate)} className="submit">sign in</button>
-                <p>Don't have an account? <Link to="/usersignup" >sign up</Link></p>
+                <p>Don't have an account? <Link to="/usersignup" className='link' >sign up</Link></p>
             </div>
       </form>
       </article>
