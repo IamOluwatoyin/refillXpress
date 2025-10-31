@@ -14,6 +14,12 @@ import ProfileManagement from "../pages/feature/component/profile";
 import VerifyForgetPasswordEmail from "../auth/vendor-auth/vendor-forgot-password/vendor-verify-forgetpassword-email";
 import RiderSignup from "../auth/Rider/Rider-signup";
 import RiderLogin from "../auth/Rider/Rider-login";
+import Dashboard_layout from "../Components/layout/Dashboard_layout";
+import DashboardHome from "../Pages/Dashboard/DashboardHome";
+import RiderOrder from "../Pages/Dashboard/RiderOrder";
+import RiderEarnings from "../Pages/Dashboard/RiderEarnings";
+import RiderLeaderboard from "../Pages/Dashboard/RiderLeaderboard";
+import RiderAccount from "../Pages/Dashboard/RiderAccount";
 
 export const router = createBrowserRouter([
   {
@@ -70,6 +76,33 @@ export const router = createBrowserRouter([
       {
         path: "vendor-profile",
         element: <ProfileManagement />,
+      },
+    ],
+  },
+
+  {
+    path: "/rider-dashboard",
+    element: <Dashboard_layout />,
+    children: [
+      {
+        index: true,
+        element: <DashboardHome />,
+      },
+      {
+        path: "order",
+        element: <RiderOrder />,
+      },
+      {
+        path: "earnings",
+        element: <RiderEarnings />,
+      },
+      {
+        path: "leaderboard",
+        element: <RiderLeaderboard />,
+      },
+      {
+        path: "account",
+        element: <RiderAccount />,
       },
     ],
   },

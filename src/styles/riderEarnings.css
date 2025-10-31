@@ -1,0 +1,227 @@
+.rider_earnings_page {
+  width: 100%;
+  padding: 30px;
+}
+
+.page_title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  color: #333;
+}
+
+.page_subtitle {
+  color: #777;
+  margin-top: 5px;
+  margin-bottom: 25px;
+}
+
+.section_header {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 30px 0 15px 0;
+  color: #444;
+}
+
+.earnings_grid {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.earnings_card {
+  flex: 1;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.earnings_card .card_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.earnings_card .card_icon {
+  padding: 0;
+  border-radius: 0;
+}
+
+.earnings_card .card_value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 5px;
+  order: 3;
+}
+
+.earnings_card .card_title {
+  display: block;
+  font-size: 0.9rem;
+  color: #555;
+  font-weight: 500;
+  margin-top: auto;
+  order: 2;
+}
+
+.earnings_card .card_secondary {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-left: auto;
+  position: relative;
+  top: -5px;
+}
+.earnings_card .card_secondary::before {
+  content: "\2197";
+  font-size: 1.2rem;
+  position: relative;
+  top: 2px;
+}
+
+.segmented_tabs_wrapper {
+  display: flex;
+  width: 350px;
+  height: 45px;
+  border-radius: 8px;
+  background-color: #e0e0e0;
+  overflow: hidden;
+  padding: 3px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  margin-bottom: 25px;
+}
+
+.segmented_tab {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #777;
+  transition: all 0.2s ease-in-out;
+  padding: 0;
+}
+
+.active_segment {
+  background-color: white;
+  border-radius: 6px;
+  color: #333;
+  font-weight: 600;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.delivery_item {
+  background-color: white;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 10px;
+  border: 1px solid #eee;
+}
+
+.delivery_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dashed #eee;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.delivery_id {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.status_badge {
+  font-size: 0.75rem;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  color: white;
+}
+
+.status_badge.paid {
+  background-color: #4caf50;
+}
+.status_badge.pending {
+  background-color: #ff9800;
+}
+
+.delivery_details {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.delivery_meta p {
+  margin: 5px 0;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.customer_info {
+  font-weight: 600;
+  color: #333 !important;
+}
+.distance_info {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #777 !important;
+}
+
+.delivery_financials {
+  text-align: right;
+}
+
+.total_earning {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
+
+.base_fare {
+  font-size: 0.8rem;
+  color: #777;
+  margin: 0;
+}
+
+.payout_schedule_card {
+  background-color: #e8f5e9;
+  border-radius: 8px;
+  padding: 15px;
+  border-left: 5px solid #4caf50;
+  color: #333;
+}
+
+.payout_header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #4caf50;
+}
+
+.payout_details {
+  font-size: 0.9rem;
+  margin: 5px 0;
+  padding-left: 30px;
+}
+
+.expected_amount {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #4caf50;
+  background-color: #dcedc8;
+  width: fit-content;
+  padding: 2px 5px;
+  border-radius: 4px;
+  margin-top: 10px;
+  margin-left: 30px;
+}

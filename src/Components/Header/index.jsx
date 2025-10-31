@@ -2,6 +2,7 @@ import styled from "styled-components";
 import logo from "../../assets/logo.svg";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { Link } from "react-scroll";
 
 const Header = () => {
   const [loginDrop, setDrop] = useState(false);
@@ -31,9 +32,15 @@ const Header = () => {
         </LogoHolder>
         <MidContainer>
           <ul>
-            <li>Home</li>
-            <li>How it works</li>
-            <li>Contant Us</li>
+            <SmoothLink to="home" smooth={true} duration={600}>
+              Home
+            </SmoothLink>
+            <SmoothLink to="how" smooth={true} duration={600}>
+              How it works
+            </SmoothLink>
+            <SmoothLink to="contact" smooth={true} duration={600}>
+              Contact Us
+            </SmoothLink>
           </ul>
         </MidContainer>
         <ButtonHolder>
@@ -119,11 +126,21 @@ const LogoHolder = styled.div`
   }
 `;
 
+const SmoothLink = styled(Link)`
+  &:hover {
+    color: #2887db;
+  }
+`;
+
 const MidContainer = styled.div`
   ul {
     display: flex;
     list-style: none;
     gap: 35px;
+    cursor: pointer;
+
+    li {
+    }
   }
 `;
 
