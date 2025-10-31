@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { loginVendor } from "../../../api/mutation";
 
-const Vendorlogin = () => {
+const VendorLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -192,4 +192,4 @@ const Vendorlogin = () => {
   );
 };
 
-export default Vendorlogin;
+export default VendorLogin;
