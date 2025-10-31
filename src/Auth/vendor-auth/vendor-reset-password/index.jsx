@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { vendorResetPassword } from "../../../api/mutation";
 import "./vendor-reset-password.css";
 
-const VendorResetPassword = () => {
+const ResetPasswordVendor = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [cshowPassword, csetShowPassword] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
@@ -212,4 +212,4 @@ const VendorResetPassword = () => {
   );
 };
 
-export default VendorResetPassword;
+export default ResetPasswordVendor;

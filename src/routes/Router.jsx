@@ -8,7 +8,6 @@ import Reset from "../Auth/customer-auth/customer-resetpassword/Reset";
 import OtpForgot from "../Auth/customer-auth/customer-forgotverify/OtpForgot";
 import Forgot from "../Auth/customer-auth/customer-forgotpassword/Forgot";
 import HomePage from "../Pages/Home/HomePage";
-import VendorResetPassword from "../auth/vendor-auth/vendor-reset-password";
 import DashboardLayout from "../Pages/feature/Dashboard-Layout";
 import OrderManagement from "../Pages/feature/component/order";
 import ProfileManagement from "../Pages/feature/component/profile";
@@ -33,7 +32,7 @@ import VendorLogin from "../auth/vendor-auth/vendor-login";
 import VendorVerify from "../auth/vendor-auth/verify-email";
 import VendorForgotPassword from "../auth/vendor-auth/vendor-forgot-password";
 import VendorDashboard from "../Pages/feature/component/Dashboard/Vendor-Dashboard";
-
+import ResetPasswordVendor from "../auth/vendor-auth/vendor-reset-password"
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -107,7 +106,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "vendor-reset-password",
-    element: <VendorResetPassword />,
+    element: <ResetPasswordVendor />,
   },
   {
     path: "vendor-kyc",
