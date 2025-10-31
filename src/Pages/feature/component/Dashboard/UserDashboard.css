@@ -12,7 +12,7 @@
     margin-bottom: 0.5rem;
     display: grid;
     background-color: #00000005;
-    grid-template-columns: 250px 1fr;
+    grid-template-columns: 300px 1fr;
     grid-template-rows: 50px max-content;   
     gap: 3rem;
     grid-template-areas: 
@@ -82,23 +82,26 @@
     top: 6rem;
 }
 .navigation {
-    width: 95%;
+    width: 15rem;
     height: 80vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: flex-start;
-    padding: 2rem;
+    align-items: center;
+    gap: 1rem;
     margin-top: 0.5rem;
-    margin-left: 1rem;
+    margin-left: 2rem;
     border-radius: 0.9rem;
     background-color: #fff;
 }
 .navigation .nav {
-    width: max-content;
+    width: 80%;
+    padding: 0.2rem;
+    box-sizing: border-box;
     display: flex;
+    border-radius: 0.5rem;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem;
     margin-block: 0.5rem;
     color: #00000098;
     text-transform: capitalize;
@@ -113,4 +116,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.active {
+    background-color: #ff7300;
+    color: #ff4d00;
+    span {
+        color: #fff;    
+    }
+    .nav-link {
+    font-size: 2rem;
+    color: #ff4d00;
+    
+}
+
+    
 }

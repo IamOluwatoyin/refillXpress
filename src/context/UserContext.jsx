@@ -38,7 +38,7 @@ export const UserProvider = ({ children }) => {
                 toast.success(res.data.message)
                 nav("/userverify")
             } catch (err) {
-                toast.error(err.response.data.message)
+                toast.error(err.message)
                 console.log(err)
                 console.log(user)
 

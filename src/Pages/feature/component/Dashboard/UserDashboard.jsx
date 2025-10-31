@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { HiFire } from 'react-icons/hi'
 import { Outlet, useNavigate, NavLink } from 'react-router-dom'
 import { FiUser } from "react-icons/fi";
@@ -8,6 +8,12 @@ import { BiHome } from "react-icons/bi";
 import { GrLocation } from "react-icons/gr";
 import "./UserDashboard.css"
 const UserDashboard = () => {
+  const [active, setActive] = useState("home")
+  const setter = (next) => {
+    setActive("")
+    setActive(next)
+  }
+  console.log(active)
   const nav = useNavigate()
   return (
     <div className='dashboard'>
@@ -31,11 +37,11 @@ const UserDashboard = () => {
         </header>
         <div className="sidebar">
           <div className="navigation">
-            <NavLink className="nav"><BiHome className='nav-link'/><span>home</span></NavLink >
-            <NavLink className="nav" to="browsevendors"><GrLocation className='nav-link'/><span>browse vendors</span></NavLink>
-            <NavLink className="nav" to="myorders"><FiPackage className='nav-link'/><span>my orders</span></NavLink>
-            <NavLink className="nav"><GoStar className='nav-link'/><span>reviews</span></NavLink>
-            <NavLink className="nav"><FiUser /><span>account</span></NavLink>
+            <NavLink  className={active === "home"? `nav active` : "nav"}><BiHome className='nav-link'/><span>home</span></NavLink >
+            <NavLink onClick={()=> setter("browse")} className={active === "browse"? `nav active` : "nav"} to="browsevendors"><GrLocation className='nav-link'/><span>browse vendors</span></NavLink>
+            <NavLink onClick={()=> setter("orders")} className={active === "orders"? `nav active` : "nav"} to="myorders"><FiPackage className='nav-link'/><span>my orders</span></NavLink>
+            <nav onClick={()=> setter("reviews")} className={active === "reviews"? `nav active` : "nav"}><GoStar className='nav-link'/><span>reviews</span></nav>
+            <nav onClick={()=> setter("account")} className={active === "account"? `nav active` : "nav"}><FiUser /><span>account</span></nav>
           </div>
         </div>
         <div className="main">

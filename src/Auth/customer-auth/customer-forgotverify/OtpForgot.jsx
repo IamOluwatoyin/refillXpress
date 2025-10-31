@@ -111,7 +111,7 @@ const formatter = (time) => {
                 </header>
                 <form className="form">
                     <div className="form-heading">
-                        <p>{formatter(timer)}</p>
+                       
                         <h1>verify account</h1>
                         <p>A verification code has been sent to your email
                         address.Please enter it to continue</p>
