@@ -12,7 +12,7 @@ import { GoPackage } from "react-icons/go";
 import { IoIosArrowForward } from "react-icons/io";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { FaStar, FaRegStar } from "react-icons/fa";
-import ProgressBar from "../../Progress-bar";
+import ProgressBar from "../../ProgressBar";
 const AnalyticsManagement = () => {
   return (
     <div className="AnalyticsWrapper">
