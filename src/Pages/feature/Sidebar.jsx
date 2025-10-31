@@ -24,7 +24,6 @@ const Sidebar = () => {
   return (
     <div className="sidebarWrapper">
       <div className="sidebarContainer">
-        {/* <div style={{ background: "red", width: "100%", height: "70px" }}></div> */}
         <section className="vendor-icon-holder">
           <div className="vendor-icon-wrapper">
             <img src="/Images/Container.svg" />
@@ -45,7 +44,7 @@ const Sidebar = () => {
 
         <span
           onClick={() => navigate("/vendor-dashboard")}
-          className={`dashboard ${isDashboardActive ? "active" : ""}`}
+          className={`dashboards ${isDashboardActive ? "active" : ""}`}
         >
           <MdDashboard style={{ color: "#FF7F11", fontSize: "25px" }} />
           <p>Dashboard</p>
@@ -53,13 +52,13 @@ const Sidebar = () => {
 
         <span
           onClick={() => navigate("/vendor-dashboard/vendor-order")}
-          className={`order ${isOrderActive ? "active" : ""}`}
+          className={`orders ${isOrderActive ? "active" : ""}`}
         >
           <GoPackage style={{ fontSize: "25px" }} />
           <sub>
             Orders
-            <span className="counter">
-              <p>0</p>
+            <span className="profileNotification">
+              0
             </span>
           </sub>
         </span>
@@ -75,7 +74,7 @@ const Sidebar = () => {
 
         <span
           onClick={() => navigate("/vendor-dashboard/vendor-profile")}
-          className={`profile ${
+          className={`profiles ${
             currentPath === "/vendor-dashboard/vendor-profile" ? "active" : ""
           }`}
         >

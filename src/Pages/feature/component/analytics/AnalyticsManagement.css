@@ -7,7 +7,10 @@
   padding: 20px 40px;
   font-family: "Inter", sans-serif;
 }
-
+.AnalyticsWrapperHeader{
+  font-size: 30px;
+  padding-bottom: 10px;
+}
 .summary-section-analysis {
   display: flex;
   flex-wrap: wrap;
