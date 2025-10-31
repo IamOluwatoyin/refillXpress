@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import SpinnerModal from "../spinner-modal";
 import { useForm } from "react-hook-form";
 import { vendorForgotPassword } from "../../../api/mutation";
-const ForgotPassword = () => {
+const VendorForgotPassword = () => {
   const [showModal, setShowModal] = useState(false);
   const {
     register,
@@ -48,7 +48,7 @@ const ForgotPassword = () => {
     <div className="form-wrapperpassword">
       <div className="form-containerpassword">
         <header>
-          <img src="/src/assets/logo.svg" alt="logo" className="image" />
+          <img src="/src/assets/logo.svg" alt="logo" className="image" onClick={()=>navigate("/")} />
 
           <h1>
             Refill<span>Xpress</span>
@@ -143,4 +143,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default VendorForgotPassword;

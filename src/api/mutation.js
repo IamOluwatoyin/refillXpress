@@ -15,3 +15,4 @@ export const vendorForgotPasswordVerify = (data) => api.post("/vendor/verify-for
 export const vendorForgotPasswordOtpResend  = (data) => api.post("/vendor/vendorForgotPasswordOtpResend",data)
 
 export const vendorResetPassword = (data) => api.post("/vendor/reset-password",data)
+
