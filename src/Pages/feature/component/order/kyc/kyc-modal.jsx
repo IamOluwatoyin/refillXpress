@@ -1,6 +1,6 @@
 import React from "react";
 import { IoClose } from "react-icons/io5";
-import "./ModalKyc.css";
+import "./ModalKYC.css";
 
 const ModalKyc = ({ onClose }) => {
   return (
