@@ -9,7 +9,7 @@ const ProfileManagement = () => {
 
   return (
     <div className="profileWrapper">
-      <div className="header">
+      <div className="profileheader">
         <div>
          <h2>Profile & Verification</h2>
           <p>Manage your business profile and verification documents</p>

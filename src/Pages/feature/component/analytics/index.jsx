@@ -1,12 +1,5 @@
 import React from "react";
 import "./AnalyticsManagement.css";
-import {
-  FaClock,
-  FaCheckCircle,
-  FaMapMarkerAlt,
-  FaCalendarAlt,
-  FaPhoneAlt,
-} from "react-icons/fa";
 import { FaNairaSign } from "react-icons/fa6";
 import { GoPackage } from "react-icons/go";
 import { IoIosArrowForward } from "react-icons/io";
@@ -16,7 +9,8 @@ import ProgressBar from "../../ProgressBar";
 const AnalyticsManagement = () => {
   return (
     <div className="AnalyticsWrapper">
-      Analytics
+      <p className="AnalyticsWrapperHeader"> Analytics</p>
+     
       <div className="summary-section-analysis">
         <div className="summary-card-analysis">
           <div className="icon-analysis-holder">
