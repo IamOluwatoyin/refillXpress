@@ -11,7 +11,7 @@ import HomePage from "../Pages/Home/HomePage";
 import DashboardLayout from "../Pages/feature/Dashboard-Layout";
 import OrderManagement from "../Pages/feature/component/order";
 import ProfileManagement from "../Pages/feature/component/profile";
-import VerifyForgetPasswordEmail from "../auth/vendor-auth/vendor-forgot-password/vendor-verify-forgetpassword-email";
+import VerifyForgetPasswordEmail from "../auth/vendor-auth/vendor-forgot-password/VendorVerifyForgetPasswordEmail";
 import AnalyticsManagement from "../Pages/feature/component/analytics";
 import SettingsMangement from "../Pages/feature/component/settings";
 import RiderSignup from "../auth/Rider/Rider-signup";
