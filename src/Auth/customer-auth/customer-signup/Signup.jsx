@@ -4,10 +4,11 @@ import { HiFire } from "react-icons/hi";
 import  { BsEye, BsEyeSlash } from 'react-icons/bs';
 import { UserContext } from '../../../context/UserContext';
 import { useNavigate, Link } from 'react-router-dom';
-
+import SpinnerModal from '../../vendor-auth/spinner-modal';
 const Signup = () => {
     const nav = useNavigate()
-    // const {user, signup } = useContext(UserContext)
+    const { loading, setLoading } = useContext(UserContext)
+    const {user, signup } = useContext(UserContext)
     const [type, setType] = useState("password")
     const [show, setShow] = useState(false)
     const [confirm, setConfirm] = useState("")
@@ -25,14 +26,17 @@ const Signup = () => {
     
     return (
         <div className='signup'>
+             {loading && <SpinnerModal />} 
            <article className="article">
-                <header className="header">
-                    <h4 className='logo-heading'>
+                <header className="form-header">
+                    <div className="inner-header">
+                        <h4 className='logo-heading'>
                     <span className='fire'>
                         <HiFire /> 
                     </span>
                     Refill<span className='logo-style'>Xpress</span>
                     </h4>
+                    </div>
                 </header>
                 <form className="form">
                     <div className="form-heading">

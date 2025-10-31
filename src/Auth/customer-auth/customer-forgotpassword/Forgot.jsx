@@ -11,14 +11,19 @@ const Forgot = () => {
 const nav = useNavigate()
         const requestCode = async (e) => {
             e.preventDefault()
+           
             const savedUser = JSON.parse(localStorage.getItem("user"))
-            console.log(savedUser.email)
+            if(!email) {
+                toast.error("please input a valid email")
+                return
+            }
             try {
                 const res = await axios.post(`${BASEURL}/api/v1/user/forgot-password`, {
-                    email: savedUser.email
+                    email: email
                 }, {
                     headers: {"Content-Type": "application/json"}
                 })
+                JSON.stringify(localStorage.setItem("email", email))
                 toast.success("successful")
                 nav("/forgot-verify")
             } catch(err) {

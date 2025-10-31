@@ -4,13 +4,13 @@ import { router } from './routes/Router'
 import VendorSignup from './auth/vendor-auth/vendor-signup/vendor-signup'
 import vendorlogin from './auth/vendor-auth/vendor-login/vendor-login'
 import Vendorlogin from './auth/vendor-auth/vendor-login/vendor-login'
+import { UserProvider } from './context/UserContext'
 const App = () => {
   return (
     <div>
-     <RouterProvider router={router}/>
-     {/* <VendorSignup/> */}
-    
-       {/* <Vendorlogin/> */}
+    <UserProvider>
+      <RouterProvider router={router}/>
+    </UserProvider>
     </div>
   )
 }

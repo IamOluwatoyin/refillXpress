@@ -9,6 +9,7 @@ import { UserContext } from '../../../context/UserContext';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
 const Reset = () => {
+    const [show, setShow] = useState(false)
     const nav = useNavigate()
 const [form, setForm] = useState({
     newPassword: "",
@@ -17,10 +18,10 @@ const [form, setForm] = useState({
 
 const handleRequest = async (e) => {
     e.preventDefault()
-     const savedUser = JSON.parse(localStorage.getItem("user"))
+     const email = localStorage.getItem("email")
     try {
         const res = await axios.post(`${BASEURL}/api/v1/user/resetpassword`, {
-            email: savedUser.email,
+            email,
              newPassword: form.newPassword,
         },
             {

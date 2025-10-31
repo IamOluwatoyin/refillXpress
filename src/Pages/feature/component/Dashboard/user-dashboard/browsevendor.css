@@ -1,0 +1,40 @@
+.browsevendor {
+    width: 100%;
+      height: max-content;
+    display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: 1rem;
+      h3 {
+        margin-block: 1rem;
+        font-size: 2rem;
+        text-transform: capitalize;
+      }
+}
+.search-bar {
+    width: 94%;
+    height: 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.search {
+    width: 75%;
+    padding: 0.6rem;
+    background-color: #eee;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+}
+.search-drop {
+    width: 20%;
+    padding: 0.6rem;
+    background-color: #eee;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}

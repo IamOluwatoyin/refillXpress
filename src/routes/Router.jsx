@@ -20,6 +20,10 @@ import ProfileManagement from "../pages/feature/component/profile";
 import VerifyForgetPasswordEmail from "../auth/vendor-auth/vendor-forgot-password/vendor-verify-forgetpassword-email";
 import RiderSignup from "../auth/Rider/Rider-signup";
 import RiderLogin from "../auth/Rider/Rider-login";
+import UserDashboard from "../Pages/feature/component/Dashboard/UserDashboard";
+import HomeContent from "../Pages/feature/component/Dashboard/user-dashboard/HomeContent";
+import BrowseVendor from "../Pages/feature/component/Dashboard/user-dashboard/BrowseVendor";
+import MyOrders from "../Pages/feature/component/Dashboard/user-dashboard/MyOrders";
 
 export const router = createBrowserRouter([
   {
@@ -31,8 +35,24 @@ export const router = createBrowserRouter([
     ),
   },
   {
-    path: "/",
-    element: <HomePage />,
+    path: "userdashboard",
+    element: 
+      <UserDashboard />,
+      children: [
+        {
+          index: true,
+          element: <HomeContent />
+          },
+          {
+          path: "browsevendors",
+          element: <BrowseVendor /> 
+        },
+        {
+          path: "myorders",
+          element: <MyOrders /> 
+        },
+      ]
+    
   },
   {
     path: "userverify",

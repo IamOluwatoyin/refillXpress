@@ -1,11 +1,9 @@
 import { createContext, useState } from "react";
-export const UserContext =  createContext()
 import { BASEURL } from "../api/base";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-
-
+export const UserContext =  createContext()
 export const UserProvider = ({ children }) => {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
@@ -14,6 +12,7 @@ export const UserProvider = ({ children }) => {
 
         const signup = async (e, FormData, confirm, nav) => {
                 e.preventDefault()
+                setLoading(true)
                 if (!/\S+@\S+\.\S+/.test(FormData.email)) {
                 toast.error("Please enter a valid email address.");    
                 }
@@ -43,6 +42,8 @@ export const UserProvider = ({ children }) => {
                 console.log(err)
                 console.log(user)
 
+            } finally {
+                setLoading(false)
             }
         }
 
@@ -51,8 +52,7 @@ export const UserProvider = ({ children }) => {
 
     const login = async (e, credentials, navigate) => {
                 e.preventDefault()
-                const existing = JSON.parse(localStorage.getItem("user"))
-                if (!existing.email) {
+                if (!credentials.email) {
                 toast.error("Please enter a valid email address."); 
                 return   
                 }
@@ -72,7 +72,7 @@ export const UserProvider = ({ children }) => {
             setToken(token);
             localStorage.setItem("user", JSON.stringify(userData));
             localStorage.setItem("token", token);
-            navigate("/homepage")
+            navigate("/userdashboard")
             
         } catch(err) {
             console.error(err.message)
@@ -88,7 +88,7 @@ export const UserProvider = ({ children }) => {
     
     
     return (
-        <UserContext.Provider value={{user, setUser, signup, login, token, logout}}>
+        <UserContext.Provider value={{user, setUser, signup, login, token, logout, loading, setLoading}}>
             {children}
         </UserContext.Provider>
     )

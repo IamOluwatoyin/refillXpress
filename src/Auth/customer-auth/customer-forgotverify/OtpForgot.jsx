@@ -33,12 +33,12 @@ const handleSend = async (e) => {
         toast.error("incomplete digits") 
         return
     }
-    const savedUser = JSON.parse(localStorage.getItem("user"))
-    
+    const savedUser = localStorage.getItem("email")
+    console.log(savedUser)
     try {
         const res = await axios.post(`${BASEURL}/api/v1/user/verify-forgot-password-otp`, 
             {
-                email: savedUser.email,
+                email: savedUser,
                 otp: joined
             }, 
             {
@@ -58,8 +58,7 @@ const handleResend = async (e) => {
     e.preventDefault()
     setTimer(60)
     toast.info("Verification code resent!");
-    const savedUser = JSON.parse(localStorage.getItem("user"))
-    const { email } = savedUser
+    const email = localStorage.getItem("email")
 
      try {
             const res = await axios.post(`${BASEURL}/api/v1/user/forgot-password/resend`, {

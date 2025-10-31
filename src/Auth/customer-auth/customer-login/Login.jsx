@@ -5,11 +5,11 @@ import { BsEye, BsEyeSlash } from "react-icons/bs"
 import { HiFire } from "react-icons/hi";
 import { UserContext } from '../../../context/UserContext';
 import { Link, useNavigate } from 'react-router-dom';
+import SpinnerModal from '../../vendor-auth/spinner-modal';
 
 
 const Login = () => {
-    // const { login } = useContext(UserContext)
-    // const {token} = useContext(UserContext)
+    const { login, loading, setLoading } = useContext(UserContext)
     const navigate = useNavigate()
     const [show, setShow] = useState(false)
     const [formData, setFormData] = useState({
@@ -22,6 +22,7 @@ const Login = () => {
   return (
     <div className='login'>
       <article className="article space">
+                     {loading && <SpinnerModal />} 
         <header className="header">
         <h6 className="logo-heading">
             <span className="fire">

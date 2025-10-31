@@ -80,7 +80,7 @@ console.log("User", savedUser)
 
         try {
             const res = await axios.post(`${BASEURL}/api/v1/user/resend-otp`, {
-                email: savedUser.data.email,
+                email: savedUser.email,
             }, {
                 headers: {"Content-Type": "application/json"}
             })
@@ -125,7 +125,7 @@ console.log("User", savedUser)
   return (
     <div className='verify'>
       <article className="article">
-        <header className="header">
+        <header className="form-header">
             <h6 className='logo-heading'>
                 <span className='fire'>
                     <HiFire /> 
