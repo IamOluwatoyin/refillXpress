@@ -1,9 +1,21 @@
 import React from 'react'
+import "./Dashboard-Header.css"
+import { useNavigate } from 'react-router'
+
 
 const DashboardHeader = () => {
+  const nav = useNavigate()
   return (
-    <div>
-      This is the header dashboard 
+    <div className='dashboard-wrapper'>
+      <div className='header-wrapper'>
+        <header className='header-container'>
+       <img src="/Images/logo.svg"className='imgLogo'onClick={()=>nav("/")}/>
+       <h2>
+              Refill<span>Xpress</span>
+            </h2>
+      </header>
+      </div>
+
     </div>
   )
 }

@@ -18,8 +18,11 @@ import DashboardLayout from "../pages/feature/Dashboard-Layout";
 import OrderManagement from "../pages/feature/component/order";
 import ProfileManagement from "../pages/feature/component/profile";
 import VerifyForgetPasswordEmail from "../auth/vendor-auth/vendor-forgot-password/vendor-verify-forgetpassword-email";
+import AnalyticsManagement from "../pages/feature/component/analytics";
+import SettingsMangement from "../pages/feature/component/settings";
 import RiderSignup from "../auth/Rider/Rider-signup";
 import RiderLogin from "../auth/Rider/Rider-login";
+import KYC from "../pages/feature/component/order/kyc";
 import UserDashboard from "../Pages/feature/component/Dashboard/UserDashboard";
 import HomeContent from "../Pages/feature/component/Dashboard/user-dashboard/HomeContent";
 import BrowseVendor from "../Pages/feature/component/Dashboard/user-dashboard/BrowseVendor";
@@ -106,6 +109,10 @@ export const router = createBrowserRouter([
     path: "vendor-reset-password",
     element: <VendorResetPassword />,
   },
+  {
+    path: "vendor-kyc",
+    element: <KYC />,
+  },
 
   {
     path: "vendor-dashboard",
@@ -121,8 +128,19 @@ export const router = createBrowserRouter([
         element: <OrderManagement />,
       },
       {
+        path: "vendor-analytics",
+        element: <AnalyticsManagement />,
+      },
+      {
         path: "vendor-profile",
         element: <ProfileManagement />,
+        // children: [
+
+        // ],
+      },
+      {
+        path: "vendor-settings",
+        element: <SettingsMangement />,
       },
     ],
   },

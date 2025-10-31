@@ -99,7 +99,7 @@ const VerifyForgetPasswordEmail = () => {
       <div className="form-wrapper-verify-forgetpassword">
         <div className="form-container-verify-forgetpassword">
           <header>
-            <img src="/src/assets/logo.svg" alt="logo" className="image" />
+            <img src="/src/assets/logo.svg" alt="logo" className="image" onClick={()=>navigate("/")} />
             <h1>
               Refill<span>Xpress</span>
             </h1>
@@ -150,7 +150,7 @@ const VerifyForgetPasswordEmail = () => {
 
                   <div className="btnHolder">
                     <button
-                      className="btn-forgetpassword"
+                      className="btn-verify-forgetpassword"
                       type="submit"
                       disabled={buttonDisabled || showModal}
                     >
