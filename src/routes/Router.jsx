@@ -1,19 +1,19 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../routes/Layout";
 import RouteErr from "./RouteErr";
-import Signup from "../Auth/customer-auth/customer-signup/Signup"
-import Login from "../Auth/customer-auth/customer-login/Login"
+import Signup from "../Auth/customer-auth/customer-signup/Signup";
+import Login from "../Auth/customer-auth/customer-login/Login";
 import OtpSignup from "../Auth/customer-auth/customer-signupverify/OtpSignup";
 import Reset from "../Auth/customer-auth/customer-resetpassword/Reset";
 import OtpForgot from "../Auth/customer-auth/customer-forgotverify/OtpForgot";
 import Forgot from "../Auth/customer-auth/customer-forgotpassword/Forgot";
-import VendorSignup from "../auth/vendor-auth/vendor-signup/vendor-signup";
-import Vendorlogin from "../auth/vendor-auth/vendor-login/vendor-login";
+import VendorSignup from "../auth/vendor-auth/vendor-signup";
+import Vendorlogin from "../auth/vendor-auth/vendor-login";
 import ForgotPassword from "../auth/vendor-auth/vendor-forgot-password/forgot-password";
 import VendorDashboard from "../pages/feature/component/Dashboard/VendorDashboard";
 import HomePage from "../pages/Home/HomePage";
 import Verify from "../auth/vendor-auth/verify-email/verify-email";
-import VendorResetPassword from "../auth/vendor-auth/vendor-reset-password/vendor-reset-password";
+import VendorResetPassword from "../auth/vendor-auth/vendor-reset-password";
 import DashboardLayout from "../pages/feature/Dashboard-Layout";
 import OrderManagement from "../pages/feature/component/order";
 import ProfileManagement from "../pages/feature/component/profile";
@@ -42,23 +42,21 @@ export const router = createBrowserRouter([
   },
   {
     path: "userdashboard",
-    element: 
-      <UserDashboard />,
-      children: [
-        {
-          index: true,
-          element: <HomeContent />
-          },
-          {
-          path: "browsevendors",
-          element: <BrowseVendor /> 
-        },
-        {
-          path: "myorders",
-          element: <MyOrders /> 
-        },
-      ]
-    
+    element: <UserDashboard />,
+    children: [
+      {
+        index: true,
+        element: <HomeContent />,
+      },
+      {
+        path: "browsevendors",
+        element: <BrowseVendor />,
+      },
+      {
+        path: "myorders",
+        element: <MyOrders />,
+      },
+    ],
   },
   {
     path: "userverify",
@@ -77,11 +75,11 @@ export const router = createBrowserRouter([
     element: <OtpForgot />,
   },
   {
-     path: "userreset",
+    path: "userreset",
     element: <Reset />,
   },
   {
-     path: "usersignup",
+    path: "usersignup",
     element: <Signup />,
   },
   {
