@@ -11,11 +11,11 @@ import HomePage from "../Pages/Home/HomePage";
 import DashboardLayout from "../Pages/feature/Dashboard-Layout";
 import OrderManagement from "../Pages/feature/component/order";
 import ProfileManagement from "../Pages/feature/component/profile";
-import VerifyForgetPasswordEmail from "../auth/vendor-auth/vendor-forgot-password/VendorVerifyForgetPasswordEmail";
+import VerifyForgetPasswordEmail from "../Auth/vendor-auth/vendor-forgot-password/VendorVerifyForgetPasswordEmail";
 import AnalyticsManagement from "../Pages/feature/component/analytics";
 import SettingsMangement from "../Pages/feature/component/settings";
-import RiderSignup from "../auth/Rider/Rider-signup";
-import RiderLogin from "../auth/Rider/Rider-login";
+import RiderSignup from "../Auth/Rider/Rider-signup";
+import RiderLogin from "../Auth/Rider/Rider-login";
 import KYC from "../Pages/feature/component/order/kyc";
 import UserDashboard from "../Pages/feature/component/Dashboard/UserDashboard";
 import HomeContent from "../Pages/feature/component/Dashboard/user-dashboard/HomeContent";
@@ -27,12 +27,12 @@ import RiderOrder from "../Pages/Dashboard/RiderOrder";
 import RiderEarnings from "../Pages/Dashboard/RiderEarnings";
 import RiderLeaderboard from "../Pages/Dashboard/RiderLeaderboard";
 import RiderAccount from "../Pages/Dashboard/RiderAccount";
-import VendorSignup from "../auth/vendor-auth/vendor-signup";
-import VendorLogin from "../auth/vendor-auth/vendor-login";
-import VendorVerify from "../auth/vendor-auth/verify-email";
-import VendorForgotPassword from "../auth/vendor-auth/vendor-forgot-password";
+import VendorSignup from "../Auth/vendor-auth/vendor-signup";
+import VendorLogin from "../Auth/vendor-auth/vendor-login";
+import VendorVerify from "../Auth/vendor-auth/verify-email";
+import VendorForgotPassword from "../Auth/vendor-auth/vendor-forgot-password";
 import VendorDashboard from "../Pages/feature/component/Dashboard/Vendor-Dashboard";
-import ResetPasswordVendor from "../auth/vendor-auth/vendor-reset-password"
+import ResetPasswordVendor from "../Auth/vendor-auth/vendor-reset-password"
 export const router = createBrowserRouter([
   {
     path: "/",
