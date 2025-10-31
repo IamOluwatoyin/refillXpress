@@ -7,7 +7,6 @@ import OtpSignup from "../Auth/customer-auth/customer-signupverify/OtpSignup";
 import Reset from "../Auth/customer-auth/customer-resetpassword/Reset";
 import OtpForgot from "../Auth/customer-auth/customer-forgotverify/OtpForgot";
 import Forgot from "../Auth/customer-auth/customer-forgotpassword/Forgot";
-import VendorSignup from "../auth/vendor-auth/vendor-signup";
 import Vendorlogin from "../auth/vendor-auth/vendor-login";
 import ForgotPassword from "../auth/vendor-auth/vendor-forgot-password/forgot-password";
 import VendorDashboard from "../pages/feature/component/Dashboard/VendorDashboard";
@@ -33,6 +32,7 @@ import RiderOrder from "../Pages/Dashboard/RiderOrder";
 import RiderEarnings from "../Pages/Dashboard/RiderEarnings";
 import RiderLeaderboard from "../Pages/Dashboard/RiderLeaderboard";
 import RiderAccount from "../Pages/Dashboard/RiderAccount";
+import VendorSignup from "../auth/vendor-auth/vendor-signup";
 
 export const router = createBrowserRouter([
   {
@@ -87,7 +87,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "vendor-signup",
-    element: <VendorSignup />,
+    element: < VendorSignup/>,
   },
   {
     path: "vendor-login",
