@@ -16,6 +16,7 @@ import AnalyticsManagement from "../pages/feature/component/analytics";
 import SettingsMangement from "../pages/feature/component/settings";
 import RiderSignup from "../auth/Rider/Rider-signup";
 import RiderLogin from "../auth/Rider/Rider-login";
+import KYC from "../pages/feature/component/order/kyc";
 
 export const router = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ export const router = createBrowserRouter([
     path: "vendor-reset-password",
     element: <VendorResetPassword />,
   },
+  {
+    path: "vendor-kyc",
+    element: <KYC />,
+  },
 
   {
     path: "vendor-dashboard",
@@ -69,18 +74,21 @@ export const router = createBrowserRouter([
         path: "vendor-order",
         element: <OrderManagement />,
       },
-       {
+      {
         path: "vendor-analytics",
-        element: <AnalyticsManagement/>
+        element: <AnalyticsManagement />,
       },
       {
         path: "vendor-profile",
-        element: <ProfileManagement/>
+        element: <ProfileManagement />,
+        // children: [
+
+        // ],
       },
       {
         path: "vendor-settings",
-        element: <SettingsMangement/>
-      }
+        element: <SettingsMangement />,
+      },
     ],
   },
 

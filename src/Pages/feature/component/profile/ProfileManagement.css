@@ -8,6 +8,14 @@ background-color: #f9fafb;
 font-family: "Inter", sans-serif;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  width: 100%;
+  /* margin-bottom: 6px; */
+}
+
 .header h2 {
 font-size: 22px;
 font-weight: 600;
@@ -26,7 +34,8 @@ background: #16a34a;
 color: #fff;
 border-radius: 10px;
 padding: 25px;
-overflow: hidden;
+/* overflow: hidden; */
+
 }
 
 .verificationHeader {
@@ -40,7 +49,7 @@ display: flex;
 align-items: center;
 gap: 6px;
 font-weight: 500;
-z-index: 999;
+text-align: right;
 }
 
 .progressSection {
@@ -48,23 +57,9 @@ position: relative;
 margin: 15px 0;
 }
 
-.progressBadge {
-position: absolute;
-top: -15px;
-left: 50%;
-transform: translateX(-50%);
-background: #fff;
-color: #16a34a;
-font-size: 12px;
-font-weight: 600;
-padding: 2px 8px;
-border-radius: 10px;
-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-z-index: 2;
-}
 
 .progressContainer {
-width: 100%;
+width: 50%;
 height: 8px;
 background: rgba(255, 255, 255, 0.3);
 border-radius: 5px;
@@ -89,7 +84,8 @@ position: absolute;
 right: 25px;
 top: 20px;
 font-size: 40px;
-opacity: 0.15;
+
+color: white;
 }
 
 /* Tabs */
@@ -118,7 +114,7 @@ background: #e5e7eb;
 .tabs button.active {
 background: #fff;
 color: #111827;
-box-shadow: 0 -2px 0 #16a34a inset;
+
 }
 
 /* Profile Card */
@@ -161,8 +157,8 @@ position: relative;
 }
 
 .profileImagePlaceholder {
-width: 70px;
-height: 70px;
+width: 100px;
+height: 100px;
 background: #d1d5db;
 border-radius: 50%;
 }
@@ -174,7 +170,9 @@ right: 0;
 background: #16a34a;
 border-radius: 50%;
 color: #fff;
-padding: 4px;
+display: flex;
+align-items: center;
+padding: 6px;
 font-size: 10px;
 }
 
@@ -182,37 +180,58 @@ font-size: 10px;
 background: none;
 border: 1px solid #d1d5db;
 border-radius: 6px;
-padding: 6px 12px;
+padding: 4px 6px;
+width: 60%;
+height: 40%;
 cursor: pointer;
 color: #111827;
 font-weight: 500;
 margin-top: 8px;
+display: flex;
+gap: 5px;
+align-items: center;
+
 }
 
 .formGrid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.formRow {
+  display: flex;
+  gap: 20px;
+  width: 100%;
 }
 
 .formGroup {
-display: flex;
-flex-direction: column;
-gap: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1; 
 }
 
 .formGroup label {
-font-size: 14px;
-color: #374151;
-font-weight: 500;
+  font-size: 14px;
+  color: #374151;
+  font-weight: 500;
 }
 
 .formGroup input {
-padding: 10px;
-border: 1px solid #e5e7eb;
-border-radius: 6px;
-background: #f3f4f6;
-outline: none;
+  padding: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #f3f4f6;
+  outline: none;
+  width: 100%;
+  font-size: 14px;
+}
+
+.formGroup input:focus {
+  border-color: #16a34a;
+  background: #fff;
 }
 
 .saveSection {

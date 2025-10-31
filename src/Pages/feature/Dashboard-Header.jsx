@@ -1,12 +1,15 @@
 import React from 'react'
 import "./Dashboard-Header.css"
+import { useNavigate } from 'react-router'
+
 
 const DashboardHeader = () => {
+  const nav = useNavigate()
   return (
     <div className='dashboard-wrapper'>
       <div className='header-wrapper'>
         <header className='header-container'>
-       <img src="/Images/logo.svg"className='imgLogo'/>
+       <img src="/Images/logo.svg"className='imgLogo'onClick={()=>nav("/")}/>
        <h2>
               Refill<span>Xpress</span>
             </h2>

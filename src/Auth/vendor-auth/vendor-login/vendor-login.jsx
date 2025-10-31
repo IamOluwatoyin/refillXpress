@@ -47,7 +47,7 @@ const Vendorlogin = () => {
       <div className="form-wrapperlogin">
         <div className="form-containerlogin">
           <header>
-            <img src="/src/assets/logo.svg" alt="logo" className="image" />
+            <img src="/src/assets/logo.svg" alt="logo" className="image" onClick={()=>navigate("/")}/>
 
             <h1>
               Refill<span>Xpress</span>

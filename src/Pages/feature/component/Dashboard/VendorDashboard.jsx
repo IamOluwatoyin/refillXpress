@@ -11,8 +11,10 @@ import { GoPackage } from "react-icons/go";
 import { IoIosArrowForward } from "react-icons/io";
 import "./VendorDashboard.css";
 import { FaStar, FaRegStar } from "react-icons/fa";
+import { useNavigate } from "react-router";
 
 const VendorDashboard = () => {
+  const nav =useNavigate()
   return (
     <div className="vendorDashboard-wrapper">
       <h2>Dashboard</h2>
@@ -56,7 +58,7 @@ const VendorDashboard = () => {
       <div className="pending-orders">
         <div className="pending-header">
           <h3>Pending Orders</h3>
-          <button className="view-all">
+          <button className="view-all" onClick={()=>nav("/vendor-dashboard/vendor-profile")}>
             View All <IoIosArrowForward />
           </button>
         </div>

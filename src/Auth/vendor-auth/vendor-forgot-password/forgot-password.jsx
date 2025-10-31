@@ -48,7 +48,7 @@ const ForgotPassword = () => {
     <div className="form-wrapperpassword">
       <div className="form-containerpassword">
         <header>
-          <img src="/src/assets/logo.svg" alt="logo" className="image" />
+          <img src="/src/assets/logo.svg" alt="logo" className="image" onClick={()=>navigate("/")} />
 
           <h1>
             Refill<span>Xpress</span>

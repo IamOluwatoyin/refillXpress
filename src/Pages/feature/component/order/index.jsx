@@ -10,6 +10,9 @@ import "./OrderManagement.css";
 import { useState } from "react";
 
 const OrderManagement = () => {
+  
+  const [activeTab, setActiveTab] = useState("Pending");
+  
   const orders = [
     {
       id: "#GR45821",
@@ -46,13 +49,12 @@ const OrderManagement = () => {
     },
   ];
 
-  const [activeTab, setActiveTab] = useState("Pending");
 
   const tabs = [
-    { label: "Pending (1)", key: "Pending" },
-    { label: "Active (1)", key: "Active" },
-    { label: "Completed (3)", key: "Completed" },
-    { label: "Cancelled (1)", key: "Cancelled" },
+    { label: "Pending (3)", key: "Pending" },
+    { label: "Active (0)", key: "Active" },
+    { label: "Completed (0)", key: "Completed" },
+    { label: "Cancelled (0)", key: "Cancelled" },
   ];
 
   return (
@@ -70,60 +72,71 @@ const OrderManagement = () => {
           </button>
         ))}
        
-       
       </div>
-       {/* <p>Currently viewing: {activeTab}</p> */}
+      {activeTab === "Pending" && (
+  <div className="pendingOrders">
+    {/* your current pending orders section here */}
+  </div>
+)}
 
-      <div className="ordersList">
-        {orders.map((order, index) => (
-          <div className="orderCard" key={index}>
-            <div className="orderTop">
-              <div className="orderId">
-                <span>{order.id}</span>
-                <span className="status pending">{order.status}</span>
+{/* These only show empty boxes when you click other tabs */}
+<div className="ordersList">
+  {activeTab === "Pending" ? (
+    orders.map((order, index) => (
+      <div className="orderCard" key={index}>
+        <div className="orderTop">
+          <div className="orderId">
+            <span>{order.id}</span>
+            <span className="status pending">{order.status}</span>
+          </div>
+          <div className="priceSection">
+            <span className="price">{order.price}</span>
+          </div>
+        </div>
+
+        <div className="orderDetails">
+          <p className="name">{order.name}</p>
+
+          <div className="infoRow">
+            <div className="leftInfo">
+              <div className="item">
+                <GoPackage /> {order.weight}
               </div>
-              <div className="priceSection">
-                <span className="price">{order.price}</span>
-               
+              <div className="item address">
+                <FaMapMarkerAlt /> {order.address}
               </div>
             </div>
 
-            <div className="orderDetails">
-              <p className="name">{order.name}</p>
-
-              <div className="infoRow">
-                <div className="leftInfo">
-                  <div className="item">
-                    < GoPackage /> {order.weight}
-                  </div>
-                  <div className="item address">
-                    <FaMapMarkerAlt /> {order.address}
-                  </div>
-                </div>
-
-                <div className="centerInfo">
-                  <div className="item">
-                    <FaCalendarAlt /> {order.date}
-                  </div>
-                  <div className="item">
-                    <FaClock /> {order.time}
-                  </div>
-                  <div className="item">
-                    <FaPhoneAlt /> {order.phone}
-                  </div>
-                </div>
-
-                <div className="rightBtns">
-                  <button className="viewBtn">View</button>
-                  <button className="acceptBtn">Accept</button>
-                  <button className="rejectBtn">Reject</button>
-                </div>
+            <div className="centerInfo">
+              <div className="item">
+                <FaCalendarAlt /> {order.date}
               </div>
+              <div className="item">
+                <FaClock /> {order.time}
+              </div>
+              <div className="item">
+                <FaPhoneAlt /> {order.phone}
+              </div>
+            </div>
+
+            <div className="rightBtns">
+              <button className="viewBtn">View</button>
+              <button className="acceptBtn">Accept</button>
+              <button className="rejectBtn">Reject</button>
             </div>
           </div>
-        ))}
+        </div>
       </div>
+    ))
+  ) : (
+    <div className="orderPlaceholder">
+      <p>No {activeTab.toLowerCase()} orders yet</p>
     </div>
+  )}
+</div>
+
+      </div>
+   
   );
 };
 

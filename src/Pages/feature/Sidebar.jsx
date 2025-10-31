@@ -80,7 +80,7 @@ const Sidebar = () => {
           }`}
         >
           <FaUser style={{ fontSize: "25px" }} />
-          <p>Profile</p>
+          <p>Account</p>
         </span>
         <span
           onClick={() => navigate("/vendor-dashboard/vendor-settings")}
