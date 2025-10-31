@@ -1,4 +1,4 @@
-.dashboard { 
+.userdashboard { 
     width: 100%;
     height: max-content;    
     display: flex;
@@ -44,15 +44,18 @@
     margin-inline: 0.5rem;
 }
 .profile {
-    background-color: hsl(24, 100%, 50%);
+    background-color: hsl(18, 100%, 50%);
     color: #fff;
-    font-size: 1.4rem;
     width: 50px;
     height: 50px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.user-placeholder {
+    font-size: 1.8rem;
+    color: #fff;
 }
 .user {
     display: flex;
@@ -106,6 +109,8 @@
     color: #00000098;
     text-transform: capitalize;
     text-decoration: none;
+    cursor: pointer;
+    text-decoration: none;
 }
 .nav-link {
     font-size: 1.4rem;
@@ -124,7 +129,7 @@
         color: #fff;    
     }
     .nav-link {
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: #ff4d00;
     
 }

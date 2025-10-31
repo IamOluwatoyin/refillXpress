@@ -8,15 +8,9 @@ import { BiHome } from "react-icons/bi";
 import { GrLocation } from "react-icons/gr";
 import "./UserDashboard.css"
 const UserDashboard = () => {
-  const [active, setActive] = useState("home")
-  const setter = (next) => {
-    setActive("")
-    setActive(next)
-  }
-  console.log(active)
-  const nav = useNavigate()
+    const nav = useNavigate()
   return (
-    <div className='dashboard'>
+    <div className='userdashboard'>
       <div className="dashboard-grid">
         <header className="header">
           <div className="header-content">
@@ -27,7 +21,7 @@ const UserDashboard = () => {
           Refill<span className='logo-style'>Xpress</span>
           </h6>
           <div className="user">
-            <p className='profile'><FiUser /></p>
+            <p className='profile'><FiUser className='user-placeholder'/></p>
             <div>
               <span>Glory Otene</span>
             <span>Customer</span>
@@ -37,11 +31,11 @@ const UserDashboard = () => {
         </header>
         <div className="sidebar">
           <div className="navigation">
-            <NavLink  className={active === "home"? `nav active` : "nav"}><BiHome className='nav-link'/><span>home</span></NavLink >
-            <NavLink onClick={()=> setter("browse")} className={active === "browse"? `nav active` : "nav"} to="browsevendors"><GrLocation className='nav-link'/><span>browse vendors</span></NavLink>
-            <NavLink onClick={()=> setter("orders")} className={active === "orders"? `nav active` : "nav"} to="myorders"><FiPackage className='nav-link'/><span>my orders</span></NavLink>
-            <nav onClick={()=> setter("reviews")} className={active === "reviews"? `nav active` : "nav"}><GoStar className='nav-link'/><span>reviews</span></nav>
-            <nav onClick={()=> setter("account")} className={active === "account"? `nav active` : "nav"}><FiUser /><span>account</span></nav>
+            <NavLink className={({isActive}) => isActive? `nav active` : "nav"}><BiHome className='nav-link'/><span>home</span></NavLink >
+            <NavLink className={({isActive}) => isActive? "nav active" : "nav"} to="browsevendors"><GrLocation className='nav-link'/><span>browse vendors</span></NavLink>
+            <NavLink className={({isActive}) => isActive? "nav active" : "nav"} to="myorders"><FiPackage className='nav-link'/><span>my orders</span></NavLink>
+            <NavLink className={({isActive}) => isActive? "nav active" : "nav"} to="reviews"><GoStar className='nav-link'/><span>reviews</span></NavLink>
+            <NavLink className={({isActive}) => isActive? "nav active" : "nav"} to="account"><FiUser className='nav-link'/><span>account</span></NavLink>
           </div>
         </div>
         <div className="main">
