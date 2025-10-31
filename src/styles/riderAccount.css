@@ -1,0 +1,230 @@
+.rider_account_page {
+  width: 100%;
+  padding: 30px;
+}
+
+.page_title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  color: #333;
+}
+
+.page_subtitle {
+  color: #777;
+  margin-top: 5px;
+  margin-bottom: 30px;
+}
+
+.account_tabs_wrapper {
+  display: flex;
+  width: 500px;
+  height: 45px;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  overflow: hidden;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+.account_tab {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #777;
+  transition: all 0.2s ease-in-out;
+  padding: 0 10px;
+}
+
+.active_account_tab {
+  background-color: white;
+  color: #333;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+}
+
+.personal_info_section {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.section_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section_title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.btn_save_green {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 8px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.profile_picture_area {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 0 30px 0;
+  border-bottom: 1px dashed #eee;
+  margin-bottom: 30px;
+}
+
+.profile_avatar_wrapper {
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.profile_avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 2px #ddd;
+}
+
+.btn_edit_avatar {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #4caf50;
+  color: white;
+  border: 3px solid white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.profile_upload_info {
+  display: flex;
+  flex-direction: column;
+}
+
+.upload_text {
+  font-weight: 600;
+  margin: 0;
+}
+
+.upload_subtitle {
+  font-size: 0.8rem;
+  color: #777;
+  margin: 2px 0 10px 0;
+}
+
+.btn_upload_photo {
+  background-color: transparent;
+  border: 1px solid #ccc;
+  color: #555;
+  padding: 8px 15px;
+  border-radius: 8px;
+  font-weight: 600;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.personal_info_grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px 30px;
+  margin-bottom: 30px;
+}
+
+.form_group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input_label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.text_input {
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #333;
+  background-color: #f7f9fc;
+}
+
+.phone_input_wrapper {
+  display: flex;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #f7f9fc;
+}
+
+.phone_prefix {
+  padding: 12px;
+  background-color: #f7f9fc;
+  border-right: 1px solid #e0e0e0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 8px 0 0 8px;
+}
+
+.phone_number_input {
+  flex-grow: 1;
+  border: none;
+  background-color: transparent;
+  border-radius: 0 8px 8px 0;
+  padding-left: 0;
+}
+
+.save_changes_footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 10px;
+}
+
+.btn_save_changes_orange {
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tab_content_placeholder {
+  padding: 50px;
+  text-align: center;
+  color: #999;
+}

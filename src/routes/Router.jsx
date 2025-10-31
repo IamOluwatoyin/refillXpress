@@ -24,6 +24,12 @@ import UserDashboard from "../Pages/feature/component/Dashboard/UserDashboard";
 import HomeContent from "../Pages/feature/component/Dashboard/user-dashboard/HomeContent";
 import BrowseVendor from "../Pages/feature/component/Dashboard/user-dashboard/BrowseVendor";
 import MyOrders from "../Pages/feature/component/Dashboard/user-dashboard/MyOrders";
+import Dashboard_layout from "../Components/layout/Dashboard_layout";
+import DashboardHome from "../Pages/Dashboard/DashboardHome";
+import RiderOrder from "../Pages/Dashboard/RiderOrder";
+import RiderEarnings from "../Pages/Dashboard/RiderEarnings";
+import RiderLeaderboard from "../Pages/Dashboard/RiderLeaderboard";
+import RiderAccount from "../Pages/Dashboard/RiderAccount";
 
 export const router = createBrowserRouter([
   {
@@ -119,6 +125,33 @@ export const router = createBrowserRouter([
       {
         path: "vendor-profile",
         element: <ProfileManagement />,
+      },
+    ],
+  },
+
+  {
+    path: "/rider-dashboard",
+    element: <Dashboard_layout />,
+    children: [
+      {
+        index: true,
+        element: <DashboardHome />,
+      },
+      {
+        path: "order",
+        element: <RiderOrder />,
+      },
+      {
+        path: "earnings",
+        element: <RiderEarnings />,
+      },
+      {
+        path: "leaderboard",
+        element: <RiderLeaderboard />,
+      },
+      {
+        path: "account",
+        element: <RiderAccount />,
       },
     ],
   },
