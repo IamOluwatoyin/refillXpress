@@ -7,7 +7,7 @@ import OtpSignup from "../Auth/customer-auth/customer-signupverify/OtpSignup";
 import Reset from "../Auth/customer-auth/customer-resetpassword/Reset";
 import OtpForgot from "../Auth/customer-auth/customer-forgotverify/OtpForgot";
 import Forgot from "../Auth/customer-auth/customer-forgotpassword/Forgot";
-import ForgotPassword from "../auth/vendor-auth/vendor-forgot-password/forgot-password";
+import ForgotPassword from "../auth/vendor-auth/vendor-forgot-password";
 import VendorDashboard from "../pages/feature/component/Dashboard/VendorDashboard";
 import HomePage from "../pages/Home/HomePage";
 import VendorResetPassword from "../auth/vendor-auth/vendor-reset-password";
