@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import SpinnerModal from "../spinner-modal";
 import { useForm } from "react-hook-form";
 import { vendorForgotPassword } from "../../../api/mutation";
-const ForgotPassword = () => {
+const VendorForgotPassword = () => {
   const [showModal, setShowModal] = useState(false);
   const {
     register,
@@ -143,4 +143,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default VendorForgotPassword;
