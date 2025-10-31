@@ -7,17 +7,17 @@ import OtpSignup from "../Auth/customer-auth/customer-signupverify/OtpSignup";
 import Reset from "../Auth/customer-auth/customer-resetpassword/Reset";
 import OtpForgot from "../Auth/customer-auth/customer-forgotverify/OtpForgot";
 import Forgot from "../Auth/customer-auth/customer-forgotpassword/Forgot";
-import HomePage from "../pages/Home/HomePage";
+import HomePage from "../Pages/Home/HomePage";
 import VendorResetPassword from "../auth/vendor-auth/vendor-reset-password";
-import DashboardLayout from "../pages/feature/Dashboard-Layout";
-import OrderManagement from "../pages/feature/component/order";
-import ProfileManagement from "../pages/feature/component/profile";
+import DashboardLayout from "../Pages/feature/Dashboard-Layout";
+import OrderManagement from "../Pages/feature/component/order";
+import ProfileManagement from "../Pages/feature/component/profile";
 import VerifyForgetPasswordEmail from "../auth/vendor-auth/vendor-forgot-password/vendor-verify-forgetpassword-email";
-import AnalyticsManagement from "../pages/feature/component/analytics";
-import SettingsMangement from "../pages/feature/component/settings";
+import AnalyticsManagement from "../Pages/feature/component/analytics";
+import SettingsMangement from "../Pages/feature/component/settings";
 import RiderSignup from "../auth/Rider/Rider-signup";
 import RiderLogin from "../auth/Rider/Rider-login";
-import KYC from "../pages/feature/component/order/kyc";
+import KYC from "../Pages/feature/component/order/kyc";
 import UserDashboard from "../Pages/feature/component/Dashboard/UserDashboard";
 import HomeContent from "../Pages/feature/component/Dashboard/user-dashboard/HomeContent";
 import BrowseVendor from "../Pages/feature/component/Dashboard/user-dashboard/BrowseVendor";
@@ -32,7 +32,7 @@ import VendorSignup from "../auth/vendor-auth/vendor-signup";
 import VendorLogin from "../auth/vendor-auth/vendor-login";
 import VendorVerify from "../auth/vendor-auth/verify-email";
 import VendorForgotPassword from "../auth/vendor-auth/vendor-forgot-password";
-import VendorDashboard from "../pages/feature/component/Dashboard/Vendor-Dashboard";
+import VendorDashboard from "../Pages/feature/component/Dashboard/Vendor-Dashboard";
 
 export const router = createBrowserRouter([
   {
