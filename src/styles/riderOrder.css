@@ -1,0 +1,93 @@
+.rider_order_page {
+  width: 100%;
+  padding: 30px;
+}
+
+.order_title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  color: #333;
+}
+
+.order_subtitle {
+  color: #777;
+  margin-top: 5px;
+  margin-bottom: 30px;
+}
+
+.order_tabs_wrapper {
+  display: flex;
+  width: 500px;
+  height: 45px;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  overflow: hidden;
+  padding: 3px;
+  margin-bottom: 25px;
+}
+
+.order_tab {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #777;
+  transition: all 0.2s ease-in-out;
+  padding: 0 10px;
+}
+
+.active_order_tab {
+  background-color: white;
+  border-radius: 6px;
+  color: #333;
+  font-weight: 600;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.request_info_section {
+  margin-bottom: 10px;
+}
+
+.request_info_title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+  color: #333;
+}
+
+.request_info_subtitle {
+  font-size: 0.9rem;
+  color: #777;
+  margin: 5px 0 15px;
+}
+
+.gas_cylinder_service_info {
+  font-size: 0.85rem;
+  padding: 10px;
+  border-radius: 8px;
+  color: #555;
+  margin-bottom: 20px;
+  background-color: #e3f2fd;
+}
+.service_details {
+  color: #2196f3;
+}
+
+.request_item {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.request_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
