@@ -11,7 +11,7 @@ import {
 } from "../../../api/mutation";
 import { useForm, Controller } from "react-hook-form";
 
-const Verify = () => {
+const VendorVerify = () => {
   const [showModal, setShowModal] = useState(false);
 
   const [timeLeft, setTimeLeft] = useState(60);
@@ -96,7 +96,12 @@ const Verify = () => {
       <div className="form-wrapper-verify">
         <div className="form-container-verify">
           <header>
-            <img src="/src/assets/logo.svg" alt="logo" className="image" />
+            <img
+              src="/src/assets/logo.svg"
+              alt="logo"
+              className="image"
+              onClick={() => navigate("/")}
+            />
             <h1>
               Refill<span>Xpress</span>
             </h1>
@@ -187,4 +192,4 @@ const Verify = () => {
   );
 };
 
-export default Verify;
+export default VendorVerify;

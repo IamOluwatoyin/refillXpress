@@ -11,7 +11,7 @@ import {
   vendorForgotPasswordVerify,
 } from "../../../api/mutation";
 
-const VerifyForgetPasswordEmail = () => {
+const VendorVerifyForgetPasswordEmail = () => {
   const [showModal, setShowModal] = useState(false);
 
   const [timeLeft, setTimeLeft] = useState(60);
@@ -99,7 +99,7 @@ const VerifyForgetPasswordEmail = () => {
       <div className="form-wrapper-verify-forgetpassword">
         <div className="form-container-verify-forgetpassword">
           <header>
-            <img src="/src/assets/logo.svg" alt="logo" className="image" />
+            <img src="/src/assets/logo.svg" alt="logo" className="image" onClick={()=>navigate("/")} />
             <h1>
               Refill<span>Xpress</span>
             </h1>
@@ -150,7 +150,7 @@ const VerifyForgetPasswordEmail = () => {
 
                   <div className="btnHolder">
                     <button
-                      className="btn-forgetpassword"
+                      className="btn-verify-forgetpassword"
                       type="submit"
                       disabled={buttonDisabled || showModal}
                     >
@@ -190,4 +190,4 @@ const VerifyForgetPasswordEmail = () => {
   );
 };
 
-export default VerifyForgetPasswordEmail;
+export default VendorVerifyForgetPasswordEmail;

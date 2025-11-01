@@ -1,0 +1,138 @@
+.userdashboard { 
+    width: 100%;
+    height: max-content;    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #00000005;
+}
+.dashboard-grid {
+    width: 100%;
+    height: max-content;
+    margin-bottom: 0.5rem;
+    display: grid;
+    background-color: #00000005;
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: 50px max-content;   
+    gap: 3rem;
+    grid-template-areas: 
+    "header header"
+    "sidebar main"
+}
+.header {
+    grid-area: header;
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    box-shadow: 0 2px 20px 0 #00000018;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0;
+}
+.fire {
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: orangered;
+    color: #fff;
+    border-radius: 0.3rem;
+    margin-inline: 0.5rem;
+}
+.profile {
+    background-color: hsl(18, 100%, 50%);
+    color: #fff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.user-placeholder {
+    font-size: 1.8rem;
+    color: #fff;
+}
+.user {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    div {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+    }
+}
+.header-content {
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+
+}
+.sidebar {
+    grid-area: sidebar;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: fixed;
+    top: 6rem;
+}
+.navigation {
+    width: 15rem;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    margin-left: 2rem;
+    border-radius: 0.9rem;
+    background-color: #fff;
+}
+.navigation .nav {
+    width: 80%;
+    padding: 0.2rem;
+    box-sizing: border-box;
+    display: flex;
+    border-radius: 0.5rem;
+    align-items: center;
+    gap: 1rem;
+    margin-block: 0.5rem;
+    color: #00000098;
+    text-transform: capitalize;
+    text-decoration: none;
+    cursor: pointer;
+    text-decoration: none;
+}
+.nav-link {
+    font-size: 1.4rem;
+}
+
+.main {
+    grid-area: main;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.active {
+    background-color: #ff7300;
+    color: #ff4d00;
+    span {
+        color: #fff;    
+    }
+    .nav-link {
+    font-size: 1.8rem;
+    color: #ff4d00;
+    
+}
+
+    
+}

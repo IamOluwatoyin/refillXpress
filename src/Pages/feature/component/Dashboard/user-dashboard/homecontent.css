@@ -1,0 +1,221 @@
+.homecontent {
+    width: 100%;
+      height: max-content;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: 1rem;
+      h3 {
+        margin-block: 1rem;
+        font-size: 2rem;
+        text-transform: capitalize;
+      }
+}
+.heading {
+    width: 95%;
+    height: max-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .texts {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+.actions {
+    width: 60rem;
+    height: max-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.action {
+    width: 28rem;
+    height: 9rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-inline-start: 1rem;
+    background-color: #fff;
+    border-radius: 0.7rem;  
+    .icon {
+        font-size: 2rem;
+        }
+        .action-type {
+                text-transform: capitalize;
+                margin-block: 1rem;
+                
+                }
+                p {
+                    color: #646464;
+                }
+
+}
+.views {
+    width: 60rem;
+    height: max-content;
+    background-color: #fff;
+    border-radius: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+
+    .top {
+        width: 95%;
+        padding-block: 0.8rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+.stretch {
+    width: 62rem;
+}
+.preview-title {
+    text-transform: capitalize;
+}
+.view-all {
+    width: max-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;    
+    background-color: transparent;
+    font-size: 1rem;
+    border: none;
+    gap: 0.5rem;
+
+}
+
+.order-holder {
+    width: 95%;
+    height: max-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 0.8rem;
+    border: 1px solid #5c5c5c4d;
+}
+
+.my-order {
+    width: max-content;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+
+}
+.delivered {
+     width: 5rem;
+     padding: 0.5rem;
+     box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.4rem;  
+    background-color: none;
+    text-transform: capitalize;
+    color: #fff;
+    background-color: hsl(144, 100%, 40%);
+    border-style: none;
+}
+.vendor-status {
+    width: max-content;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.available {
+     width: 5rem;
+     padding: 0.2rem;
+     box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.4rem;  
+    background-color: none;
+    text-transform: capitalize;
+    color: green;
+    font-size: 0.8rem;
+    background-color: hsl(144, 100%, 90%);
+    border-style: none;
+}
+.verified {
+    width: 5rem;
+     padding: 0.1rem;
+     box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
+    border-radius: 0.4rem;  
+    background-color: none;
+    text-transform: capitalize;
+    color: #fff;
+    font-size: 0.8rem;
+    background: #00cc52;
+    border-style: none;
+}
+.info {
+    width: max-content;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    small {
+    display: flex;
+    align-items: center;
+    }
+}
+.star {
+    color: gold;
+}
+.the-price, .the-currency {
+    color: blue;
+}
+.the-currency {
+    font-size: 1.1rem;
+}
+.order-now {
+    width: max-content;
+     padding: 0.5rem;
+     box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
+    border-radius: 0.4rem;  
+    background-color: none;
+    text-transform: capitalize;
+    color: #fff;
+    font-size: 0.8rem;
+    background: #ffae00;
+    border-style: none;
+}
+.to-view {
+    width: 5rem;
+    background-color: transparent;
+    border: 1px solid #e0e0e0;
+    color: #000;
+}
+.right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-inline-end: 0.5rem;
+}
+.out-of-stock {
+    background-color: transparent;
+    border: 1px solid #e0e0e0;
+    text-transform: lowercase;
+    color: #b6b6b6;
+}
+.disabled {
+    background-color: #5e5e5e4b;
+}
