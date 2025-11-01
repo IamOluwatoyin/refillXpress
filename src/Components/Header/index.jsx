@@ -3,6 +3,8 @@ import logo from "../../assets/logo.svg";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-scroll";
+import { BiMenu } from "react-icons/bi";
+import { CgClose } from "react-icons/cg";
 
 const Header = () => {
   const [loginDrop, setDrop] = useState(false);
@@ -18,6 +20,12 @@ const Header = () => {
   const handleGetstated = () => {
     setDrop(false);
     setGetStated(!getStated);
+  };
+
+  const [show, setShow] = useState(false);
+
+  const ToggleSow = () => {
+    setShow(!show);
   };
   return (
     <Container>
@@ -86,12 +94,111 @@ const Header = () => {
             </div>
           )}
         </ButtonHolder>
+
+        <Iconholder>
+          {show ? (
+            <CgClose onClick={ToggleSow} size={25} />
+          ) : (
+            <BiMenu onClick={ToggleSow} size={25} />
+          )}
+        </Iconholder>
+
+        {show ? (
+          <Dropdownholder>
+            <Dropdown>
+              <SmoothLink2 to="home" smooth={true} duration={600}>
+                Home
+              </SmoothLink2>
+              <SmoothLink2 to="how" smooth={true} duration={600}>
+                How it works
+              </SmoothLink2>
+              <SmoothLink2 to="contact" smooth={true} duration={600}>
+                Contact Us
+              </SmoothLink2>
+              <button className="box3" onClick={handleLoginDrop}>
+                Sign in
+              </button>
+              <button className="box4" onClick={handleGetstated}>
+                Get Stated
+              </button>
+            </Dropdown>
+          </Dropdownholder>
+        ) : null}
       </ContainerWrapper>
     </Container>
   );
 };
 
 export default Header;
+const SmoothLink2 = styled(Link)`
+  width: 100%;
+  display: flex;
+  /* justify-content: center;
+  align-items: center; */
+  margin-bottom: 30px;
+  &:hover {
+    color: #2887db;
+  }
+`;
+const Dropdown = styled.div`
+  width: 28%;
+  display: flex;
+  align-content: center;
+  /* justify-content: center; */
+  flex-direction: column;
+  height: 300px;
+  background-color: #fff;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  padding: 30px;
+
+  .box3 {
+    width: 100%;
+    height: 50px;
+    border: 1px solid #2887db;
+    color: #2887db;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #fff;
+    margin-bottom: 20px;
+  }
+
+  .box3:hover {
+    color: white;
+    background-color: #2887db;
+  }
+  .box4 {
+    width: 100%;
+    height: 50px;
+    background-color: #ff7f11;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .box4:hover {
+    background-color: #ee750cc0;
+  }
+`;
+const Dropdownholder = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  /* background-color: #00000075; */
+  top: 70px;
+  left: 0;
+  display: none;
+  justify-content: end;
+  @media (max-width: 768px) {
+    display: flex;
+  }
+`;
+const Iconholder = styled.div`
+  display: none;
+  @media (max-width: 768px) {
+    display: flex;
+  }
+`;
 
 const Container = styled.div`
   width: 100%;
@@ -141,6 +248,10 @@ const MidContainer = styled.div`
 
     li {
     }
+  }
+
+  @media (max-width: 768px) {
+    display: none;
   }
 `;
 
@@ -253,6 +364,9 @@ const ButtonHolder = styled.div`
   .vendor_button1:hover {
     cursor: pointer;
     color: #ff7f11;
+  }
+  @media (max-width: 768px) {
+    display: none;
   }
 `;
 

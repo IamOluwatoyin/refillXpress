@@ -11,6 +11,7 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import "../../styles/riderEarnings.css";
 
 const EarningsCard = ({
+  // eslint-disable-next-line no-unused-vars
   icon: Icon,
   title,
   value,
