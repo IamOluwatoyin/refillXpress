@@ -20,7 +20,7 @@ const navItems = [
     name: "Orders",
     icon: MdShoppingCart,
     path: "/rider-dashboard/order",
-    badge: 1,
+    badge: 10,
   },
   {
     name: "Earnings",

@@ -1,6 +1,5 @@
 import React from "react";
-import { GoContainer } from "react-icons/go";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { HiArrowLongDown } from "react-icons/hi2";
 import Hero from "../../assets/Hero1.png";
 import network2 from "../../assets/network2.png";
@@ -13,7 +12,7 @@ function Network() {
       </Title>
       <DataContainerWrapper>
         <DataContainer>
-          <LeftContainer>
+          <LeftContainer className="vendor-text">
             <ContainerTitle>
               Become a <span style={{ color: "#ff7f11" }}>Vendor</span>
             </ContainerTitle>
@@ -25,10 +24,11 @@ function Network() {
             </Description>
             <ContainerButton>Partner with us</ContainerButton>
           </LeftContainer>
-          <RightContainer>
-            <img src={Hero} alt="" />
+          <RightContainer className="vendor-image">
+            <img src={Hero} alt="Vendor illustration" />
           </RightContainer>
         </DataContainer>
+
         <DataContainer1>
           <LeftContainer>
             <ContainerTitle>
@@ -42,7 +42,7 @@ function Network() {
             <ContainerButton>Partner with us</ContainerButton>
           </LeftContainer>
           <RightContainer>
-            <img src={network2} alt="" />
+            <img src={network2} alt="Delivery partner illustration" />
           </RightContainer>
         </DataContainer1>
       </DataContainerWrapper>
@@ -54,56 +54,90 @@ export default Network;
 
 const Container = styled.div`
   width: 100%;
-  height: 100vh;
   min-height: max-content;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
-  padding-top: 30px;
+  padding: 50px 20px;
   gap: 50px;
 `;
 const Title = styled.h3`
   font-size: 36px;
   font-weight: 700;
   color: #c7c7c7;
+
+  @media (max-width: 768px) {
+    font-size: 28px;
+    text-align: center;
+  }
 `;
 const DataContainerWrapper = styled.div`
   width: 85%;
-  height: 80%;
+  max-width: 1200px;
   min-height: max-content;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 60px;
+
+  @media (max-width: 992px) {
+    width: 100%;
+  }
+`;
+
+const DataContainerBase = css`
+  width: 100%;
+  min-height: 400px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+
+  @media (max-width: 992px) {
+    flex-direction: column;
+    min-height: max-content;
+  }
 `;
 
 const DataContainer = styled.div`
-  width: 100%;
-  height: 340px;
-  display: flex;
+  ${DataContainerBase}
   flex-direction: row;
-  justify-content: space-betweent;
 `;
+
 const DataContainer1 = styled.div`
-  width: 100%;
-  height: 340px;
-  display: flex;
+  ${DataContainerBase}
   flex-direction: row-reverse;
-  justify-content: space-between;
+
+  @media (max-width: 992px) {
+    flex-direction: column;
+  }
 `;
+
 const LeftContainer = styled.div`
   width: 50%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 25px;
+
+  @media (max-width: 992px) {
+    width: 100%;
+    text-align: center;
+    align-items: center;
+    order: 2;
+  }
 `;
 
 const ContainerTitle = styled.h4`
   font-size: 28px;
   font-weight: 600;
   color: #2887db;
+
+  @media (max-width: 768px) {
+    font-size: 24px;
+  }
+  @media (max-width: 480px) {
+    font-size: 20px;
+  }
 `;
 
 const Description = styled.p`
@@ -111,6 +145,12 @@ const Description = styled.p`
   font-weight: 400;
   line-height: 183%;
   width: 90%;
+
+  @media (max-width: 992px) {
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+  }
 `;
 
 const ContainerButton = styled.button`
@@ -122,16 +162,33 @@ const ContainerButton = styled.button`
   border: none;
   font-size: 16px;
   font-weight: 600;
+
+  @media (max-width: 480px) {
+    width: 140px;
+    height: 45px;
+    font-size: 14px;
+  }
 `;
 const RightContainer = styled.div`
   width: 45%;
   height: 100%;
+  min-height: 350px;
   border-radius: 20px;
   overflow: hidden;
 
-  &img {
+  @media (max-width: 992px) {
+    width: 100%;
+    height: 300px;
+    margin-bottom: 30px;
+    order: 1;
+  }
+  @media (max-width: 480px) {
+    height: 250px;
+  }
+
+  & img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
   }
 `;

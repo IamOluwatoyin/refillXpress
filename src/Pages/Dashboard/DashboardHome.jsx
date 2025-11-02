@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   MdOutlineAttachMoney,
   MdOutlineTimer,
@@ -7,9 +7,33 @@ import {
   MdOutlineRemoveCircle,
   MdAutorenew,
 } from "react-icons/md";
-import { FaTruckLoading } from "react-icons/fa";
-
+import { FaTruckLoading, FaCheckCircle } from "react-icons/fa";
 import "../../styles/dashboardHome.css";
+
+const CompletedRefillItem = ({ name, type, time, rating, earnings }) => {
+  const stars = "★".repeat(rating) + "☆".repeat(5 - rating);
+
+  return (
+    <div className="completed_refill_item">
+      <div className="refill_icon_name">
+        <FaCheckCircle size={20} color="#4CAF50" />
+        <div className="name_type">
+          <span className="customer_name">{name}</span>
+          <span className="refill_type">{type}</span>
+        </div>
+      </div>
+      <div className="refill_details">
+        <span className="refill_earnings">+₦{earnings}</span>
+        <div className="time_rating">
+          <span className="refill_time">
+            <MdOutlineTimer size={14} /> {time}
+          </span>
+          <span className="refill_rating">{stars}</span>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const PerformanceCard = ({
   icon: Icon,
@@ -78,6 +102,8 @@ const RefillRequestItem = ({ orderId, time, deliveryFee, steps }) => (
 );
 
 const DashboardHome = () => {
+  const [activeTab, setActiveTab] = useState("available");
+
   const order1 = {
     orderId: "ORD-7542",
     time: "31kg LPG Refill • 35 min",
@@ -105,6 +131,30 @@ const DashboardHome = () => {
   };
 
   const order2 = { ...order1, orderId: "ORD-7543" };
+
+  const recentRefills = [
+    {
+      name: "Linda anuogo",
+      type: "LPG 6kg",
+      time: "28 mins",
+      rating: 4,
+      earnings: "7.50",
+    },
+    {
+      name: "Benjamin uzor",
+      type: "LPG 3kg",
+      time: "25 mins",
+      rating: 5,
+      earnings: "6.00",
+    },
+    {
+      name: "Martins Deke",
+      type: "LPG 5kg",
+      time: "22 mins",
+      rating: 4,
+      earnings: "5.50",
+    },
+  ];
 
   return (
     <div className="dashboard_home">
@@ -150,33 +200,59 @@ const DashboardHome = () => {
 
       <div className="tabs_section">
         <div className="segmented_tabs_wrapper">
-          <div className="tab segmented_tab active_segment">
+          <div
+            className={`tab segmented_tab ${
+              activeTab === "available" ? "active_segment" : ""
+            }`}
+            onClick={() => setActiveTab("available")}
+          >
             <MdOutlineCheckCircle size={18} /> Available (
             <span className="tab_badge">3</span>)
           </div>
-          <div className="tab segmented_tab">
+          <div
+            className={`tab segmented_tab ${
+              activeTab === "recent" ? "active_segment" : ""
+            }`}
+            onClick={() => setActiveTab("recent")}
+          >
             <MdOutlineTimer size={18} /> Recent
           </div>
         </div>
 
-        <div className="tab_content_header">
-          <h3 className="tab_content_title">Available Refill Requests</h3>
-          <p className="tab_content_subtitle">
-            Pick a refill order to start earning
-          </p>
-        </div>
-        <div className="gas_cylinder_service_info">
-          Gas Cylinder Refill service:{" "}
-          <span className="service_details">
-            Collect empty cylinders &rarr; Take to vendors for refilling &rarr;
-            Return filled cylinders to customers
-          </span>
-        </div>
-      </div>
+        {activeTab === "available" ? (
+          <>
+            <div className="tab_content_header">
+              <h3 className="tab_content_title">Available Refill Requests</h3>
+              <p className="tab_content_subtitle">
+                Pick a refill order to start earning
+              </p>
+            </div>
+            <div className="gas_cylinder_service_info">
+              Gas Cylinder Refill service:{" "}
+              <span className="service_details">
+                Collect empty cylinders &rarr; Take to vendors for refilling
+                &rarr; Return filled cylinders to customers
+              </span>
+            </div>
+            <div className="requests_list">
+              <RefillRequestItem {...order1} />
+              <RefillRequestItem {...order2} />
+            </div>
+          </>
+        ) : (
+          <div className="recent_refills_tab">
+            <h3 className="tab_content_title">Recent Completed Refills</h3>
+            <p className="tab_content_subtitle">
+              Your last completed deliveries today
+            </p>
 
-      <div className="requests_list">
-        <RefillRequestItem {...order1} />
-        <RefillRequestItem {...order2} />
+            <div className="completed_refills_list">
+              {recentRefills.map((item, index) => (
+                <CompletedRefillItem key={index} {...item} />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

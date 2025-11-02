@@ -225,3 +225,57 @@
   margin-top: 10px;
   margin-left: 30px;
 }
+
+.weekly_breakdown_list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px 0;
+}
+
+.weekly_bar_item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.day_info {
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.day_label {
+  font-weight: 600;
+  color: #333;
+}
+
+.delivery_count {
+  font-size: 0.8rem;
+  color: #777;
+}
+
+.bar_container {
+  flex: 1;
+  height: 10px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+}
+
+.delivery_bar {
+  height: 100%;
+  background-color: #4caf50;
+  border-radius: 5px;
+  transition: width 0.5s ease-out;
+}
+
+.daily_earning {
+  width: 80px;
+  text-align: right;
+  font-weight: 700;
+  color: #333;
+}
