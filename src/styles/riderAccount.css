@@ -48,7 +48,9 @@
   border-radius: 8px;
 }
 
-.personal_info_section {
+.personal_info_section,
+.banking_section,
+.documents_section {
   background-color: white;
   padding: 30px;
   border-radius: 12px;
@@ -66,19 +68,6 @@
   font-size: 1.1rem;
   font-weight: 600;
   color: #333;
-}
-
-.btn_save_green {
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 8px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  cursor: pointer;
 }
 
 .profile_picture_area {
@@ -137,20 +126,6 @@
   margin: 2px 0 10px 0;
 }
 
-.btn_upload_photo {
-  background-color: transparent;
-  border: 1px solid #ccc;
-  color: #555;
-  padding: 8px 15px;
-  border-radius: 8px;
-  font-weight: 600;
-  width: fit-content;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  cursor: pointer;
-}
-
 .personal_info_grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -179,34 +154,6 @@
   background-color: #f7f9fc;
 }
 
-.phone_input_wrapper {
-  display: flex;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background-color: #f7f9fc;
-}
-
-.phone_prefix {
-  padding: 12px;
-  background-color: #f7f9fc;
-  border-right: 1px solid #e0e0e0;
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: #333;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  border-radius: 8px 0 0 8px;
-}
-
-.phone_number_input {
-  flex-grow: 1;
-  border: none;
-  background-color: transparent;
-  border-radius: 0 8px 8px 0;
-  padding-left: 0;
-}
-
 .save_changes_footer {
   display: flex;
   justify-content: flex-end;
@@ -223,8 +170,343 @@
   cursor: pointer;
 }
 
-.tab_content_placeholder {
-  padding: 50px;
-  text-align: center;
-  color: #999;
+.banking_section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0;
+  box-shadow: none;
+  background-color: transparent;
+}
+
+.bank_details_card,
+.recent_payouts_card {
+  background-color: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.card_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header_icon_text {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section_title_card {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  color: #333;
+}
+
+.btn_update_banking_info {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.banking_info_grid {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+.banking_info_grid .form_group {
+  flex: 1;
+}
+
+.account_number_field {
+  width: calc(50% - 15px);
+  margin-bottom: 30px;
+}
+
+.automatic_payouts {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  border-top: 1px solid #eee;
+}
+
+.payouts_title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.payouts_subtitle {
+  font-size: 0.85rem;
+  color: #777;
+  margin: 2px 0 0 0;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 45px;
+  height: 25px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 17px;
+  width: 17px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #4caf50;
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+.slider.round {
+  border-radius: 25px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.recent_payouts_title {
+  margin-bottom: 20px;
+}
+
+.payouts_list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.payout_item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.payout_item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.payout_icon_wrapper {
+  background-color: #e6ffe6;
+  color: #4caf50;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-right: 15px;
+}
+
+.payout_details {
+  flex-grow: 1;
+}
+
+.payout_date {
+  font-weight: 500;
+  margin: 0;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.payout_status {
+  font-size: 0.8rem;
+  margin: 2px 0 0 0;
+  font-weight: 500;
+  color: #4caf50;
+}
+
+.payout_amount {
+  font-weight: 600;
+  color: #333;
+  font-size: 1rem;
+}
+
+.section_title_documents {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+.doc_alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background-color: #e7f5ff;
+  color: #3498db;
+  padding: 12px 15px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-bottom: 30px;
+  border: 1px solid #cce7ff;
+}
+.doc_alert p {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.document_list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.document_item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.document_item:last-of-type {
+  border-bottom: none;
+}
+
+.doc_info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.doc_icon {
+  color: #4caf50;
+}
+
+.doc_icon.status_pending {
+  color: #ffc107;
+}
+
+.doc_icon.status_rejected {
+  color: #dc3545;
+}
+
+.doc_title {
+  font-weight: 500;
+  margin: 0;
+  color: #333;
+}
+
+.doc_date {
+  font-size: 0.8rem;
+  color: #777;
+  margin: 2px 0 0 0;
+}
+
+.doc_actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.doc_status {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status_verified {
+  background-color: #e6ffe6;
+  color: #28a745;
+}
+
+.status_pending {
+  background-color: #fff8e1;
+  color: #ffc107;
+}
+
+.status_rejected {
+  background-color: #ffe8e8;
+  color: #dc3545;
+}
+
+.btn_reupload {
+  background-color: transparent;
+  border: 1px solid #ccc;
+  color: #555;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.doc_verification_process {
+  background-color: #f7f9fc;
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.doc_verification_header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  color: #3498db;
+}
+
+.doc_verification_title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.verification_list {
+  list-style: disc;
+  padding-left: 20px;
+  margin: 0;
+}
+.verification_list li {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.6;
 }

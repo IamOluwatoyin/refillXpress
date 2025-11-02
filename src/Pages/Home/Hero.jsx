@@ -21,7 +21,7 @@ const Hero = () => {
         </p>
 
         <ButtonHolder>
-          <button className="box1"  onClick={()=>nav("/vendor-login")}>
+          <button className="box1" onClick={() => nav("/vendor-login")}>
             Order now <IoIosArrowRoundForward style={{ fontSize: "17px" }} />
           </button>
           <button className="box2" onClick={() => nav("/vendor-signup")}>
@@ -60,17 +60,39 @@ const Wrapper = styled.div`
   padding-left: 40px;
   font-size: 48px;
 
+  h3 {
+    color: #2887db;
+    font-size: 48px;
+    margin: 0 0 10px 0;
+    span {
+      color: #ff7f11;
+    }
+
+    @media (max-width: 768px) {
+      font-size: 32px;
+    }
+  }
+
   p {
     color: white;
     font-size: 16px;
     width: 35%;
+    line-height: 1.6;
+    margin-top: 0;
+
+    @media (max-width: 1024px) {
+      width: 50%;
+    }
+
+    @media (max-width: 768px) {
+      width: 85%;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
   }
 
-  h3 {
-    color: #2887db;
-    span {
-      color: #ff7f11;
-    }
+  @media (max-width: 768px) {
+    padding-left: 20px;
   }
 `;
 
@@ -93,6 +115,7 @@ const ButtonHolder = styled.div`
     justify-content: center;
     gap: 5px;
     cursor: pointer;
+    font-weight: 500;
   }
 
   .box2 {
@@ -103,10 +126,28 @@ const ButtonHolder = styled.div`
     border-radius: 8px;
     background: transparent;
     cursor: pointer;
+    font-weight: 500;
 
     &:hover {
       background-color: #fff;
       color: #2887db;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    width: 35%;
+  }
+
+  @media (max-width: 768px) {
+    width: 90%;
+    height: auto;
+    gap: 10px;
+
+    .box1,
+    .box2 {
+      width: 140px;
+      height: 40px;
+      font-size: 14px;
     }
   }
 `;

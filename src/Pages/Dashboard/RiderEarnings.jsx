@@ -7,17 +7,30 @@ import {
   MdOutlineCheckCircle,
 } from "react-icons/md";
 import { FaMapMarkerAlt } from "react-icons/fa";
-
 import "../../styles/riderEarnings.css";
 
-const EarningsCard = ({
-  icon: Icon,
-  title,
-  value,
-  color,
-  bgColor,
-  secondary,
-}) => (
+const WeeklyPerformanceBar = ({ day, deliveries, earnings, maxEarnings }) => {
+  const widthPercent =
+    (parseInt(earnings.replace(/[^0-9]/g, "")) / maxEarnings) * 100;
+
+  return (
+    <div className="weekly_bar_item">
+      <div className="day_info">
+        <span className="day_label">{day}</span>
+        <span className="delivery_count">{deliveries} deliveries</span>
+      </div>
+      <div className="bar_container">
+        <div
+          className="delivery_bar"
+          style={{ width: `${widthPercent}%` }}
+        ></div>
+      </div>
+      <span className="daily_earning">₦{earnings}</span>
+    </div>
+  );
+};
+
+const EarningsCard = ({ icon: title, value, color, bgColor, secondary }) => (
   <div className="earnings_card" style={{ backgroundColor: bgColor }}>
     <div className="card_header">
       <div className="card_icon" style={{ color: color }}>
@@ -125,6 +138,20 @@ function RiderEarnings() {
     },
   ];
 
+  const weeklyData = [
+    { day: "Mon", deliveries: 8, earnings: "2,500" },
+    { day: "Tue", deliveries: 10, earnings: "3,500" },
+    { day: "Wed", deliveries: 12, earnings: "3,900" },
+    { day: "Thu", deliveries: 14, earnings: "5,000" },
+    { day: "Fri", deliveries: 9, earnings: "4,000" },
+    { day: "Sat", deliveries: 3, earnings: "1,500" },
+    { day: "Sun", deliveries: 2, earnings: "1,000" },
+  ];
+
+  const maxEarnings = Math.max(
+    ...weeklyData.map((d) => parseInt(d.earnings.replace(/[^0-9]/g, "")))
+  );
+
   return (
     <div className="rider_earnings_page">
       <h1 className="page_title">Earnings Overview</h1>
@@ -141,7 +168,11 @@ function RiderEarnings() {
           className={`segmented_tab ${
             activeTab === "recent" ? "active_segment" : ""
           }`}
-          onClick={() => setActiveTab("recent")}
+          onClick={() => {
+            setActiveTab("recent");
+            document.querySelector(".section_header").textContent =
+              "Recent Deliveries";
+          }}
         >
           Recent Earnings
         </div>
@@ -149,13 +180,20 @@ function RiderEarnings() {
           className={`segmented_tab ${
             activeTab === "weekly" ? "active_segment" : ""
           }`}
-          onClick={() => setActiveTab("weekly")}
+          onClick={() => {
+            setActiveTab("weekly");
+            document.querySelector(".section_header").textContent =
+              "Weekly Performance";
+          }}
         >
           Weekly Breakdown
         </div>
       </div>
 
-      <h2 className="section_header">Recent Deliveries</h2>
+      <h2 className="section_header">
+        {activeTab === "recent" ? "Recent Deliveries" : "Weekly Performance"}
+      </h2>
+
       {activeTab === "recent" && (
         <div className="recent_deliveries_list">
           {recentDeliveries.map((delivery, index) => (
@@ -163,9 +201,16 @@ function RiderEarnings() {
           ))}
         </div>
       )}
+
       {activeTab === "weekly" && (
-        <div className="weekly_content_placeholder">
-          <p>Weekly breakdown chart and summary goes here...</p>
+        <div className="weekly_breakdown_list">
+          {weeklyData.map((data, index) => (
+            <WeeklyPerformanceBar
+              key={index}
+              {...data}
+              maxEarnings={maxEarnings}
+            />
+          ))}
         </div>
       )}
 
