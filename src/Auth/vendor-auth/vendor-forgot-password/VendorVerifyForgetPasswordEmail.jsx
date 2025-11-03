@@ -98,8 +98,8 @@ const VendorVerifyForgetPasswordEmail = () => {
     <div>
       <div className="form-wrapper-verify-forgetpassword">
         <div className="form-container-verify-forgetpassword">
-          <header>
-            <img src="/src/assets/logo.svg" alt="logo" className="image" onClick={()=>navigate("/")} />
+          <header onClick={()=>navigate("/")}>
+            <img src="/Images/logo.svg" alt="logo" className="image"  />
             <h1>
               Refill<span>Xpress</span>
             </h1>

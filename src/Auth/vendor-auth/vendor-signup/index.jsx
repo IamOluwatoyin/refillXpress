@@ -26,9 +26,10 @@ const VendorSignup = () => {
   const password = watch("password", "");
 
   const submit = async (data) => {
+    const { confirmPassword, agree, ...payload } = data;
     setButtonDisabled(true);
     try {
-      const response = await signupVendor(data);
+      const response = await signupVendor(payload );
       console.log("formData", response);
       localStorage.setItem("vendorEmail", data.businessEmail);
 
@@ -50,8 +51,8 @@ const VendorSignup = () => {
   return (
     <div className="form-wrapper">
       <div className="form-container">
-        <header>
-          <img src="/src/assets/logo.svg" alt="logo" className="image" onClick={()=>navigate("/")}/>
+        <header onClick={()=>navigate("/")}>
+          <img src="/Images/logo.svg" alt="logo" className="image" />
           <h1>
             Refill<span>Xpress</span>
           </h1>
@@ -97,8 +98,8 @@ const VendorSignup = () => {
                     style={{
                       padding: "12px",
                       borderRadius: "8px",
-                      border: "1px solid #ccc",
-                      width: "30.9375rem",
+                      // border: "1px solid #ccc",
+                      width: "39.3125rem",
                       background: "#F2F6F5",
                       boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
                     }}
@@ -203,7 +204,7 @@ const VendorSignup = () => {
                             message: "Phone number must contain only digits",
                           },
                           validate: (value) =>
-                            value.length === 10 ||
+                            value.length === 11 ||
                             "Phone number must be exactly 10 digits",
                         })}
                         style={{
@@ -253,7 +254,7 @@ const VendorSignup = () => {
                   </p>
                 )}
 
-                <h4> Owner’s/manager Information</h4>
+                <h4> Owner's/manager Information</h4>
                 <div style={{ display: "flex", gap: "20px" }}>
                   <div
                     style={{
@@ -415,6 +416,7 @@ const VendorSignup = () => {
                     {...register("agree", {
                       required: "You must agree to the terms.",
                     })}
+                    
                   />
                   <span>
                     {" "}
@@ -446,7 +448,7 @@ const VendorSignup = () => {
                     justifyContent: "center",
                   }}
                 >
-                  <span>Already have an account?</span>
+                  <span >Already have an account?</span>
                   <NavLink
                     to={"/vendor-login"}
                     style={{ textDecoration: "none", color: "#1BB970" }}

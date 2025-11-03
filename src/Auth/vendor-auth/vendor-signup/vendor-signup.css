@@ -17,6 +17,7 @@
   display: flex;
   margin-top: 20px;
   padding-left: 30px;
+  cursor: pointer;
 }
 
 .image {
@@ -103,4 +104,177 @@
   background-color: #ccc;
   transition: all 0.2s ease;
 }
+input:focus {
+  outline: none;
+  box-shadow: none; 
+}
+
+/* Make signup form responsive across all screen sizes */
+
+@media (max-width: 1200px) {
+  .form-container {
+    width: 80%;
+  }
+
+  .cardBody {
+    width: 90%;
+    height: auto;
+  }
+
+  .btnsignup {
+    width: 100%;
+  }
+}
+
+@media (max-width: 992px) {
+  .form-container {
+    width: 90%;
+  }
+
+  .cardBody {
+    width: 95%;
+    padding: 1.5rem;
+  }
+
+  .cardBody > h4 {
+    padding-left: 1rem;
+  }
+
+  .btnsignup {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .form-container > header {
+    width: 100%;
+    justify-content: center;
+    padding-left: 0;
+    
+  }
+
+  .cardBodyWrapper {
+    padding: 10px;
+  }
+
+  .cardBody {
+    width: 100%;
+    height: auto;
+  }
+
+  .formStyle {
+    width: 100%;
+  }
+
+  .formStyle input,
+  .btnsignup {
+    width: 100% !important;
+  }
+
+  .formStyle > div[style*="display: flex"][style*="gap: 20px"] {
+    flex-direction: column !important;
+    gap: 15px !important;
+  }
+
+  .cardBody article h3 {
+    font-size: 24px;
+  }
+
+  .cardBody article p {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-container {
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  .cardBody {
+    padding: 1rem;
+    width: 100%;
+  }
+
+  .cardBody article h3 {
+    font-size: 20px;
+  }
+
+  .cardBody article p {
+    font-size: 13px;
+  }
+
+  .btnsignup {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  input,
+  label,
+  span,
+  a {
+    font-size: 14px !important;
+  }
+}
+
+
+@media (max-width: 768px) {
+
+  .formStyle > div > div[style*="border-radius: 8px"][style*="padding: 12px 6px"] {
+    width: 100% !important;
+    display: flex;
+    align-items: center;
+  }
+
+  .formStyle input[name="password"],
+  .formStyle input[name="confirmPassword"] {
+    width: 100% !important;
+  }
+
+  /* Checkbox container adjustments */
+  .formStyle > div > input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin-top: 3px;
+  }
+
+  .formStyle > div > span {
+    font-size: 14px;
+    line-height: 1.3;
+    flex: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .formStyle > div > div[style*="border-radius: 8px"][style*="padding: 12px 6px"] {
+    width: 100% !important;
+  }
+
+  .formStyle input[name="password"],
+  .formStyle input[name="confirmPassword"] {
+    width: 100% !important;
+  }
+
+  .formStyle > div > input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+    margin-top: 2px;
+  }
+
+  .formStyle > div > span {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  
+  input[type="checkbox"] {
+    width: 14px !important;
+    height: 14px !important;
+    margin-top: 5px !important
+  }
+
+}
+
+
 

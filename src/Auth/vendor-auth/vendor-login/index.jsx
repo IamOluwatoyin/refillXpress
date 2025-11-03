@@ -27,12 +27,18 @@ const VendorLogin = () => {
        
       console.log("formData", response);
        localStorage.setItem(import.meta.env.VITE_VENDOR_TOKEN,response.data.token)
+       localStorage.setItem(import.meta.env.VITE_VENDOR_ID,response.data.data.id)
       toast.success("Account successfully created");
       setShowModal(true);
 
       setTimeout(() => {
         setShowModal(false);
-        navigate("/vendor-dashboard");
+        if(response?.data?.data?.showKycPage === true){
+          navigate("/vendor-kyc");
+        }else{
+          navigate("/vendor-dashboard")
+        }
+        
       }, 2000);
     } catch (error) {
       console.log("not working", error);
@@ -46,8 +52,8 @@ const VendorLogin = () => {
     <>
       <div className="form-wrapperlogin">
         <div className="form-containerlogin">
-          <header>
-            <img src="/src/assets/logo.svg" alt="logo" className="image" onClick={()=>navigate("/")}/>
+          <header onClick={()=>navigate("/")}>
+            <img src="/Images/logo.svg" alt="logo" className="image" />
 
             <h1>
               Refill<span>Xpress</span>
@@ -92,7 +98,7 @@ const VendorLogin = () => {
                         padding: "12px",
                         borderRadius: "4px",
                         border: "1px solid #ccc",
-                        width: "39.3125rem",
+                        width: "100%",
                         background: "#F2F6F5",
                       }}
                     />
@@ -115,7 +121,7 @@ const VendorLogin = () => {
                         padding: "12px 6px",
                         borderRadius: "4px",
                         border: "1px solid #9b9191cc",
-                        width: "39.3125rem",
+                        width: "100%",
 
                         background: "#F2F6F5",
                       }}

@@ -16,3 +16,12 @@ export const vendorForgotPasswordOtpResend  = (data) => api.post("/vendor/vendor
 
 export const vendorResetPassword = (data) => api.post("/vendor/reset-password",data)
 
+export const vendorKycPost = (data,id) =>api.post(`/vendorKyc/${id}`,data,{
+  headers:{
+     "Content-Type": "multipart/form-data",
+  }
+})
+
+export const vendorAcceptRejectOrder = ({ orderId, action }) =>
+  api.post(`/vendor/accept/rejectOrder/${orderId}`, { action });
+
