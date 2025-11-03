@@ -32,7 +32,9 @@ import VendorLogin from "../Auth/vendor-auth/vendor-login";
 import VendorVerify from "../Auth/vendor-auth/verify-email";
 import VendorForgotPassword from "../Auth/vendor-auth/vendor-forgot-password";
 import VendorDashboard from "../Pages/feature/component/Dashboard/Vendor-Dashboard";
-import ResetPasswordVendor from "../Auth/vendor-auth/vendor-reset-password"
+import ResetPasswordVendor from "../Auth/vendor-auth/vendor-reset-password";
+import VerifyEmail from "../Auth/Rider/verify-email/Index";
+import RiderApplicationForm from "../Auth/Rider/Rider-Kyc";
 import BusinessDetails from "../Pages/feature/component/profile/BusinessDetails";
 import BankDetails from "../Pages/feature/component/profile/BankDetails";
 import VendorDashboardEmpty from "../Pages/feature/component/Dashboard/VendorDashboardEmpty";
@@ -90,7 +92,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "vendor-signup",
-    element: < VendorSignup/>,
+    element: <VendorSignup />,
   },
   {
     path: "vendor-login",
@@ -116,19 +118,18 @@ export const router = createBrowserRouter([
     path: "vendor-kyc",
     element: <KYC />,
   },
-    {
+  {
     path: "vendor-business",
-    element: <BusinessDetails/>,
+    element: <BusinessDetails />,
   },
   {
     path: "vendor-bank",
-    element: <BankDetails/>,
+    element: <BankDetails />,
   },
-   {
+  {
     path: "vendor-dashboardEmpty",
-    element: <VendorDashboardEmpty/>,
+    element: <VendorDashboardEmpty />,
   },
-
 
   {
     path: "vendor-dashboard",
@@ -201,6 +202,14 @@ export const router = createBrowserRouter([
   {
     path: "/riderlogin",
     element: <RiderLogin />,
+  },
+  {
+    path: "verify-email",
+    element: <VerifyEmail />,
+  },
+  {
+    path: "rider-kyc",
+    element: <RiderApplicationForm />,
   },
 
   // {
