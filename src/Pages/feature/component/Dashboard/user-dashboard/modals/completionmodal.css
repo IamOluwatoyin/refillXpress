@@ -1,0 +1,109 @@
+.completionmodal {
+ width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: hsla(0, 0%, 0%, 0.027);
+    backdrop-filter: blur(1px);
+    position: absolute;
+    top: 0;   
+}
+.modal-itself {
+    width: 50%;
+    height: max-content;
+    /* height: 90vh; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-block: 0.3rem;
+    background-color: #fff;
+    border-radius: 0.5rem;
+    gap: 0.4rem;
+    padding: 1rem;
+    /* box-shadow: ; */
+
+}
+.modal-heading {
+    width: 95%;
+    height: max-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: 0.5rem;
+    h3 {
+        text-transform: capitalize;
+    }
+
+}
+.order-code {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    h4 {
+        text-transform: capitalize;
+        margin-block: 0;
+    }
+}
+
+.the-vendor-name {
+    color: #ddd;
+    text-transform: capitalize;
+}
+.order-info {
+    width: 95%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    /* padding: 0.5rem; */
+    gap: 3rem;
+}
+.order-info-details {
+    width: max-content;
+    /* padding: 0.5rem; */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.total-amt {
+    width: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-transform: capitalize;
+}
+.generate-holder {
+    width: 95%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.generate {
+    width: 100%;
+    height: max-content;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-style: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    color: #fff;
+    font-size: 1rem;
+    text-transform: capitalize;
+    background-color: darkorange;
+}
+.icon-type {
+    color: #ddd;
+    font-size: 1.2rem;
+} 
+.the-order-info {
+    text-transform: capitalize;
+    color: #ddd;
+}

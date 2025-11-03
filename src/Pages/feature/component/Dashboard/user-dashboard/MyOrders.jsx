@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./myorders.css"
 import "./homecontent.css"
 import { MdVerified } from "react-icons/md";
@@ -9,15 +9,21 @@ import { RxCaretDown } from "react-icons/rx";
 import { LuSearch } from "react-icons/lu";
 import { BsArrowRight } from "react-icons/bs";
 import { FiPackage } from "react-icons/fi";
-
-
+import CompletionModal from './modals/CompletionModal';
+import DeliveryVerification from './modals/DeliveryVerification';
+import { useNavigate, Outlet } from 'react-router-dom';
 const MyOrders = () => {
+    const nav = useNavigate()
+    const [show, setShow] = useState(false)
   return (
+  <>
     <main className='myorders'>
+        {/* {show && <CompletionModal />} */}
+        {show && <DeliveryVerification />}
       <header className="heading">
             <div className="texts">
                 <h3> my orders</h3>
-                view your orders
+                <span>view your orders</span>
             </div>
         </header>
         <section className="views shrink">
@@ -66,10 +72,10 @@ const MyOrders = () => {
                         +2348237824681
                     </div>
                     <div className="complete-track">
-                        <button className="delivered">
+                        <button onClick={()=> setShow(true)} className="delivered">
                             complete
                         </button>
-                        <button className="order-now adjust">
+                        <button onClick={()=> nav("/userdashboard/track-order")} className="order-now adjust">
                             track delivery
                         </button>
                     </div>
@@ -83,6 +89,8 @@ const MyOrders = () => {
                 </div>
         </section>
     </main>
+  </>
+    
   )
 }
 

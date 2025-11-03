@@ -1,0 +1,110 @@
+.customer-account {
+ width: 100%;
+      height: max-content;
+    display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: 1rem;
+}
+
+   h3 {
+        margin-block: 1rem;
+        font-size: 2rem;
+        text-transform: capitalize;
+      }   
+
+      .profile-box {
+        width: 10rem;
+        height: 10rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-style: none;
+        border-radius: 50%;
+        background-color: #f4f4f4;
+        
+      }
+      .upload   {
+        width: 95%;
+        height: max-content;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start ;
+        gap: 3rem;
+        position: relative;
+      }
+      input[type="file"] {
+        display: none;
+      }
+      label {
+        width: max-content;
+      }
+      .green-circle {
+        width: 3.5rem;
+        height: 3.5rem;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-style: none;
+        background-color: green;
+        color: #fff;
+        font-size: 1.4rem;
+        position: absolute;  
+        top: 52%;
+        left: 12%;
+    }
+
+    .inputs {
+        width: 95%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-block: 1.5rem;
+    }
+
+
+     .div-input {
+        width: 48%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;  
+        gap: 0.4rem;
+         
+        input {
+            width: 100%;
+            height: 3rem;
+            padding: 0.6rem;
+            box-sizing: border-box;
+            border-radius: 0.5rem;
+            outline: none;
+            border-style: none;
+            background-color: #f4f4f4;
+        }
+    } 
+    label {
+        text-transform: capitalize;
+        margin-block: 0.2rem;
+    }
+    .my-order .destination {
+      text-transform: capitalize;
+    }
+    .my-order .address {
+      color: #aaa
+    }
+    .add-destination {
+      width: 100%;
+      padding: 0.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .addbutton {
+        background-color: transparent;
+        border: none;
+        text-transform: capitalize;
+
+      }
+    }

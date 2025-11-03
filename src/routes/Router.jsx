@@ -33,6 +33,11 @@ import VendorVerify from "../Auth/vendor-auth/verify-email";
 import VendorForgotPassword from "../Auth/vendor-auth/vendor-forgot-password";
 import VendorDashboard from "../Pages/feature/component/Dashboard/Vendor-Dashboard";
 import ResetPasswordVendor from "../Auth/vendor-auth/vendor-reset-password"
+import CustomerReview from "../Pages/feature/component/Dashboard/user-dashboard/CustomerReview";
+import CustomerAccount from "../Pages/feature/component/Dashboard/user-dashboard/CustomerAccount";
+import TrackOrder from  "../Pages/feature/component/Dashboard/user-dashboard/TrackOrder";               
+
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -57,6 +62,18 @@ export const router = createBrowserRouter([
       {
         path: "myorders",
         element: <MyOrders />,
+      },
+      {
+        path: "customer-review",
+        element: <CustomerReview />,
+      },
+      {
+        path: "customer-account",
+        element: <CustomerAccount />,
+      },
+      {
+        path: "track-order",
+        element: <TrackOrder />,
       },
     ],
   },

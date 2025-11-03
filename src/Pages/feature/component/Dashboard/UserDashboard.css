@@ -4,14 +4,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #00000005;
+    background-color: #F5F5F5;
 }
 .dashboard-grid {
     width: 100%;
     height: max-content;
     margin-bottom: 0.5rem;
     display: grid;
-    background-color: #00000005;
+    background-color: #F5F5F5;
     grid-template-columns: 300px 1fr;
     grid-template-rows: 50px max-content;   
     gap: 3rem;
@@ -26,11 +26,12 @@
     justify-content: center;
     align-items: center;
     background-color: #fff;
-    box-shadow: 0 2px 20px 0 #00000018;
+    box-shadow: 0 1px 1px 0 #00000018;
     display: flex;
     align-items: center;
     position: fixed;
     top: 0;
+    z-index: 9999999;
 }
 .fire {
     width: 3rem;
@@ -43,7 +44,7 @@
     border-radius: 0.3rem;
     margin-inline: 0.5rem;
 }
-.profile {
+.glorys-profile {
     background-color: hsl(18, 100%, 50%);
     color: #fff;
     width: 50px;
@@ -121,6 +122,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #F5F5F5;
+    
 }
 .active {
     background-color: #ff7300;
