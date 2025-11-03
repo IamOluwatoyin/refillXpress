@@ -95,12 +95,12 @@ const VendorVerify = () => {
     <div>
       <div className="form-wrapper-verify">
         <div className="form-container-verify">
-          <header>
+          <header  onClick={() => navigate("/")}>
             <img
-              src="/src/assets/logo.svg"
+              src="/Images/logo.svg"
               alt="logo"
               className="image"
-              onClick={() => navigate("/")}
+             
             />
             <h1>
               Refill<span>Xpress</span>
