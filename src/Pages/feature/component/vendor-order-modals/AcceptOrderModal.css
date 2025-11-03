@@ -5,7 +5,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 100;
+  z-index: 1000;
 }
 
 .orderModal {
@@ -19,7 +19,7 @@
   flex-direction: column;
   gap: 20px;
   font-family: "Inter", sans-serif;
-  animation: fadeIn 0.25s ease;
+  z-index: 1001;
 }
 
 

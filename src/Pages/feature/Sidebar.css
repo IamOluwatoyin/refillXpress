@@ -62,7 +62,6 @@
   width: 223px;
   height: 47.98px;
   border-radius: 10px;
-  background-color: #f0dccc;
   display: flex;
   gap: 10px;
   padding: 15px;
@@ -70,9 +69,9 @@
   line-height: 24px;
   font-weight: 400;
   align-items: center;
-  color: #ff7f11;
+  
 }
-.orders {
+.dashboard-order {
   width: 223px;
   height: 47.98px;
   border-radius: 10px;
@@ -90,7 +89,6 @@
   width: 223px;
   height: 47.98px;
   border-radius: 10px;
-  /* background-color: #f0dccc; */
   display: flex;
   gap: 10px;
   padding: 15px;
@@ -130,7 +128,7 @@
   align-items: center;
 }
 
-.orders > sub {
+.dashboard-order > sub {
   display: flex;
   width: 100%;
   justify-content: space-between;
@@ -146,6 +144,23 @@
   color: #fff;
 }
 
+.Dashboard-logout {
+  width: 223px;
+  height: 47.98px;
+  border-radius: 10px;
+  /* background-color: #f0dccc; */
+  display: flex;
+  gap: 10px;
+  padding: 15px;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 400;
+  /* justify-content: center; */
+  align-items: center;
+  
+}
+
+
 .dashboard:hover,
 .order:hover,
 .analytics:hover,
@@ -159,3 +174,127 @@
   background-color: #f0dccc !important;
   color: #ff7f11 !important;
 }
+
+
+/* ===== Sidebar Responsive Column Format ===== */
+@media (max-width: 992px) {
+  .sidebarWrapper {
+    width: 100%;
+    height: auto; /* allows vertical growth */
+    position: relative; /* no longer fixed */
+    display: flex;
+    flex-direction: column;
+    padding: 10px 5px;
+    box-shadow: none;
+    margin-bottom: 20px; /* space below for dashboard */
+  }
+
+  .sidebarContainer {
+    width: 100%;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 5px;
+    align-items: flex-start;
+  }
+
+  .vendor-icon-holder {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .vendor-icon-wrapper {
+    width: 100%;
+    gap: 8px;
+    font-size: 14px;
+  }
+
+  .dashboards,
+  .dashboard-order,
+  .analytics,
+  .profiles,
+  .settings,
+  .Dashboard-logout {
+    width: 100%;
+    height: 40px;
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  .profileNotification {
+    width: 22px;
+    height: 18px;
+    font-size: 10px;
+  }
+
+  .verified-btn {
+    width: auto;
+    height: 18px;
+    font-size: 10px;
+  }
+}
+
+/* For small mobile devices (<768px) */
+@media (max-width: 768px) {
+  .sidebarWrapper {
+    padding: 8px 5px;
+  }
+
+  .dashboards,
+  .dashboard-order,
+  .analytics,
+  .profiles,
+  .settings,
+  .Dashboard-logout {
+    padding: 6px 10px;
+    font-size: 12px;
+    height: 36px;
+  }
+
+  .vendor-icon-wrapper {
+    gap: 5px;
+  }
+}
+
+/* Gap between sidebar and dashboard on larger screens */
+.dashboard-layout {
+  display: flex;
+  gap: 20px; /* space between sidebar and dashboard */
+}
+
+/* Adjust sidebar and dashboard on tablet and mobile */
+@media (max-width: 992px) {
+  .dashboard-layout {
+    flex-direction: column; /* sidebar on top, dashboard below */
+    gap: 15px; /* vertical spacing */
+  }
+
+  .dashboard-main {
+    margin-left: 0; /* remove left margin for column layout */
+    width: 100%;
+    padding: 10px;
+  }
+}
+
+.sidebarWrapper {
+  width: 18%;
+  height: 89vh;
+  display: flex;
+  position: fixed;
+  margin-right: 20px; /* add breathing room */
+}
+
+.dashboard-main {
+  flex: 1;
+  margin-left: 18%; /* keeps it aligned with sidebar width */
+  padding: 20px;
+}
+
+/* On smaller screens, remove left margin */
+@media (max-width: 768px) {
+  .dashboard-main {
+    margin-left: 0;
+    padding: 10px;
+  }
+}
+
+

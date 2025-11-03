@@ -2,8 +2,24 @@
 import React from "react";
 import { IoClose } from "react-icons/io5";
 import "./AcceptOrderModal.css";
+import { vendorAcceptRejectOrder } from "../../../../api/mutation";
 
 const AcceptOrderModal = ({ onClose }) => {
+
+ 
+  // const handleAccept = async () => {
+  //   try {
+  //     const response = await vendorAcceptRejectOrder({
+  //       orderId: order.id,
+  //       action: "accept",
+  //     });
+  //     console.log(" Order accepted:", response);
+  //     onClose();
+  //   } catch (error) {
+  //     console.error(" Failed to accept order", error);
+  //   }
+  // };
+
   return (
     <div className="orderOverlay" onClick={onClose}>
       <div
@@ -18,19 +34,19 @@ const AcceptOrderModal = ({ onClose }) => {
         <div className="orderHeader">
           <div className="orderCode">
             <h4>Order Details</h4>
-            <p>#GR45821</p>
+            <p>{order?.orderNumber || "N/A"}</p>
           </div>
          
         </div>
 
         
-         <button className="acceptedBtn">Accepted</button>
+         <button className="acceptedBtn"onClick={handleAccept}>Accepted</button>
         <div className="section">
           <h5>Customer Information</h5>
           <div className="customerDetails">
-            <p>Glory Otene</p>
-            <p>+2347060994040</p>
-            <p>No 1 Salua Street, Magodo</p>
+            <p>{order?.user?.firstName} {order?.user?.lastName}</p>
+            <p>{order?.user?.phoneNumber}</p>
+            <p>{order?.deliveryAddress}</p>
           </div>
         </div>
 
@@ -39,11 +55,11 @@ const AcceptOrderModal = ({ onClose }) => {
           <h5>Order Details</h5>
           <div className="detailRow">
             <span>Quantity</span>
-            <span>15 kg</span>
+            <span>{order?.quantity} kg</span>
           </div>
           <div className="detailRow">
             <span>Date</span>
-            <span>Oct 20, 2025</span>
+            <span>{new Date(order?.createdAt).toLocaleDateString()}</span>
           </div>
           <div className="detailRow">
             <span>Time Slot</span>
@@ -55,16 +71,24 @@ const AcceptOrderModal = ({ onClose }) => {
         <div className="section">
           <h5>Price Breakdown</h5>
           <div className="detailRow">
-            <span>Gas (11kg × 1000)</span>
-            <span>₦11,000</span>
+            <span>Gas (
+      {order?.quantity ? `${order.quantity}kg` : "—"} × ₦
+      {order?.unitPrice?.toLocaleString() || "—"})</span>
+
+            <span>{order?.gasPrice
+        ? order.gasPrice.toLocaleString()
+        : order?.quantity && order?.unitPrice
+        ? (order.quantity * order.unitPrice).toLocaleString()
+        : "—"}</span>
           </div>
+
           <div className="detailRow">
             <span>Delivery Fee</span>
-            <span>₦1,500</span>
+            <span>₦{order?.deliveryFee?.toLocaleString() || "—"}</span>
           </div>
           <div className="detailRow totalRow">
             <span>Total Amount</span>
-            <span>₦12,500</span>
+            <span>₦{order?.price?.toLocaleString() || "—"}</span>
           </div>
         </div>
 

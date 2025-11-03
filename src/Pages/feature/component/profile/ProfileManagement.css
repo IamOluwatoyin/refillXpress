@@ -22,19 +22,18 @@ font-weight: 600;
 color: #111827;
 }
 
-.profileheader p {
+.profileheader span {
 color: #6b7280;
 font-size: 16px;
 }
 
-/* Verification Card */
 .verificationCard {
 position: relative;
 background: #16a34a;
 color: #fff;
 border-radius: 10px;
 padding: 25px;
-/* overflow: hidden; */
+overflow: hidden;
 
 }
 
@@ -48,7 +47,7 @@ align-items: center;
 display: flex;
 align-items: center;
 gap: 6px;
-font-size: 18px;
+font-size: 20px;
 font-weight: 500;
 text-align: right;
 }
@@ -89,7 +88,7 @@ font-size: 40px;
 color: white;
 }
 
-/* Tabs */
+
 .tabs {
 display: flex;
 background: #f3f4f6;
@@ -118,7 +117,6 @@ color: #111827;
 
 }
 
-/* Profile Card */
 .profileCard {
 background: #fff;
 border: 1px solid #e5e7eb;

@@ -223,17 +223,6 @@
   border-radius: 50px;
   position: relative;
 }
-/* .toggle::after {
-  content: "";
-  position: absolute;
-  top: 2px;
-  left: 22px;
-  width: 16px;
-  height: 16px;
-  background: #fff;
-  border-radius: 50%;
-}
- */
 
 .submitContainer {
   display: flex;
@@ -307,3 +296,26 @@
   line-height: 1.5;
 }
  
+.pendingBtn {
+  background: #b6aa2a;
+  color: #92400e;
+}
+
+.pending {
+  background: #fef9c3;
+  color: #92400e;
+}
+
+.uploadedBtn {
+  border: 1px solid #16a34a;
+  color: #16a34a;
+}
+
+.rejectedBtn {
+  border: 1px solid #dc2626;
+  color: #dc2626;
+}
+
+.rejectedRow {
+  background: #fef2f2;
+}
