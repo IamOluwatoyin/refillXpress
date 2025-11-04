@@ -6,7 +6,8 @@ import { Outlet } from "react-router-dom";
 
 const DashboardLayout = () => {
   return (
-    <div classNames="DashboardlayoutWrapper">
+   
+      <div classNames="DashboardlayoutWrapper">
       <DashboardHeader />
       <div className="Content-wrapper">
         <div className="sidebar-wrapper">
@@ -26,6 +27,8 @@ const DashboardLayout = () => {
         </div>
       </div>
     </div>
+    
+    
   );
 };
 

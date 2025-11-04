@@ -91,3 +91,221 @@
   align-items: flex-start;
   margin-bottom: 20px;
 }
+
+.completed_order_content {
+  padding: 10px 0;
+}
+
+.completed_deliveries_list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.completed_delivery_item {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.completed_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.completed_order_id {
+  font-weight: 700;
+  color: #333;
+  font-size: 1rem;
+}
+
+.status_badge.completed {
+  background-color: #28a745;
+}
+
+.completed_fee {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #4caf50;
+}
+
+.completed_details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.customer_time {
+  display: flex;
+  flex-direction: column;
+}
+
+.customer_name_comp {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #333;
+  margin-bottom: 2px;
+}
+
+.delivery_time_comp {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.gas_quantity {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #777;
+}
+
+.completed_meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.distance_rating {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.completed_rating {
+  color: #ffc107;
+  font-size: 1rem;
+  margin-left: 5px;
+}
+
+.bonus_tip {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background-color: #d1c4e9;
+  color: #673ab7;
+}
+
+.active_order_content {
+  padding: 10px 0;
+}
+
+.active_order_card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.active_order_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.active_order_id {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.status_badge {
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: white;
+}
+
+.status_badge.in_progress {
+  background-color: #28a745;
+}
+
+.active_order_fee {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #4caf50;
+}
+
+.active_order_details {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.refill_type {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.customer_name_detail {
+  font-size: 0.9rem;
+  margin-top: 2px;
+}
+
+.location_sections {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.location_card {
+  flex: 1;
+  background-color: #f7f9fc;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+
+.location_title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #333;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.location_address {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.4;
+}
+
+.active_order_actions {
+  display: flex;
+  gap: 15px;
+}
+
+.btn_navigate,
+.btn_complete {
+  flex: 1;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: opacity 0.2s;
+}
+
+.btn_navigate {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn_complete {
+  background-color: #ff9800;
+  color: white;
+}

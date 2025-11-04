@@ -10,31 +10,31 @@ const About = () => {
       </h2>
       <Wrapper>
         <ImgHolder>
-          <Image src={AboutImg} alt="" />
+          <Image src={AboutImg} alt="Illustration of gas delivery service" />
         </ImgHolder>
         <Rightholder>
           <h1 style={{ marginBottom: "40px" }}>
             Empowering Convenient, Safe, and Reliable Gas Refills for Every Home
           </h1>
           <p style={{ marginBottom: "40px" }}>
-            At RefillXpress, we’re redefining how households and businesses
-            access cooking gas. Our goal is simple , to make gas refilling
-            faster, safer, and more convenient for everyone.{" "}
+            At **RefillXpress**, we’re redefining how households and businesses
+            access cooking gas. Our goal is simple, to make gas refilling
+            faster, safer, and more convenient for everyone.
           </p>
           <p style={{ marginBottom: "40px" }}>
-            We connect customers with verified local gas vendors, ensuring every
-            refill is transparent, affordable, and reliable. With just a few
-            clicks, users can locate nearby suppliers, compare prices, and order
-            refills from the comfort of their homes.
+            We connect customers with **verified local gas vendors**, ensuring
+            every refill is transparent, affordable, and reliable. With just a
+            few clicks, users can locate nearby suppliers, compare prices, and
+            order refills from the comfort of their homes.
           </p>
           <p style={{ marginBottom: "40px" }}>
-            For vendors, RefillXpress offers digital visibility, helping them
-            reach more customers, manage orders efficiently, and grow their
+            For vendors, RefillXpress offers **digital visibility**, helping
+            them reach more customers, manage orders efficiently, and grow their
             business.
           </p>
           <p style={{ marginBottom: "40px" }}>
-            We believe in trust, transparency, and technology , three values
-            that drive everything we do. Whether you’re a busy professional, a
+            We believe in trust, transparency, and technology, three values that
+            drive everything we do. Whether you’re a busy professional or a
             family at home, RefillXpress ensures your gas needs are handled
             seamlessly so you can focus on what truly matters.
           </p>
@@ -52,8 +52,9 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding-top: 50px;
-  font-weight: 40%;
+  padding: 50px 20px;
+  font-weight: 400;
+  text-align: center;
 
   h2 {
     font-size: 70px;
@@ -61,15 +62,29 @@ const Container = styled.div`
     span {
       color: #ff7f11;
     }
+
+    @media (max-width: 768px) {
+      font-size: 50px;
+    }
+    @media (max-width: 480px) {
+      font-size: 40px;
+    }
   }
 `;
 
 const Wrapper = styled.div`
   width: 90%;
+  max-width: 1200px;
   display: flex;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 50px;
   justify-content: space-between;
+
+  @media (max-width: 992px) {
+    flex-direction: column;
+    width: 100%;
+    padding: 0 5%;
+  }
 `;
 
 const Image = styled.img`
@@ -82,19 +97,43 @@ const ImgHolder = styled.div`
   width: 48%;
   overflow: hidden;
   height: 800px;
+
+  @media (max-width: 992px) {
+    width: 100%;
+    height: 400px;
+    margin-bottom: 40px;
+  }
+  @media (max-width: 480px) {
+    height: 300px;
+  }
 `;
 
 const Rightholder = styled.div`
   width: 48%;
   display: flex;
   flex-direction: column;
+  text-align: left;
+
+  @media (max-width: 992px) {
+    width: 100%;
+  }
 
   h1 {
     width: 600px;
     font-size: 48px;
 
-    p {
-      margin-top: 50px;
+    @media (max-width: 992px) {
+      width: 100%;
+      font-size: 36px;
+      text-align: center;
     }
+    @media (max-width: 576px) {
+      font-size: 28px;
+    }
+  }
+
+  p {
+    margin-bottom: 40px;
+    line-height: 1.6;
   }
 `;

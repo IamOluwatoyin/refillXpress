@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import "./RiderSignup.css";
-import { MdCheckBoxOutlineBlank } from "react-icons/md";
-import { IoFlag } from "react-icons/io5";
-import { RiArrowDropDownLine } from "react-icons/ri";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { Link, NavLink, useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
 import SpinnerModal from "../../vendor-auth/spinner-modal";
 
 const RiderSignup = () => {
@@ -13,58 +11,51 @@ const RiderSignup = () => {
   const [cshowPassword, csetShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [showModal, setShowModal] = useState(false);
+
   const [formData, setFormData] = useState({
-    businessName: "",
+    firstName: "",
+    lastName: "",
     email: "",
-    phone: "",
-    address: "",
-    vendorFirstName: "",
-    vendorLastName: "",
+    phoneNumber: "",
     confirmPassword: "",
     password: "",
     agree: false,
   });
   const navigate = useNavigate();
 
-  const validate = (e) => {
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : value,
+    });
+  };
+
+  const validate = async (e) => {
     e.preventDefault();
     const newErrors = {};
-    if (!formData.businessName.trim()) {
-      newErrors.businessName = "Business name is required";
-    }
 
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = "Enter your first name";
+    }
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = "Enter your last name";
+    }
     if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Please enter a valid email address.";
     }
-
-    if (!/^\d+$/.test(formData.phone)) {
-      newErrors.phone = "Phone number must contain only digits";
-    } else if (formData.phone.length !== 10) {
-      newErrors.phone = "10 digit phone number is required";
+    if (!/^\+?\d{10,15}$/.test(formData.phoneNumber)) {
+      newErrors.phoneNumber = "Please enter a valid phone number.";
     }
-    if (!formData.address.trim()) {
-      newErrors.address = "Enter your business address";
-    }
-
-    if (!formData.vendorFirstName.trim()) {
-      newErrors.vendorFirstName = "Enter your first name";
-    }
-
-    if (!formData.vendorLastName.trim()) {
-      newErrors.vendorLastName = "Enter your last name";
-    }
-
     if (
       !/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/.test(formData.password)
     ) {
       newErrors.password =
         "Password must be at least 8 characters and include letters, numbers, and special characters.";
     }
-
     if (formData.confirmPassword !== formData.password) {
       newErrors.confirmPassword = "Passwords do not match.";
     }
-
     if (!formData.agree) {
       newErrors.agree = "You must agree to the terms.";
     }
@@ -72,26 +63,43 @@ const RiderSignup = () => {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length > 0) {
-      toast.error("Please fill all required fields.");
-      setShowModal(false);
+      toast.error("Please fill all required fields correctly.");
       return;
     }
 
-    toast.success("Account successfully created");
+    const { confirmPassword, agree, ...payload } = formData;
+
+    const API_BASE_URL = "https://refillexpress.onrender.com/api/v1";
+
     setShowModal(true);
 
-    setTimeout(() => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/rider`, payload);
+
+      console.log("Signup successful:", response.data);
+      localStorage.setItem("userEmail", formData.email);
+      toast.success("Account successfully created!");
+
+      setTimeout(() => {
+        navigate("/verify-email");
+      }, 1000);
+    } catch (error) {
+      const message =
+        error.response?.data?.message ||
+        error.message ||
+        "Signup failed. Could not connect to the server.";
+
+      console.error("Signup failed:", error.response || error);
+      toast.error(message);
+    } finally {
       setShowModal(false);
-      navigate("/vendorlogin");
-    }, 2000);
+    }
 
     setFormData({
-      businessName: "",
+      firstName: "",
+      lastName: "",
       email: "",
-      phone: "",
-      address: "",
-      vendorFirstName: "",
-      vendorLastName: "",
+      phoneNumber: "",
       confirmPassword: "",
       password: "",
       agree: false,
@@ -99,243 +107,198 @@ const RiderSignup = () => {
   };
 
   return (
-    <div className="form-wrapper">
-      <div className="form-container">
-        <header>
-          <img src="/src/assets/logo.svg" alt="logo" className="image" />
-
+    <div className="rider-signup-page">
+      <div className="form-wrapper">
+        <header className="form-header">
+          <img src="/src/assets/logo.svg" alt="logo" className="logo-image" />
           <h1>
-            Refill<span>Xpress</span>
+            Refill<span className="logo-span">Xpress</span>
           </h1>
         </header>
-        <section className="cardBodyWrapper">
-          <main className="cardBody">
-            <article>
-              <h3>Sign Up as Rider</h3>
-              <p>Sign Up to start dilivering with us</p>
+
+        <section className="card-body-wrapper">
+          <main className="signup-card">
+            <article className="signup-title-section">
+              <h3>Become a Rider</h3>
+              <p>Sign Up to start delivering with us</p>
             </article>
 
-            <section className="formWrapper">
-              <form
-                className="formStyle"
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "20px",
-                  height: "",
-                }}
-                onSubmit={validate}
-              >
-                {errors.address && (
-                  <p style={{ color: "red" }}>{errors.address}</p>
-                )}
-
-                <div style={{ display: "flex", gap: "20px" }}>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "5px",
-                    }}
-                  >
-                    <label>First Name</label>
+            <section className="form-section">
+              <form className="signup-form" onSubmit={validate}>
+                <div className="input-row-group">
+                  <div className="input-field-group">
+                    <label htmlFor="firstName">First Name</label>
                     <input
-                      id="vendorFirstName"
+                      id="firstName"
                       type="text"
-                      name="vendorFirstName"
-                      value={formData.vendorFirstName}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          vendorFirstName: e.target.value,
-                        })
-                      }
-                      style={{
-                        padding: "8px",
-                        borderRadius: "8px",
-                        border: "1px solid #ccc",
-                        width: " 18.875rem",
-                        background: "#F2F6F5",
-                        boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-                      }}
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleInputChange}
+                      className={`form-input ${
+                        errors.firstName ? "input-error" : ""
+                      }`}
+                      placeholder="First Name"
                     />
-                    {errors.vendorFirstName && (
-                      <p style={{ color: "red" }}>{errors.vendorFirstName}</p>
+                    {errors.firstName && (
+                      <p className="error-text">{errors.firstName}</p>
                     )}
                   </div>
 
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "5px",
-                    }}
-                  >
-                    <label> Last Name</label>
+                  <div className="input-field-group">
+                    <label htmlFor="lastName">Last Name</label>
                     <input
-                      id="vendorLastName"
+                      id="lastName"
                       type="text"
-                      name="vendorLastName"
-                      value={formData.vendorLastName}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          vendorLastName: e.target.value,
-                        })
-                      }
-                      style={{
-                        padding: "8px",
-                        borderRadius: "8px",
-                        border: "1px solid #ccc",
-                        width: " 18.875rem",
-                        background: "#F2F6F5",
-                        boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-                      }}
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleInputChange}
+                      className={`form-input ${
+                        errors.lastName ? "input-error" : ""
+                      }`}
+                      placeholder="Last Name"
                     />
-                    {errors.vendorLastName && (
-                      <p style={{ color: "red" }}>{errors.vendorLastName}</p>
+                    {errors.lastName && (
+                      <p className="error-text">{errors.lastName}</p>
                     )}
                   </div>
                 </div>
 
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "5px",
-                  }}
-                >
-                  <label> Input Your Password</label>
+                <div className="input-row-group">
+                  <div className="input-field-group">
+                    <label htmlFor="email">Email Address</label>
+                    <input
+                      id="email"
+                      type="email"
+                      name="email"
+                      placeholder="Your email here..."
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className={`form-input ${
+                        errors.email ? "input-error" : ""
+                      }`}
+                    />
+                    {errors.email && (
+                      <p className="error-text">{errors.email}</p>
+                    )}
+                  </div>
+
+                  <div className="input-field-group phone-field">
+                    <label htmlFor="phoneNumber">Phone number</label>
+                    <div
+                      className={`form-input phone-input-wrapper ${
+                        errors.phoneNumber ? "input-error" : ""
+                      }`}
+                    >
+                      <span className="country-code">+234</span>
+                      <input
+                        id="phoneNumber"
+                        type="tel"
+                        name="phoneNumber"
+                        value={formData.phoneNumber}
+                        onChange={handleInputChange}
+                        placeholder="7080998844"
+                        className="phone-input"
+                      />
+                    </div>
+                    {errors.phoneNumber && (
+                      <p className="error-text">{errors.phoneNumber}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="input-field-group full-width">
+                  <label>Input Your Password</label>
                   <div
-                    style={{
-                      padding: "8px 4px",
-                      borderRadius: "8px",
-                      border: "1px solid #ccc",
-                      width: "39.3125rem",
-                      boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-                      background: "#F2F6F5",
-                    }}
+                    className={`password-input-wrapper ${
+                      errors.password ? "input-error" : ""
+                    }`}
                   >
                     <input
-                      placeholder=" Password ( 8 or more characters)"
+                      placeholder="Password ( 8 or more characters)"
                       type={showPassword ? "text" : "password"}
                       name="password"
                       value={formData.password}
-                      onChange={(e) =>
-                        setFormData({ ...formData, password: e.target.value })
-                      }
-                      style={{
-                        border: "none",
-                        outline: "none",
-                        background: "#F2F6F5",
-                        width: "37rem",
-                      }}
+                      onChange={handleInputChange}
+                      className="password-input"
                     />
                     {showPassword ? (
-                      <FaRegEye onClick={() => setShowPassword(false)} />
+                      <FaRegEye
+                        onClick={() => setShowPassword(false)}
+                        className="password-toggle-icon"
+                      />
                     ) : (
-                      <FaRegEyeSlash onClick={() => setShowPassword(true)} />
+                      <FaRegEyeSlash
+                        onClick={() => setShowPassword(true)}
+                        className="password-toggle-icon"
+                      />
                     )}
                   </div>
+                  {errors.password && (
+                    <p className="error-text">{errors.password}</p>
+                  )}
                 </div>
-                {errors.password && (
-                  <p style={{ color: "red" }}>{errors.password}</p>
-                )}
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "5px",
-                  }}
-                >
-                  <label> Comfirm Password</label>
+
+                <div className="input-field-group full-width">
+                  <label>Confirm Password</label>
                   <div
-                    style={{
-                      padding: "8px",
-                      borderRadius: "8px",
-                      border: "1px solid #ccc",
-                      background: "#F2F6F5",
-                      width: "39.3125rem",
-                      boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-                    }}
+                    className={`password-input-wrapper ${
+                      errors.confirmPassword ? "input-error" : ""
+                    }`}
                   >
                     <input
-                      placeholder="  Enter your same password here"
+                      placeholder="Enter your same password here"
                       type={cshowPassword ? "text" : "password"}
                       name="confirmPassword"
                       value={formData.confirmPassword}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          confirmPassword: e.target.value,
-                        })
-                      }
-                      style={{
-                        outline: "none",
-                        border: "none",
-                        width: "37rem",
-                        background: "#F2F6F5",
-                      }}
+                      onChange={handleInputChange}
+                      className="password-input"
                     />
                     {cshowPassword ? (
-                      <FaRegEye onClick={() => csetShowPassword(false)} />
+                      <FaRegEye
+                        onClick={() => csetShowPassword(false)}
+                        className="password-toggle-icon"
+                      />
                     ) : (
-                      <FaRegEyeSlash onClick={() => csetShowPassword(true)} />
+                      <FaRegEyeSlash
+                        onClick={() => csetShowPassword(true)}
+                        className="password-toggle-icon"
+                      />
                     )}
                   </div>
+                  {errors.confirmPassword && (
+                    <p className="error-text">{errors.confirmPassword}</p>
+                  )}
                 </div>
-                {errors.confirmPassword && (
-                  <p style={{ color: "red" }}>{errors.confirmPassword}</p>
-                )}
 
-                <div style={{ display: "flex", gap: "3px" }}>
+                <div className="terms-checkbox-group">
                   <input
                     type="checkbox"
                     name="agree"
                     checked={formData.agree}
-                    onChange={(e) =>
-                      setFormData({ ...formData, agree: e.target.checked })
-                    }
+                    onChange={handleInputChange}
+                    className="checkbox-input"
                   />
-                  <span>
-                    {" "}
+                  <span className="terms-text">
                     I agree to Refillxpress{" "}
-                    <a
-                      href="#"
-                      style={{ textDecoration: "none", color: "#1BB970" }}
-                    >
+                    <a href="#" className="terms-link">
                       terms and conditions
                     </a>
                   </span>
                 </div>
-                {errors.agree && <p style={{ color: "red" }}>{errors.agree}</p>}
-                <button
-                  style={{
-                    padding: "10px 12px",
-                    borderRadius: "8px",
-                    cursor: "pointer",
-                    background: "#FF7F11",
-                    border: "none",
-                    width: "39.3125rem",
-                    boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-                  }}
-                >
+                {errors.agree && (
+                  <p className="error-text checkbox-error-text">
+                    {errors.agree}
+                  </p>
+                )}
+
+                <button type="submit" className="submit-button">
                   Create Account
                 </button>
                 {showModal && <SpinnerModal />}
 
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "3px",
-                    justifyContent: "center",
-                  }}
-                >
+                <div className="signin-link-wrapper">
                   <span>Already have an account?</span>
-                  <NavLink
-                    to={"/vendorlogin"}
-                    style={{ textDecoration: "none", color: "#1BB970" }}
-                  >
+                  <NavLink to={"/riderlogin"} className="signin-link-bottom">
                     Sign in
                   </NavLink>
                 </div>

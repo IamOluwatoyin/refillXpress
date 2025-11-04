@@ -2,7 +2,6 @@ import React from "react";
 import "./AnalyticsManagement.css";
 import { FaNairaSign } from "react-icons/fa6";
 import { GoPackage } from "react-icons/go";
-import { IoIosArrowForward } from "react-icons/io";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import ProgressBar from "../../ProgressBar";
@@ -125,24 +124,3 @@ const AnalyticsManagement = () => {
 };
 
 export default AnalyticsManagement;
-
-{/* <div className="rate-row">
-      <div className="rate-label">
-        <p>5 <FaStar className="filled" /></p>
-        <p>172</p>
-      </div>
-      <div className="progress-bar">
-        <div className="progress-fill" style={{ width: "80%" }}></div>
-      </div>
-    </div>
-
-    
-     <div className="rate-row">
-      <div className="rate-label">
-        <p>4 <FaStar className="filled" /></p>
-        <p>50</p>
-      </div>
-      <div className="progress-bar">
-        <div className="progress-fill" style={{ width: "60%" }}></div>
-      </div> 
-    </div> */}

@@ -36,7 +36,12 @@ import ResetPasswordVendor from "../Auth/vendor-auth/vendor-reset-password"
 import CustomerReview from "../Pages/feature/component/Dashboard/user-dashboard/CustomerReview";
 import CustomerAccount from "../Pages/feature/component/Dashboard/user-dashboard/CustomerAccount";
 import TrackOrder from  "../Pages/feature/component/Dashboard/user-dashboard/TrackOrder";               
-
+import ResetPasswordVendor from "../Auth/vendor-auth/vendor-reset-password";
+import VerifyEmail from "../Auth/Rider/verify-email/Index";
+import RiderApplicationForm from "../Auth/Rider/Rider-Kyc";
+import BusinessDetails from "../Pages/feature/component/profile/BusinessDetails";
+import BankDetails from "../Pages/feature/component/profile/BankDetails";
+import VendorDashboardEmpty from "../Pages/feature/component/Dashboard/VendorDashboardEmpty";
 
 export const router = createBrowserRouter([
   {
@@ -103,7 +108,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "vendor-signup",
-    element: < VendorSignup/>,
+    element: <VendorSignup />,
   },
   {
     path: "vendor-login",
@@ -129,6 +134,18 @@ export const router = createBrowserRouter([
     path: "vendor-kyc",
     element: <KYC />,
   },
+  {
+    path: "vendor-business",
+    element: <BusinessDetails />,
+  },
+  {
+    path: "vendor-bank",
+    element: <BankDetails />,
+  },
+  {
+    path: "vendor-dashboardEmpty",
+    element: <VendorDashboardEmpty />,
+  },
 
   {
     path: "vendor-dashboard",
@@ -150,12 +167,13 @@ export const router = createBrowserRouter([
       {
         path: "vendor-profile",
         element: <ProfileManagement />,
-        // children: [
-
-        // ],
       },
       {
         path: "vendor-settings",
+        element: <SettingsMangement />,
+      },
+      {
+        path: "vendor-logout",
         element: <SettingsMangement />,
       },
     ],
@@ -200,6 +218,14 @@ export const router = createBrowserRouter([
   {
     path: "/riderlogin",
     element: <RiderLogin />,
+  },
+  {
+    path: "verify-email",
+    element: <VerifyEmail />,
+  },
+  {
+    path: "rider-kyc",
+    element: <RiderApplicationForm />,
   },
 
   // {

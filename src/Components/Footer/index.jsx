@@ -60,9 +60,11 @@ const Footer = () => {
             </h2>
           </div>
           <div className="right">
-            <CiFacebook />
-            <MdOutlineWhatsapp />
-            <BsInstagram />
+            <div style={{ display: "flex", gap: "30px" }}>
+              <CiFacebook />
+              <MdOutlineWhatsapp />
+              <BsInstagram />
+            </div>
           </div>
         </section>
       </footer>

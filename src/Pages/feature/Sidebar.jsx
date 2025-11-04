@@ -1,19 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BiShoppingBag } from "react-icons/bi";
 import { MdDashboard, MdRateReview } from "react-icons/md";
-import { FaStar } from "react-icons/fa";
+import { FaStar, FaRegUser } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./Sidebar.css";
 import { GoPackage } from "react-icons/go";
 import { VscGraph } from "react-icons/vsc";
 import { CiSettings } from "react-icons/ci";
-import { FaUser } from "react-icons/fa"
 import { LuImagePlus } from "react-icons/lu";
+import { IoIosLogOut } from "react-icons/io";
+import { getVendorId } from "../../api/query";
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [vendor, setVendor] = useState(null);
+  const id = localStorage.getItem(import.meta.env.VITE_VENDOR_ID);
+  useEffect(() => {
+    const fetchVendor = async () => {
+      try {
+        const response = await getVendorId(id);
+        setVendor(response.data);
+      } catch (error) {
+        console.error("Failed to fetch vendor:", error);
+      }
+    };
 
+    fetchVendor();
+  }, []);
+  console.log(vendor);
   const currentPath = location.pathname;
 
   console.log("PATH:", currentPath);
@@ -29,7 +44,7 @@ const Sidebar = () => {
             <img src="/Images/Container.svg" />
             {/* <LuImagePlus/> */}
             <aside>
-              Max Gas Supply
+              {vendor?.data?.businessName}
               <div className="spaceicon">
                 <span>
                   <FaStar style={{ color: "gold", fontSize: "16px" }} />
@@ -46,20 +61,18 @@ const Sidebar = () => {
           onClick={() => navigate("/vendor-dashboard")}
           className={`dashboards ${isDashboardActive ? "active" : ""}`}
         >
-          <MdDashboard style={{ color: "#FF7F11", fontSize: "25px" }} />
+          <MdDashboard style={{fontSize: "25px" }} />
           <p>Dashboard</p>
         </span>
 
         <span
           onClick={() => navigate("/vendor-dashboard/vendor-order")}
-          className={`orders ${isOrderActive ? "active" : ""}`}
+          className={`dashboard-order ${isOrderActive ? "active" : ""}`}
         >
           <GoPackage style={{ fontSize: "25px" }} />
           <sub>
             Orders
-            <span className="profileNotification">
-              0
-            </span>
+            <span className="profileNotification">0</span>
           </sub>
         </span>
         <span
@@ -78,7 +91,7 @@ const Sidebar = () => {
             currentPath === "/vendor-dashboard/vendor-profile" ? "active" : ""
           }`}
         >
-          <FaUser style={{ fontSize: "25px" }} />
+          <FaRegUser style={{ fontSize: "25px" }} />
           <p>Account</p>
         </span>
         <span
@@ -89,6 +102,16 @@ const Sidebar = () => {
         >
           <CiSettings style={{ fontSize: "28px" }} />
           <p>Settings</p>
+        </span>
+
+        <span
+          onClick={() => navigate("/vendor-dashboard/vendor-logout")}
+          className={`Dashboard-logout ${
+            currentPath === "/vendor-dashboard/vendor-logout" ? "active" : ""
+          }`}
+        >
+          <IoIosLogOut style={{ fontSize: "28px" }} />
+          <p>Logout </p>
         </span>
       </div>
     </div>
