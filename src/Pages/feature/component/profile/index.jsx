@@ -7,6 +7,7 @@ import BusinessDetails from "./BusinessDetails";
 import BankDetails from "./BankDetails";
 import BusinessDocuments from "./BusinessDocuments";
 import { getVendorKyc } from "../../../../api/query";
+import { toast } from "react-toastify";
 
 
 const ProfileManagement = () => {
@@ -20,10 +21,11 @@ const ProfileManagement = () => {
     const fetchVendorKycData = async() => {
       try{
           const response = await getVendorKyc(id)
-          setKycData(response.data)
+          setKycData(response?.data)
           console.log("kycsingle",response.data)
       }catch(error){
          console.log("no kyc",error)
+         toast.error(error?.response?.data?.message || "Something went wrong!")
       }
 
     } 
@@ -108,7 +110,7 @@ const ProfileManagement = () => {
   <BusinessDocuments vendor={kycData?.data} />
 )}
 {activeTab === "Banking" && (
-  <BankDetails vendor={kycData?.data} />
+  <BankDetails vendor={kycData?.data?.kyc} />
 )}
 
     </div>

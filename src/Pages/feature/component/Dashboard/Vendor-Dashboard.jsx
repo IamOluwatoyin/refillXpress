@@ -179,7 +179,7 @@ const vendor = JSON.parse(localStorage.getItem("vendor"));
     <div className="order-card" key={index}>
       <div className="order-header">
         <div>
-          <span className="order-id">{order.orderNumber}</span>
+          <span className="order-ids">{order.orderNumber}</span>
           <span className="order-status">{order.status}</span>
         </div>
         <span className="price">₦{order.price}</span>

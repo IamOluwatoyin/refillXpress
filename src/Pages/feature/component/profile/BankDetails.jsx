@@ -10,11 +10,11 @@ const BankDetails = ({ vendor }) => {
     bankName: "",
     accountNumber: "",
   });
-
+  console.log("info",bankInfo)
   useEffect(() => {
     if (vendor?.bankDetails) {
       setBankInfo({
-        accountName: vendor.bankDetails.accountName || "",
+        accountName: vendor?.bankAccountName || "",
         bankName: vendor.bankDetails.bankName || "",
         accountNumber: vendor.bankDetails.accountNumber
           ? `******${vendor.bankDetails.accountNumber.slice(-4)}`
@@ -73,7 +73,7 @@ const BankDetails = ({ vendor }) => {
               checked={isAutoPayout}
               onChange={handleToggle}
             />
-            <span className={`slider ${isAutoPayout ? "actives" : ""}`}></span>
+            <span className={`slider ${isAutoPayout ? "active" : ""}`}></span>
           </label>
         </div>
 
