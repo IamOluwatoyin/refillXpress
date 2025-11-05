@@ -23,12 +23,12 @@ const handleRejectClick = (order) => {
           </div>
         </div>
 
-        {/* Order Status */}
+       
         <div className="section">
           <button className="pendingBtns">{order?.status}</button>
         </div>
 
-        {/* Customer Info */}
+     
         <div className="section">
           <h5>Customer Information</h5>
           <div className="customerDetails">
@@ -38,7 +38,7 @@ const handleRejectClick = (order) => {
           </div>
         </div>
 
-        {/* Order Details */}
+       
         <div className="section">
           <h5>Order Details</h5>
           <div className="detailRow">
@@ -55,11 +55,10 @@ const handleRejectClick = (order) => {
           </div>
         </div>
 
-        {/* Price Breakdown */}
         <div className="section">
           <h5>Price Breakdown</h5>
           <div className="detailRow">
-            <span>Gas ({order?.quantity}kg × {order?.unitPrice})</span>
+            <span>Gas ({order?.quantity}kg x {order?.unitPrice})</span>
             <span>₦{order?.price?.toLocaleString()}</span>
           </div>
           <div className="detailRow">
@@ -72,7 +71,6 @@ const handleRejectClick = (order) => {
           </div>
         </div>
 
-        {/* Action Buttons */}
         <div className="actionBtns">
           <button className="acceptBtn" onClick={() => onAccept(order)}>Accept Order</button>
           <button className="rejectBtn" onClick={() => onReject(order)}>Reject Order</button>

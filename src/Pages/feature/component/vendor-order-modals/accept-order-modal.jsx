@@ -1,46 +1,26 @@
-
 import React from "react";
 import { IoClose } from "react-icons/io5";
 import "./AcceptOrderModal.css";
-import { vendorAcceptRejectOrder } from "../../../../api/mutation";
 
-const AcceptOrderModal = ({ onClose }) => {
-
- 
-  // const handleAccept = async () => {
-  //   try {
-  //     const response = await vendorAcceptRejectOrder({
-  //       orderId: order.id,
-  //       action: "accept",
-  //     });
-  //     console.log(" Order accepted:", response);
-  //     onClose();
-  //   } catch (error) {
-  //     console.error(" Failed to accept order", error);
-  //   }
-  // };
+const AcceptOrderModal = ({ order, onClose, onComplete }) => {
+  if (!order) return null;
 
   return (
     <div className="orderOverlay" onClick={onClose}>
-      <div
-        className="orderModal"
-        onClick={(e) => e.stopPropagation()} 
-      >
+      <div className="orderModal" onClick={(e) => e.stopPropagation()}>
         <button className="closeBtn" onClick={onClose}>
           <IoClose size={22} />
         </button>
 
-    
         <div className="orderHeader">
           <div className="orderCode">
             <h4>Order Details</h4>
-            <p>{order?.orderNumber || "N/A"}</p>
+            <p>#{order?.orderNumber}</p>
           </div>
-         
         </div>
 
-        
-         <button className="acceptedBtn"onClick={handleAccept}>Accepted</button>
+        <button className="acceptedBtn">Accepted</button>
+
         <div className="section">
           <h5>Customer Information</h5>
           <div className="customerDetails">
@@ -50,7 +30,6 @@ const AcceptOrderModal = ({ onClose }) => {
           </div>
         </div>
 
-    
         <div className="section">
           <h5>Order Details</h5>
           <div className="detailRow">
@@ -63,39 +42,29 @@ const AcceptOrderModal = ({ onClose }) => {
           </div>
           <div className="detailRow">
             <span>Time Slot</span>
-            <span>10:00 AM - 11:00 AM</span>
+            <span>{order?.deliveryTime || "N/A"}</span>
           </div>
         </div>
 
-  
         <div className="section">
           <h5>Price Breakdown</h5>
           <div className="detailRow">
-            <span>Gas (
-      {order?.quantity ? `${order.quantity}kg` : "—"} × ₦
-      {order?.unitPrice?.toLocaleString() || "—"})</span>
-
-            <span>{order?.gasPrice
-        ? order.gasPrice.toLocaleString()
-        : order?.quantity && order?.unitPrice
-        ? (order.quantity * order.unitPrice).toLocaleString()
-        : "—"}</span>
+            <span>Gas ({order?.quantity}kg x ₦{order?.unitPrice?.toLocaleString() || "—"})</span>
+            <span>₦{order?.price?.toLocaleString() || "—"}</span>
           </div>
-
           <div className="detailRow">
             <span>Delivery Fee</span>
             <span>₦{order?.deliveryFee?.toLocaleString() || "—"}</span>
           </div>
           <div className="detailRow totalRow">
             <span>Total Amount</span>
-            <span>₦{order?.price?.toLocaleString() || "—"}</span>
+            <span>₦{order?.totalPrice?.toLocaleString() || "—"}</span>
           </div>
         </div>
 
         <div className="actionBtns">
-         
           <button className="closeModalBtn" onClick={onClose}>Close</button>
-           <button className="completeBtn">Mark as Complete</button>
+         
         </div>
       </div>
     </div>

@@ -9,25 +9,58 @@ import { VscGraph } from "react-icons/vsc";
 import { CiSettings } from "react-icons/ci";
 import { LuImagePlus } from "react-icons/lu";
 import { IoIosLogOut } from "react-icons/io";
-import { getVendorId } from "../../api/query";
+import { getAllReviews, getVendorId, getVendorKyc, getVendorPendingOrders } from "../../api/query";
+import { toast } from "react-toastify";
+
+
+
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [vendor, setVendor] = useState(null);
+  const [averageRating, setAverageRating] = useState(0);
+
+  const [orderNotify, setOrderNotify] = useState()
+  const[verifyBadge, setVerifyBadge] = useState()
   const id = localStorage.getItem(import.meta.env.VITE_VENDOR_ID);
+  
   useEffect(() => {
     const fetchVendor = async () => {
       try {
         const response = await getVendorId(id);
         setVendor(response.data);
+        const res = await getVendorPendingOrders()
+        setOrderNotify(res.data?.data?.length || 0)
+          
+        const isVerifyRes = await getVendorKyc(id)
+        setVerifyBadge(isVerifyRes?.data?.data)
+
+        const reviewsRes = await getAllReviews();
+      const reviews = reviewsRes?.data?.data || [];
+      const vendorReviews = reviews.filter(
+        (review) => review.vendorId === id
+      );
+
+      if (vendorReviews.length > 0) {
+        const avg =
+          vendorReviews.reduce((sum, r) => sum + (r.rating || 0), 0) /
+          vendorReviews.length;
+        setAverageRating(avg.toFixed(1));
+      }
+        
       } catch (error) {
         console.error("Failed to fetch vendor:", error);
+        toast.error(error.response?.data?.message || "Something went wrong!")
       }
     };
 
     fetchVendor();
+
+    
   }, []);
+
+
   console.log(vendor);
   const currentPath = location.pathname;
 
@@ -42,16 +75,21 @@ const Sidebar = () => {
         <section className="vendor-icon-holder">
           <div className="vendor-icon-wrapper">
             <img src="/Images/Container.svg" />
-            {/* <LuImagePlus/> */}
             <aside>
               {vendor?.data?.businessName}
               <div className="spaceicon">
-                <span>
-                  <FaStar style={{ color: "gold", fontSize: "16px" }} />
-                  {""}
-                  {""}4.8
-                </span>
-                <button className="verified-btn">Verified</button>
+               {averageRating > 0 && (
+                      <span className="vendor-rating">
+                        <FaStar style={{ color: "gold", fontSize: "16px" }} />
+                        <span style={{ marginLeft: "4px", fontWeight: "500" }}>
+                          {averageRating}
+                        </span>
+                      </span>
+                    )}
+
+              {verifyBadge?.verificationStatus === "verified" && (
+      <button className="verified-btn">Verified</button>
+    )}
               </div>
             </aside>
           </div>
@@ -72,7 +110,7 @@ const Sidebar = () => {
           <GoPackage style={{ fontSize: "25px" }} />
           <sub>
             Orders
-            <span className="profileNotification">0</span>
+            <span className="profileNotification">{orderNotify}</span>
           </sub>
         </span>
         <span
@@ -104,15 +142,17 @@ const Sidebar = () => {
           <p>Settings</p>
         </span>
 
-        <span
-          onClick={() => navigate("/vendor-dashboard/vendor-logout")}
-          className={`Dashboard-logout ${
-            currentPath === "/vendor-dashboard/vendor-logout" ? "active" : ""
-          }`}
-        >
-          <IoIosLogOut style={{ fontSize: "28px" }} />
-          <p>Logout </p>
-        </span>
+       <span
+  className="Dashboard-logout"
+  
+>
+  <IoIosLogOut style={{ fontSize: "28px" }} onClick={() => {
+    localStorage.removeItem(import.meta.env.VITE_VENDOR_TOKEN);
+    localStorage.removeItem(import.meta.env.VITE_VENDOR_ID);
+    navigate("/");
+  }}/>
+  <p>Logout</p>
+</span>
       </div>
     </div>
   );

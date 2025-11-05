@@ -1,9 +1,4 @@
-/* .bankSection p {
-  font-size: 30px;
-  padding: 20px;
-  color: #111827;
 
-} */
 .businessCard {
   background: #fff;
   border: 1px solid #e5e7eb;
@@ -48,4 +43,10 @@
   border-radius: 8px;
   cursor: pointer;
   font-weight: 500;
+}
+
+.faint-input {
+  color: #6b7280;      
+  background-color: #f9fafb; 
+  cursor: not-allowed;  
 }

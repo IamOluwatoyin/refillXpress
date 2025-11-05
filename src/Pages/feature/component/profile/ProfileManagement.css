@@ -98,7 +98,7 @@ overflow: hidden;
 
 .tabs button {
 flex: 1;
-padding: 10px 0;
+padding: 6px 0;
 border: none;
 background: transparent;
 cursor: pointer;
@@ -107,11 +107,8 @@ color: #6b7280;
 transition: all 0.3s ease;
 }
 
-.tabs button:hover {
-background: #e5e7eb;
-}
 
-.tabs button.active {
+.tabs button.actived {
 background: #fff;
 color: #111827;
 

@@ -7,6 +7,9 @@ import SpinnerModal from "../spinner-modal";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { loginVendor } from "../../../api/mutation";
+import VendorDashboardEmpty from "../../../Pages/feature/component/Dashboard/VendorDashboardEmpty";
+import KYC from "../../../Pages/feature/component/order/kyc";
+import VendorDashboard from "../../../Pages/feature/component/Dashboard/Vendor-Dashboard";
 
 const VendorLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -24,21 +27,39 @@ const VendorLogin = () => {
     try {
       setButtonDisabled(true);
       const response = await loginVendor(data);
-       
+
       console.log("formData", response);
-       localStorage.setItem(import.meta.env.VITE_VENDOR_TOKEN,response.data.token)
-       localStorage.setItem(import.meta.env.VITE_VENDOR_ID,response.data.data.id)
+      localStorage.setItem(
+        import.meta.env.VITE_VENDOR_TOKEN,
+        response.data.token
+      );
+      localStorage.setItem(
+        import.meta.env.VITE_VENDOR_ID,
+        response.data.data.id
+      );
       toast.success("Account successfully created");
       setShowModal(true);
 
+      switch (response?.data?.data?.kycStatus) {
+        case "pending":
+          navigate("/vendor-dashboardEmpty");
+          break;
+        case "Not submiited":
+          navigate("/vendor-kyc");
+          break;
+        case "rejected":
+          navigate("/vendor-kyc");
+          break;
+        case "verified":
+          navigate("/vendor-dashboard");
+          break;
+        default:
+          navigate("/vendor-login");
+      }
+
       setTimeout(() => {
         setShowModal(false);
-        if(response?.data?.data?.showKycPage === true){
-          navigate("/vendor-kyc");
-        }else{
-          navigate("/vendor-dashboard")
-        }
-        
+       
       }, 2000);
     } catch (error) {
       console.log("not working", error);
@@ -52,7 +73,7 @@ const VendorLogin = () => {
     <>
       <div className="form-wrapperlogin">
         <div className="form-containerlogin">
-          <header onClick={()=>navigate("/")}>
+          <header onClick={() => navigate("/")}>
             <img src="/Images/logo.svg" alt="logo" className="image" />
 
             <h1>
@@ -63,7 +84,7 @@ const VendorLogin = () => {
             <main className="cardBodylogin">
               <article>
                 <h3> Welcome Back</h3>
-                <p>let’s sign in to your account</p>
+                <p>let's sign in to your account</p>
               </article>
               <section className="formWrapperlogin">
                 <form
@@ -193,7 +214,7 @@ const VendorLogin = () => {
           </section>
         </div>
       </div>
-      {/* )} */}
+      
     </>
   );
 };

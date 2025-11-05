@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from "react";
 import "./vendor-signup.css";
 import { RiArrowDropDownLine } from "react-icons/ri";
@@ -29,7 +28,7 @@ const VendorSignup = () => {
     const { confirmPassword, agree, ...payload } = data;
     setButtonDisabled(true);
     try {
-      const response = await signupVendor(payload );
+      const response = await signupVendor(payload);
       console.log("formData", response);
       localStorage.setItem("vendorEmail", data.businessEmail);
 
@@ -51,7 +50,7 @@ const VendorSignup = () => {
   return (
     <div className="form-wrapper">
       <div className="form-container">
-        <header onClick={()=>navigate("/")}>
+        <header onClick={() => navigate("/")}>
           <img src="/Images/logo.svg" alt="logo" className="image" />
           <h1>
             Refill<span>Xpress</span>
@@ -98,7 +97,7 @@ const VendorSignup = () => {
                     style={{
                       padding: "12px",
                       borderRadius: "8px",
-                      // border: "1px solid #ccc",
+                      border: "1px solid #ccc",
                       width: "39.3125rem",
                       background: "#F2F6F5",
                       boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
@@ -180,7 +179,6 @@ const VendorSignup = () => {
                         <img src="/Images/ngflag.jpg" />
                       </div>
 
-                      {/* Divider */}
                       <div
                         style={{
                           height: "40px",
@@ -204,8 +202,9 @@ const VendorSignup = () => {
                             message: "Phone number must contain only digits",
                           },
                           validate: (value) =>
+                            value.length === 10 ||
                             value.length === 11 ||
-                            "Phone number must be exactly 10 digits",
+                            "Phone number must be 10 or 11 digits",
                         })}
                         style={{
                           border: "none",
@@ -274,7 +273,7 @@ const VendorSignup = () => {
                       style={{
                         padding: "12px",
                         borderRadius: "8px",
-                        border: "1px solid #ccc",
+                        // border: "1px solid #ccc",
                         width: " 18.875rem",
                         background: "#F2F6F5",
                         boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
@@ -416,7 +415,6 @@ const VendorSignup = () => {
                     {...register("agree", {
                       required: "You must agree to the terms.",
                     })}
-                    
                   />
                   <span>
                     {" "}
@@ -448,7 +446,7 @@ const VendorSignup = () => {
                     justifyContent: "center",
                   }}
                 >
-                  <span >Already have an account?</span>
+                  <span>Already have an account?</span>
                   <NavLink
                     to={"/vendor-login"}
                     style={{ textDecoration: "none", color: "#1BB970" }}

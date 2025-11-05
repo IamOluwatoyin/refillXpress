@@ -22,6 +22,6 @@ export const vendorKycPost = (data,id) =>api.post(`/vendorKyc/${id}`,data,{
   }
 })
 
-export const vendorAcceptRejectOrder = ({ orderId, action }) =>
-  api.post(`/vendor/accept/rejectOrder/${orderId}`, { action });
+export const vendorAcceptRejectOrder = ({ orderId, action, message}) =>
+  api.post(`/vendor/accept/rejectOrder/${orderId}`, { action, message});
 
