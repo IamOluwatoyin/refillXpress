@@ -36,7 +36,7 @@ const handleSend = async (e) => {
     const savedUser = localStorage.getItem("email")
     console.log(savedUser)
     try {
-        const res = await axios.post(`${BASEURL}/api/v1/user/verify-forgot-password-otp`, 
+        const res = await axios.post(`${BASEURL}/user/verify-forgot-password-otp`, 
             {
                 email: savedUser,
                 otp: joined
@@ -61,7 +61,7 @@ const handleResend = async (e) => {
     const email = localStorage.getItem("email")
 
      try {
-            const res = await axios.post(`${BASEURL}/api/v1/user/forgot-password/resend`, {
+            const res = await axios.post(`${BASEURL}/user/forgot-password/resend`, {
                 email: email,
             }, {
                 headers: {"Content-Type": "application/json"}

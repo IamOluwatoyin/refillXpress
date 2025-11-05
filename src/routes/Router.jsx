@@ -56,7 +56,7 @@ export const router = createBrowserRouter([
     ),
   },
   {
-    path: "userdashboard",
+    path: "/userdashboard",
     element: <UserDashboard />,
     children: [
       {
