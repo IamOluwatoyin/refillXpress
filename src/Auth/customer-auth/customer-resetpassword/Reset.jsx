@@ -23,7 +23,7 @@ const handleRequest = async (e) => {
      const email = localStorage.getItem("email")
     try {
         setLoading(true)
-        const res = await axios.post(`${BASEURL}/api/v1/user/resetpassword`, {
+        const res = await axios.post(`${BASEURL}/user/resetpassword`, {
             email,
              newPassword: form.newPassword,
         },

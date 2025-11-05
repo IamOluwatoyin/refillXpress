@@ -30,10 +30,7 @@ const BrowseVendor = () => {
                 <span>Newest first <RxCaretDown /></span>
             </div>
         </div>
-        <section className="views stretch">
-    <div className="top">
-        <p className="preview-title">nearby vendors</p>
-    </div>
+        <section className="views extreme">    
     <div className="order-holder">
         <div className="my-order">
             <div className='vendor-status'>
@@ -59,10 +56,7 @@ const BrowseVendor = () => {
         </button>
         </div>
         </div>                  
-        <div className="top">
-        <p className="preview-title">nearby vendors</p>
-    </div>
-    <div className="order-holder">
+        <div className="order-holder">
         <div className="my-order">
             <div className='vendor-status'>
                 <p>QuickGas express  </p><span className='available'>available</span> <span className='verified'><MdVerified />verified </span>
@@ -87,9 +81,6 @@ const BrowseVendor = () => {
         </button>
         </div>
         </div>                  
-            <div className="top">
-        <p className="preview-title">nearby vendors</p>
-    </div>
     <div className="order-holder">
         <div className="my-order">
             <div className='vendor-status'>

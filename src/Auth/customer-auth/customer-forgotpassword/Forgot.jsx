@@ -22,7 +22,7 @@ const Forgot = () => {
             }
             try {
                 setLoading(true)
-                const res = await axios.post(`${BASEURL}/api/v1/user/forgot-password`, {
+                const res = await axios.post(`${BASEURL}/user/forgot-password`, {
                     email: email
                 }, {
                     headers: {"Content-Type": "application/json"}
