@@ -20,14 +20,14 @@ export const UserProvider = ({ children }) => {
         const response = res.data.data;
         setAllUsers(response);
       } catch (err) {
-        null;
+        console.log(err);
       }
     };
     getUsers();
   }, []);
 
-  const checkVerified = allUsers.find((all) => all.isVerified === false);
-  console.log(checkVerified);
+  //   const checkVerified = allUsers.find((all) => all.isVerified === false);
+  //   console.log(checkVerified);
 
   const signup = async (e, FormData, confirm, nav) => {
     e.preventDefault();
