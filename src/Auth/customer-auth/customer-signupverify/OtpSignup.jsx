@@ -8,6 +8,7 @@ import { BASEURL } from '../../../api/base';
 import { useContext } from 'react';
 import { UserContext } from '../../../context/UserContext';
 import { useNavigate } from 'react-router-dom';
+import logo from "../../../assets/dashboard_logo.png"
 
 const OtpSignup = () => {
     const nav = useNavigate()
@@ -126,12 +127,9 @@ console.log("User", savedUser)
     <div className='verify'>
       <article className="article">
         <header className="form-header">
-            <h6 className='logo-heading'>
-                <span className='fire'>
-                    <HiFire /> 
-                </span>
-                Refill<span className='logo-style'>Xpress</span>
-            </h6>
+             <div className='logo-heading'>
+                                                       <img src={logo} alt="" onClick={()=> nav("/")} className='logo-heading' />
+                                                   </div>
         </header>
         <form className="form">
             <div className="form-heading">

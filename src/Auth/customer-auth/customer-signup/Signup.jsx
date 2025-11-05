@@ -5,13 +5,18 @@ import  { BsEye, BsEyeSlash } from 'react-icons/bs';
 import { UserContext } from '../../../context/UserContext';
 import { useNavigate, Link } from 'react-router-dom';
 import SpinnerModal from '../../vendor-auth/spinner-modal';
+import logo from "../../../assets/dashboard_logo.png"
+
+
+
 const Signup = () => {
     const nav = useNavigate()
-    const { loading, setLoading } = useContext(UserContext)
+    const { loading, setLoading, checked } = useContext(UserContext)
     const {user, signup } = useContext(UserContext)
     const [type, setType] = useState("password")
     const [show, setShow] = useState(false)
     const [confirm, setConfirm] = useState("")
+    const [checkedbox, setCheckedbox] = useState(false)
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -25,17 +30,12 @@ const Signup = () => {
     }     
     
     return (
-        <div className='signup'>
+        <div className='signup'> 
              {loading && <SpinnerModal />} 
            <article className="article">
                 <header className="form-header">
-                    <div className="inner-header">
-                        <h4 className='logo-heading'>
-                    <span className='fire'>
-                        <HiFire /> 
-                    </span>
-                    Refill<span className='logo-style'>Xpress</span>
-                    </h4>
+                     <div className='logo-heading'>
+                        <img src={logo} alt="" onClick={()=> nav("/")} className='logo-heading' />
                     </div>
                 </header>
                 <form className="form">
@@ -70,7 +70,7 @@ const Signup = () => {
 
                     <div className="row-input">
                         <div className="input-container small-input">
-                        <label>email addres</label>
+                        <label>email address</label>
                         <div className="input-div">
                             <input type="text"
                              name='email'
@@ -119,14 +119,13 @@ const Signup = () => {
                         </div>
                     </div>
                     <div className="checkbox">
-                        <input type="checkbox" name="check" id="box" />
+                        <input type="checkbox" checked={checkedbox} onChange={()=> setCheckedbox(!checkedbox)} name="check" id="box" />
                         <p>I agree to Refillxpress <span>terms and conditions</span></p>
                     </div>
                     <div className='submit-section'>
-                        <button type='button' onClick={(e)=> signup(e, formData, confirm, nav)} className="submit">create account</button>
+                        <button type='button' onClick={(e)=> signup(e, formData, confirm, nav, checkedbox)} className="submit">create account</button>
                         <p>Already have an account? <Link className="link" to="/userlogin">sign in</Link></p>  
                     </div>
-
                 </form>
             </article> 
         </div>

@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-// import { BASEURL } from "../api/base";
+import { BASEURL } from "../api/base";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -28,18 +28,36 @@ export const UserProvider = ({ children }) => {
             }, [])
 
             const checkVerified = allUsers.find(all => all.isVerified === false)
-        const signup = async (e, FormData, confirm, nav) => {
+        const signup = async (e, FormData, confirm, nav, checked) => {
                 e.preventDefault()
                 setLoading(true)
                 if (!/\S+@\S+\.\S+/.test(FormData.email)) {
-                toast.error("Please enter a valid email address.");    
+                toast.error("Please enter a valid email address.");  
+                return  
+                }
+                if(!FormData.password) {
+                    toast.error("enter a valid password")
                 }
                 if (confirm !== FormData.password) {
                     toast.error("password does not match")
                     return  
                 }
-                           
-
+                if(!FormData.firstName) {
+                    toast.error("Enter your first name")
+                    return
+                }
+                if(!FormData.lastName) {
+                    toast.error("Enter your last name")
+                    return
+                }
+                if(!FormData.phoneNumber) {
+                    toast.error("enter valid phone number")
+                    return
+                }
+                if(checked === false) {
+                    toast.error("agree to the terms and conditions")
+                    return
+                }
 
             try {
                 const res = await axios.post(`${BASEURL}/user`, FormData, {
@@ -49,7 +67,7 @@ export const UserProvider = ({ children }) => {
                 })
                 const userData = res.data.data
                 setUser(userData)
-                localStorage.setItem("user", JSON.stringify(userData))
+                // localStorage.setItem("user", JSON.stringify(userData))
                 toast.success(res.data.message)
                 nav("/userverify")
             } catch (err) {
@@ -107,6 +125,7 @@ export const UserProvider = ({ children }) => {
             setToken(null)
             localStorage.removeItem("token")
             localStorage.removeItem("user")
+            navigate("/userlogin")
         }
     
     
