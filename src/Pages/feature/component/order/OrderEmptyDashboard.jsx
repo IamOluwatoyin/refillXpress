@@ -1,8 +1,8 @@
 import React from "react";
 import "./VendorDashboardEmpty.css";
-import { FaThLarge } from "react-icons/fa"; // the 2x2 square grid icon
+import { FaThLarge } from "react-icons/fa"; 
 
-const VendorDashboardEmpty = () => {
+const OrderEmptyDashboard = () => {
   return (
     <div className="dashboard-empty-container">
       <p className="dashboard-title">Orders</p>
@@ -23,4 +23,4 @@ const VendorDashboardEmpty = () => {
   );
 };
 
-export default VendorDashboardEmpty;
+export default OrderEmptyDashboard;

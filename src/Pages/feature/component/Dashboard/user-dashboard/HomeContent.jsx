@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { GrLocation } from "react-icons/gr";
 import { BsArrowRight } from "react-icons/bs";
 import { FiPackage } from "react-icons/fi";
@@ -6,14 +6,22 @@ import { MdVerified } from "react-icons/md";
 import { GoStar } from "react-icons/go";
 import { TbCurrencyNaira } from "react-icons/tb";
 import { BiTimeFive } from "react-icons/bi";
-
 import "./homecontent.css"
+import { UserContext } from '../../../../../context/UserContext';
+
+
 const HomeContent = () => {
+    const [info, setInfo] = useState(null)
+    const { userDetail } = useContext(UserContext)
+    useEffect(()=> {
+        const parsed = JSON.parse(localStorage.getItem("userInfo"))
+        setInfo(parsed)
+    })
   return (
     <main className='homecontent'>
         <header className="heading">
             <div className="texts">
-                <h3>welcome back Glory</h3>
+                <h3>welcome back {info?.firstName}</h3>
                 Ready to order your next gas refill?
             </div>
         </header>
@@ -33,7 +41,7 @@ const HomeContent = () => {
                 <p>Track your deliveries</p>
             </div>
         </section>
-        <div className="views">
+        <div className="views extreme">
             <div className="top">
                 <p className="preview-title">recent orders</p>
                 <button className="view-all">view all <BsArrowRight /></button>
@@ -59,7 +67,7 @@ const HomeContent = () => {
                 </div>
             </div>
         </div>
-        <div className="views">
+        <div className="views extreme">
             <div className="top">
                 <p className="preview-title">nearby vendors</p>
                 <button className="view-all">view all <BsArrowRight /></button>

@@ -1,13 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaNairaSign } from "react-icons/fa6";
 import "./BankDetails.css";
 import { RiBankCardLine } from "react-icons/ri";
 
-const BankDetails = () => {
+const BankDetails = ({ vendor }) => {
   const [isAutoPayout, setIsAutoPayout] = useState(true);
+  const [bankInfo, setBankInfo] = useState({
+    accountName: "",
+    bankName: "",
+    accountNumber: "",
+  });
+
+  useEffect(() => {
+    if (vendor?.bankDetails) {
+      setBankInfo({
+        accountName: vendor.bankDetails.accountName || "",
+        bankName: vendor.bankDetails.bankName || "",
+        accountNumber: vendor.bankDetails.accountNumber
+          ? `******${vendor.bankDetails.accountNumber.slice(-4)}`
+          : "",
+      });
+    }
+  }, [vendor]);
 
   const handleToggle = () => {
-    setIsAutoPayout(!isAutoPayout);
+    const newValue = !isAutoPayout;
+    setIsAutoPayout(newValue);
+    console.log("Automatic Payouts:", newValue ? "Enabled" : "Disabled");
   };
 
   const payouts = [
@@ -18,27 +37,26 @@ const BankDetails = () => {
 
   return (
     <div className="bank-details-container">
-     
       <div className="bank-section">
-       
-        <h2 className="section-title"> 
-          <RiBankCardLine style={{fontSize:"25px"}}/>
-          Bank Account Details</h2>
+        <h2 className="section-title">
+          <RiBankCardLine style={{ fontSize: "25px" }} />
+          Bank Account Details
+        </h2>
 
         <div className="input-row">
           <div className="input-group">
             <label>Account Name</label>
-            <input value="MaxGas Supply" disabled />
+            <input value={bankInfo.accountName || "N/A"} disabled />
           </div>
           <div className="input-group">
             <label>Bank Name</label>
-            <input value="UBA" disabled />
+            <input value={bankInfo.bankName || "N/A"} disabled />
           </div>
         </div>
 
         <div className="input-group">
           <label>Account Number</label>
-          <input value="******8086" disabled />
+          <input value={bankInfo.accountNumber || "N/A"} disabled />
         </div>
 
         <div className="payout-toggle">
@@ -55,9 +73,7 @@ const BankDetails = () => {
               checked={isAutoPayout}
               onChange={handleToggle}
             />
-            <span
-              className={`slider ${isAutoPayout ? "active" : ""}`}
-            ></span>
+            <span className={`slider ${isAutoPayout ? "actives" : ""}`}></span>
           </label>
         </div>
 
@@ -66,7 +82,6 @@ const BankDetails = () => {
         </div>
       </div>
 
-    
       <div className="payout-section">
         <h2 className="section-title">
           <FaNairaSign className="icon" /> Recent Payouts

@@ -11,7 +11,8 @@ import { toast } from "react-toastify";
 const KYC = () => {
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
-  const [fileData, setFileData] = useState({}); // ✅ store uploaded files
+  const [fileData, setFileData] = useState({});
+  const [buttonDisabled, setButtonDisabled] = useState(false);
 
   const {
     register,
@@ -34,18 +35,15 @@ const KYC = () => {
     const file = event.target.files[0];
     if (!file) return;
 
-    // ✅ store the file by its key name
     setFileData((prev) => ({
       ...prev,
       [documents[index].key]: file,
     }));
 
-    // ✅ update UI status
     const updatedDocs = [...documents];
     updatedDocs[index].status = "Pending";
     setDocuments(updatedDocs);
 
-    // simulate upload progress
     setTimeout(() => {
       const isSuccess = Math.random() > 0.3;
       updatedDocs[index].status = isSuccess ? "Uploaded" : "Rejected";
@@ -62,16 +60,14 @@ const KYC = () => {
 
     const formData = new FormData();
 
-    // ✅ append uploaded files
     Object.entries(fileData).forEach(([key, file]) => {
       formData.append(key, file);
     });
 
-    // ✅ append other text inputs
     formData.append("bankAccountName", data.bankAccountName);
     formData.append("bankName", data.bankName);
     formData.append("accountNumber", data.accountNumber);
-
+    setButtonDisabled(true);
     try {
       const response = await vendorKycPost(formData, vendorId);
       console.log("upload response:", response.data);
@@ -79,13 +75,18 @@ const KYC = () => {
       toast.success("KYC uploaded successfully!");
       setOpenModal(true);
 
+      switch (response?.data?.data?.verificationStatus) {
+        case "pending":
+          navigate("/vendor-dashboardEmpty");
+          break;
+      }
       setTimeout(() => {
         setOpenModal(false);
-        navigate("/vendor-dashboard");
       }, 2000);
     } catch (error) {
       console.error("Upload error:", error);
       toast.error(error.response?.data?.message || "Something went wrong!");
+      setButtonDisabled(false);
     }
   };
 
@@ -95,16 +96,14 @@ const KYC = () => {
         <div className={`kycWrapper ${openModal ? "blurred" : ""}`}>
           <div className="kycHeader">
             <h2>Know Your Customer</h2>
-            <p>
-              Complete the steps of KYC process to start using our platform
-            </p>
+            <p>Complete the steps of KYC process to start using our platform</p>
           </div>
 
           <div className="infoBar">
             <FaInfoCircle />
             <span>
-              Upload clear, legible copies of all required documents.
-              Documents are typically verified within 24–48 hours.
+              Upload clear, legible copies of all required documents. Documents
+              are typically verified within 24–48 hours.
             </span>
           </div>
 
@@ -190,6 +189,18 @@ const KYC = () => {
               ))}
             </div>
           </div>
+          <div className="verifyBox">
+              <FaInfoCircle className="infoIcon" />
+              <div>
+                <h4>Document Verification Process</h4>
+                <ul>
+                  <li>Documents are typically verified within 24-48 hours</li>
+                  <li>Ensure all documents are clear and legible</li>
+                  <li>Documents must be valid and not expired</li>
+                  <li>You'll receive an email notification once verified</li>
+                </ul>
+              </div>
+            </div>
 
           {/* Bank Info */}
           <div className="bankSection">
@@ -245,7 +256,11 @@ const KYC = () => {
               <div className="toggleRow">
                 <span>Automatic Payouts</span>
                 <label className="switch">
-                  <input type="checkbox" {...register("autoPayouts")} defaultChecked />
+                  <input
+                    type="checkbox"
+                    {...register("autoPayouts")}
+                    defaultChecked
+                  />
                   <span className="slider"></span>
                 </label>
               </div>
@@ -253,7 +268,11 @@ const KYC = () => {
           </div>
 
           <div className="submitContainer">
-            <button className="submitBtn" type="submit">
+            <button
+              className="submitBtn"
+              type="submit"
+              disabled={openModal || buttonDisabled}
+            >
               Submit
             </button>
           </div>

@@ -115,7 +115,7 @@ switch {
   transition: 0.3s ease;
 }
 
-/* Active (ON) State */
+
 .slider.active {
   background-color: #000; 
 }
@@ -145,7 +145,7 @@ switch {
   background-color: #16a34a;
 }
 
-/* Payouts Section */
+ 
 .payout-list {
   display: flex;
   flex-direction: column;

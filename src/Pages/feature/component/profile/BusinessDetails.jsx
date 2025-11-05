@@ -2,7 +2,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import "./BusinessDetails.css"
 
-const BusinessDetails = () => {
+const BusinessDetails = ({vendor}) => {
   const {register, handleSubmit, formState: {errors}} = useForm()
   return (
     <div>
@@ -14,12 +14,12 @@ const BusinessDetails = () => {
                     <label>Business Name</label>
                     <input
                       type="text"
-                      placeholder="Max gas"
+                     value={vendor?.businessName}
                       {...register("bankAccountName", { required: true })}
                     />
-                    {errors.bankAccountName && (
+                    {errors.businessName && (
                       <span style={{ color: "red", fontSize: "12px" }}>
-                        Account name is required
+                        Business name is required
                       </span>
                     )}
                   </div>
@@ -27,12 +27,12 @@ const BusinessDetails = () => {
                     <label>Phone Number</label>
                     <input
                       type="text"
-                      placeholder="Enter bank name"
-                      {...register("bankName", { required: true })}
+                     value={vendor?.businessPhoneNumber || ""}
+                      {...register("businessPhoneNumber", { required: true })}
                     />
                     {errors.bankName && (
                       <span style={{ color: "red", fontSize: "12px" }}>
-                        Bank name is required
+                        Phone number is required
                       </span>
                     )}
                   </div>
@@ -42,15 +42,17 @@ const BusinessDetails = () => {
                   <label>Email Address</label>
                   <input
                     type="text"
-                    placeholder="Maxgas@gmail.com"
-                    {...register("accountNumber", {
+                    readOnly
+                    className="faint-input"
+                    value={vendor?.businessEmail || ""}
+                    {...register("businessEmailr", {
                       required: true,
                       pattern: /^[0-9]{10}$/,
                     })}
                   />
-                  {errors.accountNumber && (
+                  {errors.businessEmail && (
                     <span style={{ color: "red", fontSize: "12px" }}>
-                      Enter a valid 10-digit account number
+                      Enter a valid email address
                     </span>
                   )}
                 </div>
@@ -60,15 +62,15 @@ const BusinessDetails = () => {
                   <label>Business Address</label>
                   <input
                     type="text"
-                    placeholder="No 1 salau street Magodo"
-                    {...register("accountNumber", {
+                     value={vendor?.businessAddress || ""}
+                    {...register("businessAddres", {
                       required: true,
                       pattern: /^[0-9]{10}$/,
                     })}
                   />
-                  {errors.accountNumber && (
+                  {errors.businessAddres && (
                     <span style={{ color: "red", fontSize: "12px" }}>
-                      No 1 salau street Magodo
+                     Business Address is required
                     </span>
                   )}
                 </div>

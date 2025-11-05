@@ -6,6 +6,7 @@
       justify-content: flex-start;
       align-items: flex-start;
       gap: 1rem;
+      position: relative;
       h3 {
         margin-block: 1rem;
         font-size: 2rem;

@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import "./SettingsManagement.css"
+import { GoPackage , GoDotFill } from "react-icons/go";
+
 
 const SettingsManagement = () => {
+
+   const [businessOpen, setBusinessOpen] = useState(true);
+  const [inStock, setInStock] = useState(true);
   return (
     <div className="settingsWrapper">
       <h2 className="settingsTitle">Settings</h2>
@@ -41,22 +46,36 @@ const SettingsManagement = () => {
         <div className="toggleItem">
           <div className="toggleText">
             <p>Business Availability</p>
-            <span>Open</span>
+            <span style={{ color: businessOpen ? "green" : "gray" }}>
+              <GoDotFill />
+              {businessOpen ? "Open" : "Closed"}
+            </span>
           </div>
-          <label className="switch">
-            <input type="checkbox" defaultChecked />
-            <span className="slider"></span>
+         <label className="switch">
+            <input
+              type="checkbox"
+              checked={businessOpen}
+              onChange={() => setBusinessOpen(!businessOpen)}
+            />
+            <span className="sliders"></span>
           </label>
         </div>
 
         <div className="toggleItem">
-          <div className="toggleText">
+          <div className="toggleText" >
             <p>Stock Status</p>
-            <span>In Stock</span>
-          </div>
+            <span style={{ color: inStock ? "green" : "red", }}>
+              <GoPackage />
+              {inStock ? "In Stock" : "Out of Stock"}
+            </span>
+            </div>
           <label className="switch">
-            <input type="checkbox" defaultChecked />
-            <span className="slider"></span>
+            <input
+              type="checkbox"
+              checked={inStock}
+              onChange={() => setInStock(!inStock)}
+            />
+            <span className="sliders"></span>
           </label>
         </div>
 
@@ -74,7 +93,7 @@ const SettingsManagement = () => {
           </div>
           <label className="switch">
             <input type="checkbox" defaultChecked />
-            <span className="slider"></span>
+            <span className="sliders"></span>
           </label>
         </div>
 
@@ -85,7 +104,7 @@ const SettingsManagement = () => {
           </div>
           <label className="switch">
             <input type="checkbox" defaultChecked />
-            <span className="slider"></span>
+            <span className="sliders"></span>
           </label>
         </div>
 
@@ -96,7 +115,7 @@ const SettingsManagement = () => {
           </div>
           <label className="switch">
             <input type="checkbox" defaultChecked />
-            <span className="slider"></span>
+            <span className="sliders"></span>
           </label>
         </div>
       </div>

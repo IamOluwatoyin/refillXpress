@@ -33,11 +33,15 @@ import VendorVerify from "../Auth/vendor-auth/verify-email";
 import VendorForgotPassword from "../Auth/vendor-auth/vendor-forgot-password";
 import VendorDashboard from "../Pages/feature/component/Dashboard/Vendor-Dashboard";
 import ResetPasswordVendor from "../Auth/vendor-auth/vendor-reset-password";
+import CustomerReview from "../Pages/feature/component/Dashboard/user-dashboard/CustomerReview";
+import CustomerAccount from "../Pages/feature/component/Dashboard/user-dashboard/CustomerAccount";
+import TrackOrder from "../Pages/feature/component/Dashboard/user-dashboard/TrackOrder";
 import VerifyEmail from "../Auth/Rider/verify-email/Index";
 import RiderApplicationForm from "../Auth/Rider/Rider-Kyc";
 import BusinessDetails from "../Pages/feature/component/profile/BusinessDetails";
 import BankDetails from "../Pages/feature/component/profile/BankDetails";
 import VendorDashboardEmpty from "../Pages/feature/component/Dashboard/VendorDashboardEmpty";
+import SettingsManagement from "../Pages/feature/component/settings";
 import ForgotPassword from "../Auth/Rider/Forget-password/ForgetPassword";
 import ForgotPasswordVerifyEmail from "../Auth/Rider/forgotPasswordVerifyEmail/Index";
 import ResetPassword from "../Auth/Rider/reset-pasword/Index";
@@ -66,6 +70,18 @@ export const router = createBrowserRouter([
       {
         path: "myorders",
         element: <MyOrders />,
+      },
+      {
+        path: "customer-review",
+        element: <CustomerReview />,
+      },
+      {
+        path: "customer-account",
+        element: <CustomerAccount />,
+      },
+      {
+        path: "track-order",
+        element: <TrackOrder />,
       },
     ],
   },
@@ -161,7 +177,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "vendor-logout",
-        element: <SettingsMangement />,
+        element: <SettingsManagement />,
       },
     ],
   },

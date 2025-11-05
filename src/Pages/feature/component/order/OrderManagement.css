@@ -11,7 +11,7 @@
   color: #111827;
 }
 
-.orderTabs {
+.orderGasTabs {
   display: inline-flex;
   background: #e5e7eb; 
   border-radius: 10px;
@@ -19,7 +19,7 @@
   margin-bottom: 25px;
 }
 
-.orderTabs button {
+.orderGasTabs button {
   border: none;
   background: transparent; 
   padding: 8px 16px;
@@ -28,6 +28,11 @@
   font-weight: 500;
   color: #111827;
   transition: all 0.3s ease;
+}
+.orderGasTabs button.activity {
+  background-color: #fff;
+  color: #000;
+ 
 }
 .orderPlaceholder {
   width: 100%;
@@ -42,13 +47,9 @@
   font-weight: 500;
   margin-top: 10px;
 }
-.orderTabs button:hover {
-  background: rgba(0, 0, 0, 0.1);
-}
 
-.orderTabs .active {
-  color: #fff;
-}
+
+
 
 .ordersList {
   display: flex;
@@ -110,7 +111,7 @@
   color: #374151;;
 }
 
-/* === MAIN ORDER INFO ROW === */
+
 .infoRow {
  display: flex;
   justify-content: space-between;
@@ -118,7 +119,7 @@
  gap: 20px;
 }
 
-/* === LEFT SIDE (Weight + Address) === */
+
 .leftInfo {
   display: flex;
   flex-direction: column;
@@ -129,7 +130,6 @@
 
 
 
-/* === CENTER SIDE (Date + Time + Phone) === */
 .centerInfo {
   display: flex;
   justify-content: center;
@@ -139,7 +139,7 @@
   color: #4b5563;
 }
 
-/* === RIGHT SIDE (Vertical Buttons) === */
+
 .rightBtns {
   display: flex;
   flex-direction: column;
@@ -190,13 +190,9 @@
   margin-top: 8px;
 }
   
-/* .blurred {
-  filter: blur(3px);
-  pointer-events: none;
-} */
 
 
-/* === RESPONSIVE === */
+
 @media (max-width: 768px) {
   .infoRow {
     flex-direction: column;
@@ -227,14 +223,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2000; /* higher than modal */
+  z-index: 2000; 
 }
 
 .rejectCard {
   background: #fff;
   padding: 20px;
   border-radius: 10px;
-  width: 350px;
+  width: 600px;
   max-width: 90%;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
@@ -245,14 +241,17 @@
   margin: 12px 0;
   border-radius: 6px;
   border: 1px solid #ccc;
+  height: 120px;
+  
 }
+
 
 .cardBtns {
   display: flex;
   justify-content: space-between;
 }
 
-.closeBtn {
+.closeBtnReject {
   padding: 8px 12px;
   background: #ccc;
   border: none;
@@ -260,7 +259,7 @@
   cursor: pointer;
 }
 
-.rejectBtn {
+.rejectBtnReject {
   padding: 8px 12px;
   border: none;
   border-radius: 6px;
@@ -269,7 +268,7 @@
 
 /* Success toast */
 .my-success-toast {
-  background-color: #4CAF50 !important; /* green */
+  background-color: #4CAF50 !important;
   color: white !important;
   font-weight: 600;
   border-radius: 8px;
@@ -278,9 +277,50 @@
 
 /* Error toast */
 .my-error-toast {
-  background-color: #f44336 !important; /* red */
+  background-color: #f44336 !important; 
   color: white !important;
   font-weight: 600;
   border-radius: 8px;
   padding: 12px 16px;
+}
+
+.statusP.accepted {
+  background: rgb(230, 224, 224);
+  color: #000;
+}
+
+.statusP.pending {
+  background: #000;;
+  color: #fff;
+}
+
+.statusP.completed {
+  background: #fff;
+  color: #2e7d32;
+  box-shadow: 2px 2px 5px gray;
+}
+
+.statusP.cancelled {
+  background: #c62828;
+  color: #ffebee;
+}
+
+.Toastify__toast--success {
+  background-color: #22c55e; 
+  color: #fff !important;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+.Toastify__toast-container {
+  z-index: 9999 !important;
+  margin-top: 50px !important;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #ccc; 
+  color: #666 !important;            
+  pointer-events: none;
 }
