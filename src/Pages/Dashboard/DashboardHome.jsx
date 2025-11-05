@@ -46,10 +46,12 @@ const PerformanceCard = ({
   <div className="performance_card" style={{ backgroundColor: bgColor }}>
     <div className="card_header">
       <div className="card_icon" style={{ color: color }}>
-        <Icon size={24} />
+        <Icon size={24} /> {/* ✅ this now renders the icon you passed in */}
       </div>
       {secondary && (
-        <span className="card_secondary" style={{ color: color }}></span>
+        <span className="card_secondary" style={{ color: color }}>
+          {secondary}
+        </span>
       )}
     </div>
     <span className="card_title">{title}</span>

@@ -73,7 +73,6 @@ const RiderLogin = () => {
 
   return (
     <div className="rider-login-page-layout">
-      {/* Top-Left Logo Header */}
       <header className="fixed-header">
         <div className="logo-container">
           <img src="/src/assets/logo.svg" alt="logo" className="logo-image" />
@@ -83,7 +82,6 @@ const RiderLogin = () => {
         </div>
       </header>
 
-      {/* Centered Login Card */}
       <div className="login-page-center">
         <main className="login-card">
           <div className="login-title-section">
@@ -92,7 +90,6 @@ const RiderLogin = () => {
           </div>
 
           <form className="login-form" onSubmit={handleSubmit}>
-            {/* 1. Email Field */}
             <div className="input-field-group full-width">
               <label htmlFor="email">Email Address</label>
               <input
@@ -107,7 +104,6 @@ const RiderLogin = () => {
               {errors.email && <p className="error-text">{errors.email}</p>}
             </div>
 
-            {/* 2. Password Field */}
             <div className="input-field-group full-width password-group">
               <label>Input Your Password</label>
               <div
@@ -140,22 +136,16 @@ const RiderLogin = () => {
               )}
             </div>
 
-            {/* 3. Forgot Password Link */}
             <div className="forgot-password-link-wrapper">
-              <NavLink
-                to={"/rider/forgotpassword"}
-                className="forgot-password-link"
-              >
+              <NavLink to={"/forgetpassword"} className="forgot-password-link">
                 Forgot password?
               </NavLink>
             </div>
 
-            {/* 4. Submit Button */}
             <button type="submit" className="signin-button">
               Sign in
             </button>
 
-            {/* 5. Don't have an account? Link */}
             <div className="signup-link-wrapper">
               <span>Don't have an account?</span>
               <NavLink to={"/ridersignup"} className="signup-link-bottom">
