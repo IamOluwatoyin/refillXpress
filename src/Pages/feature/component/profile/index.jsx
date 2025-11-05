@@ -1,13 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ProfileManagement.css";
 import { FaShieldAlt, FaCheck, FaCamera } from "react-icons/fa";
 
 import BusinessInformation from "./BusinessInformation";
 import BusinessDetails from "./BusinessDetails";
+import BankDetails from "./BankDetails";
+import BusinessDocuments from "./BusinessDocuments";
+import { getVendorKyc } from "../../../../api/query";
 
 
 const ProfileManagement = () => {
   const [activeTab, setActiveTab] = useState("Profile Info");
+ const [kycData, setKycData] = useState()
+
+ const id = localStorage.getItem(import.meta.env.VITE_VENDOR_ID);
+  
+
+ useEffect(() => {
+    const fetchVendorKycData = async() => {
+      try{
+          const response = await getVendorKyc(id)
+          setKycData(response.data)
+          console.log("kycsingle",response.data)
+      }catch(error){
+         console.log("no kyc",error)
+      }
+
+    } 
+    fetchVendorKycData()
+      
+  },[])
 
   return (
     <div className="profileWrapper">
@@ -18,9 +40,15 @@ const ProfileManagement = () => {
         </div>
         
 
-        <p className="verifiedText">
-          <FaShieldAlt style={{color:"#16a34a"}} /> 50% Verified
-        </p>
+       <p className="verifiedText">
+  <FaShieldAlt
+    style={{
+      color: kycData?.data?.kyc?.verificationStatus === "verified" ? "#16a34a" : "#facc15",
+    }}
+  />{" "}
+  {kycData?.data?.kyc?.verificationStatus === "verified" ? "Verified" : "Pending Verification"}
+</p>
+
       </div>
       
 
@@ -36,12 +64,22 @@ const ProfileManagement = () => {
 
         {/* Badge and Progress */}
         <div className="progressSection">
-          <div className="progressContainer">
-            <div className="progressFill" style={{ width: "50%" }}></div>
-          </div>
-        </div>
+  <div className="progressContainer">
+    <div
+      className="progressFill"
+      style={{
+        width: kycData?.data?.kyc?.verificationStatus === "verified" ? "100%" : "50%",
+      }}
+    ></div>
+  </div>
+</div>
 
-        <p className="verifiedCount">1 of 4 documents verified</p>
+<p className="verifiedCount">
+  {kycData?.data?.kyc?.verificationStatus === "verified"
+    ? "4 of 4 documents verified"
+    : "2 of 4 documents verified"}
+</p>
+
         <FaShieldAlt className="shieldIcon" />
       </div>
 
@@ -51,7 +89,7 @@ const ProfileManagement = () => {
           (tab) => (
             <button
               key={tab}
-              className={activeTab === tab ? "active" : ""}
+              className={activeTab === tab ? "actived" : ""}
               onClick={() => setActiveTab(tab)}
             >
               {tab}
@@ -60,14 +98,19 @@ const ProfileManagement = () => {
         )}
       </div>
 
-      {/* Personal Information */}
-      {activeTab === "Profile Info" && (
-      <BusinessInformation/>
-      )}
-      {activeTab === "Business Details" && (
-      <BusinessDetails/>
-      )}
-      
+    {activeTab === "Profile Info" && (
+  <BusinessInformation vendor={kycData?.data} />
+)}
+{activeTab === "Business Details" && (
+  <BusinessDetails vendor={kycData?.data} />
+)}
+{activeTab === "Documents" && (
+  <BusinessDocuments vendor={kycData?.data} />
+)}
+{activeTab === "Banking" && (
+  <BankDetails vendor={kycData?.data} />
+)}
+
     </div>
   );
 };

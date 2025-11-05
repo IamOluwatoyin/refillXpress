@@ -8,7 +8,7 @@
   font-family: "Inter", sans-serif;
 }
 
-/* ===== Summary Cards ===== */
+
 .summary-section {
   display: flex;
   flex-wrap: wrap;
@@ -59,7 +59,6 @@
 .icon.green { background-color: #DCFCE7;color: #00A63E; }
 .icon.purple { background-color: #F3E8FF; color: #000000; }
 
-/* ===== Pending Orders ===== */
 .pending-orders {
   background: #fff;
   border-radius: 10px;
@@ -137,7 +136,6 @@
   color: #111827;
 }
 
-/* ===== Order Details Section ===== */
 .order-details {
   display: flex;
   flex-direction: column;
@@ -159,7 +157,7 @@
   margin: 0;
 }
 
-/* Center info (date, time, phone) — equal spacing */
+
 .center-info {
   display: flex;
   justify-content: center;
@@ -184,7 +182,7 @@
   margin-top: 8px;
 }
 
-/* ===== Actions (buttons) ===== */
+
 .order-actions {
   position: absolute;
   right: 20px;
@@ -211,7 +209,6 @@
 
 
 
-/* ===== Reviews Section ===== */
 .reviews-section {
   background: #fff;
   border-radius: 10px;
@@ -281,7 +278,6 @@
   font-size: 14px;
 }
 
-/* ===== Vendor Dashboard Responsive ===== */
 @media (max-width: 1200px) {
   .vendorDashboard-wrapper {
     padding: 20px 30px;
@@ -434,11 +430,11 @@
 
 .dashboard-main {
   flex: 1;
-  margin-left: 20%; /* leave space for sidebar + breathing room */
+  margin-left: 20%; 
   padding: 20px;
 }
 
-/* On smaller screens, remove margin-left so dashboard spans full width */
+
 @media (max-width: 768px) {
   .dashboard-main {
     margin-left: 0;

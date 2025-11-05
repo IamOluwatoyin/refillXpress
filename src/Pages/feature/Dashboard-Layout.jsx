@@ -16,7 +16,6 @@ const DashboardLayout = () => {
         <div
           style={{
             width: "80%",
-            // background:"red"
             overflow: "auto",
           }}
         >

@@ -12,7 +12,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import "./VendorDashboard.css";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import { useNavigate } from "react-router";
-import { getSummary } from "../../../../api/query";
+import { getAllReviews, getSummary, getVendorId } from "../../../../api/query";
 import { getVendorPendingOrders } from "../../../../api/query";
 import ViewOrderModal from "../vendor-order-modals/view-order-modal";
 import { vendorAcceptRejectOrder } from "../../../../api/mutation";
@@ -24,20 +24,45 @@ const VendorDashboard = () => {
   const [vendorPendingOrders, setVendorPendingOrders] = useState([]);
   const [showRejectCard, setShowRejectCard] = useState(false);
   const[showModal,setShowModal] = useState(false)
+  const [vendorInfo, setVendorInfo] = useState(null);
+
 const [rejectReason, setRejectReason] = useState("");
+
+const [isProcessing, setIsProcessing] = useState(false);
+const [selectedOrder, setSelectedOrder] = useState(null);
+const [allReviews, setAllReviews] = useState(null)
+
 
   useEffect(()=>{
    const fetchVendorSummary = async()=>{
     try {
+
+      const id = localStorage.getItem(import.meta.env.VITE_VENDOR_ID); 
+      const vendorResponse = await getVendorId(id);
+      setVendorInfo(vendorResponse.data.data); 
+
       const response = await getSummary()
       setVendorSummary(response.data.data)
-
+     
        const pendingRes = await getVendorPendingOrders();
-      setVendorPendingOrders(pendingRes.data?.data || []);
-    
+      setVendorPendingOrders(pendingRes.data?.data || [])
+      ;
+      const reviewsRes = await getAllReviews()
+       setAllReviews(reviewsRes?.data?.data)
+      
     } catch (error) {
-      console.error("failed to fetch summary")
       console.error("failed to fetch summary or pending orders");
+      console.log(typeof error.response?.data?.message )
+
+      const message = error.response?.data?.message || "Something went wrong!";
+      toast.dismiss(); 
+      toast.error(message);
+       
+      
+      if (error?.response?.data?.message?.toLowerCase()?.includes("session timed out")) {
+  nav("/vendor-login");
+}
+
     }
    }
    fetchVendorSummary()
@@ -48,26 +73,33 @@ const [rejectReason, setRejectReason] = useState("");
 
   const handleOrderDecision = async (order, action, reason = "") => {
   try {
-    await vendorAcceptRejectOrder({ orderId: order.id, action, reason });
+     setIsProcessing(true)
+    await vendorAcceptRejectOrder({ orderId: order.id, action, message: reason });
 
-    // Update local pending list
+    
     setVendorPendingOrders(prev => prev.filter(o => o.id !== order.id));
 
-    if (action === "accept") {
-      toast.success(`Order ${order.orderNumber} accepted successfully`, {
-        position: "top-right",
+   if (action === "accept") {
+      toast.success(` Order ${order.orderNumber} accepted successfully!`, {
+        position: "top-center",
+        style: { marginTop: "40px", backgroundColor: "#22c55e", color: "#fff" },
       });
     } else if (action === "reject") {
-      toast.info(`Order ${order.orderNumber} rejected`, {
-        position: "top-right",
+      toast.success(` Order ${order.orderNumber} rejected successfully!`, {
+        position: "top-center",
+        style: {backgroundColor: "#ef4444", color: "#fff" },
       });
     }
+
 
     setShowModal(false);
     setShowRejectCard(false);
   } catch (error) {
     console.error(`Failed to ${action} order`, error);
-    toast.error(`Failed to ${action} order`, { position: "top-right" });
+    toast.error(`Failed to ${action} order`, { position: "top-center" },error.response?.data?.message || "Something went wrong!");
+    
+  }finally {
+    setIsProcessing(false);
   }
 };
 
@@ -77,15 +109,18 @@ const handleRejectClick = (order) => {
   setShowRejectCard(true);
 };
 
-
-  
+const vendor = JSON.parse(localStorage.getItem("vendor")); 
+ 
+ 
   return (
 
     <div className="vendorDashboard-wrapper">
       <h2>Dashboard</h2>
-      <span>Welcome back, Max gas supply! Here’s what’s happening today</span>
+      <span>Welcome back,
+         {""}{vendorInfo?.businessName || "Vendor"}!{""}
+         Here's what's happening today</span>
 
-      {/* ===== Summary Cards ===== */}
+     
       <div className="summary-section">
         <div className="summary-card">
           <div className="icon blue">
@@ -100,7 +135,7 @@ const handleRejectClick = (order) => {
             <FaClock />
           </div>
          <h3 className="summary-value">{vendorSummary?.pendingOrders || 0}</h3>
-<p className="summary-label">Pending Orders</p>
+      <p className="summary-label">Pending Orders</p>
         </div>
 
         <div className="summary-card">
@@ -123,7 +158,7 @@ const handleRejectClick = (order) => {
 
         </div>
       </div>
-      {/* ===== Pending Orders ===== */}
+      {/*  Pending Orders  */}
       <div className="pending-orders">
         <div className="pending-header">
           <h3>Pending Orders</h3>
@@ -190,12 +225,16 @@ const handleRejectClick = (order) => {
   <button
     className="accept-btn"
     onClick={() => handleOrderDecision(order, "accept")}
+    disabled={isProcessing}
+    
   >
     Accept
   </button>
   <button
     className="reject-btn"
-    onClick={() => handleRejectClick(order)}
+    onClick={() => handleRejectClick(order,)}
+    disabled={isProcessing}
+   
   >
     Reject
   </button>
@@ -209,57 +248,39 @@ const handleRejectClick = (order) => {
   </div>
 )}
 
-      {/* ===== Recent Reviews ===== */}
+      {/* Recent Reviews  */}
       <div className="reviews-section">
-        <h3>Recent Reviews</h3>
-        <p className="subtext">Customer feedback</p>
+  <h3>Recent Reviews</h3>
+  <p className="subtext">Customer feedback</p>
 
-        <div className="review-card">
-          <div className="review-header">
-            <strong>John D.</strong>
-            <span>Oct 20, 2025</span>
-          </div>
-          <div className="stars">
-            <FaStar className="filled" />
-            <FaStar className="filled" />
-            <FaStar className="filled" />
-            <FaStar className="filled" />
-          </div>
-          <p>Excellent service! Very professional and punctual.</p>
+  {allReviews && allReviews.length > 0 ? (
+    allReviews.slice(0, 3).map((review, index) => (
+      <div className="review-card" key={index}>
+        <div className="review-header">
+          <strong>{review.user?.firstName || "Anonymous"}</strong>
+          <span>{new Date(review.createdAt).toLocaleDateString()}</span>
         </div>
 
-        <div className="review-card">
-          <div className="review-header">
-            <strong>Sarah M.</strong>
-            <span>Oct 19, 2025</span>
-          </div>
-          <div className="stars">
-            <FaStar className="filled" />
-            <FaStar className="filled" />
-            <FaStar className="filled" />
-            <FaStar className="filled" />
-            <FaStar className="filled" />
-          </div>
-          <p>Great experience! Highly recommend.</p>
+        <div className="stars">
+          {[...Array(5)].map((_, i) =>
+            i < review.rating ? (
+              <FaStar key={i} className="filled" />
+            ) : (
+              <FaRegStar key={i} className="unfilled" />
+            )
+          )}
         </div>
 
-        <div className="review-card">
-          <div className="review-header">
-            <strong>Mike R.</strong>
-            <span>Oct 18, 2025</span>
-          </div>
-          <div className="stars">
-            <FaStar className="filled" />
-            <FaStar className="filled" />
-            <FaStar className="filled" />
-            <FaStar className="filled" />
-            <FaRegStar className="unfilled" />
-          </div>
-          <p>Good service overall. Delivery was a bit delayed.</p>
-        </div>
+        <p>{review.comment || "No comment provided."}</p>
       </div>
+    ))
+  ) : (
+    <p>No reviews yet</p>
+  )}
+</div>
+
     </div>
-    {/* ===== View Order Modal ===== */}
+    {/*  View Order Modal  */}
 {showModal && (
   <ViewOrderModal
     order={selectedOrder}
@@ -269,7 +290,7 @@ const handleRejectClick = (order) => {
   />
 )}
 
-{/* ===== Reject Overlay ===== */}
+{/*  Reject Overlay  */}
 {showRejectCard && (
   <div className="rejectOverlay" onClick={() => setShowRejectCard(false)}>
     <div className="rejectCard" onClick={(e) => e.stopPropagation()}>
@@ -282,13 +303,17 @@ const handleRejectClick = (order) => {
         onChange={(e) => setRejectReason(e.target.value)}
       />
       <div className="cardBtns">
-        <button className="closeBtn" onClick={() => setShowRejectCard(false)}>
-          Close
+        <button className="closeBtnReject" onClick={() => setShowRejectCard(false)}
+          
+          >
+          
+          Cancel
         </button>
         <button
-          className="rejectBtn"
-          style={{ backgroundColor: "red", color: "#fff" }}
+          className="rejectBtnReject"
           onClick={() => handleOrderDecision(selectedOrder, "reject", rejectReason)}
+          style={{ backgroundColor: "red", color: "#fff" }}
+          disabled={isProcessing}
         >
           Reject
         </button>

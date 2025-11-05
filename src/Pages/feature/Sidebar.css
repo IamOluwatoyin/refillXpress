@@ -4,14 +4,12 @@
   display: flex;
   position: fixed;
   /* background-color: red; */
- /* justify-content: center;
- align-items: center; */
+
 }
 
 .sidebarContainer {
   width: 100%;
   height: 100%;
-  /* border-radius: 16px; */
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -95,21 +93,18 @@
   font-size: 18px;
   line-height: 24px;
   font-weight: 400;
-  /* justify-content: center; */
   align-items: center;
 }
 .profiles {
   width: 223px;
   height: 47.98px;
   border-radius: 10px;
-  /* background-color: #f0dccc; */
   display: flex;
   gap: 10px;
   padding: 15px;
   font-size: 18px;
   line-height: 24px;
   font-weight: 400;
-  /* justify-content: center; */
   align-items: center;
 }
 
@@ -124,7 +119,6 @@
   font-size: 18px;
   line-height: 24px;
   font-weight: 400;
-  /* justify-content: center; */
   align-items: center;
 }
 
@@ -155,9 +149,15 @@
   font-size: 18px;
   line-height: 24px;
   font-weight: 400;
-  /* justify-content: center; */
+ 
   align-items: center;
   
+}
+
+.vendor-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 
@@ -176,17 +176,17 @@
 }
 
 
-/* ===== Sidebar Responsive Column Format ===== */
+/* Sidebar Responsive */
 @media (max-width: 992px) {
   .sidebarWrapper {
     width: 100%;
-    height: auto; /* allows vertical growth */
-    position: relative; /* no longer fixed */
+    height: auto; 
+    position: relative; 
     display: flex;
     flex-direction: column;
     padding: 10px 5px;
     box-shadow: none;
-    margin-bottom: 20px; /* space below for dashboard */
+    margin-bottom: 20px; 
   }
 
   .sidebarContainer {
@@ -233,7 +233,7 @@
   }
 }
 
-/* For small mobile devices (<768px) */
+
 @media (max-width: 768px) {
   .sidebarWrapper {
     padding: 8px 5px;
@@ -255,21 +255,21 @@
   }
 }
 
-/* Gap between sidebar and dashboard on larger screens */
+
 .dashboard-layout {
   display: flex;
-  gap: 20px; /* space between sidebar and dashboard */
+  gap: 20px; 
 }
 
-/* Adjust sidebar and dashboard on tablet and mobile */
+
 @media (max-width: 992px) {
   .dashboard-layout {
-    flex-direction: column; /* sidebar on top, dashboard below */
-    gap: 15px; /* vertical spacing */
+    flex-direction: column; 
+    gap: 15px; 
   }
 
   .dashboard-main {
-    margin-left: 0; /* remove left margin for column layout */
+    margin-left: 0; 
     width: 100%;
     padding: 10px;
   }
@@ -280,16 +280,16 @@
   height: 89vh;
   display: flex;
   position: fixed;
-  margin-right: 20px; /* add breathing room */
+  margin-right: 20px; 
 }
 
 .dashboard-main {
   flex: 1;
-  margin-left: 18%; /* keeps it aligned with sidebar width */
+  margin-left: 18%; 
   padding: 20px;
 }
 
-/* On smaller screens, remove left margin */
+
 @media (max-width: 768px) {
   .dashboard-main {
     margin-left: 0;

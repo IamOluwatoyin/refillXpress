@@ -36,6 +36,7 @@ import ResetPasswordVendor from "../Auth/vendor-auth/vendor-reset-password"
 import BusinessDetails from "../Pages/feature/component/profile/BusinessDetails";
 import BankDetails from "../Pages/feature/component/profile/BankDetails";
 import VendorDashboardEmpty from "../Pages/feature/component/Dashboard/VendorDashboardEmpty";
+import SettingsManagement from "../Pages/feature/component/settings";
 
 export const router = createBrowserRouter([
   {
@@ -157,7 +158,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "vendor-logout",
-        element: <SettingsMangement />,
+        element: <SettingsManagement />,
       },
     ],
   },
