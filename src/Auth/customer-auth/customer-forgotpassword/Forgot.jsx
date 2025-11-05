@@ -7,6 +7,8 @@ import { toast } from 'react-toastify';
 import { useNavigate, Link } from 'react-router';
 import SpinnerModal from '../../vendor-auth/spinner-modal';
 import axios from 'axios';
+import logo from "../../../assets/dashboard_logo.png"
+
 
 const Forgot = () => {
     const nav = useNavigate()
@@ -42,14 +44,10 @@ const Forgot = () => {
       {loading && <SpinnerModal />} 
            <article className="article">
                 <header className="form-header">
-                    <div className="inner-header">
-                        <h4 className='logo-heading'>
-                    <span className='fire'>
-                        <HiFire /> 
-                    </span>
-                    Refill<span className='logo-style'>Xpress</span>
-                    </h4>
+                        <div className='logo-heading'>
+                        <img src={logo} alt="" onClick={()=> nav("/")} className='logo-heading' />
                     </div>
+                    
                 </header>
       <form className="form">
         <div className="form-heading wrap">
