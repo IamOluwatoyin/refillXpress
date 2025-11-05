@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useContext} from 'react'
 import "./browsevendor.css"
 import "./homecontent.css"
 import { MdVerified } from "react-icons/md";
@@ -8,10 +8,14 @@ import { BiTimeFive } from "react-icons/bi";
 import { RxCaretDown } from "react-icons/rx";
 import { LuSearch } from "react-icons/lu";
 import { BsArrowRight } from "react-icons/bs";
+import OrderModal from './modals/OrderModal';
+import ViewVendor from './modals/ViewVendor';
 
 const BrowseVendor = () => {
+    const [show, setShow] = useState(false)
   return (
     <main className='browsevendor'>
+        { show && <ViewVendor />} 
       <header className="heading">
             <div className="texts">
                 <h3> browse vendor</h3>
@@ -50,7 +54,7 @@ const BrowseVendor = () => {
             <button className="order-now">
             order now
         </button>
-        <button className="order-now to-view">
+        <button onClick={()=> setShow(true)} className="order-now to-view">
             view
         </button>
         </div>
@@ -103,7 +107,7 @@ const BrowseVendor = () => {
             <small>Mon - Sun</small>
         </div>
         <div className='right'>
-            <button className="order-now">
+            <button onClick={()=> setShow(true)} className="order-now">
             order now
         </button>
         <button className="order-now to-view">

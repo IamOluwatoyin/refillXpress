@@ -4,9 +4,7 @@ import { UserProvider } from "./context/UserContext";
 const App = () => {
   return (
     <div>
-      <UserProvider>
         <RouterProvider router={router} />
-      </UserProvider>
     </div>
   );
 };

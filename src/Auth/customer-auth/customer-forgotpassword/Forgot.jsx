@@ -28,10 +28,10 @@ const Forgot = () => {
                     headers: {"Content-Type": "application/json"}
                 })
                 JSON.stringify(localStorage.setItem("email", email))
-                toast.success("successful")
+                toast.success(res.data.message)
                 nav("/forgot-verify")
             } catch(err) {
-                toast.error("failed, please try again" )
+                toast.error(err.response.data.message)
             }  finally {
                 setLoading(false)
             }

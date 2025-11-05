@@ -1,119 +1,262 @@
-.form-wrapper {
-  width: 100%;
-  height: 100vh;
+.rider-signup-page {
   display: flex;
   justify-content: center;
-}
-.form-container {
-  width: 60%;
-  height: max-content;
-  /* background-color: aqua; */
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-.form-container > header {
-  width: 40%;
-  display: flex;
-  margin-top: 20px;
-  padding-left: 30px;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background-color: #f7f9fc;
+  padding-block: 40px;
+  padding-inline: 60px;
+  font-family: Arial, sans-serif;
 }
 
-.image {
-  width: 40px;
+.form-wrapper {
+  width: 90%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.signup-card {
+  margin-top: 2px;
+  background-color: #fff;
+  padding-inline: 40px;
+  padding-block: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 650px;
+  text-align: center;
+}
+
+.form-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  margin-bottom: 0;
+  padding-bottom: 20px;
+}
+
+.logo-image {
   height: 30px;
+  margin-right: 5px;
 }
-.form-container > header > h1 {
+
+.form-header h1 {
   font-size: 20px;
-  font-weight: 600;
-  line-height: 120%;
-  color: #005bac;
+  font-weight: 700;
+  color: #053055;
 }
-.form-container > header > h1 > span {
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 120%;
+
+.logo-span {
   color: #ff7f11;
 }
-.cardBodyWrapper {
-  width: 100%;
+
+/* --- Title Section --- */
+.signup-title-section {
+  margin-bottom: 30px;
+}
+
+.signup-title-section h3 {
+  font-size: 28px;
+  margin-bottom: 5px;
+  color: #053055;
+  font-weight: 600;
+}
+
+.signup-title-section p {
+  color: #666;
+  margin: 0;
+  font-size: 14px;
+}
+
+/* --- Form Layout --- */
+.signup-form {
   display: flex;
-  padding: 20px;
-  justify-content: center;
-  /* background-color: yellow; */
-  height: 58rem;
-}
-
-.cardBody {
-  width: 48.875rem;
-  height: 56rem;
-  padding: 2rem;
-  /* background-color: red; */
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-
-  article {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 20px;
-    text-align: center;
-    padding: 10px;
-
-    h3 {
-      font-weight: 700;
-      font-size: 32px;
-      /* line-height: 120%; */
-    }
-
-    p {
-      font-size: 16px;
-      font-weight: 400;
-
-      line-height: 120%;
-    }
-  }
-}
-.cardBody > h4 {
-  padding-left: 2.7rem;
-  margin-bottom: 15px;
-}
-.formWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
-}
-.spinnerimgholder {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 50;
-  padding: 0 1rem;
-}
-.spinnerimg {
-  width: 200px;
-  height: 200px;
-  position: relative;
-  border-radius: 8px;
-}
-.spinnerimg svg,
-.spinnerimg img {
-  animation: spin 1s linear infinite;
-  transform-origin: center;
+  gap: 20px;
 }
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
+/* Two-column layout for name, email/phone */
+.input-row-group {
+  display: flex;
+  gap: 15px;
+  width: 100%;
+}
+
+.input-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex-grow: 1;
+  text-align: left;
+}
+
+.input-field-group label {
+  font-weight: 500; /* Lighter font weight for labels */
+  color: #333;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+/* --- Input Styling (General) --- */
+.form-input {
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: none;
+  height: 45px;
+  background: #f2f6f5;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 16px;
+  color: #333;
+}
+
+/* --- Phone Number Input --- */
+.phone-input-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  border: none;
+  background: #f2f6f5;
+  height: 45px;
+  border-radius: 8px; /* Apply border radius here */
+  overflow: hidden; /* Ensures child elements fit */
+}
+
+.country-code {
+  background: #e6e6e6;
+  padding: 0 10px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  color: #555;
+  font-size: 14px;
+}
+
+.phone-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  height: 100%;
+  flex-grow: 1;
+  padding: 0 10px;
+  font-size: 16px;
+}
+
+/* --- Password Fields --- */
+.password-input-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  border-radius: 8px;
+  border: none;
+  background: #f2f6f5;
+  height: 45px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.password-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  height: 100%;
+  flex-grow: 1;
+  padding: 0;
+  font-size: 16px;
+}
+
+.password-toggle-icon {
+  cursor: pointer;
+  color: #666;
+  font-size: 18px;
+}
+
+/* --- Checkbox and Terms --- */
+.terms-checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #555;
+  width: 100%;
+  justify-content: flex-start; /* Aligned left */
+}
+
+.checkbox-input {
+  width: 18px;
+  height: 18px;
+  accent-color: #ff7f11;
+}
+
+.terms-link {
+  text-decoration: none;
+  color: #2887db;
+  font-weight: 500;
+}
+
+.terms-text {
+  font-size: 14px;
+}
+
+/* --- Submit Button --- */
+.submit-button {
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #ff7f11;
+  color: white;
+  border: none;
+  width: 100%;
+  height: 50px;
+  box-shadow: none;
+  font-weight: bold;
+  font-size: 18px;
+  transition: background-color 0.2s;
+  margin-top: 10px;
+}
+
+.submit-button:hover {
+  background-color: #e66a00;
+}
+
+/* --- Sign In Link --- */
+.signin-link-wrapper {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  font-size: 14px;
+  color: #666;
+  margin-top: 10px;
+}
+
+.signin-link-bottom {
+  text-decoration: none;
+  color: #2887db;
+  font-weight: 500;
+}
+
+/* --- Error Messages & Highlighting --- */
+.error-text {
+  color: red;
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.input-error {
+  border: 1px solid red !important;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 550px) {
+  .input-row-group {
+    flex-direction: column;
+    gap: 20px;
   }
-  100% {
-    transform: rotate(360deg);
+  .signup-card {
+    padding: 25px;
   }
 }
