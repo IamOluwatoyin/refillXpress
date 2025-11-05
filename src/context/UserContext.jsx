@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { BASEURL } from "../api/base";
+// import { BASEURL } from "../api/base";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -11,23 +11,26 @@ export const UserProvider = ({ children }) => {
   const [allUsers, setAllUsers] = useState([]);
   const [userDetail, setUserDetail] = useState(null);
 
-  console.log(allUsers);
+  const BASEURL = import.meta.env.VITE_BASEURL;
+
+  console.log("allUsers", BASEURL);
 
   useEffect(() => {
     const getUsers = async () => {
       try {
-        const res = await axios.get(`${BASEURL}/api/v1/user/getAllusers`);
-        const response = res.data.data;
+        const res = await axios.get(`${BASEURL}/user/getAllusers`);
+        console.log("Res", res);
+        const response = res?.data?.data;
         setAllUsers(response);
       } catch (err) {
-        console.log(err);
+        null;
       }
     };
     getUsers();
   }, []);
 
-  //   const checkVerified = allUsers.find((all) => all.isVerified === false);
-  //   console.log(checkVerified);
+  const checkVerified = allUsers?.find((all) => all.isVerified === false);
+  console.log("checkVerified", checkVerified);
 
   const signup = async (e, FormData, confirm, nav) => {
     e.preventDefault();
