@@ -42,6 +42,9 @@ import BusinessDetails from "../Pages/feature/component/profile/BusinessDetails"
 import BankDetails from "../Pages/feature/component/profile/BankDetails";
 import VendorDashboardEmpty from "../Pages/feature/component/Dashboard/VendorDashboardEmpty";
 import SettingsManagement from "../Pages/feature/component/settings";
+import ForgotPassword from "../Auth/Rider/Forget-password/ForgetPassword";
+import ForgotPasswordVerifyEmail from "../Auth/Rider/forgotPasswordVerifyEmail/Index";
+import ResetPassword from "../Auth/Rider/reset-pasword/Index";
 
 export const router = createBrowserRouter([
   {
@@ -228,8 +231,16 @@ export const router = createBrowserRouter([
     element: <RiderApplicationForm />,
   },
 
-  // {
-  //   path: "forgetpassword",
-  //   element: <RiderForgotPassword />,
-  // },
+  {
+    path: "forgetpassword",
+    element: <ForgotPassword />,
+  },
+  {
+    path: "verify-password",
+    element: <ForgotPasswordVerifyEmail />,
+  },
+  {
+    path: "rider/resetpassword",
+    element: <ResetPassword />,
+  },
 ]);

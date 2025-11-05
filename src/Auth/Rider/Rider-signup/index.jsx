@@ -67,7 +67,7 @@ const RiderSignup = () => {
       return;
     }
 
-    const { confirmPassword, agree, ...payload } = formData;
+    const { ...payload } = formData;
 
     const API_BASE_URL = "https://refillexpress.onrender.com/api/v1";
 

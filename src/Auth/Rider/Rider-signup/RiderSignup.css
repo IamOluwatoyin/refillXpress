@@ -53,7 +53,6 @@
   color: #ff7f11;
 }
 
-/* --- Title Section --- */
 .signup-title-section {
   margin-bottom: 30px;
 }
@@ -71,14 +70,12 @@
   font-size: 14px;
 }
 
-/* --- Form Layout --- */
 .signup-form {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-/* Two-column layout for name, email/phone */
 .input-row-group {
   display: flex;
   gap: 15px;
@@ -94,13 +91,12 @@
 }
 
 .input-field-group label {
-  font-weight: 500; /* Lighter font weight for labels */
+  font-weight: 500;
   color: #333;
   font-size: 14px;
   margin-bottom: 5px;
 }
 
-/* --- Input Styling (General) --- */
 .form-input {
   padding: 12px 15px;
   border-radius: 8px;
@@ -113,7 +109,6 @@
   color: #333;
 }
 
-/* --- Phone Number Input --- */
 .phone-input-wrapper {
   display: flex;
   align-items: center;
@@ -121,8 +116,8 @@
   border: none;
   background: #f2f6f5;
   height: 45px;
-  border-radius: 8px; /* Apply border radius here */
-  overflow: hidden; /* Ensures child elements fit */
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .country-code {
@@ -146,7 +141,6 @@
   font-size: 16px;
 }
 
-/* --- Password Fields --- */
 .password-input-wrapper {
   display: flex;
   align-items: center;
@@ -175,7 +169,6 @@
   font-size: 18px;
 }
 
-/* --- Checkbox and Terms --- */
 .terms-checkbox-group {
   display: flex;
   align-items: center;
@@ -183,7 +176,7 @@
   font-size: 14px;
   color: #555;
   width: 100%;
-  justify-content: flex-start; /* Aligned left */
+  justify-content: flex-start;
 }
 
 .checkbox-input {
@@ -194,7 +187,7 @@
 
 .terms-link {
   text-decoration: none;
-  color: #2887db;
+  color: #1bb970;
   font-weight: 500;
 }
 
@@ -202,7 +195,6 @@
   font-size: 14px;
 }
 
-/* --- Submit Button --- */
 .submit-button {
   padding: 10px 12px;
   border-radius: 8px;
@@ -223,7 +215,6 @@
   background-color: #e66a00;
 }
 
-/* --- Sign In Link --- */
 .signin-link-wrapper {
   display: flex;
   gap: 5px;
@@ -235,11 +226,10 @@
 
 .signin-link-bottom {
   text-decoration: none;
-  color: #2887db;
+  color: #1bb970;
   font-weight: 500;
 }
 
-/* --- Error Messages & Highlighting --- */
 .error-text {
   color: red;
   font-size: 12px;
@@ -250,7 +240,6 @@
   border: 1px solid red !important;
 }
 
-/* --- Responsive Adjustments --- */
 @media (max-width: 550px) {
   .input-row-group {
     flex-direction: column;

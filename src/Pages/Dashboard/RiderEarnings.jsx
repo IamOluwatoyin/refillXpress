@@ -221,8 +221,8 @@ function RiderEarnings() {
           <span>Next Payout: **Friday, Oct 25**</span>
         </div>
         <p className="payout_details">
-          Your earnings are paid out every Friday. **Completed deliveries are
-          processed within 24 hours.**
+          Your earnings are paid out every Friday. Completed deliveries are
+          processed within 24 hours.
         </p>
         <p className="expected_amount">Expected Amount: ₦487.20</p>
       </div>

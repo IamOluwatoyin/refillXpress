@@ -17,19 +17,19 @@ const About = () => {
             Empowering Convenient, Safe, and Reliable Gas Refills for Every Home
           </h1>
           <p style={{ marginBottom: "40px" }}>
-            At **RefillXpress**, we’re redefining how households and businesses
+            At RefillXpress, we’re redefining how households and businesses
             access cooking gas. Our goal is simple, to make gas refilling
             faster, safer, and more convenient for everyone.
           </p>
           <p style={{ marginBottom: "40px" }}>
-            We connect customers with **verified local gas vendors**, ensuring
-            every refill is transparent, affordable, and reliable. With just a
-            few clicks, users can locate nearby suppliers, compare prices, and
-            order refills from the comfort of their homes.
+            We connect customers with verified local gas vendors, ensuring every
+            refill is transparent, affordable, and reliable. With just a few
+            clicks, users can locate nearby suppliers, compare prices, and order
+            refills from the comfort of their homes.
           </p>
           <p style={{ marginBottom: "40px" }}>
-            For vendors, RefillXpress offers **digital visibility**, helping
-            them reach more customers, manage orders efficiently, and grow their
+            For vendors, RefillXpress offers digital visibility, helping them
+            reach more customers, manage orders efficiently, and grow their
             business.
           </p>
           <p style={{ marginBottom: "40px" }}>
@@ -73,7 +73,7 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-  width: 90%;
+  width: 100%;
   max-width: 1200px;
   display: flex;
   align-items: center;
@@ -94,7 +94,7 @@ const Image = styled.img`
 `;
 
 const ImgHolder = styled.div`
-  width: 48%;
+  width: 55%;
   overflow: hidden;
   height: 800px;
 
@@ -109,7 +109,7 @@ const ImgHolder = styled.div`
 `;
 
 const Rightholder = styled.div`
-  width: 48%;
+  width: 40%;
   display: flex;
   flex-direction: column;
   text-align: left;

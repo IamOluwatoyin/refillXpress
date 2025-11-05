@@ -5,13 +5,12 @@ import {
   MdOutlineTimer,
   MdAutorenew,
   MdOutlineLocationOn,
-  MdOutlineStar, // ADDED: For rating stars
+  MdOutlineStar,
 } from "react-icons/md";
 import { FaTruckLoading, FaCheckCircle, FaLocationArrow } from "react-icons/fa";
 
 import "../../styles/riderOrder.css";
 
-// --- START: Component for Completed Delivery Item ---
 const CompletedDeliveryItem = ({ order }) => {
   const stars = "★".repeat(order.rating) + "☆".repeat(5 - order.rating);
 
@@ -42,9 +41,7 @@ const CompletedDeliveryItem = ({ order }) => {
     </div>
   );
 };
-// --- END: Component for Completed Delivery Item ---
 
-// --- Component for Active Delivery Item (from previous step) ---
 const ActiveOrderItem = ({ order }) => (
   <div className="active_order_card">
     <div className="active_order_header">
@@ -61,7 +58,6 @@ const ActiveOrderItem = ({ order }) => (
     </div>
 
     <div className="location_sections">
-      {/* Pickup Location Card */}
       <div className="location_card pickup_card">
         <span className="location_title">Pickup</span>
         <div className="location_address">
@@ -70,7 +66,6 @@ const ActiveOrderItem = ({ order }) => (
         </div>
       </div>
 
-      {/* Delivery Location Card */}
       <div className="location_card delivery_card">
         <span className="location_title">Delivery</span>
         <div className="location_address">
@@ -90,10 +85,8 @@ const ActiveOrderItem = ({ order }) => (
     </div>
   </div>
 );
-// --- Component for Available Refill Request Item (unchanged) ---
 const RefillRequestItem = ({ orderId, time, deliveryFee, steps }) => (
   <div className="request_item">
-    {/* ... (Existing RefillRequestItem JSX) ... */}
     <div className="request_header">
       <span className="order_id">{orderId}</span>
       <span className="order_meta">
@@ -137,7 +130,6 @@ const RefillRequestItem = ({ orderId, time, deliveryFee, steps }) => (
 const RiderOrder = () => {
   const [activeTab, setActiveTab] = React.useState("available");
 
-  // --- MOCK DATA ---
   const order1 = {
     orderId: "ORD-7542",
     time: "12kg LPG Refill • 35 min",
@@ -200,7 +192,6 @@ const RiderOrder = () => {
     deliveryAddress: "no 2 Salau street magodo",
   };
 
-  // ADDED: Mock data for the Completed tab (image_5115a7.png)
   const completedDeliveries = [
     {
       deliveryId: "DEL-5023",
@@ -210,7 +201,7 @@ const RiderOrder = () => {
       rating: 5,
       gasType: "Oxygen",
       quantity: 1,
-      fee: "1,500", // Adjusted from image to match common fee structure
+      fee: "1,500",
       tip: "62",
     },
     {
@@ -225,7 +216,6 @@ const RiderOrder = () => {
       tip: "50",
     },
   ];
-  // --- END MOCK DATA ---
 
   const tabs = [
     { key: "available", name: "Available (2)" },
@@ -238,7 +228,6 @@ const RiderOrder = () => {
       <h1 className="order_title">Deliveries</h1>
       <p className="order_subtitle">Manage your delivery assignments</p>
 
-      {/* TABS WRAPPER */}
       <div className="order_tabs_wrapper">
         {tabs.map((tab) => (
           <div
@@ -253,8 +242,6 @@ const RiderOrder = () => {
         ))}
       </div>
 
-      {/* --- CONDITIONAL RENDERING --- */}
-      {/* 1. AVAILABLE TAB CONTENT */}
       {activeTab === "available" && (
         <>
           <div className="request_info_section">
@@ -280,14 +267,12 @@ const RiderOrder = () => {
         </>
       )}
 
-      {/* 2. ACTIVE TAB CONTENT */}
       {activeTab === "active" && (
         <div className="active_order_content">
           <ActiveOrderItem order={activeOrder} />
         </div>
       )}
 
-      {/* 3. COMPLETED TAB CONTENT (NEW) */}
       {activeTab === "completed" && (
         <div className="completed_order_content">
           <div className="request_info_section">
