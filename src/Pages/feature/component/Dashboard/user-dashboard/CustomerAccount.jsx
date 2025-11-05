@@ -14,7 +14,7 @@ const CustomerAccount = () => {
                 <span>Manage your profile</span>
             </div>
         </header>
-        <section className="views stretch">
+        <section className="views extreme">
             <div className="top">
                 <p className="preview-title">
                     personal information
@@ -56,7 +56,7 @@ const CustomerAccount = () => {
             </div>
         </section>
         </section>
-        <div className="views stretch">
+        <div className="views extreme">
             <div className="top">
                 <p className="preview-title">
                     <GrLocation className='nav-link' /> saved addersses  

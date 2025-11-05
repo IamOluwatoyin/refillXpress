@@ -4,24 +4,27 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #F5F5F5;
+    background:  #e5e7eb42;
+
 }
 .dashboard-grid {
     width: 100%;
     height: max-content;
     margin-bottom: 0.5rem;
     display: grid;
-    background-color: #F5F5F5;
+    background:  #e5e7eb42;
     grid-template-columns: 300px 1fr;
     grid-template-rows: 50px max-content;   
-    gap: 3rem;
+    row-gap: 1rem;
+    /* column-gap: 3rem; */
     grid-template-areas: 
     "header header"
     "sidebar main"
 }
 .header {
     grid-area: header;
-    height: 5rem;
+    width: 100%;
+    height: 10%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -31,7 +34,7 @@
     align-items: center;
     position: fixed;
     top: 0;
-    z-index: 9999999;
+    z-index: 90;
 }
 .fire {
     width: 3rem;
@@ -70,6 +73,7 @@
 }
 .header-content {
     width: 95%;
+    height: max-content;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -82,25 +86,26 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    position: fixed;
-    top: 6rem;
+
 }
 .navigation {
     width: 15rem;
-    height: 80vh;
+    height: 82vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    position: fixed;
     gap: 1rem;
-    margin-top: 0.5rem;
-    margin-left: 2rem;
+    margin-top: 3rem;
+    margin-left: 1rem;
     border-radius: 0.9rem;
     background-color: #fff;
+    
 }
 .navigation .nav {
     width: 80%;
-    padding: 0.2rem;
+    padding: 0.4rem;
     box-sizing: border-box;
     display: flex;
     border-radius: 0.5rem;
@@ -114,7 +119,7 @@
     text-decoration: none;
 }
 .nav-link {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
 }
 
 .main {
@@ -122,20 +127,86 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #F5F5F5;
     
 }
 .active {
-    background-color: #ff7300;
-    color: #ff4d00;
+    background-color: #ff7f0f36;
     span {
-        color: #fff;    
+        color: #ff7f11;
     }
     .nav-link {
-    font-size: 1.8rem;
-    color: #ff4d00;
+    font-size: 1.6rem;
+    color: #ff7f11;
     
+}  
 }
 
-    
+.burger {
+    display: none;
+}
+
+@media screen and (max-width: 630px) {
+    .glorys-profile {
+        display: none;
+    }
+    .burger {
+        display: block;
+    }
+    .sidebar {
+        
+        width: 100%;
+        height: max-content;
+        /* height: 10vh; */
+        background-color: #fff;
+        position: absolute;
+        z-index: 100000;
+        top: 0;
+        .navigation {
+            width: 100%;
+            height: 100vh;
+            margin-top: 4rem;
+            position: absolute;
+            top: 100%;
+            z-index: 1000000;
+            overflow-y: hidden;
+            border-radius: 0;
+        }
+    }
+    .user span {
+        display: none;
+    }
+    .header {
+        width: 100%;
+        height: max-content;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        top: 0;
+        background-color: #fff;
+        h6, span {
+            font-size: 0.9rem;
+        }
+        .fire {
+            width: 1rem;
+            height: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+    .header-content {
+        position: relative;
+        background-color: #fff;
+        padding: 1rem;
+    }
+   .dashboard-grid {
+    display: flex;
+    flex-direction: column;
+   }
+   .main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+   }
 }

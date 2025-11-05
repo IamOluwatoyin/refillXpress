@@ -1,19 +1,21 @@
 .ordermodal {
     width: 100%;
-    height: 1000vh;
+    height: 100vh;
+    min-height: max-content;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     background-color: hsla(0, 0%, 0%, 0.027);
     backdrop-filter: blur(1px);
-    position: absolute;
+    position: fixed;
     top: 0;
-    z-index: 99999;
+    left: 0;
+    z-index: 1000;
 }
 
-.modal-itself {
-    width: 40%;
-    height: max-content;
+.the-modal-itself {
+    width: 35rem;
+    min-height: max-content;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,8 +24,8 @@
     background-color: #fff;
     border-radius: 0.5rem;
     gap: 0.4rem;
-    padding: 1rem;
-    /* box-shadow: ; */
+    padding: 0.6rem;
+    transform: scale(0.95);
 
 }
 .modal-heading {
@@ -40,7 +42,6 @@
     align-items: center;
     justify-content: flex-start;
     text-transform: capitalize;
-    /* background-color: palegoldenrod; */
 }
 .the-vendor-name {
     color: #ddd;
@@ -68,7 +69,7 @@
     box-sizing: border-box;
 }
 .the-spec-input {
-    width: max-content;
+    width: 100%;
     outline: none;
     border: none;
     background-color: transparent;  
@@ -83,7 +84,7 @@
     border-radius: 0.5rem;
     background-color: #eee;
     border-style: none;
-    padding-inline-start: 0.6rem;
+    padding: 0.6rem;
     box-sizing: border-box;
 }
 .delivery-fee-info {
@@ -135,6 +136,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            p {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
         }
         .line {
             width: 100%;
@@ -167,8 +173,9 @@
         font-size: 1rem;
         cursor: pointer;
         text-transform: capitalize;
+        gap: 0.5rem;
     }
-    .continue {
+    .to-continue { 
         background-color: darkorange;
         color: #fff;
     }

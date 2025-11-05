@@ -50,7 +50,7 @@ console.log("User", savedUser)
   }
 
   try {
-        const res = await axios.post(`${BASEURL}/api/v1/user/verify`, {
+        const res = await axios.post(`${BASEURL}/user/verify`, {
       email: savedUser.email,
       otp: joined,
     }, 
@@ -79,7 +79,7 @@ console.log("User", savedUser)
         const savedUser = JSON.parse(localStorage.getItem("user"))
 
         try {
-            const res = await axios.post(`${BASEURL}/api/v1/user/resend-otp`, {
+            const res = await axios.post(`${BASEURL}/user/resend-otp`, {
                 email: savedUser.email,
             }, {
                 headers: {"Content-Type": "application/json"}
