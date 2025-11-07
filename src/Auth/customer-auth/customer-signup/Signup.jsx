@@ -30,17 +30,12 @@ const Signup = () => {
   };
     
     return (
-        <div className='signup'>
+        <div className='signup'> 
              {loading && <SpinnerModal />} 
            <article className="article">
                 <header className="form-header">
-                    <div className="inner-header">
-                        <h4 className='logo-heading'>
-                    <span className='fire'>
-                        <HiFire /> 
-                    </span>
-                    Refill<span className='logo-style'>Xpress</span>
-                    </h4>
+                     <div className='logo-heading'>
+                        <img src={logo} alt="" onClick={()=> nav("/")} className='logo-heading' />
                     </div>
                 </header>
                 <form className="form" onSubmit={handleSubmit(onSubmit)}>
@@ -196,7 +191,6 @@ const Signup = () => {
                         className="submit">create account</button>
                         <p>Already have an account? <Link className="link" to="/userlogin">Sign in</Link></p>  
                     </div>
-
                 </form>
             </article> 
         </div>

@@ -31,14 +31,9 @@ const Login = () => {
       {loading && <SpinnerModal />} 
            <article className="article">
                 <header className="form-header">
-                    <div className="inner-header">
-                        <h4 className='logo-heading'>
-                    <span className='fire'>
-                        <HiFire /> 
-                    </span>
-                    Refill<span className='logo-style'>Xpress</span>
-                    </h4>
-                    </div>
+                     <div className='logo-heading'>
+                                                               <img src={logo} alt="" onClick={()=> nav("/")} className='logo-heading' />
+                                                           </div>
                 </header>
       <form className="form" onSubmit={handleSubmit(onSubmit)}>
         <div className="form-heading wrap">

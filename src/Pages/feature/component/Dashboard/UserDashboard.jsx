@@ -8,6 +8,8 @@ import { BiHome } from "react-icons/bi";
 import { GrLocation } from "react-icons/gr";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { CgClose } from 'react-icons/cg';
+import  logo  from "../../../../assets/dashboard_logo.png"
+
 import "./UserDashboard.css"
 import { UserContext } from '../../../../context/UserContext';
 const UserDashboard = () => {
@@ -42,12 +44,9 @@ const UserDashboard = () => {
       <div className="dashboard-grid">
         <header className="header">
           <div className="header-content">
-            <h6 onClick={()=> nav("/")} className='logo-heading'>
-          <span className='fire'>
-                <HiFire />  
-          </span>
-          Refill<span className='logo-style'>Xpress</span>
-          </h6>
+            <div>
+          <img  src= {logo} onClick={()=> nav("/")} className='logo-heading' /> 
+          </div>
           <div className="user">
             <p className='glorys-profile'><FiUser className='user-placeholder'/></p>
             <div>
