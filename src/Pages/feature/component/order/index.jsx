@@ -10,8 +10,7 @@ import "./OrderManagement.css";
 import ViewOrderModal from "../vendor-order-modals/view-order-modal";
 import { vendorAcceptRejectOrder } from "../../../../api/mutation";
 import { getAllVendorsOrders } from "../../../../api/query";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import AcceptOrderModal from "../vendor-order-modals/accept-order-modal";
 import RejectedOrder from "../vendor-order-modals/rejected-order";
 import OrderDetails from "../vendor-order-modals/order-details";
@@ -68,13 +67,13 @@ const OrderManagement = () => {
   const handleOrderDecision = async (order, action, reason = "") => {
     try {
       setIsProcessing(true);
-      await vendorAcceptRejectOrder({
-        orderId: order.id,
-        action,
-        message: reason,
-      });
-      console.log("working", rejectionMessage);
+      const res = await vendorAcceptRejectOrder({
+    orderId: order.id,
+    action,
+    message: reason,
+  });
 
+  console.log("working", res.data.message);
       setVendororderPending((prev) => prev.filter((o) => o.id !== order.id));
 
       if (action === "accept") {
@@ -83,9 +82,7 @@ const OrderManagement = () => {
           { ...order, status: "Accepted" },
         ]);
 
-        toast.success(`Order ${order.orderNumber} accepted successfully`, {
-          position: "top-center",
-        });
+       toast.success(`Order ${order.orderNumber} accepted successfully`);
       } else if (action === "complete") {
         setVendororderActive((prev) => prev.filter((o) => o.id !== order.id));
         setVendororderCompleted((prev) => [
@@ -102,21 +99,15 @@ const OrderManagement = () => {
           { ...order, status: "Cancelled", reason },
         ]);
 
-        toast.success(`Order ${order.orderNumber} rejected`, {
-          position: "top-center",
-          style: { backgroundColor: "#ef4444", color: "#fff" },
-        });
+        toast.success(`Order ${order.orderNumber} rejected`);
       }
 
       setShowModal(false);
       setShowRejectCard(false);
     } catch (error) {
       console.error(`Failed to ${action} order`, error);
-      toast.error(
-        `Failed to ${action} order`,
-        { position: "top-center" },
-        error.response?.data?.message || "Something went wrong!"
-      );
+
+      toast.error(`Failed to ${action} order`);
     } finally {
       setIsProcessing(false);
     }
@@ -340,7 +331,6 @@ const OrderManagement = () => {
           </div>
         </div>
       )}
-      <ToastContainer />
     </div>
   );
 };
