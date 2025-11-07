@@ -17,13 +17,14 @@ const OrderModal = ({ onClose, vendor }) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const quantity = parseFloat(orderInput.quantity) || 0;
-    const pricePerKg = vendor?.pricePerKg || 0;
-    const deliveryFee = vendor?.deliveryFee || 0;
-    const subtotal = quantity * pricePerKg;
-    setTotal(subtotal + deliveryFee);
-  }, [orderInput.quantity, vendor]);
+ useEffect(() => {
+  const quantity = parseFloat(orderInput.quantity) || 0;
+  const pricePerKg = vendor?.pricePerKg || 0;
+  const deliveryFee = vendor?.deliveryFee || 0;
+
+  setTotal(quantity * pricePerKg + deliveryFee);
+}, [orderInput.quantity, vendor?.pricePerKg, vendor?.deliveryFee]);
+
 
   const beforeInput = (e) => {
     if (e.data && !/^\d+$/.test(e.data)) {
@@ -108,14 +109,17 @@ const OrderModal = ({ onClose, vendor }) => {
           <label htmlFor="quantity">Quantity</label>
           <div className="the-spec">
             <input
-              type="text"
-              className="the-spec-input"
-              id="quantity"
-              onChange={(e) =>
-                setOrderInput({ ...orderInput, quantity: e.target.value })
-              }
-              onBeforeInput={beforeInput}
-            />
+  type="text"
+  className="the-spec-input"
+  id="quantity"
+  value={orderInput.quantity}
+  onChange={(e) => {
+    // Only allow digits
+    const numericValue = e.target.value.replace(/\D/g, "");
+    setOrderInput({ ...orderInput, quantity: numericValue });
+  }}
+/>
+
             <small className="small">
               price: <TbCurrencyNaira size={12} />
               {vendor?.pricePerKg || 0}/kg
@@ -161,9 +165,9 @@ const OrderModal = ({ onClose, vendor }) => {
               Gas ({orderInput.quantity || 0}) × {vendor?.pricePerKg || 0}
             </p>
             <p>
-              <TbCurrencyNaira size={20} />
-              {(orderInput.quantity || 0) * (vendor?.pricePerKg || 0)}
-            </p>
+  <TbCurrencyNaira size={20} />
+  {(parseFloat(orderInput.quantity) || 0) * (vendor?.pricePerKg || 0)}
+</p>
           </div>
 
           <div className="calc">

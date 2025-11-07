@@ -63,3 +63,27 @@
   line-height: 1.5;
   max-width: 80%;
 }
+.proceedBtn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 25px;
+  background-color: #ff7f50; 
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+
+
+.proceedBtn:hover {
+  background-color: #ff6333; 
+  transform: translateY(-2px);
+}
+
+.proceedBtn:active {
+  transform: translateY(0);
+}
