@@ -39,11 +39,7 @@ const OrderModal = ({onClose, vendor}) => {
       if(res.status === 201 || res.status === 200) {
         toast.success("order placed successfully")
         console.log(res.data)
-        //  window.location.href = res.data.data.payment_url;
-        // setPayChoice(true)
          const orderId = res.data.order.id;
-
-      // 3️⃣ Initialize Payment
       const payRes = await axios.post(
         `${BASEURL}/user/initializePayment/${orderId}`,
         {},
@@ -56,7 +52,6 @@ const OrderModal = ({onClose, vendor}) => {
 
       console.log("Payment init:", payRes.data);
 
-      // 4️⃣ Redirect to Korapay link if available
       if (payRes.data?.data?.checkoutUrl) {
         window.location.href = payRes.data.data.checkoutUrl;
       } else {
@@ -73,7 +68,6 @@ const OrderModal = ({onClose, vendor}) => {
   }
   toast.error("Payment initialization failed");
   if (err.response.message = "Session timed out, please login to your account" || err.response.status === 401) {
-      // Token expired or invalid
       localStorage.removeItem("token");
       toast.error("Session expired. Please log in again.");
      nav("/userlogin")
@@ -88,41 +82,6 @@ const OrderModal = ({onClose, vendor}) => {
     }
   };
   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   return (
     <div className="ordermodal">
