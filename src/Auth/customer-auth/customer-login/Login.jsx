@@ -32,8 +32,8 @@ const Login = () => {
            <article className="article">
                 <header className="form-header">
                      <div className='logo-heading'>
-                                                               <img src={logo} alt="" onClick={()=> nav("/")} className='logo-heading' />
-                                                           </div>
+                                                                     <img src="/Images/logo.svg" alt="" onClick={()=> nav("/")} className='logo-heading' />
+                                                                </div>
                 </header>
       <form className="form" onSubmit={handleSubmit(onSubmit)}>
         <div className="form-heading wrap">
