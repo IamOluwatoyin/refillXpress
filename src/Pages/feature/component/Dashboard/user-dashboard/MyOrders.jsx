@@ -54,22 +54,19 @@ const MyOrders = () => {
     try {
       setLoading(true);
 
-      
       const res = await handlePayment(order.id);
-     const paymentLink = res?.data?.data?.checkoutUrl;
-     console.log("Raw response from handlePayment:", res);
+      const paymentLink = res?.data?.data?.checkoutUrl;
+      console.log("Raw response from handlePayment:", res);
 
-      if (!paymentLink ) {
+      if (!paymentLink) {
         throw new Error("Payment link not received from server");
       }
 
       setPaymentLink(paymentLink);
 
-;
-      setShowPaymentModal(true); 
+      setShowPaymentModal(true);
       setLoading(false);
-    } 
-    catch (err) {
+    } catch (err) {
       setLoading(false);
       toast.error(
         err.response?.data?.message || "Payment initialization failed"
@@ -233,24 +230,39 @@ const MyOrders = () => {
                   )}
 
                   {/* Accepted → Pay Now + Cancel */}
-                  {order.status === "active" && (
-                    <>
-                      <button
-                        className="order-btn pay-btn"
-                        onClick={() => handlePayNow(order)}
-                      >
-                        Pay Now
-                      </button>
-                      <button
-                        className="order-btn cancel-btn"
-                        onClick={() =>
-                          toast.info("Order cancelled successfully")
-                        }
-                      >
-                        Cancel
-                      </button>
-                    </>
-                  )}
+                 {order.status === "active" && (
+  <>
+    {order.paymentStatus === "unpaid" && (
+      <button
+        className="order-btn pay-btn"
+        onClick={() => handlePayNow(order)}
+      >
+        Pay Now
+      </button>
+    )}
+
+    {order.paymentStatus === "paid" && (
+      <button className="order-btn completed-btn" disabled>
+        Paid
+      </button>
+    )}
+
+    {order.paymentStatus === "failed" && (
+      <button
+        className="order-btn retry-btn"
+        onClick={() => handlePayNow(order)}
+      >
+        Retry Payment
+      </button>
+    )}
+
+    {/* Cancel button disabled for active orders */}
+    <button className="order-btn cancel-btn" disabled>
+      Cancel
+    </button>
+  </>
+)}
+
 
                   {(order.status === "paid" ||
                     order.status === "confirmed") && (
@@ -259,7 +271,7 @@ const MyOrders = () => {
                         className="order-btn completed-btn"
                         onClick={() => {
                           setOrderDetails(order);
-                          setShow(true); // show order details modal
+                          setShow(true); 
                         }}
                       >
                         Completed
