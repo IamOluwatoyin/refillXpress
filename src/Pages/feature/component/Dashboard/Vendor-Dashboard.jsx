@@ -16,7 +16,7 @@ import { getAllReviews, getSummary, getVendorId } from "../../../../api/query";
 import { getVendorPendingOrders } from "../../../../api/query";
 import ViewOrderModal from "../vendor-order-modals/view-order-modal";
 import { vendorAcceptRejectOrder } from "../../../../api/mutation";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const VendorDashboard = () => {
   const nav =useNavigate()
@@ -80,23 +80,29 @@ const [allReviews, setAllReviews] = useState(null)
     setVendorPendingOrders(prev => prev.filter(o => o.id !== order.id));
 
    if (action === "accept") {
-      toast.success(` Order ${order.orderNumber} accepted successfully!`, {
-        position: "top-center",
-        style: { marginTop: "40px", backgroundColor: "#22c55e", color: "#fff" },
-      });
+      toast.success(` Order ${order.orderNumber} accepted successfully!`
+    );
     } else if (action === "reject") {
-      toast.success(` Order ${order.orderNumber} rejected successfully!`, {
-        position: "top-center",
-        style: {backgroundColor: "#ef4444", color: "#fff" },
-      });
+      toast.success(` Order ${order.orderNumber} rejected successfully!`);
     }
+ 
 
+    // {
+    //     position: "top-center",
+    //     style: {backgroundColor: "#ef4444", color: "#fff" },
+    //   }
+
+
+    // , {
+    //     position: "top-center",
+    //     style: { marginTop: "40px", backgroundColor: "#22c55e", color: "#fff" },
+    //   }
 
     setShowModal(false);
     setShowRejectCard(false);
   } catch (error) {
     console.error(`Failed to ${action} order`, error);
-    toast.error(`Failed to ${action} order`, { position: "top-center" },error.response?.data?.message || "Something went wrong!");
+    toast.error(`Failed to ${action} order`,error.response?.data?.message || "Something went wrong!");
     
   }finally {
     setIsProcessing(false);
@@ -322,7 +328,6 @@ const vendor = JSON.parse(localStorage.getItem("vendor"));
   </div>
 )}
 
-<ToastContainer />
 
     </div>
   );

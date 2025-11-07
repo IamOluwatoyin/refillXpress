@@ -8,7 +8,12 @@ import { UserProvider } from "./context/UserContext";
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-   <ToastContainer/>
+<ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={true}
+        newestOnTop={true}
+      />
     <UserProvider>
        <App />
     </UserProvider>

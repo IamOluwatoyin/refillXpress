@@ -1,185 +1,136 @@
-import React, { useRef, useEffect, useState } from 'react'
-import "../customer-signup/signup.css"
-import "./signupverify.css"
+import React, { useRef, useState, useEffect } from "react";
 import { HiFire } from "react-icons/hi";
-import { toast } from 'react-toastify';
-import axios from 'axios';
-import { BASEURL } from '../../../api/base';
-import { useContext } from 'react';
-import { UserContext } from '../../../context/UserContext';
-import { useNavigate } from 'react-router-dom';
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import SpinnerModal from "../../vendor-auth/spinner-modal";import { resendOtp, verifyUser } from "../../../api/mutation";
+;
 
-const OtpSignup = () => {
-    const nav = useNavigate()
-    const { user, setUser } = useContext(UserContext)
-    
-    const [code, setCode] = useState([])
-    const [timer, setTimer] = useState(30); // 2 minutes = 120 seconds
-    const [resendActive, setResendActive] = useState(false);
+const UserVerify = () => {
+  const nav = useNavigate();
+  const [timeLeft, setTimeLeft] = useState(30);
+  const [isLoading, setIsLoading] = useState(false);
+  const [disableResend, setDisableResend] = useState(false);
+  const inputRefs = Array.from({ length: 6 }, () => useRef(null));
 
-    useEffect(() => {
-  let countdown;
+  useEffect(() => {
+    inputRefs[0].current.focus();
+  }, []);
 
-  if (timer > 0) {
-    countdown = setInterval(() => {
-      setTimer(prev => prev - 1);
-    }, 1000);
-  } else {
-    setResendActive(true); // enable resend when timer finishes
-    clearInterval(countdown);
-  }
-
-  return () => clearInterval(countdown);
-}, [timer]);
-
-   const handleSend = async (e) => {
-  e.preventDefault();
-
-  const joined = inputRef.map(val => val.current.value).join("");
-
-  if (joined.length < 6) {
-    toast.error("Please enter all 6 digits.");
-    return;
-  }
-
-const savedUser = JSON.parse(localStorage.getItem("user"));
-console.log("User", savedUser)
-  if (!savedUser || !savedUser.email) {
-    toast.error("User not found. Please sign up again.");
-    return;
-  }
-
-  try {
-        const res = await axios.post(`${BASEURL}/user/verify`, {
-      email: savedUser.email,
-      otp: joined,
-    }, 
-    {
-      headers: { "Content-Type": "application/json" }
-    });
-    console.log(joined)
-    toast.success(res.data.message || "Account verified successfully!");
-    setUser(res.data);
-    localStorage.setItem("user", JSON.stringify(res.data));  
-    nav("/userlogin")
-
-  } catch (err) {
-    console.error(err);
-    toast.error(err.response)
-    
-  }
-};
-
-    const handleResend = async (e) => {
-        e.preventDefault()
-  setTimer(30); 
-  setResendActive(false);
-  toast.info("Verification code resent!"); 
-
-        const savedUser = JSON.parse(localStorage.getItem("user"))
-
-        try {
-            const res = await axios.post(`${BASEURL}/user/resend-otp`, {
-                email: savedUser.email,
-            }, {
-                headers: {"Content-Type": "application/json"}
-            })
-        } catch (err) {
-            console.error(err)
-        }
-  
-};      
-
-    const formatTime = (time) => {
-  const minutes = Math.floor(time / 60);
-  const seconds = time % 60;
-  return `${minutes < 10 ? "0" + minutes : minutes}:${
-    seconds < 10 ? "0" + seconds : seconds
-  }`;
-};
-
-
-
-    const inputRef = [useRef(null), useRef(null), useRef(null), useRef(null), useRef(null), useRef(null)]
-    const handleChange = (e, index) => {
-            const value = e.target.value
-        if (value && index < inputRef.length - 1)  {
-            inputRef[index + 1].current.focus()
-        } 
-        if (!/^[0-9]?$/.test(value)) {
-            toast.error("only allow digits")
-            // return  
-        }
+  useEffect(() => {
+    if (timeLeft > 0) {
+      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+      return () => clearTimeout(timer);
     }
+  }, [timeLeft]);
 
-    const backspace = (e, index) => {
-        if (e.key === "Backspace" && !e.target.value  && index > 0) {
-            inputRef[index - 1].current.focus()
+  const handleChange = (e, index) => {
+    const value = e.target.value;
+    if (!/^[0-9]?$/.test(value)) return;
+    if (value && index < inputRefs.length - 1) {
+      inputRefs[index + 1].current.focus();
     }
+  };
+
+  const handleBackspace = (e, index) => {
+    if (e.key === "Backspace" && !e.target.value && index > 0) {
+      inputRefs[index - 1].current.focus();
     }
+  };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    useEffect(()=> {    
-        inputRef[0].current.focus()
-    }, [])
+    const otp = inputRefs.map((ref) => ref.current.value).join("");
+    if (otp.length < 6) return toast.error("Please enter all 6 digits");
+
+    const email = localStorage.getItem("email");
+    if (!email) return toast.error("Email not found. Please sign up again.");
+
+    try {
+      setIsLoading(true);
+      const res = await verifyUser({ email, otp });
+      toast.success(res.data.message || "Verification successful!");
+      localStorage.removeItem("email");
+      setTimeout(() => nav("/userlogin"), 2000);
+    } catch (err) {
+      console.error(err);
+      toast.error(err.response?.data?.message || "Something went wrong");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleResend = async () => {
+    setDisableResend(true);
+    const email = localStorage.getItem("email");
+
+    try {
+      await resendOtp({ email });
+      toast.success("OTP resent successfully!");
+      setTimeLeft(30);
+      setTimeout(() => setDisableResend(false), 3000);
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to resend OTP");
+      setDisableResend(false);
+    }
+  };
+
   return (
-    <div className='verify'>
+    <div className="verify">
       <article className="article">
-        <header className="form-header">
-            <h6 className='logo-heading'>
-                <span className='fire'>
-                    <HiFire /> 
-                </span>
-                Refill<span className='logo-style'>Xpress</span>
-            </h6>
+        <header className="form-header" onClick={() => nav("/")}>
+          <h6 className="logo-heading">
+            <span className="fire"><HiFire /></span>
+            Refill<span className="logo-style">Xpress</span>
+          </h6>
         </header>
-        <form className="form">
-            <div className="form-heading">
-                <h1>verify account</h1>
-                <p>A verification code has been sent to your email
-                address.Please enter it to continue</p>
-            </div>
-            <div className="code">
-                {inputRef.map((ref, index) => (
-                    <input 
-                    ref={ref}
-                    key={index}
-                    type='text'
-                      onBeforeInput={(e) => {
-                          if (!/[0-9]/.test(e.data)) {
-                            e.preventDefault();
-                          toast.error("Only digits allowed")
-                          }
-                        }}
 
-                    onChange={(e)=> handleChange(e, index)}
-                    onKeyDown={(e)=> backspace(e, index)}
-                    maxLength="1"
-                    placeholder={index + 1}
-                    className='code-box'
-                    />
-                ))}
-            </div>
-            <div className='submit-section'>
-            
-      <button onClick={handleSend} disabled={!resendActive} className="submit">Verify</button>
-        { 
-            timer > 0 ? (
-            <>
-            <p>didn’t receive code? resend in  {formatTime(timer)}</p>
-            </>
+        <form className="form" onSubmit={handleSubmit}>
+          <div className="form-heading">
+            <h1>Verify Account</h1>
+            <p>A 6-digit code has been sent to your email. Please enter it below.</p>
+          </div>
+
+          <div className="code">
+            {inputRefs.map((ref, i) => (
+              <input
+                key={i}
+                ref={ref}
+                type="text"
+                maxLength="1"
+                className="code-box"
+                onChange={(e) => handleChange(e, i)}
+                onKeyDown={(e) => handleBackspace(e, i)}
+              />
+            ))}
+          </div>
+
+          <div className="submit-section">
+            <button type="submit" className="submit" disabled={isLoading}>
+              {isLoading ? <SpinnerModal /> : "Verify"}
+            </button>
+
+            {timeLeft > 0 ? (
+              <p>Resend code in {timeLeft}s</p>
             ) : (
-                <>
-            <p>didn’t receive code? <button onClick={handleResend} className='resend-btn'>resend</button></p>
-                </>
-            )
-        }
-</div>
-
+              <p>
+                Didn't get the code?{" "}
+                <button
+                  type="button"
+                  onClick={handleResend}
+                  disabled={disableResend}
+                  className="resend-btn"
+                >
+                  Resend
+                </button>
+              </p>
+            )}
+          </div>
         </form>
       </article>
     </div>
-  )
-}
+  );
+};
 
-export default OtpSignup
+export default UserVerify;

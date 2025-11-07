@@ -6,19 +6,26 @@ import { HiFire } from "react-icons/hi";
 import { UserContext } from '../../../context/UserContext';
 import { Link, useNavigate } from 'react-router-dom';
 import SpinnerModal from '../../vendor-auth/spinner-modal';
+import { useForm } from 'react-hook-form';
 
 
 const Login = () => {
     const { login, loading, setLoading } = useContext(UserContext)
     const navigate = useNavigate()
     const [show, setShow] = useState(false)
-    const [formData, setFormData] = useState({
-        email: "",
-        password: ""
-    })
-    const handleChange = (e) => {
-        setFormData((prev)=> ({...prev, [e.target.name]: e.target.value}))
+     const {
+        register,
+        handleSubmit,
+        formState: { errors },
+      } = useForm();
+
+       const onSubmit = async (data) => {
+    const success = await login(data);
+    if (success) {
+      navigate("/userdashboard"); 
     }
+  };
+    
   return (
     <div className='login'>
       {loading && <SpinnerModal />} 
@@ -33,7 +40,7 @@ const Login = () => {
                     </h4>
                     </div>
                 </header>
-      <form className="form">
+      <form className="form" onSubmit={handleSubmit(onSubmit)}>
         <div className="form-heading wrap">
             <h1>welcome back</h1>
             <p>
@@ -41,22 +48,39 @@ const Login = () => {
             </p>
         </div>
         <div className="input-container">
-                <label htmlFor="email">email address</label>
+                <label htmlFor="email">Email Address</label>
                 <div className="input-div">
                     <input type="text" placeholder='your email here...' 
                     name='email'
-                    value={formData.email}
-                    onChange={handleChange}
+                     {...register("email", {
+                        required: "email is required",
+                        pattern: {
+                          value: /\S+@\S+\.\S+/,
+                          message: "Enter a valid email address",
+                        },
+                      })}
                     />
                 </div>
+                 {errors.email && (
+                      <p style={{ color: "red" }}>
+                        {errors.email.message}
+                      </p>
+                    )}
         </div>
         <div className="input-container">
-            <label htmlFor="email">password</label>
+            <label htmlFor="email">Password</label>
                 <div className="input-div">
                     <input type={show? "text" : "password"} placeholder='password ( 8 or more characters)'
                     name='password'
-                    value={formData.password}
-                    onChange={handleChange}
+                    {...register("password", {
+                          required: "Password is required",
+                          pattern: {
+                            value:
+                              /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/,
+                            message:
+                              "Password must be at least 8 characters and include letters, numbers, and special characters.",
+                          },
+                        })}
                     />
                     <span className='eye'>
                         {
@@ -64,12 +88,18 @@ const Login = () => {
                         }
                     </span>
                 </div>
+                 {errors.password && (
+                    <p style={{ color: "red" }}>{errors.password.message}</p>
+                  )}
                 <div className="Forgot">
                     <Link className='link' to="/forgot">forgot password?</Link>
                 </div>
         </div>
             <div className='submit-section small'>
-                <button onClick={(e)=> login(e, formData, navigate)} className="submit">sign in</button>
+                <button 
+                 
+                disabled={loading}
+                className="submit">sign in</button>
                 <p>Don't have an account? <Link to="/usersignup" className='link' >sign up</Link></p>
             </div>
       </form>

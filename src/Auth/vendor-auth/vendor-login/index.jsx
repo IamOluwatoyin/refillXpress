@@ -37,7 +37,7 @@ const VendorLogin = () => {
         import.meta.env.VITE_VENDOR_ID,
         response.data.data.id
       );
-      toast.success("Account successfully created");
+      toast.success("Login successfully created");
       setShowModal(true);
 
       switch (response?.data?.data?.kycStatus) {
