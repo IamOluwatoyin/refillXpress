@@ -1,6 +1,7 @@
 .homecontent {
     width: 100%;
       height: max-content;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
@@ -35,7 +36,7 @@
     align-items: center;
 }
 .action {
-    width: 34rem;
+    width: 32rem;
     height: 9rem;
     display: flex;
     flex-direction: column;
@@ -44,6 +45,7 @@
     padding-inline-start: 1rem;
     background-color: #fff;
     border-radius: 0.7rem;  
+    cursor: pointer;
     .icon {
         font-size: 2rem;
         }
@@ -154,7 +156,7 @@
     border-style: none;
 }
 .verified {
-    width: 5rem;
+    width: max-content;
      padding: 0.1rem;
      box-sizing: border-box;
     display: flex;
@@ -244,9 +246,10 @@
         width: 100%;
         display: flex;
         justify-content: center;
+        align-items: center;
         margin-block: 0.7rem;
         text-align: center;
-        text-align: center;
+        margin-top: 2.7rem;
       }
       .actions {
         width: 98%;
@@ -268,9 +271,14 @@
       }
       .right {
         width: max-content;
-        /* transform: translate(-3rem, 2rem); */
         position: absolute;
         top: 70%;
         right: 0;
       }
+}
+.heading, .views, .actions, .order-holder, .stretch {
+  width: 100%;
+  max-width: 95%; 
+  margin-inline: auto;
+  box-sizing: border-box;
 }

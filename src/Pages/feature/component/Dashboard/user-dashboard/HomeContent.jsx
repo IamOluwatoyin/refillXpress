@@ -79,14 +79,14 @@ useEffect(() => {
             </div>
         </header>
         <section className="actions">
-            <div className="action">
+            <div onClick={()=> nav("browsevendors")} className="action">
                 <GrLocation className='icon' style={{color: "blue"}} />
                 <p className="action-type">
                     find vendors
                 </p>
                 <p>Browse gas suppliers near you</p>
             </div>
-            <div className="action">
+            <div onClick={()=> nav("myorders")} className="action">
                 <FiPackage className='icon' style={{color: "orange"}} />
                 <p className="action-type">
                     my orders

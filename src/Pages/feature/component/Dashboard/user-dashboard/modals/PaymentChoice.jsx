@@ -36,7 +36,7 @@ const PaymentChoice = ({onClick}) => {
             </div> 
         </div>
         <button className="continue">continue</button>
-        <strong className="back">go back</strong>
+        <strong  onClick={onClick} className="back">go back</strong>
       </div>
     </div>
   )

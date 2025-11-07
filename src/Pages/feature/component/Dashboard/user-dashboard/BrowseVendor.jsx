@@ -1,110 +1,100 @@
-import React, { useState, useEffect } from "react";
-import "./browsevendor.css";
-import "./homecontent.css";
+import React, {useState, useContext, useEffect} from 'react'
+import "./browsevendor.css"
+import "./homecontent.css"
 import { MdVerified } from "react-icons/md";
-import { GoStar } from "react-icons/go";
 import { TbCurrencyNaira } from "react-icons/tb";
 import { BiTimeFive } from "react-icons/bi";
 import { RxCaretDown } from "react-icons/rx";
 import { LuSearch } from "react-icons/lu";
+import { FaStar } from "react-icons/fa";
 import { BsArrowRight } from "react-icons/bs";
-import OrderModal from "./modals/OrderModal";
-import ViewVendor from "./modals/ViewVendor";
-import { getNearbyVendors } from "../../../../../api/query";
+import OrderModal from './modals/OrderModal';
+import ViewVendor from './modals/ViewVendor';
+import axios from 'axios';
+import { BASEURL } from '../../../../../api/base';
 
 const BrowseVendor = () => {
-  const [showView, setShowView] = useState(false);
-  const [showOrder, setShowOrder] = useState(false);
-  const [selectedVendor, setSelectedVendor] = useState(null);
-  const [vendors, setVendors] = useState([]);
+    const [vendors, setVendors] = useState([])
+    const [selected, setSelected] = useState(null)
+    const [showView, setShowView] = useState(false)
+    const [showOrder, setShowOrder] = useState(false)
+useEffect(()=> {
+  const getvendorVendors = async () => {
+    try {
+      const res = await axios.get(`${BASEURL}/vendor/getAllvendors`)
+      const retrived = res.data.data
+      console.log(retrived)
+      setVendors(retrived)
+    } catch(err) {
+      console.log("error fetching data", err.message)
+    }
 
-  useEffect(() => {
-    const fetchVendors = async () => {
-      try {
-        const res = await getNearbyVendors();
-        setVendors(res.data.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchVendors();
-  }, []);
+}
+getvendorVendors()
+}, [])
 
-  const openViewModal = (vendor) => {
-    setSelectedVendor(vendor);
-    setShowView(true);
-  };
+const order = (vendor) => {
+    setSelected(vendor)
+    setShowOrder(true)
+    setShowView(false)
+} 
 
-  const openOrderModal = (vendor) => {
-    setSelectedVendor(vendor);
-    setShowOrder(true);
-  };
+const view = (vendor) => {
+     setSelected(vendor)
+     setShowView(true)
+    setShowOrder(false)
+}
+
+
 
   return (
-    <main className="browsevendor">
-      {showView && <ViewVendor onClose={() => setShowView(false)} vendor={selectedVendor} />}
-      {showOrder && <OrderModal onClose={() => setShowOrder(false)} vendor={selectedVendor} />}
-
+    <main className='browsevendor'>
+        { showView && <ViewVendor vendor={selected} onClose={()=> setShowView(false)} openOrder={()=> order(selected)}  />} 
+        {showOrder && <OrderModal  vendor={selected} onClose={()=> setShowOrder(false)}/>}
       <header className="heading">
-        <div className="texts">
-          <h3>browse vendor</h3>
-          Find and locate your vendors
-        </div>
-      </header>
-
-      <div className="search-bar">
-        <div className="search">
-          <LuSearch /> <span>Search location</span>
-        </div>
-        <div className="search-drop">
-          <span>
-            Newest first <RxCaretDown />
-          </span>
-        </div>
-      </div>
-
-      <section className="views extreme">
-        {vendors.length === 0 && <p>No vendors available</p>}
-        {vendors.map((vendor) => (
-          <div key={vendor.id} className="order-holder">
-            <div className="my-order">
-              <div className="vendor-status">
-                <p>{vendor.businessName}</p>{" "}
-                <span className="available">available</span>{" "}
-                <span className="verified">
-                  <MdVerified /> verified
-                </span>
-              </div>
-              <div className="info">
-                <small>
-                  <GoStar className="star" /> {vendor.rating || 4.8}
-                </small>
-                <small>{vendor.distance || "2.1km"}</small>
-                <small>
-                  <TbCurrencyNaira className="the-currency" />
-                  <span className="the-price">{vendor.pricePerKg || 1500}/kg</span>
-                </small>
-              </div>
-              <p>
-                <span>
-                  <BiTimeFive />
-                </span>
-                <small>{vendor.operatingHours || "7:30AM - 8:30PM"}</small>
-              </p>
-              <small>Mon - Sun</small>
+            <div className="texts">
+                <h3> browse vendor</h3>
+                Find and locate your vendors
             </div>
-
-            <div className="right">
-              <button className="order-now" onClick={() => openOrderModal(vendor)}>
-                order now
-              </button>
-              <button className="order-now to-view" onClick={() => openViewModal(vendor)}>
-                view
-              </button>
+        </header>
+        {/* <div className="search-bar">
+             <div className="search">
+            <LuSearch /> <span>Search location</span>
             </div>
-          </div>
+            <div className="search-drop">
+                <span>Newest first <RxCaretDown /></span>
+            </div> 
+        </div> */}
+        <section className="views extreme">    
+        {vendors?.map((vendor)=> (
+            <div className="order-holder">
+        <div className="my-order">
+            <div className='vendor-status'>
+                <p>{vendor.businessName}</p><span className='available'>{vendor.businessAvailability}</span> <span className='verified'><MdVerified />{vendor.status} </span>
+            </div>
+            <div className='info'>
+            <smvendor><FaStar className='star' />4.8</smvendor>
+            <smvendor>2.1km</smvendor>
+            <smvendor><TbCurrencyNaira className='the-currency' /><span className='the-price'>1,500/kg</span></smvendor>
+            </div>
+            <p>
+                <span><BiTimeFive /></span>
+                <smvendor>{vendor.operatingHours}</smvendor>
+            </p>
+            <smvendor>Mon - Sun</smvendor>
+        </div>
+        <div className='right'>
+            <button onClick={()=> order(vendor)} className="order-now">
+            order now
+        </button>
+        <button onClick={()=> view(vendor)} className="order-now to-view">
+            view
+        </button>
+        </div>
+        </div>
         ))}
-      </section>
+                      
+        </section>
     </main>
   );
 };

@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { MdOutlineEdit } from "react-icons/md";
+import React, { useEffect, useState } from 'react'
+import "./customeraccount.css"
+import "./homecontent.css"
+import { FiPackage } from "react-icons/fi";
 import { GrLocation } from "react-icons/gr";
 import { toast } from "react-toastify";
  
@@ -7,38 +9,17 @@ import "./customeraccount.css"
 import { getUserProfile } from "../../../../../api/query";
 
 const CustomerAccount = () => {
-  const [profileAccount, setProfileAccount] = useState({
-    fullName: "",
-    email: "",
-    phoneNumber: "",
-    residentialAddress: "",
-  });
-
-  const fetchUserProfile = async () => {
-    try {
-      const res = await getUserProfile();
-      const data = res?.data?.data;
-
-      const fullName = `${data?.firstName || ""} ${data?.lastName || ""}`.trim();
-
-      setProfileAccount({
-        fullName,
-        email: data?.email || "",
-        phoneNumber: data?.phoneNumber || "",
-        residentialAddress: data?.address || "",
-      });
-
-      console.log("profile fetched", data);
-    } catch (err) {
-      console.error("not seeing profile", err);
-      toast.error("Failed to load profile");
-    }
-  };
-
-  useEffect(() => {
-    fetchUserProfile();
-  }, []);
-
+//     useEffect(()=> {
+//     const [profile, setProfile] = useState(null)
+//     const getProfile = async () => {
+//         try {
+//             const res = await axios.get(`${BASEURL}/user/getUserProfile`)
+//             setProfile(res.data.data)
+//         } catch (err) {
+//             console.log("error")
+//         }
+//     }
+// }, [])
   return (
     <main className="customer-account">
       <header className="heading">

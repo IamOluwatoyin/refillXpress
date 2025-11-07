@@ -4,52 +4,49 @@ import { CgClose } from "react-icons/cg";
 import axios from "axios";
 import { BASEURL } from "../../../../../../api/base";
 import { TbCurrencyNaira } from "react-icons/tb";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom"
 
-const OrderModal = ({ onClose, vendor }) => {
+
+const OrderModal = ({onClose, vendor}) => {
+  const nav = useNavigate()
+  const [payChoice, setPayChoice] = useState(false)
   const [orderInput, setOrderInput] = useState({
-    cylinderSize: "",
-    quantity: "",
-    deliveryAddress: "",
-  });
-  const [total, setTotal] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const quantity = parseFloat(orderInput.quantity) || 0;
-    const pricePerKg = vendor?.pricePerKg || 0;
-    const deliveryFee = vendor?.deliveryFee || 0;
-    const subtotal = quantity * pricePerKg;
-    setTotal(subtotal + deliveryFee);
-  }, [orderInput.quantity, vendor]);
-
-  const beforeInput = (e) => {
-    if (e.data && !/^\d+$/.test(e.data)) {
-      e.preventDefault();
-      toast.error("Numbers only");
-    }
-  };
-
+        cylinderSize: "",
+        quantity: "",
+        deliveryAddress: "",
+  })
   const handleSend = async () => {
-    if (!orderInput.cylinderSize || !orderInput.quantity || !orderInput.deliveryAddress) {
-      toast.warn("Please fill all fields");
-      return;
-    }
-
-    const token = localStorage.getItem("token");
-    setLoading(true);
-
+    console.log("running")
+     if (!orderInput.cylinderSize || !orderInput.quantity && !orderInput.deliveryAddress) {
+    toast.warn("Please fill all fields");
+    return;
+  }
+  const token = localStorage.getItem("token")
     try {
-      const res = await axios.post(
-        `${BASEURL}/order/create-order`,
-        {
-          cylinderSize: orderInput.cylinderSize,
-          quantity: orderInput.quantity,
-          deliveryAddress: orderInput.deliveryAddress,
-          vendorId: vendor?.id,
-        },
+      const res = await axios.post(`${BASEURL}/order/create-order` , {
+        cylinderSize: orderInput.cylinderSize,
+        quantity: orderInput.quantity,
+        deliveryAddress: orderInput.deliveryAddress
+      }, 
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+    )
+    console.log(res)
+      if(res.status === 201 || res.status === 200) {
+        toast.success("order placed successfully")
+        console.log(res.data)
+        //  window.location.href = res.data.data.payment_url;
+        // setPayChoice(true)
+         const orderId = res.data.order.id;
+
+      // 3️⃣ Initialize Payment
+      const payRes = await axios.post(
+        `${BASEURL}/user/initializePayment/${orderId}`,
+        {},
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -57,20 +54,75 @@ const OrderModal = ({ onClose, vendor }) => {
         }
       );
 
-      if (res.status === 200 || res.status === 201) {
-        toast.success(res.data.message || "Order created successfully!");
-        setTimeout(() => {
-          onClose(); 
-          navigate("/userdashboard/myorders"); s
-        }, 1200);
+      console.log("Payment init:", payRes.data);
+
+      // 4️⃣ Redirect to Korapay link if available
+      if (payRes.data?.data?.checkoutUrl) {
+        window.location.href = payRes.data.data.checkoutUrl;
+      } else {
+        toast.error("Payment link not found");
       }
-    } catch (err) {
-      console.error(err);
-      toast.error(err.response?.data?.message || "Failed to create order");
-    } finally {
-      setLoading(false);
+      }
+    }  catch (err) {
+  if (err.response) {
+    console.error("Response error:", err.response.data);
+  } else if (err.request) {
+    console.error("No response received:", err.request);
+  } else {
+    console.error("Error setting up request:", err.message);
+  }
+  toast.error("Payment initialization failed");
+  if (err.response.message = "Session timed out, please login to your account" || err.response.status === 401) {
+      // Token expired or invalid
+      localStorage.removeItem("token");
+      toast.error("Session expired. Please log in again.");
+     nav("/userlogin")
+    }
+}
+  }
+  const beforeInput = (e) => {
+    if (e.data && !/^\d+$/.test(e.data)) {
+      e.preventDefault();
+      toast.error("numbers only")
+      return
     }
   };
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   return (
     <div className="ordermodal">
@@ -103,25 +155,16 @@ const OrderModal = ({ onClose, vendor }) => {
           </div>
         </div>
 
-        {/* Quantity */}
-        <div className="specs">
-          <label htmlFor="quantity">Quantity</label>
-          <div className="the-spec">
-            <input
-              type="text"
-              className="the-spec-input"
-              id="quantity"
-              onChange={(e) =>
-                setOrderInput({ ...orderInput, quantity: e.target.value })
-              }
-              onBeforeInput={beforeInput}
-            />
-            <small className="small">
-              price: <TbCurrencyNaira size={12} />
-              {vendor?.pricePerKg || 0}/kg
-            </small>
-          </div>
-        </div>
+            <div className="specs">
+                <label htmlFor="size">quantity</label>
+                <div className="the-spec">
+                  <input type="text" className="the-spec-input" id='size' 
+                   onChange={(e)=> setOrderInput({...orderInput, quantity: e.target.value})}
+                  onBeforeInput={beforeInput}
+                  />
+                  {/* <small className='small'>price: 1000/kg</small> */}
+                </div>
+            </div>
 
         {/* Address */}
         <div className="specs">
@@ -138,68 +181,44 @@ const OrderModal = ({ onClose, vendor }) => {
           ></textarea>
         </div>
 
-        {/* Delivery Info */}
-        <div className="vendors-name">
-          <p>Service Type</p>
-        </div>
-        <div className="delivery-fee-info">
-          <div className="inline-delivery-info">
-            <div className="smallblackdot-bg">
-              <div className="smallblackdot"></div>
+            <div className="vendors-name">
+              <p>service type</p>
             </div>
-            <small>
-              This delivery is for customers within this location — fee:
-              <TbCurrencyNaira size={12} /> {vendor?.deliveryFee || 0}
-            </small>
-          </div>
-        </div>
-
-        {/* Summary */}
-        <div className="item-details">
-          <div className="calc">
-            <p>
-              Gas ({orderInput.quantity || 0}) × {vendor?.pricePerKg || 0}
-            </p>
-            <p>
-              <TbCurrencyNaira size={20} />
-              {(orderInput.quantity || 0) * (vendor?.pricePerKg || 0)}
-            </p>
-          </div>
-
-          <div className="calc">
-            <p>Delivery Fee</p>
-            <p>
-              <TbCurrencyNaira size={20} />
-              {vendor?.deliveryFee || 0}
-            </p>
-          </div>
-
-          <div className="line">
-            <hr />
-          </div>
-
-          <div className="calc total">
-            <p>Total</p>
-            <p>
-              <TbCurrencyNaira size={20} />
-              {total}
-            </p>
-          </div>
-        </div>
-
-        {/* Buttons */}
-        <div className="choice-btns">
-          <button onClick={onClose} className="cancel-order">
-            cancel
-          </button>
-          <button
-            onClick={handleSend}
-            className="cancel-order to-continue"
-            disabled={loading}
-          >
-            {loading ? "Placing Order..." : "Place Order"}
-          </button>
-        </div>
+            <div className="delivery-fee-info">
+              <div className="inline-delivery-info">
+                <div className="smallblackdot-bg">
+                  <div className="smallblackdot"></div>
+                </div>
+                <small>This delivery is only for customers within this location 
+                  <span> {vendor.deliveryFee} </span>
+                </small>
+              </div>
+            </div>
+            <div className="item-details">
+              <div className="calc">
+                <p>{`Gas - ${orderInput.quantity} x ${orderInput.cylinderSize}kg x ${vendor.pricePerKg}`}</p>
+                <p><TbCurrencyNaira size={20} />{orderInput.quantity * vendor.pricePerKg}</p>
+              </div>
+              <div className="calc">
+                <p>Delivery Fee</p>
+                <p><TbCurrencyNaira size={20} />{vendor.pricePerKg} </p>
+              </div>
+                <div className="line">
+                  <hr />
+                </div>
+                <div className="calc">
+                  <p>Total</p>
+                <p><TbCurrencyNaira size={20}/>{orderInput.quantity * vendor.pricePerKg + vendor.pricePerKg}</p>
+                </div>
+            </div>
+            <div className="choice-btns">
+              <button onClick={onClose} className="cancel-order">
+                cancel
+              </button>
+              <button onClick={handleSend} className="cancel-order to-continue">
+                continue
+              </button>
+            </div>
       </div>
     </div>
   );

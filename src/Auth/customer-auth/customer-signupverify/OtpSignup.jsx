@@ -5,40 +5,31 @@ import { useNavigate } from "react-router-dom";
 import SpinnerModal from "../../vendor-auth/spinner-modal";import { resendOtp, verifyUser } from "../../../api/mutation";
 ;
 
-const UserVerify = () => {
-  const nav = useNavigate();
-  const [timeLeft, setTimeLeft] = useState(30);
-  const [isLoading, setIsLoading] = useState(false);
-  const [disableResend, setDisableResend] = useState(false);
-  const inputRefs = Array.from({ length: 6 }, () => useRef(null));
+const OtpSignup = () => {
+    const nav = useNavigate()
+    const { user, setUser } = useContext(UserContext)
+    
+    const [code, setCode] = useState([])
+    const [timer, setTimer] = useState(60);
+    const [resendActive, setResendActive] = useState(false);
 
-  useEffect(() => {
-    inputRefs[0].current.focus();
-  }, []);
+    useEffect(() => {
+  let countdown;
 
-  useEffect(() => {
-    if (timeLeft > 0) {
-      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [timeLeft]);
+  if (timer > 0) {
+    countdown = setInterval(() => {
+      setTimer(prev => prev - 1);
+    }, 1000);
+  } else {
+    setResendActive(true); 
+    clearInterval(countdown);
+  }
 
-  const handleChange = (e, index) => {
-    const value = e.target.value;
-    if (!/^[0-9]?$/.test(value)) return;
-    if (value && index < inputRefs.length - 1) {
-      inputRefs[index + 1].current.focus();
-    }
-  };
+  return () => clearInterval(countdown);
+}, [timer]);
 
-  const handleBackspace = (e, index) => {
-    if (e.key === "Backspace" && !e.target.value && index > 0) {
-      inputRefs[index - 1].current.focus();
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+   const handleSend = async (e) => {
+  e.preventDefault();
 
     const otp = inputRefs.map((ref) => ref.current.value).join("");
     if (otp.length < 6) return toast.error("Please enter all 6 digits");

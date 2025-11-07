@@ -1,13 +1,7 @@
 import React, { useState } from 'react'
 import "./completionmodal.css"
 import './ordermodal.css'
-import { MdVerified } from "react-icons/md";
-import { GoStar } from "react-icons/go";
 import { TbCurrencyNaira } from "react-icons/tb";
-import { BiTimeFive } from "react-icons/bi";
-import { RxCaretDown } from "react-icons/rx";
-import { LuSearch } from "react-icons/lu";
-import { BsArrowRight } from "react-icons/bs";
 import { FiPackage, FiPhone } from "react-icons/fi";
 import { GrLocation } from 'react-icons/gr';
 import DeliveryVerification from './DeliveryVerification';
