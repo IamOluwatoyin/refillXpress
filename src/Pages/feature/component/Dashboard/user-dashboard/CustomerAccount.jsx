@@ -3,7 +3,7 @@ import { MdOutlineEdit } from "react-icons/md";
 import { GrLocation } from "react-icons/gr";
 import { toast } from "react-toastify";
  
-import "./CustomerAccount.css";
+import "./customeraccount.css"
 import { getUserProfile } from "../../../../../api/query";
 
 const CustomerAccount = () => {
