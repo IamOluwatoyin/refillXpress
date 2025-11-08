@@ -9,9 +9,8 @@ import {
 } from "react-icons/fa";
 import "./RiderApplicationForm.css";
 import Header from "../../../assets/Header.png";
-import { useNavigate } from "react-router-dom"; // Ensure this is 'react-router-dom' if you are using v6+
-
-const logo = "path/to/your/Header.png";
+import { useNavigate } from "react-router-dom";
+import ApplicationSuccessPage from "../../../Components/ApplicationSuccessPage";
 
 const validateRequiredFields = (data, requiredFields) => {
   return requiredFields.some(
@@ -19,7 +18,6 @@ const validateRequiredFields = (data, requiredFields) => {
   );
 };
 
-/* ---------- PERSONAL INFO FORM ---------- */
 const PersonalInfoForm = ({ initialData, onNext }) => {
   const [data, setData] = useState({
     fullName: "",
@@ -192,7 +190,6 @@ const PersonalInfoForm = ({ initialData, onNext }) => {
   );
 };
 
-/* ---------- VEHICLE DETAILS FORM ---------- */
 const VehicleDetailsForm = ({ initialData, onNext, onBack }) => {
   const [data, setData] = useState({
     type: "",
@@ -340,7 +337,6 @@ const VehicleDetailsForm = ({ initialData, onNext, onBack }) => {
   );
 };
 
-/* ---------- DOCUMENTS FORM ---------- */
 const DocumentsForm = ({ initialData, onNext, onBack }) => {
   const [documents, setDocuments] = useState([
     {
@@ -467,7 +463,6 @@ const DocumentsForm = ({ initialData, onNext, onBack }) => {
   );
 };
 
-/* ---------- BANKING INFO FORM ---------- */
 const BankingInfoForm = ({ initialData, onNext, onBack }) => {
   const [data, setData] = useState({
     accountHolderName: "",
@@ -584,10 +579,10 @@ const BankingInfoForm = ({ initialData, onNext, onBack }) => {
   );
 };
 
-/* ---------- MAIN KYC FORM WRAPPER ---------- */
 const RiderKycForm = () => {
   const [activeStep, setActiveStep] = useState(1);
   const [formData, setFormData] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const navigate = useNavigate();
 
   const steps = [
@@ -604,8 +599,8 @@ const RiderKycForm = () => {
       setActiveStep(activeStep + 1);
     } else {
       console.log("Final Form Data:", { ...formData, ...stepData });
-      alert("Application Submitted Successfully!");
-      navigate("/rider-dashboard");
+      navigate("rider-dashboard");
+      setIsSubmitted(true);
     }
   };
 
@@ -646,6 +641,13 @@ const RiderKycForm = () => {
     }
   };
 
+  // CONDITIONAL RENDER: Show success page after submission
+  if (isSubmitted) {
+    // You can generate a real ID here if needed, but using the mock ID for display
+    return <ApplicationSuccessPage applicationId={"RDR-FNSL9GD2K"} />;
+  }
+
+  // --- MAIN KYC FORM RENDER ---
   return (
     <div className="kyc_body">
       <div className="main_header">

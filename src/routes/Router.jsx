@@ -45,6 +45,7 @@ import SettingsManagement from "../Pages/feature/component/settings";
 import ForgotPassword from "../Auth/Rider/Forget-password/ForgetPassword";
 import ForgotPasswordVerifyEmail from "../Auth/Rider/forgotPasswordVerifyEmail/Index";
 import ResetPassword from "../Auth/Rider/reset-pasword/Index";
+import OrderTracker from "../Pages/OrderTracker/OrderTracker";
 
 export const router = createBrowserRouter([
   {
@@ -205,6 +206,10 @@ export const router = createBrowserRouter([
       {
         path: "account",
         element: <RiderAccount />,
+      },
+      {
+        path: "order-tracker",
+        element: <OrderTracker />,
       },
     ],
   },

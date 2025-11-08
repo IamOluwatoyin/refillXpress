@@ -379,3 +379,243 @@
   color: #ffc107;
   font-size: 14px;
 }
+/* --- Modal Styling --- */
+.modal_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it's on top of other content */
+}
+
+.modal_content {
+  background-color: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px; /* Adjust max width as needed */
+  padding: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal_header {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.modal_title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.modal_subtitle {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.modal_close_btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #999;
+}
+
+.modal_summary_box {
+  background-color: #e8f5e9; /* Light green background */
+  padding: 15px;
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "earn distance"
+    "value total_value";
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.you_ll_earn {
+  grid-area: earn;
+  font-size: 0.8rem;
+  color: #4caf50;
+}
+
+.modal_earnings {
+  grid-area: value;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #4caf50;
+  margin-top: 5px;
+}
+
+.total_distance_label {
+  grid-area: distance;
+  font-size: 0.8rem;
+  color: #333;
+  text-align: right;
+}
+
+.modal_total_distance {
+  grid-area: total_value;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #4caf50;
+  text-align: right;
+  margin-top: 5px;
+}
+
+.modal_section_title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.modal_refill_journey {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.modal_refill_step {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  gap: 15px;
+}
+
+.step_icon_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 20px; /* To align the steps */
+}
+
+.step_arrow {
+  font-size: 1.2rem;
+  color: #ccc;
+  margin: 5px 0;
+  height: 20px; /* Space between steps */
+}
+
+.step_separator {
+  text-align: center;
+  color: #ccc;
+  font-size: 1.5rem;
+  line-height: 0.5;
+  margin: 5px 0;
+}
+
+.step_info_modal {
+  display: flex;
+  flex-direction: column;
+}
+
+.step_title_modal {
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+}
+
+.step_type_tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 8px;
+  align-self: flex-start;
+}
+
+.first_stop {
+  background-color: #e8f5e9;
+  color: #4caf50;
+}
+
+.refill {
+  background-color: #f3e5f5;
+  color: #9c27b0;
+}
+
+.final_stop {
+  background-color: #e8f5e9;
+  color: #4caf50;
+}
+
+.step_location_modal {
+  font-size: 0.8rem;
+  color: #555;
+  white-space: pre-wrap; /* Allows the \n to create a new line */
+}
+
+.step_distance_phone {
+  font-size: 0.75rem;
+  color: #999;
+}
+
+.modal_actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+  margin-top: 20px;
+}
+
+.btn_close_modal {
+  flex-grow: 1;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btn_accept_modal {
+  flex-grow: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Adjustments for existing .btn_details style for better separation */
+.btn_details {
+  /* Existing styles here */
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Ensure RefillRequestItem buttons are aligned */
+.request_actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px; /* Added gap for better spacing */
+}

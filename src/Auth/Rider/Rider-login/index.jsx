@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import SpinnerModal from "../../vendor-auth/spinner-modal";
 import "./RiderLogin.css";
+import Header from "../../../assets/Header.png";
 
 const RiderLogin = () => {
   const navigate = useNavigate();
@@ -75,10 +76,10 @@ const RiderLogin = () => {
     <div className="rider-login-page-layout">
       <header className="fixed-header">
         <div className="logo-container">
-          <img src="/src/assets/logo.svg" alt="logo" className="logo-image" />
-          <h1>
+          <img src={Header} alt="logo" className="logo-image" />
+          {/* <h1>
             Refill<span className="logo-span">Xpress</span>
-          </h1>
+          </h1> */}
         </div>
       </header>
 
