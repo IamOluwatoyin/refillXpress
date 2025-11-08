@@ -9,7 +9,7 @@ const DashboardHeader = () => {
     <div className='dashboard-wrapper'>
       <div className='header-wrapper'>
         <header className='header-container'>
-       <img src="/Images/logo.svg"className='imgLogo'onClick={()=>nav("/")}/>
+       <img src="/Images/dashboard_logo.png"className='imgLogo'onClick={()=>nav("/")}/>
        <h2>
               Refill<span>Xpress</span>
             </h2>

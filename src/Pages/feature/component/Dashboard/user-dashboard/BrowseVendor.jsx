@@ -17,7 +17,9 @@ const BrowseVendor = () => {
   const [showOrder, setShowOrder] = useState(false);
   const [selectedVendor, setSelectedVendor] = useState(null);
   const [vendors, setVendors] = useState([]);
-
+  const [location, setLocation] = useState("")
+const [findLocation, setFindloacation] = useState("")
+ 
   useEffect(() => {
     const fetchVendors = async () => {
       try {
@@ -39,7 +41,15 @@ const BrowseVendor = () => {
     setSelectedVendor(vendor);
     setShowOrder(true);
   };
-
+ const filteredLocation = vendors.filter((item)=>{
+  if(!findLocation){
+    return true
+  }else{
+    const searchLocation = item.businessAddress
+    return searchLocation.includes(findLocation)
+  }
+ }
+)
   return (
     <main className="browsevendor">
       {showView && <ViewVendor onClose={() => setShowView(false)} vendor={selectedVendor} />}
@@ -53,9 +63,13 @@ const BrowseVendor = () => {
       </header>
 
       <div className="search-bar">
-        <div className="search">
-          <LuSearch /> <span>Search location</span>
-        </div>
+        
+          <input placeholder="Search location"  className="searchinput"
+          value={findLocation}
+          onChange={(e)=>setFindloacation(e.target.value)}
+          
+          />
+        
         <div className="search-drop">
           <span>
             Newest first <RxCaretDown />
@@ -64,8 +78,8 @@ const BrowseVendor = () => {
       </div>
 
       <section className="views extreme">
-        {vendors.length === 0 && <p>No vendors available</p>}
-        {vendors.map((vendor) => (
+        {filteredLocation.length === 0 && <p>No vendors available</p>}
+        {filteredLocation.map((vendor) => (
           <div key={vendor.id} className="order-holder">
             <div className="my-order">
               <div className="vendor-status">

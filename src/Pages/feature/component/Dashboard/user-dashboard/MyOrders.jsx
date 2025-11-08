@@ -230,39 +230,38 @@ const MyOrders = () => {
                   )}
 
                   {/* Accepted → Pay Now + Cancel */}
-                 {order.status === "active" && (
-  <>
-    {order.paymentStatus === "unpaid" && (
-      <button
-        className="order-btn pay-btn"
-        onClick={() => handlePayNow(order)}
-      >
-        Pay Now
-      </button>
-    )}
+                  {order.status === "active" && (
+                    <>
+                      {order.paymentStatus === "unpaid" && (
+                        <button
+                          className="order-btn pay-btn"
+                          onClick={() => handlePayNow(order)}
+                        >
+                          Pay Now
+                        </button>
+                      )}
 
-    {order.paymentStatus === "paid" && (
-      <button className="order-btn completed-btn" disabled>
-        Paid
-      </button>
-    )}
+                      {order.paymentStatus === "paid" && (
+                        <button className="order-btn completed-btn" disabled>
+                          Paid
+                        </button>
+                      )}
 
-    {order.paymentStatus === "failed" && (
-      <button
-        className="order-btn retry-btn"
-        onClick={() => handlePayNow(order)}
-      >
-        Retry Payment
-      </button>
-    )}
+                      {order.paymentStatus === "failed" && (
+                        <button
+                          className="order-btn retry-btn"
+                          onClick={() => handlePayNow(order)}
+                        >
+                          Retry Payment
+                        </button>
+                      )}
 
-    {/* Cancel button disabled for active orders */}
-    <button className="order-btn cancel-btn" disabled>
-      Cancel
-    </button>
-  </>
-)}
-
+                      {/* Cancel button disabled for active orders */}
+                      <button className="order-btn cancel-btn" disabled>
+                        Cancel
+                      </button>
+                    </>
+                  )}
 
                   {(order.status === "paid" ||
                     order.status === "confirmed") && (
@@ -271,7 +270,7 @@ const MyOrders = () => {
                         className="order-btn completed-btn"
                         onClick={() => {
                           setOrderDetails(order);
-                          setShow(true); 
+                          setShow(true);
                         }}
                       >
                         Completed

@@ -53,4 +53,12 @@ export const handlePayment = (orderId, data = {}) => {
   );
 };
 
+export const userProfileUpdate = async (data) => {
+  const token = localStorage.getItem("token");
+  return await axios.put(`${BASEURL}/user/update/Account`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
 

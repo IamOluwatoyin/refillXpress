@@ -1,13 +1,12 @@
 import React from "react";
 import "../../styles/dashboardHeader.css";
-import dashboardLogo from "../../assets/dashboard_logo.png";
 
 const DashboardHeader = () => {
   return (
     <header className="dashboard_header">
       <div className="dashboard_headerWrapper">
         <div className="header_left">
-          <img src={dashboardLogo} alt="" />
+          <img src="/Images/dashboard_logo.png" alt="" />
         </div>
 
         <div className="header_right">
