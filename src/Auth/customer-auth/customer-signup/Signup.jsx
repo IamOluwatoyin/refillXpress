@@ -5,42 +5,42 @@ import  { BsEye, BsEyeSlash } from 'react-icons/bs';
 import { UserContext } from '../../../context/UserContext';
 import { useNavigate, Link } from 'react-router-dom';
 import SpinnerModal from '../../vendor-auth/spinner-modal';
+import { useForm } from "react-hook-form"
 const Signup = () => {
     const nav = useNavigate()
-    const { loading, setLoading } = useContext(UserContext)
-    const {user, signup } = useContext(UserContext)
+    const { user, signup, loading, setLoading } = useContext(UserContext);
+
     const [type, setType] = useState("password")
     const [show, setShow] = useState(false)
     const [confirm, setConfirm] = useState("")
-    const [formData, setFormData] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phoneNumber: "",
-        password: ""
-    })
+   
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+      } = useForm();   
+      const password = watch("password", "");
 
-        const handleChange = (e) => {
-        setFormData((prev)=> ({...prev, [e.target.name]: e.target.value}))
-    }     
+      const onSubmit = async (data) => {
+    const success = await signup(data);
+    if (success) {
+      nav("/userverify"); 
+    }
+  };
     
     return (
-        <div className='signup'>
+        <div className='signup'> 
              {loading && <SpinnerModal />} 
            <article className="article">
                 <header className="form-header">
-                    <div className="inner-header">
-                        <h4 className='logo-heading'>
-                    <span className='fire'>
-                        <HiFire /> 
-                    </span>
-                    Refill<span className='logo-style'>Xpress</span>
-                    </h4>
+                     <div className='logo-heading'>
+                        <img src="/Images/logo.svg" alt="" onClick={()=> nav("/")} className='logo-heading' />
                     </div>
                 </header>
-                <form className="form">
+                <form className="form" onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-heading">
-                        <h1>sign up</h1>
+                        <h1>Sign Up</h1>
                         <p>
                             Create your account and enjoy quick, safe gas delivery at your doorstep.
                         </p>
@@ -48,55 +48,97 @@ const Signup = () => {
                     
                     <div className="row-input">
                         <div className="input-container small-input">
-                        <label>first name</label>
+                        <label>First Name</label>
                         <div className="input-div">
                             <input type="text"  
                             name='firstName'
-                            value={formData.firstName}
-                            onChange={handleChange}
-                            />
+                             {...register("firstName", {
+                      required: "Your First name is required",
+                    })} />
                         </div>
+                        {errors.firstName && (
+                    <p style={{ color: "red" }}>
+                      {errors.firstName.message}
+                    </p>
+                  )}
                     </div>
                     <div className="input-container small-input">
-                        <label>last name</label>
+                        <label>Last Name</label>
                         <div className="input-div">
                             <input type="text" 
                              name='lastName'
-                            value={formData.lastName}
-                            onChange={handleChange}/>
+                             {...register("lastName", {
+                      required: "Your last name is required",
+                    })}/>
                         </div>
+                        {errors.lastName && (
+                    <p style={{ color: "red" }}>
+                      {errors.lastName.message}
+                    </p>
+                  )}
                     </div>
                     </div>
 
                     <div className="row-input">
                         <div className="input-container small-input">
-                        <label>email addres</label>
+                        <label>Email Address</label>
                         <div className="input-div">
                             <input type="text"
                              name='email'
-                            value={formData.email}
-                            onChange={handleChange}/>
+                            {...register("email", {
+                        required: "email is required",
+                        pattern: {
+                          value: /\S+@\S+\.\S+/,
+                          message: "Enter a valid email address",
+                        },
+                      })}/>
                         </div>
+                         {errors.email && (
+                      <p style={{ color: "red" }}>
+                        {errors.email.message}
+                      </p>
+                    )}
                     </div>
                     <div className="input-container small-input">
-                        <label>phone number</label>
+                        <label>Phone Number</label>
                         <div className="input-div">
                             <input type="tel" 
                              name='phoneNumber'
-                            value={formData.phoneNumber}
-                            onChange={handleChange}
+                           {...register("phoneNumber", {
+                          required: "Phone number is required",
+                          pattern: {
+                            value: /^\d+$/,
+                            message: "Phone number must contain only digits",
+                          },
+                          validate: (value) =>
+                            value.length === 10 ||
+                            value.length === 11 ||
+                            "Phone number must be 10 or 11 digits",
+                        })}
                             />
                         </div>
+                        {errors.phoneNumber && (
+                      <p style={{ color: "red" }}>
+                        {errors.phoneNumber.message}
+                      </p>
+                    )}
                     </div>
                     </div>
 
                     <div className="input-container">
-                        <label>password</label>
+                        <label>Password</label>
                         <div className="input-div">
                             <input type={type} placeholder='password (8 or more characters)'
                             name='password'
-                            value={formData.password}
-                            onChange={handleChange} 
+                            {...register("password", {
+                        required: "Password is required",
+                        pattern: {
+                          value:
+                            /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/,
+                          message:
+                            "Password must be at least 8 characters and include letters, numbers, and special characters.",
+                        },
+                      })}
                             />
                             <span className='eye'>
                                 {
@@ -104,12 +146,20 @@ const Signup = () => {
                                 }
                             </span>
                         </div>
+                         {errors.password && (
+                  <p style={{ color: "red" }}>{errors.password.message}</p>
+                )}
                     </div>
                     <div className="input-container">
-                        <label>confirm password</label>
+                        <label>Comfirm Password</label>
                         <div className="input-div">
                             <input type={show? "text" : "password" } placeholder='password (8 or more characters)'
-                            onChange={(e)=> setConfirm(e.target.value)}
+                            name='confirmPassword'
+                            {...register("confirmPassword", {
+                        required: "Password confirmation is required",
+                        validate: (value) =>
+                          value === password || "Passwords do not match.",
+                      })}
                             />
                             <span className='eye'>
                                 {
@@ -117,18 +167,33 @@ const Signup = () => {
                                 }
                             </span>
                         </div>
+                         {errors.confirmPassword && (
+                  <p style={{ color: "red" }}>
+                    {errors.confirmPassword.message}
+                  </p>
+                )}
                     </div>
                     <div className="checkbox">
-                        <input type="checkbox" name="check" id="box" />
+                        <input type="checkbox" name="check" id="box" 
+                        {...register("check", {
+                      required: "You must agree to the terms.",
+                    })}
+                        />
                         <p>I agree to Refillxpress <span>terms and conditions</span></p>
                     </div>
+                    {errors.check && (
+                  <p style={{ color: "red" }}>{errors.check.message}</p>
+                )}
                     <div className='submit-section'>
-                        <button type='button' onClick={(e)=> signup(e, formData, confirm, nav)} className="submit">create account</button>
-                        <p>Already have an account? <Link className="link" to="/userlogin">sign in</Link></p>  
+                        <button  type="submit"
+                         disabled={loading}
+                        // onClick={(e)=> signup(e, formData, confirm, nav)} 
+                        className="submit">create account</button>
+                        <p>Already have an account? <Link className="link" to="/userlogin">Sign in</Link></p>  
                     </div>
-
                 </form>
             </article> 
+            {/* Toyin */}
         </div>
     )
     

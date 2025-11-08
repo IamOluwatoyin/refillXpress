@@ -7,21 +7,15 @@ const api = axios.create({
    
   },
 });
-
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem(import.meta.env.VITE_VENDOR_TOKEN);
+  
+  const vendorToken = localStorage.getItem(import.meta.env.VITE_VENDOR_TOKEN);
+
+  const userToken = localStorage.getItem("token");
+
+  const token = vendorToken || userToken;
   if (token) {
-    config.headers.Authorization =`Bearer ${token}`;
-  }
-  
-  return config;
-});
-
-api.interceptors.request.use((config) => {
-  const vendorId = localStorage.getItem(import.meta.env.VITE_VENDOR_ID);
-  
-  if (vendorId) {
-    config.headers.Authorization = `Bearer ${vendorId}`;
+    config.headers.Authorization = `Bearer ${token}`;
   }
 
   return config;

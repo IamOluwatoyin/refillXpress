@@ -1,4 +1,4 @@
-.modal-overlay {
+.vendorModal-backdrop {
   position: fixed;
   top: 5%;
   left: 0;
@@ -9,28 +9,18 @@
   align-items: center;
   justify-content: center;
   z-index: 99999;
-  box-sizing: border-box;
-}
-.info-section {
-    width: 95%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-flow: row wrap;
 }
 
-.modal-content {
+.vendorModal-box {
   background: #fff;
   width: 40%;
   max-height: 90vh;
-  /* overflow-y: auto; */
   border-radius: 16px;
   padding: 24px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
   position: relative;
-}   
+}
 
-.close-btn {
+.vendorModal-close {
   position: absolute;
   top: 12px;
   right: 18px;
@@ -38,19 +28,20 @@
   border: none;
   font-size: 22px;
   cursor: pointer;
+  z-index: 1001;
 }
 
-.modal-title {
+.vendorModal-title {
   font-weight: 700;
   font-size: 20px;
   margin-bottom: 8px;
 }
 
-.modal-rating {
+.vendorModal-rating {
   margin-bottom: 12px;
 }
 
-.tag {
+.vendor-tag {
   display: inline-block;
   font-size: 12px;
   padding: 3px 8px;
@@ -68,38 +59,36 @@
   color: #0b8c0b;
 }
 
-.modal-description {
+.vendorModal-description {
   font-size: 14px;
   color: #555;
   margin-bottom: 16px;
 }
 
-.modal-info p {
-  margin: 4px 0;
-  font-size: 14px;
+.vendor-info-section {
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }
-.location-icons {
-    width: max-content;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    font-size: 1rem;
-    gap: 1rem;
-    padding: 0.8rem;
-    p {
-        margin: 0 0;
-    }
-    div {
-        display: flex;
-        flex-direction: column;
-        gap: 0.4rem;
 
-    }
+.vendor-location-icons {
+  width: max-content;
+  display: flex;
+  gap: 1rem;
+  padding: 0.8rem;
 }
+
+.vendor-location-icons p {
+  margin: 0;
+}
+
 .transform {
-    text-transform: capitalize;
+  text-transform: capitalize;
 }
-.base-price {
+
+.vendor-base-price {
   background: #fff4e5;
   border-radius: 10px;
   padding: 12px;
@@ -109,28 +98,28 @@
   align-items: center;
 }
 
-.base-price h3 {
+.vendor-base-price h3 {
   color: #ff7a00;
   margin: 5px 0 0;
 }
 
-.reviews {
+.vendorModal-reviews {
   margin-top: 20px;
 }
 
-.review {
+.vendor-review {
   background: #fafafa;
   border-radius: 10px;
   padding: 10px;
   margin-bottom: 10px;
 }
 
-.review p {
+.vendor-review p {
   margin: 3px 0;
   font-size: 14px;
 }
 
-.order-btn {
+.vendor-order-btn {
   width: 100%;
   margin-top: 16px;
   background: #ff7a00;
@@ -143,6 +132,6 @@
   transition: background 0.2s;
 }
 
-.order-btn:hover {
+.vendor-order-btn:hover {
   background: #ff6200;
 }

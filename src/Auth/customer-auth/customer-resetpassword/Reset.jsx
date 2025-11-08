@@ -9,6 +9,9 @@ import { UserContext } from '../../../context/UserContext';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
 import SpinnerModal from '../../vendor-auth/spinner-modal';
+
+import logo from "../../../assets/dashboard_logo.png"
+
 const Reset = () => {
     const [loading, setLoading] = useState(false)
     const [show, setShow] = useState(false)
@@ -23,7 +26,7 @@ const handleRequest = async (e) => {
      const email = localStorage.getItem("email")
     try {
         setLoading(true)
-        const res = await axios.post(`${BASEURL}/api/v1/user/resetpassword`, {
+        const res = await axios.post(`${BASEURL}/user/resetpassword`, {
             email,
              newPassword: form.newPassword,
         },
@@ -49,14 +52,9 @@ const handleRequest = async (e) => {
                          {loading && <SpinnerModal />} 
            <article className="article">
                 <header className="form-header">
-                    <div className="inner-header">
-                        <h4 className='logo-heading'>
-                    <span className='fire'>
-                        <HiFire /> 
-                    </span>
-                    Refill<span className='logo-style'>Xpress</span>
-                    </h4>
-                    </div>
+                    <div className='logo-heading'>
+                                                              <img src={logo} alt="" onClick={()=> nav("/")} className='logo-heading' />
+                                                          </div>
                 </header>
                 <form className="form">
                     <div className="form-heading wrap">

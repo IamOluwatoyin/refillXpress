@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { BASEURL } from '../../../api/base';
 import { useNavigate } from 'react-router-dom';
+import logo from "../../../assets/dashboard_logo.png"
 
 const OtpForgot = () => {
     const nav = useNavigate()
@@ -36,7 +37,7 @@ const handleSend = async (e) => {
     const savedUser = localStorage.getItem("email")
     console.log(savedUser)
     try {
-        const res = await axios.post(`${BASEURL}/api/v1/user/verify-forgot-password-otp`, 
+        const res = await axios.post(`${BASEURL}/user/verify-forgot-password-otp`, 
             {
                 email: savedUser,
                 otp: joined
@@ -61,7 +62,7 @@ const handleResend = async (e) => {
     const email = localStorage.getItem("email")
 
      try {
-            const res = await axios.post(`${BASEURL}/api/v1/user/forgot-password/resend`, {
+            const res = await axios.post(`${BASEURL}/user/forgot-password/resend`, {
                 email: email,
             }, {
                 headers: {"Content-Type": "application/json"}
@@ -102,12 +103,9 @@ const formatter = (time) => {
     <div className='otpforgot'>
         <article className="article">
                 <header className="header">
-                    <h6 className='logo-heading'>
-                        <span className='fire'>
-                            <HiFire /> 
-                        </span>
-                        Refill<span className='logo-style'>Xpress</span>
-                    </h6>
+                    <div className='logo-heading'>
+                        <img src={logo} alt="" onClick={()=> nav("/")} className='logo-heading' />
+                    </div>
                 </header>
                 <form className="form">
                     <div className="form-heading">

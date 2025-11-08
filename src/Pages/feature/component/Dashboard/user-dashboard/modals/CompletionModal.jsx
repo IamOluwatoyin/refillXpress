@@ -8,22 +8,24 @@ import { BiTimeFive } from "react-icons/bi";
 import { RxCaretDown } from "react-icons/rx";
 import { LuSearch } from "react-icons/lu";
 import { BsArrowRight } from "react-icons/bs";
-import { FiPackage } from "react-icons/fi";
+import { FiPackage, FiPhone } from "react-icons/fi";
+import { GrLocation } from 'react-icons/gr';
 import DeliveryVerification from './DeliveryVerification';
-
-const CompletionModal = () => {
+import { IoMdClose } from 'react-icons/io';
+import PaymentChoice from './PaymentChoice';
+const CompletionModal = ({ order, onClose }) => {
   const [show, setShow] = useState(false)
   return (
     <div className='completionmodal'>
-      
-      <div className="modal-itself">
+      {show && DeliveryVerification}
+      <div className="the-modal-itself">
         <div className="modal-heading">
           <h4>order details</h4>  
-          <p>x</p>
+          <p onClick={onClose}><IoMdClose /></p>
         </div>
         <div className="order-code">
-          <h4>ord-2341</h4>
-          <p>2 hours ago</p>
+          <h4>{order.orderNumber}</h4>
+          <p>{order.createdAt ? new Date(order.createdAt).toLocaleString() : "—"}</p>
         </div>
         <div className="hr">
           <hr />
@@ -36,25 +38,32 @@ const CompletionModal = () => {
           </div>
         </div>
         <div className="order-info">
-          <FiPackage className='icon-type' />
+          <GrLocation className='icon-type' />
+          <div className="order-info-details">
+            <span className="the-order-info">delivery address</span>
+            <p>{order.deliveryAddress}</p>
+          </div>
+        </div>
+         <div className="order-info">
+          <FiPhone className='icon-type' />
+          <div className="order-info-details">
+            <span className="the-order-info">vendor</span>
+            <p>{order.vendor.businessName}</p>
+          </div>
+        </div>
+        {/* <div className="order-info">
+          <BiTimeFive className='icon-type' />
           <div className="order-info-details">
             <span className="the-order-info">order</span>
             <p>Lpg 11kg</p>
           </div>
-        </div>
-        <div className="order-info">
-          <FiPackage className='icon-type' />
-          <div className="order-info-details">
-            <span className="the-order-info">order</span>
-            <p>Lpg 11kg</p>
-          </div>
-        </div>
+        </div> */}
         <div className="hr">
           <hr />
         </div>
         <div className="total-amt">
           <h4>total</h4>
-          <p>12,500</p>
+          <p className='currency'><TbCurrencyNaira size={20} />{order.totalPrice}</p>
         </div>
         <div className='generate-holder'>
           <button onClick={()=> setShow(true)} className="generate">

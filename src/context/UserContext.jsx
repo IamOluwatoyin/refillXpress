@@ -1,112 +1,76 @@
 import { createContext, useEffect, useState } from "react";
-// import { BASEURL } from "../api/base";
+import { BASEURL } from "../api/base";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { signInUser, signUpUser } from "../api/mutation";
+import { useNavigate } from "react-router";
+import Signup from "../Auth/customer-auth/customer-signup/Signup";
 
 export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
+ 
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
   const [allUsers, setAllUsers] = useState([]);
   const [userDetail, setUserDetail] = useState(null);
 
-  const BASEURL = import.meta.env.VITE_BASEURL;
 
-  console.log("allUsers", BASEURL);
+
+
+const signup = async (data) => {
+  setLoading(true);
+  const { confirmPassword, check, ...payload } = data;
+
+  try {
+    const res = await signUpUser(payload);
+    localStorage.setItem("email", data.email);
+    toast.success(res.data.message);
+    console.log("success", res.data);
+
+   
+    return true;
+  } catch (err) {
+    console.log("error", err);
+    toast.error(err.response?.data?.message || "Something went wrong");
+    return false;
+  } finally {
+    setLoading(false);
+  }
+};
+
+
+  const login = async (data) => {
+     setLoading(true);
+    
+
+    try {
+      
+      const res = await signInUser(data)
+      console.log("login",res)
+
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("userId", res.data.data.id);
+      localStorage.setItem("userInfo", JSON.stringify(res.data.data));
+
+      
+
+      toast.success("Login successful!");
+       return true; 
+     
+    } catch (err) {
+        console.log("error", err);
+      toast.error(err.res?.message || "Something went wrong!");
+        return false;
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const getUsers = async () => {
-      try {
-        const res = await axios.get(`${BASEURL}/user/getAllusers`);
-        console.log("Res", res);
-        const response = res?.data?.data;
-        setAllUsers(response);
-      } catch (err) {
-        null;
-      }
-    };
-    getUsers();
+    const storedUser = localStorage.getItem("userInfo");
+    if (storedUser) setUser(JSON.parse(storedUser));
   }, []);
-
-  const checkVerified = allUsers?.find((all) => all.isVerified === false);
-  console.log("checkVerified", checkVerified);
-
-  const signup = async (e, FormData, confirm, nav) => {
-    e.preventDefault();
-    setLoading(true);
-    if (!/\S+@\S+\.\S+/.test(FormData.email)) {
-      toast.error("Please enter a valid email address.");
-    }
-    if (confirm !== FormData.password) {
-      toast.error("password does not match");
-      return;
-    }
-
-    try {
-      const res = await axios.post(`${BASEURL}/api/v1/user`, FormData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      console.log(res.data);
-      const userData = res.data.data;
-      setUser(userData);
-      localStorage.setItem("user", JSON.stringify(userData));
-      console.log(userData);
-      toast.success(res.data.message);
-      nav("/userverify");
-    } catch (err) {
-      if (checkVerified && checkVerified.email === FormData.email) {
-        nav("/userverify");
-      }
-      toast.error(err.response.data.message);
-      console.log(err.response.data.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const login = async (e, credentials, navigate) => {
-    e.preventDefault();
-    if (!credentials.email) {
-      toast.error("Please enter a valid email address.");
-      return;
-    }
-    if (!credentials.password) {
-      toast.error("Enter your password");
-      return;
-    }
-    const details = allUsers
-      .filter((all) => all.isVerified === true)
-      .find((info) => info.email === credentials.email);
-    localStorage.setItem("userInfo", JSON.stringify(details));
-    try {
-      setLoading(true);
-      const res = await axios.post(
-        `${BASEURL}/api/v1/user/login`,
-        credentials,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const token = res.data.token;
-      const userData = res.data.data;
-      setUser(userData);
-      setToken(token);
-      localStorage.setItem("user", JSON.stringify(userData));
-      localStorage.setItem("token", token);
-      setUserDetail(details);
-      console.log(userDetail);
-      navigate("/userdashboard");
-    } catch (err) {
-      toast.error(err.response.data.message);
-    } finally {
-      setLoading(false);
-    }
-  };
   const logout = () => {
     setUser(null);
     setToken(null);

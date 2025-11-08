@@ -7,7 +7,6 @@
       justify-content: flex-start;
       align-items: flex-start;
       gap: 1rem;
-      background-color: #f2f2f2;
       position: relative;
       h3 {
         margin-block: 1rem;
@@ -25,7 +24,8 @@
     font-size: 0.8rem;
 }
 .shrink {
-    gap: 0;
+    padding: 0 0;
+    gap: 2px;
 }
 .order-title {
     width: 95%;
@@ -86,7 +86,7 @@
         align-items: center;
         justify-content: space-between;
     }
-    .driver-info {
+    .drivers-info {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -111,3 +111,153 @@
             align-items: center;
         }
     }
+
+    .no-orders {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3rem;
+  text-align: center;
+  color: #555;
+  animation: fadeIn 0.4s ease-in;
+}
+
+.no-orders-img {
+  width: 150px;
+  height: 150px;
+  margin-bottom: 1rem;
+  opacity: 0.8;
+}
+
+.no-orders h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.no-orders p {
+  font-size: 0.95rem;
+  color: #888;
+}
+
+.yellow-bg {
+  background-color: #ffeb3b;
+  color: #000;
+}
+
+.orange-bg {
+  background-color: #ff9800;
+  color: #fff;
+}
+
+.green-bg {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.cancel-btn {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.completed {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+
+
+
+.order-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 0.65rem 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+}
+
+
+.awaiting-btn {
+  background-color: #ffeb3b;
+  color: #000;
+  border: 1px solid #00000020;
+  cursor: not-allowed;
+}
+
+
+.pay-btn {
+  background-color: #b17111;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(255, 152, 0, 0.3);
+}
+
+.completed-btn {
+  background-color: #4caf50;
+  color: #fff;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.completed-btn:hover {
+  background-color: #45a049;
+  transform: scale(1.02);
+}
+
+
+.cancel-btn {
+  background-color: #f44336;
+  color: #fff;
+  font-weight: 500;
+  border: none;
+  box-shadow: 0 2px 6px rgba(244, 67, 54, 0.25);
+}
+
+.cancel-btn:hover {
+  background-color: #e53935;
+  transform: scale(1.03);
+}
+
+/* Track Delivery */
+.track-btn {
+  background-color: transparent;
+  border: 1px solid #00000030;
+  color: #000;
+  font-weight: 500;
+}
+
+.track-btn:hover {
+  background-color: #f5f5f5;
+  transform: scale(1.03);
+}
+
+/* Button group layout */
+.complete-track {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  width: 95%;
+  padding: 0.8rem 0;
+}
+
+
+.order-btn:hover:not(.awaiting-btn) {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+
+.order-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

@@ -5,8 +5,9 @@
       flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;
-      background-color: #F5F5F5;
-      gap: 1rem;
+
+
+      gap: 1.5rem;
       h3 {
         margin-block: 0.7rem;
         font-size: 2rem;
@@ -19,12 +20,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    .texts {
+    margin-top: 2rem;
+}
+ .texts {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
     }
-}
 .actions {
     width: 95%;
     height: max-content;
@@ -33,7 +35,7 @@
     align-items: center;
 }
 .action {
-    width: 32rem;
+    width: 34rem;
     height: 9rem;
     display: flex;
     flex-direction: column;
@@ -55,7 +57,7 @@
                 }
 }
 .views {
-    width: 60rem;
+    width: 95%;
     height: max-content;
     background-color: #fff;
     border-radius: 0.8rem;
@@ -65,6 +67,7 @@
     align-items: center;
     gap: 1rem;
     padding: 1rem;
+    box-sizing: border-box;
 
     .top {
         width: 95%;
@@ -75,7 +78,7 @@
     }
 }
 .stretch {
-    width: 62rem;
+    width: 95%;
 }
 .preview-title {
     text-transform: capitalize;
@@ -114,7 +117,7 @@
     padding: 0.5rem;
 
 }
-.delivered {
+.isDelivered {
      width: 5rem;
      padding: 0.5rem;
      box-sizing: border-box;
@@ -127,6 +130,7 @@
     color: #fff;
     background-color: hsl(144, 100%, 40%);
     border-style: none;
+    font-size: 1rem;
 }
 .vendor-status {
     width: max-content;
@@ -209,6 +213,7 @@
     color: #000;
 }
 .right {
+    width: max-content;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -224,4 +229,48 @@
 }
 .disabled {
     background-color: #5e5e5e4b;
+}
+@media screen and (max-width: 630px) {
+.homecontent {
+    width: 100%;
+      height: max-content;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+     .heading .texts {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-block: 0.7rem;
+        text-align: center;
+        text-align: center;
+      }
+      .actions {
+        width: 98%;
+        height: max-content;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+      }
+      .action {
+        width: 95%;
+      }
+      .order-holder {
+        position: relative;
+      }
+      .views, .extreme {
+        width: 95%;
+      }
+      .right {
+        width: max-content;
+        /* transform: translate(-3rem, 2rem); */
+        position: absolute;
+        top: 70%;
+        right: 0;
+      }
 }
