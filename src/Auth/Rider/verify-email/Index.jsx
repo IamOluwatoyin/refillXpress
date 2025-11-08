@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import "./verifyEmail.css";
 import SpinnerModal from "../../vendor-auth/spinner-modal";
+import Header from "../../../assets/Header.png";
 
 const VerifyEmail = () => {
   const navigate = useNavigate();
@@ -104,10 +105,7 @@ const VerifyEmail = () => {
     <div className="verify-email-layout">
       <header className="fixed-header">
         <div className="logo-container">
-          <img src="/src/assets/logo.svg" alt="logo" className="logo-image" />
-          <h1>
-            Refill<span className="logo-span">Xpress</span>
-          </h1>
+          <img src={Header} alt="logo" className="logo-image" />
         </div>
       </header>
 

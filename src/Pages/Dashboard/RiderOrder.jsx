@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import {
   MdOutlineCheckCircle,
   MdOutlineRemoveCircle,
@@ -6,10 +7,142 @@ import {
   MdAutorenew,
   MdOutlineLocationOn,
   MdOutlineStar,
+  MdClose,
 } from "react-icons/md";
-import { FaTruckLoading, FaCheckCircle, FaLocationArrow } from "react-icons/fa";
+import {
+  FaTruckLoading,
+  FaCheckCircle,
+  FaLocationArrow,
+  FaExchangeAlt,
+} from "react-icons/fa";
 
 import "../../styles/riderOrder.css";
+
+const RefillOrderDetailsModal = ({ order, isOpen, onClose, onAccept }) => {
+  if (!isOpen || !order) return null;
+
+  const totalDistance = order.steps
+    .reduce((sum, step) => {
+      const distanceMatch = step.location.match(/(\d+\.?\d*)\s*km/);
+      return sum + (distanceMatch ? parseFloat(distanceMatch[1]) : 0);
+    }, 0)
+    .toFixed(1);
+
+  const pickupStep = order.steps.find((step) => step.title.includes("Pickup"));
+  const vendorStep = order.steps.find((step) => step.title.includes("Refill"));
+  const returnStep = order.steps.find((step) => step.title.includes("Return"));
+
+  const extractLocationDetails = (location) => {
+    const parts = location.split(" • ");
+    const name = parts[0];
+    return {
+      name: name,
+      address: name.includes("Linda")
+        ? "Glory otene\nno 2 sinzu street magodo"
+        : "Sarah Johnson\nno 43 igando rd",
+    };
+  };
+
+  const extractVendorDetails = (location) => {
+    return {
+      name: location.split(" • ")[0],
+      address: "MaxGas Supply\nno 2 salsu street mago",
+    };
+  };
+
+  const RefillStep = ({
+    icon: Icon,
+    title,
+    location,
+    distance,
+    type,
+    phone,
+  }) => (
+    <div className="modal_refill_step">
+      <div className="step_icon_wrapper">
+        <Icon size={20} color={type === "Refill" ? "#9C27B0" : "#4CAF50"} />
+        {type !== "Final Stop" && <div className="step_arrow">→</div>}
+      </div>
+      <div className="step_info_modal">
+        <span className="step_title_modal">{title}</span>
+        {type && (
+          <span
+            className={`step_type_tag ${type.toLowerCase().replace(" ", "_")}`}
+          >
+            {type}
+          </span>
+        )}
+        <span className="step_location_modal">{location}</span>
+        <span className="step_distance_phone">
+          {distance} • {phone}
+        </span>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="modal_overlay">
+      <div className="modal_content">
+        <div className="modal_header">
+          <h2 className="modal_title">Refill Order Details</h2>
+          <p className="modal_subtitle">Complete refill journey information</p>
+          <button className="modal_close_btn" onClick={onClose}>
+            <MdClose size={24} />
+          </button>
+        </div>
+
+        <div className="modal_summary_box">
+          <span className="you_ll_earn">You'll Earn</span>
+          <span className="modal_earnings">₦{order.deliveryFee},00</span>
+          <span className="total_distance_label">Total Distance</span>
+          <span className="modal_total_distance">{totalDistance} km</span>
+        </div>
+
+        <h3 className="modal_section_title">Refill Journey</h3>
+
+        <div className="modal_refill_journey">
+          <RefillStep
+            icon={MdOutlineCheckCircle}
+            title="1. Pickup Empty Cylinder"
+            location={extractLocationDetails(pickupStep.location).address}
+            distance={`${pickupStep.location.split(" • ")[1]} from customer`}
+            type="First Stop"
+            phone="08160994840"
+          />
+          <div className="step_separator">→</div>
+
+          <RefillStep
+            icon={FaExchangeAlt}
+            title="2. Refill at Vendor"
+            location={extractVendorDetails(vendorStep.location).address}
+            distance={`${vendorStep.location.split(" • ")[1]} from customer`}
+            type="Refill"
+            phone="08105885894"
+          />
+          <div className="step_separator">→</div>
+
+          <RefillStep
+            icon={MdOutlineCheckCircle}
+            title="3. Return Refilled Cylinder"
+            location={extractLocationDetails(returnStep.location).address}
+            distance={`${returnStep.location.split(" • ")[1]} from vendor`}
+            type="Final Stop"
+            phone="08160994840"
+          />
+        </div>
+
+        <div className="modal_actions">
+          <button className="btn_close_modal" onClick={onClose}>
+            Close
+          </button>
+          <button className="btn_accept_modal" onClick={onAccept}>
+            <MdOutlineCheckCircle size={18} /> Accept This Order
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const CompletedDeliveryItem = ({ order }) => {
   const stars = "★".repeat(order.rating) + "☆".repeat(5 - order.rating);
@@ -85,7 +218,15 @@ const ActiveOrderItem = ({ order }) => (
     </div>
   </div>
 );
-const RefillRequestItem = ({ orderId, time, deliveryFee, steps }) => (
+
+const RefillRequestItem = ({
+  orderId,
+  time,
+  deliveryFee,
+  steps,
+  onDetailsClick,
+  orderData,
+}) => (
   <div className="request_item">
     <div className="request_header">
       <span className="order_id">{orderId}</span>
@@ -117,7 +258,7 @@ const RefillRequestItem = ({ orderId, time, deliveryFee, steps }) => (
     </div>
 
     <div className="request_actions">
-      <button className="btn_details">
+      <button className="btn_details" onClick={() => onDetailsClick(orderData)}>
         <MdOutlineRemoveCircle size={18} /> Details
       </button>
       <button className="btn_accept">
@@ -128,7 +269,24 @@ const RefillRequestItem = ({ orderId, time, deliveryFee, steps }) => (
 );
 
 const RiderOrder = () => {
-  const [activeTab, setActiveTab] = React.useState("available");
+  const [activeTab, setActiveTab] = useState("available");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+
+  const handleDetailsClick = (orderData) => {
+    setSelectedOrder(orderData);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedOrder(null);
+  };
+
+  const handleAcceptModal = () => {
+    alert(`Order ${selectedOrder.orderId} accepted!`);
+    handleCloseModal();
+  };
 
   const order1 = {
     orderId: "ORD-7542",
@@ -139,11 +297,11 @@ const RiderOrder = () => {
         title: "Pickup Empty",
         location: "Linda Anuogo • 1.2 km",
         icon: FaTruckLoading,
-        completed: true,
+        completed: false,
       },
       {
         title: "Refill at Vendor",
-        location: "MaroGlas Supply • 0.6 km",
+        location: "MaroGlas Supply • 0.8 km",
         icon: null,
         completed: false,
       },
@@ -165,13 +323,13 @@ const RiderOrder = () => {
         title: "Pickup Empty",
         location: "Sarah Johnson • 3.2 km",
         icon: FaTruckLoading,
-        completed: true,
+        completed: false,
       },
       {
         title: "Refill at Vendor",
         location: "QuickGas Supply • 0.8 km",
         icon: null,
-        completed: true,
+        completed: false,
       },
       {
         title: "Return Filled",
@@ -261,7 +419,11 @@ const RiderOrder = () => {
 
           <div className="requests_list">
             {availableOrders.map((order, index) => (
-              <RefillRequestItem key={index} {...order} />
+              <RefillRequestItem
+                key={index}
+                {...order}
+                onDetailsClick={handleDetailsClick}
+              />
             ))}
           </div>
         </>
@@ -287,6 +449,13 @@ const RiderOrder = () => {
           </div>
         </div>
       )}
+
+      <RefillOrderDetailsModal
+        order={selectedOrder}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onAccept={handleAcceptModal}
+      />
     </div>
   );
 };

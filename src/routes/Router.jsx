@@ -47,6 +47,7 @@ import ForgotPasswordVerifyEmail from "../Auth/Rider/forgotPasswordVerifyEmail/I
 import ResetPassword from "../Auth/Rider/reset-pasword/Index";
 import PaymentPage from "../Pages/feature/component/Dashboard/PaymentPage";
 
+import OrderTracker from "../Pages/OrderTracker/OrderTracker";
 
 export const router = createBrowserRouter([
   {
@@ -187,7 +188,6 @@ export const router = createBrowserRouter([
       // },
     ],
   },
-   
 
   {
     path: "/rider-dashboard",
@@ -212,6 +212,10 @@ export const router = createBrowserRouter([
       {
         path: "account",
         element: <RiderAccount />,
+      },
+      {
+        path: "order-tracker",
+        element: <OrderTracker />,
       },
     ],
   },

@@ -30,7 +30,14 @@ const WeeklyPerformanceBar = ({ day, deliveries, earnings, maxEarnings }) => {
   );
 };
 
-const EarningsCard = ({ icon: title, value, color, bgColor, secondary }) => (
+const EarningsCard = ({
+  icon: Icon,
+  title,
+  value,
+  color,
+  bgColor,
+  secondary,
+}) => (
   <div className="earnings_card" style={{ backgroundColor: bgColor }}>
     <div className="card_header">
       <div className="card_icon" style={{ color: color }}>

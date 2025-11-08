@@ -98,10 +98,9 @@ const RecentPayouts = () => {
   );
 };
 
-const DocumentItem = ({ icon: title, date, status, showReupload }) => {
+const DocumentItem = ({ icon: Icon, title, date, status, showReupload }) => {
   let statusClass = "";
   let statusText = "";
-  // let statusIcon = null;
 
   if (status === "Verified") {
     statusClass = "status_verified";
