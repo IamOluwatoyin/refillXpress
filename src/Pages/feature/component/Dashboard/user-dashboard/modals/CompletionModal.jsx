@@ -13,7 +13,8 @@ import { GrLocation } from 'react-icons/gr';
 import DeliveryVerification from './DeliveryVerification';
 import { IoMdClose } from 'react-icons/io';
 import PaymentChoice from './PaymentChoice';
-const CompletionModal = ({ order, onClose }) => {
+const CompletionModal = ({ order, onClose, onGenerateCode }) => {
+
   const [show, setShow] = useState(false)
   return (
     <div className='completionmodal'>
@@ -66,9 +67,10 @@ const CompletionModal = ({ order, onClose }) => {
           <p className='currency'><TbCurrencyNaira size={20} />{order.totalPrice}</p>
         </div>
         <div className='generate-holder'>
-          <button onClick={()=> setShow(true)} className="generate">
-            <FiPackage /> <span>generate delivery code</span>
-          </button>
+          <button onClick={onGenerateCode} className="generate">
+           <FiPackage /> <span>generate delivery code</span>
+        </button>
+
         </div>
       </div>
     </div>

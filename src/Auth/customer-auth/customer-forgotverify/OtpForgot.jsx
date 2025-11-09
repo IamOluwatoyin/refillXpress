@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { BASEURL } from '../../../api/base';
 import { useNavigate } from 'react-router-dom';
-import logo from "../../../assets/dashboard_logo.png"
 
 const OtpForgot = () => {
     const nav = useNavigate()
@@ -104,7 +103,7 @@ const formatter = (time) => {
         <article className="article">
                 <header className="header">
                     <div className='logo-heading'>
-                        <img src={logo} alt="" onClick={()=> nav("/")} className='logo-heading' />
+                        <img src="/Images/dashboard_logo.png"lt="" onClick={()=> nav("/")} className='logo-heading' />
                     </div>
                 </header>
                 <form className="form">

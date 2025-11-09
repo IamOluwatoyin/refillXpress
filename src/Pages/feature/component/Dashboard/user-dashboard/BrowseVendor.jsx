@@ -11,24 +11,30 @@ import { BsArrowRight } from "react-icons/bs";
 import OrderModal from "./modals/OrderModal";
 import ViewVendor from "./modals/ViewVendor";
 import { getNearbyVendors } from "../../../../../api/query";
+import { useLoading } from '../../../../../context/LoadingContext';
 
 const BrowseVendor = () => {
+  const { loading, setLoading } = useLoading(); // global loading
   const [showView, setShowView] = useState(false);
   const [showOrder, setShowOrder] = useState(false);
   const [selectedVendor, setSelectedVendor] = useState(null);
   const [vendors, setVendors] = useState([]);
+  const [findLocation, setFindloacation] = useState("");
 
   useEffect(() => {
     const fetchVendors = async () => {
       try {
+        setLoading(true); // show global loading
         const res = await getNearbyVendors();
         setVendors(res.data.data);
       } catch (err) {
         console.error(err);
+      } finally {
+        setLoading(false); // hide global loading
       }
     };
     fetchVendors();
-  }, []);
+  }, [setLoading]);
 
   const openViewModal = (vendor) => {
     setSelectedVendor(vendor);
@@ -40,8 +46,21 @@ const BrowseVendor = () => {
     setShowOrder(true);
   };
 
+  const filteredLocation = vendors.filter((item) => {
+    if (!findLocation) return true;
+    return item.businessAddress?.includes(findLocation);
+  });
+
   return (
-    <main className="browsevendor">
+    <main className="browsevendor"  style={{ position: "relative" }}>
+      
+      {/* Global Loading Overlay */}
+      {loading && (
+        <div className="global-loading">
+          Loading...
+        </div>
+      )}
+
       {showView && <ViewVendor onClose={() => setShowView(false)} vendor={selectedVendor} />}
       {showOrder && <OrderModal onClose={() => setShowOrder(false)} vendor={selectedVendor} />}
 
@@ -53,9 +72,12 @@ const BrowseVendor = () => {
       </header>
 
       <div className="search-bar">
-        <div className="search">
-          <LuSearch /> <span>Search location</span>
-        </div>
+        <input
+          placeholder="Search location"
+          className="searchinput"
+          value={findLocation}
+          onChange={(e) => setFindloacation(e.target.value)}
+        />
         <div className="search-drop">
           <span>
             Newest first <RxCaretDown />
@@ -64,8 +86,8 @@ const BrowseVendor = () => {
       </div>
 
       <section className="views extreme">
-        {vendors.length === 0 && <p>No vendors available</p>}
-        {vendors.map((vendor) => (
+        {filteredLocation.length === 0 && <p>No vendors available</p>}
+        {filteredLocation.map((vendor) => (
           <div key={vendor.id} className="order-holder">
             <div className="my-order">
               <div className="vendor-status">

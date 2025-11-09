@@ -4,6 +4,7 @@ import './index.css'
 import App from './App.jsx'
 import { ToastContainer } from 'react-toastify'
 import { UserProvider } from "./context/UserContext";
+import { LoadingProvider } from "./context/LoadingContext";
 
 
 createRoot(document.getElementById('root')).render(
@@ -15,7 +16,9 @@ createRoot(document.getElementById('root')).render(
         newestOnTop={true}
       />
     <UserProvider>
-       <App />
+       <LoadingProvider>
+        <App />
+      </LoadingProvider>
     </UserProvider>
     
     

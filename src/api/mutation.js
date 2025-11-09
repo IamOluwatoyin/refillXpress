@@ -30,6 +30,9 @@ export const vendorKycPost = (data,id) =>api.post(`/vendorKyc/${id}`,data,{
 export const vendorAcceptRejectOrder = ({ orderId, action, message}) =>
   api.post(`/vendor/accept/rejectOrder/${orderId}`, { action, message});
 
+export const vendorSettings = async (vendorId, data) =>
+  api.put(`/vendor/${vendorId}/settings`, data);
+
 export const signUpUser = (data)=>api.post("/user",data)
 
 export const signInUser = (data)=>api.post("/user/login",data)
@@ -40,6 +43,14 @@ export const verifyUser = (data) => api.post("/user/verify", data);
 
 
 export const resendOtp = (data) => api.post("/user/resend-otp", data);
+
+export const userCanceledOrder = (orderId, data) =>
+  api.patch(`/orders/${orderId}/cancel`, data, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+
 
 export const handlePayment = (orderId, data = {}) => {
   const token = getToken();
@@ -53,4 +64,12 @@ export const handlePayment = (orderId, data = {}) => {
   );
 };
 
+export const userProfileUpdate = async (data) => {
+  const token = localStorage.getItem("token");
+  return await axios.put(`${BASEURL}/user/update/Account`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
 

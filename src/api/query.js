@@ -52,7 +52,14 @@ export const createOrder = (data) => {
   });
 };
 
-export const getUserProfile=()=>api.get("/user/getUserProfile")
+export const getUserProfile = async () => {
+  const token = localStorage.getItem("token");
+  return await axios.get(`${BASEURL}/user/getUserProfile`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
 
 export const getAllOrders = async () => {
   const token = localStorage.getItem("token");

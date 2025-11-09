@@ -18,7 +18,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 25px;
+  padding: 10px;
   animation: popIn 0.25s ease;
 }
 
@@ -43,7 +43,7 @@
   align-items: center;
   gap: 15px;
   text-align: center;
-  padding: 20px;
+  /* padding: 20px; */
 }
 
 .PaymentModalContent img {
@@ -65,14 +65,15 @@
 }
 .proceedBtn {
   display: inline-block;
-  margin-top: 20px;
+  /* margin-top: 20px; */
   padding: 10px 25px;
-  background-color: #ff7f50; 
-  color: #fff;
+  background-color: #FF7F11; 
+  color: #000;
   font-size: 16px;
   font-weight: 500;
   border: none;
   border-radius: 8px;
+  text-decoration: none;
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
