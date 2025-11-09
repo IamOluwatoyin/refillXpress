@@ -170,10 +170,10 @@
   cursor: pointer;
 }
 
-.active {
+ .active {
   background-color: #f0dccc !important;
   color: #ff7f11 !important;
-}
+} 
 
 
 /* Sidebar Responsive */

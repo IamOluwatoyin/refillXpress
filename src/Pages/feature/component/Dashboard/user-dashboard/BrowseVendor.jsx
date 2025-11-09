@@ -11,26 +11,30 @@ import { BsArrowRight } from "react-icons/bs";
 import OrderModal from "./modals/OrderModal";
 import ViewVendor from "./modals/ViewVendor";
 import { getNearbyVendors } from "../../../../../api/query";
+import { useLoading } from '../../../../../context/LoadingContext';
 
 const BrowseVendor = () => {
+  const { loading, setLoading } = useLoading(); // global loading
   const [showView, setShowView] = useState(false);
   const [showOrder, setShowOrder] = useState(false);
   const [selectedVendor, setSelectedVendor] = useState(null);
   const [vendors, setVendors] = useState([]);
-  const [location, setLocation] = useState("")
-const [findLocation, setFindloacation] = useState("")
- 
+  const [findLocation, setFindloacation] = useState("");
+
   useEffect(() => {
     const fetchVendors = async () => {
       try {
+        setLoading(true); // show global loading
         const res = await getNearbyVendors();
         setVendors(res.data.data);
       } catch (err) {
         console.error(err);
+      } finally {
+        setLoading(false); // hide global loading
       }
     };
     fetchVendors();
-  }, []);
+  }, [setLoading]);
 
   const openViewModal = (vendor) => {
     setSelectedVendor(vendor);
@@ -41,17 +45,21 @@ const [findLocation, setFindloacation] = useState("")
     setSelectedVendor(vendor);
     setShowOrder(true);
   };
- const filteredLocation = vendors.filter((item)=>{
-  if(!findLocation){
-    return true
-  }else{
-    const searchLocation = item.businessAddress
-    return searchLocation.includes(findLocation)
-  }
- }
-)
+
+  const filteredLocation = vendors.filter((item) => {
+    if (!findLocation) return true;
+    return item.businessAddress?.includes(findLocation);
+  });
+
   return (
-    <main className="browsevendor">
+    <main className="browsevendor"  style={{ position: "relative" }}>
+      {/* Global Loading Overlay */}
+      {loading && (
+        <div className="global-loading">
+          Loading...
+        </div>
+      )}
+
       {showView && <ViewVendor onClose={() => setShowView(false)} vendor={selectedVendor} />}
       {showOrder && <OrderModal onClose={() => setShowOrder(false)} vendor={selectedVendor} />}
 
@@ -63,13 +71,12 @@ const [findLocation, setFindloacation] = useState("")
       </header>
 
       <div className="search-bar">
-        
-          <input placeholder="Search location"  className="searchinput"
+        <input
+          placeholder="Search location"
+          className="searchinput"
           value={findLocation}
-          onChange={(e)=>setFindloacation(e.target.value)}
-          
-          />
-        
+          onChange={(e) => setFindloacation(e.target.value)}
+        />
         <div className="search-drop">
           <span>
             Newest first <RxCaretDown />
