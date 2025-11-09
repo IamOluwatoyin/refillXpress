@@ -33,6 +33,8 @@ const CustomerAccount = () => {
         phoneNumber: userData?.phoneNumber || "",
         residentialAddress: userData?.residentialAddress || "",
         profilePicture: userData?.profilePicture || "",
+         homeAddress: userData?.home || "",     
+        officeAddress: userData?.office || "",
       });
 
       //  Sync with localStorage for dashboard use
@@ -47,6 +49,8 @@ const CustomerAccount = () => {
           role: userData?.role,
           profilePicture: userData?.profilePicture,
           residentialAddress: userData?.residentialAddress || "",
+          homeAddress: userData?.home || "",   
+          officeAddress: userData?.office || "",   
         })
       );
 
@@ -71,23 +75,25 @@ const CustomerAccount = () => {
 
   
   const updateProfile = async () => {
-    try {
-      const formData = new FormData();
+  try {
+    const formData = new FormData();
 
-      if (profileAccount.profilePicture instanceof File) {
-        formData.append("profilePicture", profileAccount.profilePicture);
-      }
-
-      formData.append("residentialAddress", profileAccount.residentialAddress);
-
-      await userProfileUpdate(formData);
-      toast.success("Profile updated successfully!");
-      fetchUserProfile();
-    } catch (error) {
-      console.error("Update failed", error);
-      toast.error(error.response?.data?.message || "Something went wrong updating profile");
+    if (profileAccount.profilePicture instanceof File) {
+      formData.append("profilePicture", profileAccount.profilePicture);
     }
-  };
+
+    formData.append("residentialAddress", profileAccount.residentialAddress || "");
+    formData.append("home", profileAccount.homeAddress || "");
+    formData.append("office", profileAccount.officeAddress || "");
+
+    await userProfileUpdate(formData);
+    toast.success("Profile updated successfully!");
+    fetchUserProfile();
+  } catch (error) {
+    console.error("Update failed", error);
+    toast.error(error.response?.data?.message || "Something went wrong updating profile");
+  }
+};
 
   //  Update addresses
   // const updateAddresses = async () => {
