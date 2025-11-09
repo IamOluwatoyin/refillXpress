@@ -1,6 +1,7 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../../styles/dashboardSidebar.css";
+import { AiOutlineLogout } from "react-icons/ai";
 
 import {
   MdDashboard,
@@ -36,6 +37,11 @@ const navItems = [
     name: "Account",
     icon: MdAccountCircle,
     path: "/rider-dashboard/account",
+  },
+  {
+    name: "Logout",
+    icon: AiOutlineLogout,
+    path: "/riderlogin",
   },
 ];
 
