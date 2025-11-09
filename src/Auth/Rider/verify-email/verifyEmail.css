@@ -1,14 +1,11 @@
-/* --- Root Layout Container --- */
 .verify-email-layout {
-  /* Use min-height 100vh to ensure the background covers the whole viewport */
   min-height: 100vh;
   width: 100%;
   background-color: #f7f9fc;
   font-family: Arial, sans-serif;
-  position: relative; /* Context for fixed header */
+  position: relative;
 }
 
-/* --- Fixed Top-Left Header --- */
 .fixed-header {
   position: absolute;
   top: 10px;
@@ -81,7 +78,6 @@
   padding-inline: 20px;
 }
 
-/* --- Code Input Group --- */
 .code-input-group {
   display: flex;
   justify-content: space-between;
@@ -109,7 +105,6 @@
   outline: none;
 }
 
-/* --- Verify Button --- */
 .verify-button {
   border-radius: 8px;
   cursor: pointer;
@@ -128,14 +123,12 @@
   background-color: #e66a00;
 }
 
-/* --- Resend Section --- */
 .resend-section {
   font-size: 14px;
   color: #666;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* Reduced gap to match the tight spacing in the design */
   gap: 5px;
 }
 
