@@ -53,6 +53,7 @@ const BrowseVendor = () => {
 
   return (
     <main className="browsevendor"  style={{ position: "relative" }}>
+      
       {/* Global Loading Overlay */}
       {loading && (
         <div className="global-loading">

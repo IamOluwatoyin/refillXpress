@@ -28,7 +28,7 @@ const PaymentPage = () => {
           ...(res?.data?.data?.cancelled || []),
         ];
 
-        // 2️⃣ Find the specific order using the orderId
+        //  Find the specific order using the orderId
         const matchedOrder = allOrders.find(o => o.id === orderId);
         setOrder(matchedOrder || null);
       } catch (err) {
@@ -42,12 +42,12 @@ const PaymentPage = () => {
     if (orderId) fetchOrder();
   }, [orderId]);
 
-  // 3️⃣ Loading state
+  
   if (loading) {
     return <SpinnerModal message="Loading your payment details..." />;
   }
 
-  // Fallback if order not found
+  
   if (!order) {
     return (
       <main className="payment-page">
@@ -65,12 +65,12 @@ const PaymentPage = () => {
     );
   }
 
-  // Display receipt
+  
   return (
     <main className="payment-page">
       <div className="payment-card">
         <h2 className="payment-title" style={{ color: "#005BAC" }}>
-          Payment Successful 🎉
+          Payment Successful 
         </h2>
         <p className="receipt-line">
           Thank you! Your payment has been processed successfully.

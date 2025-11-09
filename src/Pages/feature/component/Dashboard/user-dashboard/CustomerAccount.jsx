@@ -19,7 +19,7 @@ const CustomerAccount = () => {
 
   const [loading, setLoading] = useState(false);
 
-  //  Fetch user data
+ 
   const fetchUserProfile = async () => {
     try {
       const res = await getUserProfile();
@@ -95,29 +95,6 @@ const CustomerAccount = () => {
   }
 };
 
-  //  Update addresses
-  // const updateAddresses = async () => {
-  //   if (!profileAccount.homeAddress && !profileAccount.officeAddress) {
-  //     toast.warn("Please enter address");
-  //     return;
-  //   }
-
-  //   setLoading(true);
-  //   try {
-  //     const payload = {
-  //       homeAddress: profileAccount.homeAddress || "",
-  //       officeAddress: profileAccount.officeAddress || "",
-  //     };
-
-  //     const res = await userProfileUpdate(payload);
-  //     toast.success(res?.data?.message || "Addresses updated successfully");
-  //   } catch (err) {
-  //     console.error("Address update failed:", err);
-  //     toast.error(err.response?.data?.message || "Failed to update addresses");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   return (
     <main className="customer-account">

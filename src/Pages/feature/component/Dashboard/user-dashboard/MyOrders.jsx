@@ -159,8 +159,8 @@ const [deliveryCode, setDeliveryCode] = useState("");
   const handleGenerateCode = () => {
   const code = Math.floor(100000 + Math.random() * 900000); // Generate 6-digit code
   setDeliveryCode(code);
-  setShowCompletion(false); // Hide completion modal
-  setShowDelivery(true); // Show delivery verification modal
+  setShowCompletion(false);
+  setShowDelivery(true); 
 };
 
 
@@ -185,7 +185,7 @@ const [deliveryCode, setDeliveryCode] = useState("");
   <CompletionModal
     order={orderDetails}
     onClose={() => setShowCompletion(false)}
-    onGenerateCode={handleGenerateCode} // 👈 Added
+    onGenerateCode={handleGenerateCode} 
   />
 )}
 
