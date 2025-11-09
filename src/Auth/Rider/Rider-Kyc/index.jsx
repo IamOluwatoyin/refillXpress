@@ -11,13 +11,17 @@ import "./RiderApplicationForm.css";
 import Header from "../../../assets/Header.png";
 import { useNavigate } from "react-router-dom";
 import ApplicationSuccessPage from "../../../Components/ApplicationSuccessPage";
+import axios from "axios";
+import { toast } from "react-toastify";
+import SpinnerModal from "../../vendor-auth/spinner-modal";
+
+const API_BASE_URL = "https://refillexpress.onrender.com/api/v1";
 
 const validateRequiredFields = (data, requiredFields) => {
   return requiredFields.some(
     (field) => !data[field] || String(data[field]).trim() === ""
   );
 };
-
 const PersonalInfoForm = ({ initialData, onNext }) => {
   const [data, setData] = useState({
     fullName: "",
@@ -40,6 +44,15 @@ const PersonalInfoForm = ({ initialData, onNext }) => {
     const formData = new FormData(e.target);
     const entries = Object.fromEntries(formData.entries());
 
+    const mappedEntries = {
+      residentialAddress: entries.streetAddress,
+      city: entries.city,
+      state: entries.state,
+      contactName: entries.emergencyContact,
+      contactPhone: entries.contactPhone,
+      ...entries,
+    };
+
     const requiredFields = [
       "fullName",
       "email",
@@ -58,7 +71,7 @@ const PersonalInfoForm = ({ initialData, onNext }) => {
       return;
     }
 
-    onNext({ personalData: entries });
+    onNext({ personalData: mappedEntries });
   };
 
   return (
@@ -191,6 +204,7 @@ const PersonalInfoForm = ({ initialData, onNext }) => {
 };
 
 const VehicleDetailsForm = ({ initialData, onNext, onBack }) => {
+  // ... (No changes required here, it collects vehicle data) ...
   const [data, setData] = useState({
     type: "",
     make: "",
@@ -210,6 +224,16 @@ const VehicleDetailsForm = ({ initialData, onNext, onBack }) => {
     const formData = new FormData(e.target);
     const entries = Object.fromEntries(formData.entries());
 
+    // Map form fields to API fields for clarity
+    const mappedEntries = {
+      vehicleType: entries.type,
+      vehicleMake: entries.make,
+      vehicleModel: entries.model,
+      year: entries.year,
+      registrationNumber: entries.regNumber,
+      licensePlate: entries.licensePlate,
+    };
+
     const requiredFields = [
       "type",
       "make",
@@ -224,7 +248,7 @@ const VehicleDetailsForm = ({ initialData, onNext, onBack }) => {
       return;
     }
 
-    onNext({ vehicleData: entries });
+    onNext({ vehicleData: mappedEntries });
   };
 
   return (
@@ -338,43 +362,56 @@ const VehicleDetailsForm = ({ initialData, onNext, onBack }) => {
 };
 
 const DocumentsForm = ({ initialData, onNext, onBack }) => {
-  const [documents, setDocuments] = useState([
-    {
-      name: "Driver's License",
-      status: "Uploaded",
-      date: "2025-01-15",
-      iconClass: "icon-green",
-      file: "mock.pdf",
-    },
-    {
-      name: "Vehicle Registration",
-      status: "Uploaded",
-      date: "2025-01-15",
-      iconClass: "icon-green",
-      file: "mock.pdf",
-    },
-    {
-      name: "Owner ID Card",
-      status: "Pending",
-      date: "2025-10-24",
-      iconClass: "icon-yellow",
-      file: null,
-    },
-    {
-      name: "Utility Bill",
-      status: "Re-Upload",
-      date: "2025-10-20",
-      iconClass: "icon-red",
-      file: null,
-    },
-  ]);
+  const [documents, setDocuments] = useState(
+    initialData.documentsData || [
+      {
+        name: "Driver's License",
+        apiName: "driversLicense",
+        file: null,
+        status: "Required",
+        iconClass: "icon-red",
+        date: "N/A",
+      },
+      {
+        name: "Vehicle Registration",
+        apiName: "vehicleRegistration",
+        file: null,
+        status: "Required",
+        iconClass: "icon-red",
+        date: "N/A",
+      },
+      {
+        name: "Owner ID Card",
+        apiName: "ownerIdCard",
+        file: null,
+        status: "Required",
+        iconClass: "icon-red",
+        date: "N/A",
+      },
+      {
+        name: "Utility Bill",
+        apiName: "utilityBill",
+        file: null,
+        status: "Required",
+        iconClass: "icon-red",
+        date: "N/A",
+      },
+    ]
+  );
 
   const handleFileUpload = (docIndex, file) => {
     const newDocs = [...documents];
-    newDocs[docIndex].file = file;
-    newDocs[docIndex].status = "Pending";
-    newDocs[docIndex].date = new Date().toISOString().slice(0, 10);
-    newDocs[docIndex].iconClass = "icon-yellow";
+    if (file) {
+      newDocs[docIndex].file = file;
+      newDocs[docIndex].status = "Uploaded";
+      newDocs[docIndex].date = new Date().toISOString().slice(0, 10);
+      newDocs[docIndex].iconClass = "icon-green";
+    } else {
+      newDocs[docIndex].file = null;
+      newDocs[docIndex].status = "Required";
+      newDocs[docIndex].iconClass = "icon-red";
+      newDocs[docIndex].date = "N/A";
+    }
     setDocuments(newDocs);
   };
 
@@ -412,8 +449,8 @@ const DocumentsForm = ({ initialData, onNext, onBack }) => {
             <div className="doc-details">
               <label>{doc.name}</label>
               <span className="doc-uploaded-date">
-                {doc.status === "Required"
-                  ? "Required"
+                {doc.status === "Required" || doc.status === "Re-Upload"
+                  ? doc.status
                   : `Uploaded: ${doc.date}`}
               </span>
             </div>
@@ -424,9 +461,15 @@ const DocumentsForm = ({ initialData, onNext, onBack }) => {
                   doc.status === "Re-Upload" ? "btn-red" : "btn-green"
                 }`}
               >
-                {doc.status === "Re-Upload" ? "Re-Upload" : "Upload"}
+                {doc.status === "Re-Upload"
+                  ? "Re-Upload"
+                  : doc.file
+                  ? "Change"
+                  : "Upload"}
               </span>
-              <span className="click-text">click to upload</span>
+              <span className="click-text">
+                {doc.file ? doc.file.name : "click to upload"}
+              </span>
               <input
                 type="file"
                 accept="image/*,.pdf"
@@ -583,7 +626,12 @@ const RiderKycForm = () => {
   const [activeStep, setActiveStep] = useState(1);
   const [formData, setFormData] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+  const riderId = localStorage.getItem("riderId");
+  const authToken = localStorage.getItem("authToken");
+  console.log("rider ooo", riderId);
 
   const steps = [
     { id: 1, label: "Personal Info", icon: <FaUser /> },
@@ -592,15 +640,89 @@ const RiderKycForm = () => {
     { id: 4, label: "Banking Info", icon: <FaCreditCard /> },
   ];
 
-  const handleNext = (stepData) => {
-    setFormData((prev) => ({ ...prev, ...stepData }));
+  const submitKycForm = async (finalData) => {
+    setIsLoading(true);
 
-    if (activeStep < steps.length) {
-      setActiveStep(activeStep + 1);
-    } else {
-      console.log("Final Form Data:", { ...formData, ...stepData });
-      navigate("rider-dashboard");
+    if (!riderId || !authToken) {
+      toast.error("Authentication error. Please log in again.");
+      setIsLoading(false);
+      navigate("/riderlogin");
+      return;
+    }
+
+    const apiFormData = new FormData();
+
+    const payload = {
+      ...finalData.personalData,
+      ...finalData.vehicleData,
+      ...finalData.bankingData,
+    };
+
+    const apiFields = [
+      "city",
+      "residentialAddress",
+      "state",
+      "contactName",
+      "contactPhone",
+      "vehicleType",
+      "vehicleMake",
+      "vehicleModel",
+      "year",
+      "registrationNumber",
+      "licensePlate",
+      "accountHolderName",
+      "bankName",
+      "accountNumber",
+    ];
+
+    apiFields.forEach((key) => {
+      if (payload[key]) {
+        apiFormData.append(key, payload[key]);
+      }
+    });
+
+    finalData.documentsData.forEach((doc) => {
+      if (doc.file) {
+        apiFormData.append(doc.apiName, doc.file, doc.file.name);
+      }
+    });
+
+    apiFormData.append("riderId", riderId);
+
+    try {
+      const response = await axios.post(
+        `${API_BASE_URL}/rider/riderKyc/${riderId}`,
+        apiFormData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+      console.log(response);
+      toast.success("KYC submission successful! Awaiting verification.");
       setIsSubmitted(true);
+    } catch (error) {
+      console.error("KYC Submission Error:", error.response || error);
+      const message =
+        error.response?.data?.message ||
+        "KYC submission failed. Please try again.";
+
+      toast.error(message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleNext = (stepData) => {
+    if (activeStep === steps.length) {
+      const finalData = { ...formData, ...stepData };
+      setFormData(finalData);
+      submitKycForm(finalData);
+    } else {
+      setFormData((prev) => ({ ...prev, ...stepData }));
+      setActiveStep(activeStep + 1);
     }
   };
 
@@ -641,13 +763,14 @@ const RiderKycForm = () => {
     }
   };
 
-  // CONDITIONAL RENDER: Show success page after submission
   if (isSubmitted) {
-    // You can generate a real ID here if needed, but using the mock ID for display
     return <ApplicationSuccessPage applicationId={"RDR-FNSL9GD2K"} />;
   }
 
-  // --- MAIN KYC FORM RENDER ---
+  if (isLoading) {
+    return <SpinnerModal />;
+  }
+
   return (
     <div className="kyc_body">
       <div className="main_header">
