@@ -48,7 +48,7 @@
     margin-inline: 0.5rem;
 }
 .glorys-profile {
-    background-color: hsl(18, 100%, 50%);
+   
     color: #fff;
     width: 50px;
     height: 50px;
@@ -131,7 +131,7 @@
     
 }
 .active {
-    background-color: #ff7f0f36;
+    background-color:  #f0dccc;
     span {
         color: #ff7f11;
     }
@@ -210,4 +210,10 @@
     display: flex;
     justify-content: center;
    }
+}
+.user-profile-image {
+  width: 40px;  
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
 }

@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import { useNavigate, Link } from 'react-router';
 import SpinnerModal from '../../vendor-auth/spinner-modal';
 import axios from 'axios';
-import logo from "../../../assets/dashboard_logo.png"
+
 
 
 const Forgot = () => {
@@ -45,7 +45,7 @@ const Forgot = () => {
            <article className="article">
                 <header className="form-header">
                         <div className='logo-heading'>
-                        <img src={logo} alt="" onClick={()=> nav("/")} className='logo-heading' />
+                        <img src="/Images/dashboard_logo.png" alt="" onClick={()=> nav("/")} className='logo-heading' />
                     </div>
                     
                 </header>

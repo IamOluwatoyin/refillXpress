@@ -30,6 +30,21 @@ body {
 }
 
 
-/* .Toastify__progress-bar {
-  display: none !important;
-} */
+/* Global loading overlay */
+.global-loading {
+  position: absolute;         /* relative to parent container */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;                /* On top of page content, but below sidebar/header if they have higher z-index */
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #333;
+  text-align: center;
+}
+

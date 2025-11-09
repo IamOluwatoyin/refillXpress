@@ -1,12 +1,58 @@
 import React, { useState } from "react";
-import "./SettingsManagement.css"
-import { GoPackage , GoDotFill } from "react-icons/go";
-
+import "./SettingsManagement.css";
+import { GoPackage, GoDotFill } from "react-icons/go";
+import { vendorSettings } from "../../../../api/mutation";
+import { toast } from "react-toastify";
 
 const SettingsManagement = () => {
-
-   const [businessOpen, setBusinessOpen] = useState(true);
+  const vendorId = localStorage.getItem("vendorId");
+  const [pricePerKg, setPricePerKg] = useState("");
+  const [minimumOrder, setMinimumOrder] = useState("");
+  const [openingTime, setOpeningTime] = useState("");
+  const [closingTime, setClosingTime] = useState("");
+  const [businessAvailability, setBusinessAvailability] = useState(true);
   const [inStock, setInStock] = useState(true);
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  const handleSettings = async () => {
+    if (!vendorId) {
+      toast.error("Vendor ID missing");
+      return;
+    }
+
+    const payload = {
+      pricePerKg: Number(pricePerKg),
+      minimumOrder: Number(minimumOrder),
+      openingTime,
+      closingTime,
+      businessAvailability,
+      inStock,
+    };
+
+    setIsUpdating(true);
+    try {
+      const res = await vendorSettings(vendorId, payload);
+      const updatedData = res?.data?.data;
+
+      // Update local state with returned data so form reflects saved values
+      if (updatedData) {
+        setPricePerKg(updatedData.pricePerKg || "");
+        setMinimumOrder(updatedData.minimumOrder || "");
+        setOpeningTime(updatedData.openingTime || "");
+        setClosingTime(updatedData.closingTime || "");
+        setBusinessAvailability(updatedData.businessAvailability);
+        setInStock(updatedData.inStock);
+      }
+
+      toast.success("Settings updated successfully");
+    } catch (error) {
+      console.log("Error updating settings", error);
+      toast.error(error?.response?.data?.message || "Something went wrong!");
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
   return (
     <div className="settingsWrapper">
       <h2 className="settingsTitle">Settings</h2>
@@ -17,11 +63,21 @@ const SettingsManagement = () => {
         <div className="settingsRow">
           <div className="settingsInput">
             <label>Price per kg (₦)</label>
-            <input type="text" placeholder="Enter price" />
+            <input
+              type="number"
+              placeholder="Enter price"
+              value={pricePerKg}
+              onChange={(e) => setPricePerKg(e.target.value)}
+            />
           </div>
           <div className="settingsInput">
             <label>Minimum Order (kg)</label>
-            <input type="text" placeholder="Enter minimum" />
+            <input
+              type="number"
+              placeholder="Enter minimum"
+              value={minimumOrder}
+              onChange={(e) => setMinimumOrder(e.target.value)}
+            />
           </div>
         </div>
       </div>
@@ -32,43 +88,53 @@ const SettingsManagement = () => {
         <div className="settingsRow">
           <div className="settingsInput">
             <label>Opening Time</label>
-            <input type="text" placeholder="09:00am" />
+            <input
+              type="text"
+              placeholder="08:00 AM"
+              value={openingTime}
+              onChange={(e) => setOpeningTime(e.target.value)}
+            />
           </div>
           <div className="settingsInput">
             <label>Closing Time</label>
-            <input type="text" placeholder="09:00pm" />
+            <input
+              type="text"
+              placeholder="06:00 PM"
+              value={closingTime}
+              onChange={(e) => setClosingTime(e.target.value)}
+            />
           </div>
         </div>
       </div>
 
-      {/* Business Availability */}
+      {/* Business Availability & Stock */}
       <div className="settingsCard toggles">
         <div className="toggleItem">
           <div className="toggleText">
             <p>Business Availability</p>
-            <span style={{ color: businessOpen ? "green" : "gray" }}>
+            <span style={{ color: businessAvailability ? "green" : "gray" }}>
               <GoDotFill />
-              {businessOpen ? "Open" : "Closed"}
+              {businessAvailability ? "Open" : "Closed"}
             </span>
           </div>
-         <label className="switch">
+          <label className="switch">
             <input
               type="checkbox"
-              checked={businessOpen}
-              onChange={() => setBusinessOpen(!businessOpen)}
+              checked={businessAvailability}
+              onChange={() => setBusinessAvailability(!businessAvailability)}
             />
             <span className="sliders"></span>
           </label>
         </div>
 
         <div className="toggleItem">
-          <div className="toggleText" >
+          <div className="toggleText">
             <p>Stock Status</p>
-            <span style={{ color: inStock ? "green" : "red", }}>
+            <span style={{ color: inStock ? "green" : "red" }}>
               <GoPackage />
               {inStock ? "In Stock" : "Out of Stock"}
             </span>
-            </div>
+          </div>
           <label className="switch">
             <input
               type="checkbox"
@@ -79,45 +145,13 @@ const SettingsManagement = () => {
           </label>
         </div>
 
-        <button className="updateBtn">Update Settings</button>
-      </div>
-
-      {/* Notification Preferences */}
-      <div className="settingsCard">
-        <h3>Notification Preferences</h3>
-
-        <div className="notifyItem">
-          <div>
-            <p>New Order Alerts</p>
-            <span>Get notified when new orders arrive</span>
-          </div>
-          <label className="switch">
-            <input type="checkbox" defaultChecked />
-            <span className="sliders"></span>
-          </label>
-        </div>
-
-        <div className="notifyItem">
-          <div>
-            <p>Customer Messages</p>
-            <span>Receive customer inquiries and messages</span>
-          </div>
-          <label className="switch">
-            <input type="checkbox" defaultChecked />
-            <span className="sliders"></span>
-          </label>
-        </div>
-
-        <div className="notifyItem">
-          <div>
-            <p>Review Notifications</p>
-            <span>Get notified about new reviews</span>
-          </div>
-          <label className="switch">
-            <input type="checkbox" defaultChecked />
-            <span className="sliders"></span>
-          </label>
-        </div>
+        <button
+          className="updateBtn"
+          onClick={handleSettings}
+          disabled={isUpdating}
+        >
+          {isUpdating ? "Updating..." : "Update Settings"}
+        </button>
       </div>
     </div>
   );

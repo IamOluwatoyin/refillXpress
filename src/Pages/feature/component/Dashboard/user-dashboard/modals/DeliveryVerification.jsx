@@ -3,7 +3,9 @@ import "./deliveryverification.css"
 import { GoStar } from "react-icons/go";
 
 
-const DeliveryVerification = () => {
+const DeliveryVerification = ({ code, onClose }) => {
+
+    
   return (
     <div className='modal-bg'>
       <div className="modal-itself">
@@ -12,7 +14,8 @@ const DeliveryVerification = () => {
                     <GoStar />
                     <h4>delivery verification</h4>
                 </div>
-                <p className='x-btn'>x</p>
+               <p className="x-btn" onClick={onClose}>x</p>
+
             </div>
             <div className="order-id">
                 <div  className='small'>
@@ -46,7 +49,8 @@ const DeliveryVerification = () => {
             <div className="the-code-box">
                 <GoStar className='shield' />
                 <p>your delivery code</p>
-                <h3>742891</h3>
+                <h3>{code}</h3>
+
                 <small>Share this code with the delivery person.</small>
             </div>
       </div>

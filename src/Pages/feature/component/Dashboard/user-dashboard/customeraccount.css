@@ -94,17 +94,93 @@
     .my-order .address {
       color: #aaa
     }
-    .add-destination {
-      width: 100%;
-      padding: 0.5rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    
+    .addbutton {
+  width: 100%;
+  height: 2.5rem;
+  background-color: #fff;
+  text-align: center;
+  border: none;
+  border-radius: 0.2rem;
+  outline: none;
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
-      .addbutton {
-        background-color: transparent;
-        border: none;
-        text-transform: capitalize;
+.addbutton:hover {
+  background-color: #aaa
+}
 
-      }
-    }
+.addbutton:disabled {
+  background-color: #0e0e0f;
+  cursor: not-allowed;
+}
+
+
+    .profile-box {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f3f4f6; 
+  position: relative;
+}
+
+.profile-box img.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+
+.saved-address {
+  width: 95%;
+  margin-top: 0.2rem; 
+  display: flex;
+  justify-content: flex-start;
+}
+
+.fullwidth-address {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3rem; 
+  margin-bottom: 0.8rem; 
+}
+
+.address-label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #111827;
+  text-transform: capitalize;
+  margin-left: 0.3rem;
+}
+
+.address-full-input {
+  width: 100%;
+  height: 3rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: 0.5rem;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+  font-size: 0.95rem;
+  color: #111827;
+}
+
+
+.add-destination {
+  width: 100%;
+  padding: 0.8rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
