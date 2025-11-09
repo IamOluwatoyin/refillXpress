@@ -55,11 +55,20 @@ const RiderLogin = () => {
       );
 
       const token = response.data.token;
+      const riderId = response.data.data.id;
+
       localStorage.setItem("authToken", token);
-      toast.success("Login successful! Welcome back.");
+      if (riderId) {
+        localStorage.setItem("riderId", riderId);
+        toast.success("Login successful! Welcome back.");
+      } else {
+        console.warn("Rider ID was missing in the login response data.");
+      }
+
       setTimeout(() => {
         navigate("/rider-kyc");
       }, 1000);
+      toast.success("Login successful! Welcome back.");
     } catch (error) {
       const message =
         error.response?.data?.message ||
@@ -77,9 +86,6 @@ const RiderLogin = () => {
       <header className="fixed-header">
         <div className="logo-container">
           <img src={Header} alt="logo" className="logo-image" />
-          {/* <h1>
-            Refill<span className="logo-span">Xpress</span>
-          </h1> */}
         </div>
       </header>
 
