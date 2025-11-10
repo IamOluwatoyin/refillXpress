@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
+import axios from "axios";
+import { useNavigate, useParams } from "react-router";
 import {
   FaChevronRight,
   FaRegUser,
@@ -426,8 +428,14 @@ const StepIndicator = ({ step, index, currentStepIndex }) => {
 };
 
 const OrderTracker = () => {
+  const navigate = useNavigate();
+  const { orderId } = useParams();
+
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [notes, setNotes] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [orderData, setOrderData] = useState(null);
+  const [fetchError, setFetchError] = useState(null);
 
   const deliverySteps = [
     "Navigate to Customer",
@@ -437,29 +445,6 @@ const OrderTracker = () => {
     "Return to Customer",
     "Deliver Filled Cylinder",
   ];
-
-  const handleNextStep = () => {
-    if (currentStepIndex < deliverySteps.length - 1) {
-      setCurrentStepIndex((prev) => prev + 1);
-    }
-  };
-
-  const orderInfo = {
-    orderId: "ORD-002",
-    price: "₦17,280",
-    cylinderType: "12kg LPG",
-  };
-  const customerDetails = {
-    name: "Glory Otone",
-    address: "No 2 Sinzu street Magodo",
-    phone: "+23460994040",
-  };
-  const vendorDetails = {
-    name: "MaxGas Suppy",
-    address: "No 2 Salau street Magodo",
-    phone: "+23466885894",
-    eta: "8 min • 3.7 km",
-  };
 
   const statusContent = {
     0: {
@@ -500,6 +485,120 @@ const OrderTracker = () => {
     },
   };
 
+  useEffect(() => {
+    const fetchOrderDetails = async () => {
+      const authToken = localStorage.getItem("authToken");
+
+      if (!orderId || !authToken) {
+        setLoading(false);
+        setFetchError("Missing Order ID or Auth Token.");
+        return;
+      }
+
+      setLoading(true);
+      setFetchError(null);
+
+      try {
+        const response = await axios.get(
+          `https://refillexpress.onrender.com/api/v1/orders/getOneOrder/${orderId}`,
+          { headers: { Authorization: `Bearer ${authToken}` } }
+        );
+
+        const data = response.data.data;
+        setOrderData(data);
+      } catch (error) {
+        console.error(
+          "Failed to fetch order details:",
+          error.response?.data || error
+        );
+        setFetchError(
+          "Failed to load order details. Check console for API error."
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOrderDetails();
+  }, [orderId]);
+
+  const handleCompleteOrder = async () => {
+    const orderIdToComplete = orderId;
+    const authToken = localStorage.getItem("authToken");
+
+    if (!orderIdToComplete || !authToken) {
+      alert("Missing Order ID or Auth Token.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await axios.patch(
+        `https://refillexpress.onrender.com/api/v1/rider/complete/order/${orderIdToComplete}`,
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+
+      alert("Order completed successfully!");
+      navigate("/rider/orders");
+    } catch (error) {
+      console.error("Error completing order:", error.response || error);
+      alert("Failed to complete order. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleNextStep = () => {
+    if (currentStepIndex === deliverySteps.length - 1) {
+      handleCompleteOrder();
+    } else {
+      setCurrentStepIndex((prev) => prev + 1);
+    }
+  };
+
+  // --- Render Logic: Loading/Error State ---
+  if (loading || !orderData) {
+    return (
+      <PageContainer>
+        {loading ? "Loading order details..." : "Initializing..."}
+      </PageContainer>
+    );
+  }
+  if (fetchError) {
+    return <PageContainer style={{ color: "red" }}>{fetchError}</PageContainer>;
+  }
+
+  // --- Dynamic Data Mapping (Uses API response fields) ---
+
+  const orderInfo = {
+    orderId: orderData.orderNumber || "N/A",
+    price: orderData.totalPrice
+      ? `₦${Number(orderData.totalPrice).toLocaleString()}`
+      : "N/A",
+    cylinderType: `${orderData.cylinderSize || "N/A"}kg LPG (x${
+      orderData.quantity || 1
+    })`,
+  };
+
+  const customerDetails = {
+    // Uses substring of ID as placeholder for name until user data is fetched
+    name: `Customer (ID: ${orderData.userId.substring(0, 8)})`,
+    address: orderData.deliveryAddress || "N/A (Missing Delivery Address)",
+    phone: "N/A (Phone Not in Response)",
+  };
+
+  const vendorDetails = {
+    // Uses substring of ID as placeholder for name until vendor data is fetched
+    name: `Vendor (ID: ${orderData.vendorId.substring(0, 8)})`,
+    address: orderData.pickupAddress || "N/A (Missing Pickup Address)",
+    phone: "+234XXXXXX (Placeholder Phone)",
+    eta: "8 min • 3.7 km (Placeholder)",
+  };
+
   const {
     icon: StatusIcon,
     title: statusTitle,
@@ -510,11 +609,13 @@ const OrderTracker = () => {
   return (
     <PageContainer>
       <ContentWrapper>
+        {/* Header Card */}
         <HeaderCard>
           <OrderId>Order **{orderInfo.orderId}**</OrderId>
           <PriceTag>{orderInfo.price}</PriceTag>
         </HeaderCard>
 
+        {/* Status Card */}
         <StatusCard>
           <StatusContent>
             <StatusIconWrapper>
@@ -527,6 +628,7 @@ const OrderTracker = () => {
           </StatusContent>
         </StatusCard>
 
+        {/* Progress Card */}
         <ProgressCard>
           <SectionTitle>Delivery Progress</SectionTitle>
           <div style={{ position: "relative" }}>
@@ -544,6 +646,7 @@ const OrderTracker = () => {
           </div>
         </ProgressCard>
 
+        {/* Conditional Vendor Location Card (Step 2: Navigate to Vendor) */}
         {currentStepIndex === 2 && (
           <VendorLocationCard>
             <VendorTitle>
@@ -563,6 +666,7 @@ const OrderTracker = () => {
           </VendorLocationCard>
         )}
 
+        {/* Conditional Confirm Pickup Card (Step 1: Pick Up Empty Cylinder) */}
         {currentStepIndex === 1 && (
           <ConfirmCard>
             <ConfirmHeader>
@@ -585,26 +689,33 @@ const OrderTracker = () => {
           </ConfirmCard>
         )}
 
+        {/* Details Card */}
         <DetailsCard>
           <SectionTitle>Order Details</SectionTitle>
           <div>
             <DetailBlock $hasBorder={true}>
               <DetailItem
                 icon={FaRegUser}
-                title="Customer"
+                title="Customer (Delivery Location)"
                 content={customerDetails.name}
               />
-              <DetailItem icon={FaStore} content={customerDetails.address} />
+              <DetailItem
+                icon={FaMapMarkerAlt}
+                content={customerDetails.address}
+              />
               <DetailItem icon={FaPhoneAlt} content={customerDetails.phone} />
             </DetailBlock>
 
             <DetailBlock $hasBorder={true}>
               <DetailItem
                 icon={FaStore}
-                title="Vendor"
+                title="Vendor (Pickup Location)"
                 content={vendorDetails.name}
               />
-              <DetailItem icon={FaStore} content={vendorDetails.address} />
+              <DetailItem
+                icon={FaMapMarkerAlt}
+                content={vendorDetails.address}
+              />
               <DetailItem icon={FaPhoneAlt} content={vendorDetails.phone} />
             </DetailBlock>
 
@@ -618,9 +729,10 @@ const OrderTracker = () => {
           </div>
         </DetailsCard>
 
+        {/* Action Button */}
         <div style={{ padding: "0 1.25rem", marginBottom: "1rem" }}>
-          <ActionButton onClick={handleNextStep}>
-            {buttonText} <FaChevronRight />
+          <ActionButton onClick={handleNextStep} disabled={loading}>
+            {loading ? "Processing..." : buttonText} <FaChevronRight />
           </ActionButton>
         </div>
       </ContentWrapper>

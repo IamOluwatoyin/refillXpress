@@ -218,7 +218,10 @@ const RefillOrderDetailsModal = ({ order, isOpen, onClose, onAccept }) => {
           <button className="btn_close_modal" onClick={onClose}>
             Close
           </button>
-          <button className="btn_accept_modal" onClick={onAccept}>
+          <button
+            className="btn_accept_modal"
+            onClick={() => onAccept(order.id)}
+          >
             <MdOutlineCheckCircle size={18} /> Accept This Order
           </button>
         </div>
@@ -357,7 +360,10 @@ const RefillRequestItem = ({
       <button className="btn_details" onClick={() => onDetailsClick(orderData)}>
         <MdOutlineRemoveCircle size={18} /> Details
       </button>
-      <button className="btn_accept" onClick={() => navigate("order-tracker")}>
+      <button
+        className="btn_accept"
+        onClick={() => navigate(`order-tracker/${orderData.id}`)}
+      >
         <MdOutlineCheckCircle size={18} /> Accept
       </button>
     </div>
@@ -406,6 +412,7 @@ const DashboardHome = () => {
         setRiderData({
           firstName: data.firstName || "Rider",
           kycStatus: data.kycStatus || "incomplete",
+          earnings: Number.parseFloat(data.earnings) || 0,
           refills: Number.parseInt(data.refills) || 0,
           rating: Number.parseFloat(data.rating) || 0,
         });
@@ -480,6 +487,7 @@ const DashboardHome = () => {
 
           return {
             orderId: order.orderNumber,
+            id: order.id,
             time: `${order.cylinderSize}kg LPG Refill • ${approxTime}`,
             deliveryFee: order.deliveryFee
               ? order.deliveryFee.toLocaleString()
@@ -488,6 +496,7 @@ const DashboardHome = () => {
 
             orderData: {
               ...order,
+              id: order.id,
               deliveryFee: order.deliveryFee
                 ? order.deliveryFee.toLocaleString()
                 : "0",
@@ -542,8 +551,8 @@ const DashboardHome = () => {
     setSelectedOrder(null);
   };
 
-  const handleAcceptModal = () => {
-    navigate("order-tracker");
+  const handleAcceptModal = (orderId) => {
+    navigate(`order-tracker/${orderId}`);
     handleCloseModal();
   };
 
@@ -569,7 +578,7 @@ const DashboardHome = () => {
           <PerformanceCard
             icon={MdOutlineAttachMoney}
             title="Earnings"
-            value={`₦${earnings.toFixed(2)}`}
+            value={`₦${(earnings ?? 0).toFixed(2)}`}
             color="#4CAF50"
             bgColor="#e8f5e9"
             secondary="Total"
@@ -593,7 +602,7 @@ const DashboardHome = () => {
           <PerformanceCard
             icon={MdOutlineStar}
             title="Rating"
-            value={rating.toFixed(1)}
+            value={(rating ?? 0).toFixed(1)}
             color="#FF9800"
             bgColor="#fff3e0"
             secondary=""
@@ -651,7 +660,7 @@ const DashboardHome = () => {
               <div className="requests_list">
                 {availableOrders.map((order) => (
                   <RefillRequestItem
-                    key={order.orderId}
+                    key={order.id}
                     {...order}
                     onDetailsClick={handleDetailsClick}
                     orderData={order.orderData}

@@ -1,18 +1,14 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router";
 import {
   MdOutlineCheckCircle,
   MdOutlineRemoveCircle,
   MdOutlineLocationOn,
   MdClose,
 } from "react-icons/md";
-import {
-  FaTruckLoading,
-  FaCheckCircle,
-  FaLocationArrow,
-  FaExchangeAlt,
-} from "react-icons/fa";
+import { FaCheckCircle, FaLocationArrow, FaExchangeAlt } from "react-icons/fa";
 import "../../styles/riderOrder.css";
 
 const formatNaira = (amount) => {
@@ -90,32 +86,40 @@ const RefillOrderDetailsModal = ({ order, isOpen, onClose, onAccept }) => {
 
         <h3 className="modal_section_title">Refill Journey</h3>
         <div className="modal_refill_journey">
-          <RefillStep
-            icon={MdOutlineCheckCircle}
-            title="1. Pickup Empty Cylinder"
-            location={order.pickupAddress}
-            distance={`${pickupStep.location.split(" • ")[1]} from customer`}
-            type="First Stop"
-            phone="08160994840"
-          />
+          {pickupStep && (
+            <RefillStep
+              icon={MdOutlineCheckCircle}
+              title="1. Pickup Empty Cylinder"
+              location={order.pickupAddress}
+              distance={pickupStep.location.split(" • ")[1] || "N/A"}
+              type="First Stop"
+              phone="08160994840"
+            />
+          )}
           <div className="step_separator">→</div>
-          <RefillStep
-            icon={FaExchangeAlt}
-            title="2. Refill at Vendor"
-            location="MaxGas Supply (Vendor Refill Location)"
-            distance={`${vendorStep.location.split(" • ")[1]} from customer`}
-            type="Refill"
-            phone="08105885894"
-          />
+
+          {vendorStep && (
+            <RefillStep
+              icon={FaExchangeAlt}
+              title="2. Refill at Vendor"
+              location="MaxGas Supply (Vendor Refill Location)"
+              distance={vendorStep.location.split(" • ")[1] || "N/A"}
+              type="Refill"
+              phone="08105885894"
+            />
+          )}
           <div className="step_separator">→</div>
-          <RefillStep
-            icon={MdOutlineCheckCircle}
-            title="3. Return Refilled Cylinder"
-            location={order.deliveryAddress}
-            distance={`${returnStep.location.split(" • ")[1]} from vendor`}
-            type="Final Stop"
-            phone="08160994840"
-          />
+
+          {returnStep && (
+            <RefillStep
+              icon={MdOutlineCheckCircle}
+              title="3. Return Refilled Cylinder"
+              location={order.deliveryAddress}
+              distance={returnStep.location.split(" • ")[1] || "N/A"}
+              type="Final Stop"
+              phone="08160994840"
+            />
+          )}
         </div>
 
         <div className="modal_actions">
@@ -123,7 +127,7 @@ const RefillOrderDetailsModal = ({ order, isOpen, onClose, onAccept }) => {
             Close
           </button>
           <button className="btn_accept_modal" onClick={onAccept}>
-            <MdOutlineCheckCircle size={18} /> Accept This Order
+            <MdOutlineCheckCircle size={18} /> **Accept This Order**
           </button>
         </div>
       </div>
@@ -169,7 +173,7 @@ const CompletedDeliveryItem = ({ order }) => {
   );
 };
 
-const ActiveOrderItem = ({ order }) => (
+const ActiveOrderItem = ({ order, onNavigateToTracker }) => (
   <div className="active_order_card">
     <div className="active_order_header">
       <span className="active_order_id">Delivery #{order.orderNumber}</span>
@@ -205,8 +209,8 @@ const ActiveOrderItem = ({ order }) => (
     </div>
 
     <div className="active_order_actions">
-      <button className="btn_navigate">
-        <FaLocationArrow size={18} /> Navigate to Customer
+      <button className="btn_navigate" onClick={onNavigateToTracker}>
+        <FaLocationArrow size={18} /> **Start Route Navigation**
       </button>
       <button className="btn_complete">
         <MdOutlineCheckCircle size={18} /> Complete Delivery
@@ -221,6 +225,7 @@ const RefillRequestItem = ({
   deliveryFee,
   steps,
   onDetailsClick,
+  onAccept,
   orderData,
 }) => (
   <div className="request_item">
@@ -254,7 +259,9 @@ const RefillRequestItem = ({
           <div className="step_info_image_style">
             <span className="step_title_image_style">{step.title}</span>
             <span className="step_location_image_style">
-              {index === 1 ? step.location.split(" • ")[0] : step.location}
+              {step.location.includes(" • ")
+                ? step.location.split(" • ")[0]
+                : step.location}
             </span>
           </div>
 
@@ -274,14 +281,16 @@ const RefillRequestItem = ({
       >
         <MdOutlineRemoveCircle size={18} /> Details
       </button>
-      <button className="btn_accept_image_style">
-        <MdOutlineCheckCircle size={18} /> Accept
+      <button className="btn_accept_image_style" onClick={onAccept}>
+        <MdOutlineCheckCircle size={18} /> **Accept**
       </button>
     </div>
   </div>
 );
 
 const RiderOrder = () => {
+  const navigate = useNavigate();
+
   const [activeTab, setActiveTab] = useState("available");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -291,6 +300,7 @@ const RiderOrder = () => {
   const [authToken, setAuthToken] = useState(null);
 
   const RIDER_ID = "e86e6a8c-2f5e-4293-b3fa-6ea783ccd126";
+  const VENDOR_ADDRESS = "MaxGas Supply";
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -304,6 +314,7 @@ const RiderOrder = () => {
   const transformRefillData = (refill) => ({
     ...refill,
     riderId: refill.riderId || refill.RiderId || null,
+    id: refill.id,
     orderId: refill.orderNumber,
     orderNumber: refill.orderNumber,
     customerName:
@@ -322,7 +333,10 @@ const RiderOrder = () => {
         title: "1. Pickup Empty Cylinder",
         location: `${refill.pickupAddress} • 1.2 km`,
       },
-      { title: "2. Refill at Vendor", location: "MaxGas Supply • 0.8 km" },
+      {
+        title: "2. Refill at Vendor",
+        location: `${VENDOR_ADDRESS} • 0.8 km`,
+      },
       {
         title: "3. Return Filled Cylinder",
         location: `${refill.deliveryAddress} • 1.2 km`,
@@ -393,19 +407,26 @@ const RiderOrder = () => {
     setSelectedOrder(orderData);
     setIsModalOpen(true);
   };
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedOrder(null);
   };
-  const handleAcceptModal = async () => {
-    if (!selectedOrder || !authToken) return;
-    const orderIdToAccept = selectedOrder.id;
-    const customerUserId = selectedOrder.userId;
 
-    if (!customerUserId) {
-      alert("Cannot accept order: Customer ID is missing.");
+  const handleNavigateToTracker = (orderId) => {
+    navigate(`/rider-dashboard/order-tracker/${orderId}`);
+  };
+
+  const handleAcceptOrder = async (orderToAccept) => {
+    const orderIdToAccept = orderToAccept.id;
+    const customerUserId = orderToAccept.userId;
+
+    if (!orderIdToAccept || !customerUserId || !authToken) {
+      console.error("Cannot accept order: Missing required data.");
       return;
     }
+
+    handleCloseModal();
 
     try {
       const axiosInstance = axios.create({
@@ -419,11 +440,19 @@ const RiderOrder = () => {
       await axiosInstance.get(
         `/orders/confirmOrder/${orderIdToAccept}/${customerUserId}`
       );
-      handleCloseModal();
-      fetchAllOrders();
+
+      await fetchAllOrders();
+
+      handleNavigateToTracker(orderIdToAccept);
     } catch (error) {
       console.error("Failed to accept order:", error);
       alert("Failed to accept order. Please check the console for details.");
+    }
+  };
+
+  const handleAcceptModal = () => {
+    if (selectedOrder) {
+      handleAcceptOrder(selectedOrder);
     }
   };
 
@@ -483,6 +512,7 @@ const RiderOrder = () => {
                   key={index}
                   {...order}
                   onDetailsClick={handleDetailsClick}
+                  onAccept={() => handleAcceptOrder(order)}
                   orderData={order}
                 />
               ))
@@ -497,7 +527,11 @@ const RiderOrder = () => {
             <p className="loading_message">No active orders currently.</p>
           ) : (
             activeOrders.map((order, index) => (
-              <ActiveOrderItem key={index} order={order} />
+              <ActiveOrderItem
+                key={index}
+                order={order}
+                onNavigateToTracker={() => handleNavigateToTracker(order.id)}
+              />
             ))
           )}
         </div>

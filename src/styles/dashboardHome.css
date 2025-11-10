@@ -379,25 +379,24 @@
   color: #ffc107;
   font-size: 14px;
 }
-/* --- Modal Styling --- */
 .modal_overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Ensure it's on top of other content */
+  z-index: 1000;
 }
 
 .modal_content {
   background-color: white;
   border-radius: 12px;
   width: 90%;
-  max-width: 600px; /* Adjust max width as needed */
+  max-width: 600px;
   padding: 20px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
   display: flex;
@@ -431,7 +430,7 @@
 }
 
 .modal_summary_box {
-  background-color: #e8f5e9; /* Light green background */
+  background-color: #e8f5e9;
   padding: 15px;
   border-radius: 8px;
   display: grid;
@@ -497,14 +496,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 20px; /* To align the steps */
+  min-width: 20px;
 }
 
 .step_arrow {
   font-size: 1.2rem;
   color: #ccc;
   margin: 5px 0;
-  height: 20px; /* Space between steps */
+  height: 20px;
 }
 
 .step_separator {
@@ -554,7 +553,7 @@
 .step_location_modal {
   font-size: 0.8rem;
   color: #555;
-  white-space: pre-wrap; /* Allows the \n to create a new line */
+  white-space: pre-wrap;
 }
 
 .step_distance_phone {
@@ -597,9 +596,7 @@
   font-weight: 600;
 }
 
-/* Adjustments for existing .btn_details style for better separation */
 .btn_details {
-  /* Existing styles here */
   display: flex;
   align-items: center;
   gap: 5px;
@@ -613,24 +610,20 @@
   font-weight: 500;
 }
 
-/* Ensure RefillRequestItem buttons are aligned */
 .request_actions {
   display: flex;
   justify-content: space-between;
-  gap: 10px; /* Added gap for better spacing */
+  gap: 10px;
 }
-
-/* --- KYC Notice Card Styles --- */
 
 .kyc_notice_container {
   width: 100%;
   height: 100%;
-  /* margin: 40px auto; */
   padding: 30px;
   background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  border: 1px solid #ffcc80; /* Light orange border */
+  border: 1px solid #ffcc80;
   text-align: center;
 }
 
@@ -639,7 +632,7 @@
   flex-direction: column;
   align-items: center;
   margin-bottom: 15px;
-  color: #ff9800; /* Default pending color */
+  color: #ff9800;
 }
 
 .kyc_status_title {
@@ -675,7 +668,6 @@
   background-color: #e68900;
 }
 
-/* Add styling for the enhanced refill details display */
 .refill_details_grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));

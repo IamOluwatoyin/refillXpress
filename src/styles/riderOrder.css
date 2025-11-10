@@ -1,7 +1,3 @@
-/* ========================================= */
-/* --- 1. GENERAL PAGE & LAYOUT STYLES --- */
-/* ========================================= */
-
 .rider_order_page {
   padding: 20px;
   width: 100%;
@@ -53,12 +49,10 @@
 
 .active_order_tab {
   color: #333;
-  background-color: white; /* White background for the active tab */
+  background-color: white;
   font-weight: 600;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
 }
-
-/* --- Section Headers & Info --- */
 
 .request_info_section {
   margin-bottom: 15px;
@@ -84,8 +78,8 @@
 }
 
 .blue_bg {
-  background-color: #e3f2fd; /* Light Blue */
-  color: #0d47a1; /* Dark Blue Text */
+  background-color: #e3f2fd;
+  color: #0d47a1;
 }
 
 .service_details {
@@ -104,8 +98,6 @@
   font-weight: 600;
 }
 
-/* --- Base Card Styles (Shared by all items) --- */
-
 .request_item,
 .active_order_card,
 .completed_delivery_item {
@@ -117,11 +109,6 @@
   border: 1px solid #eee;
 }
 
-/* ============================================ */
-/* --- 2. NEW REFILL REQUEST CARD STYLES (MATCHING IMAGE) --- */
-/* ============================================ */
-
-/* Header & Fee Group */
 .request_header_image_style {
   display: flex;
   justify-content: space-between;
@@ -149,7 +136,7 @@
 .delivery_fee_image_style {
   font-size: 1.2rem;
   font-weight: 700;
-  color: #4caf50; /* Green color for fee */
+  color: #4caf50;
 }
 
 .delivery_fee_label {
@@ -158,23 +145,20 @@
   margin-top: -3px;
 }
 
-/* Steps Container */
 .request_steps_image_style {
   display: flex;
   flex-direction: column;
   margin-top: 10px;
 }
 
-/* Individual Step Item */
 .step_item_image_style {
   display: flex;
   align-items: flex-start;
   padding: 10px 0;
   position: relative;
-  z-index: 1; /* Ensure content is above background */
+  z-index: 1;
 }
 
-/* Colored Backgrounds */
 .step_background {
   position: absolute;
   top: 0;
@@ -183,22 +167,21 @@
   bottom: 0;
   border-radius: 8px;
   opacity: 0.3;
-  z-index: 0; /* Behind content */
+  z-index: 0;
 }
 
 .step_background.pickup {
-  background-color: #e8f5e9; /* Light Green for Pickup/Return */
+  background-color: #e8f5e9;
 }
 
 .step_background.refill {
-  background-color: #f3e5f5; /* Light Purple/Lavender for Refill */
+  background-color: #f3e5f5;
 }
 
 .step_background.return {
-  background-color: #e8f5e9; /* Light Green for Pickup/Return */
+  background-color: #e8f5e9;
 }
 
-/* Dots and Lines */
 .step_dot_line_image_style {
   display: flex;
   flex-direction: column;
@@ -212,7 +195,7 @@
 .step_dot_filled {
   width: 10px;
   height: 10px;
-  background-color: #4caf50; /* Green */
+  background-color: #4caf50;
   border-radius: 50%;
   margin-top: 5px;
 }
@@ -220,7 +203,7 @@
 .step_dot_hollow {
   width: 10px;
   height: 10px;
-  border: 2px solid #9c27b0; /* Purple/Vendor color */
+  border: 2px solid #9c27b0;
   background-color: white;
   border-radius: 50%;
   margin-top: 5px;
@@ -233,7 +216,6 @@
   margin: 5px 0;
 }
 
-/* Text Info */
 .step_info_image_style {
   display: flex;
   flex-direction: column;
@@ -254,7 +236,6 @@
   margin-top: 2px;
 }
 
-/* Actions */
 .request_actions_image_style {
   display: flex;
   justify-content: space-between;
@@ -287,7 +268,7 @@
 }
 
 .btn_accept_image_style {
-  background-color: #ff9800; /* Orange */
+  background-color: #ff9800;
   color: white;
 }
 
@@ -298,10 +279,6 @@
 .btn_details_image_style:hover {
   background-color: #f5f5f5;
 }
-
-/* ========================================= */
-/* --- 3. ACTIVE ORDER ITEM STYLES --- */
-/* ========================================= */
 
 .active_order_header {
   display: flex;
@@ -326,8 +303,8 @@
 }
 
 .status_badge.in_progress {
-  background-color: #fff3e0; /* Light Orange */
-  color: #e65100; /* Dark Orange */
+  background-color: #fff3e0;
+  color: #e65100;
 }
 
 .active_order_fee {
@@ -412,10 +389,6 @@
   color: white;
 }
 
-/* =========================================== */
-/* --- 4. COMPLETED DELIVERY ITEM STYLES --- */
-/* =========================================== */
-
 .completed_delivery_item {
   border-left: 5px solid #4caf50;
 }
@@ -433,8 +406,8 @@
 }
 
 .status_badge.completed {
-  background-color: #e8f5e9; /* Light Green */
-  color: #388e3c; /* Darker Green */
+  background-color: #e8f5e9;
+  color: #388e3c;
 }
 
 .completed_fee {
@@ -485,12 +458,8 @@
 
 .bonus_tip {
   font-weight: 600;
-  color: #ff9800; /* Orange for Tip */
+  color: #ff9800;
 }
-
-/* ========================================= */
-/* --- 5. MODAL STYLES (Details View) --- */
-/* ========================================= */
 
 .modal_overlay {
   position: fixed;
@@ -569,7 +538,7 @@
 .modal_earnings {
   font-size: 1.4rem;
   font-weight: 700;
-  color: #4caf50; /* Earnings Green */
+  color: #4caf50;
   grid-column: 1 / 2;
   margin-bottom: 10px;
 }
@@ -577,7 +546,7 @@
 .modal_total_distance {
   font-size: 1.4rem;
   font-weight: 700;
-  color: #007bff; /* Distance Blue */
+  color: #007bff;
   grid-column: 2 / 3;
   margin-bottom: 10px;
 }
@@ -601,7 +570,7 @@
   display: flex;
   align-items: flex-start;
   padding: 10px 0;
-  border-left: 2px solid #eee; /* Visual separator for journey */
+  border-left: 2px solid #eee;
   margin-left: 10px;
 }
 
@@ -610,7 +579,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-left: -11px; /* Overlap the border-left line */
+  margin-left: -11px;
   margin-right: 15px;
   padding-top: 2px;
 }
@@ -675,7 +644,7 @@
 }
 
 .step_location_modal {
-  white-space: pre-wrap; /* Allows \n to break lines */
+  white-space: pre-wrap;
   font-size: 0.9rem;
   color: #555;
   margin-bottom: 5px;
@@ -716,7 +685,7 @@
 }
 
 .btn_accept_modal {
-  background-color: #ff9800; /* Orange */
+  background-color: #ff9800;
   color: white;
 }
 
