@@ -54,27 +54,35 @@ const RiderLogin = () => {
         formData
       );
 
+      // ✅ Correct destructuring
       const token = response.data.token;
-      const riderId = response.data.data.id;
+      const riderData = response.data.data; // contains id, kycStatus, etc.
 
+      const riderId = riderData.id;
+      const kycStatus = riderData.kycStatus?.toLowerCase() || "pending";
+
+      // ✅ Save auth token & riderId
       localStorage.setItem("authToken", token);
-      if (riderId) {
-        localStorage.setItem("riderId", riderId);
-        toast.success("Login successful! Welcome back.");
-      } else {
-        console.warn("Rider ID was missing in the login response data.");
-      }
+      localStorage.setItem("riderId", riderId);
 
-      setTimeout(() => {
-        navigate("/rider-kyc");
-      }, 1000);
       toast.success("Login successful! Welcome back.");
+
+      // ✅ Redirect based on KYC status
+      setTimeout(() => {
+        if (kycStatus === "approved" || kycStatus === "pending") {
+          navigate("/rider-dashboard");
+        } else if (kycStatus === "rejected" || kycStatus === "not completed") {
+          navigate("/rider-kyc");
+        } else {
+          // fallback
+          navigate("/rider-kyc");
+        }
+      }, 1000);
     } catch (error) {
       const message =
         error.response?.data?.message ||
         error.message ||
         "Login failed. Check your credentials.";
-
       toast.error(message);
     } finally {
       setShowModal(false);
