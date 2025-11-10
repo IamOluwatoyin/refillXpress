@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./SettingsManagement.css";
 import { GoPackage, GoDotFill } from "react-icons/go";
 import { vendorSettings } from "../../../../api/mutation";
 import { toast } from "react-toastify";
+import { getVendorId } from "../../../../api/query";
 
 const SettingsManagement = () => {
   const vendorId = localStorage.getItem("vendorId");
@@ -13,8 +14,12 @@ const SettingsManagement = () => {
   const [businessAvailability, setBusinessAvailability] = useState(true);
   const [inStock, setInStock] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [vendorOperationgHour, setVendorOperatingHour] = useState()
 
   const handleSettings = async () => {
+
+    
+
     if (!vendorId) {
       toast.error("Vendor ID missing");
       return;
@@ -34,7 +39,7 @@ const SettingsManagement = () => {
       const res = await vendorSettings(vendorId, payload);
       const updatedData = res?.data?.data;
 
-      // Update local state with returned data so form reflects saved values
+      
       if (updatedData) {
         setPricePerKg(updatedData.pricePerKg || "");
         setMinimumOrder(updatedData.minimumOrder || "");
@@ -52,6 +57,39 @@ const SettingsManagement = () => {
       setIsUpdating(false);
     }
   };
+
+  useEffect(() => {
+  const getVendord = async () => {
+    const id = localStorage.getItem(import.meta.env.VITE_VENDOR_ID);
+    if (!id) {
+      console.error("Vendor ID not found in localStorage");
+      return;
+    }
+
+    try {
+      const res = await getVendorId(id);
+      const data = res?.data?.data;
+      setVendorOperatingHour(data);
+
+     
+      setPricePerKg(data?.pricePerKg || "");
+      setMinimumOrder(data?.minimumOrder || "");
+      setOpeningTime(data?.openingTime || "");
+      setClosingTime(data?.closingTime || "");
+
+      
+      setBusinessAvailability(
+        data?.businessAvailability === "open" ? true : false
+      );
+
+      setInStock(Boolean(data?.inStock));
+    } catch (error) {
+      console.log("No data", error);
+    }
+  };
+
+  getVendord();
+}, []);
 
   return (
     <div className="settingsWrapper">

@@ -44,20 +44,25 @@ export const verifyUser = (data) => api.post("/user/verify", data);
 
 export const resendOtp = (data) => api.post("/user/resend-otp", data);
 
-export const userCanceledOrder = (orderId, data) =>
-  api.patch(`/orders/${orderId}/cancel`, data, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
+export const userCanceledOrder = (orderId) =>
+  api.patch(
+    `/orders/${orderId}/cancel`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }
+  );
 
 
-export const handlePayment = (orderId, data = {}) => {
+
+export const handlePayment = (orderId) => {
   const token = getToken();
   if (!token) throw new Error("User token not found");
   return axios.post(
     `${BASEURL}/user/initializePayment/${orderId}`,
-    data,
+    {},
     {
       headers: { Authorization: `Bearer ${token}` } 
     }
@@ -72,4 +77,6 @@ export const userProfileUpdate = async (data) => {
     },
   });
 };
+
+export const vendorUploadPic = async (data) => api.put('/vendor/account/update',data)
 

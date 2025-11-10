@@ -232,7 +232,7 @@ input:focus {
     width: 100% !important;
   }
 
-  /* Checkbox container adjustments */
+  
   .formStyle > div > input[type="checkbox"] {
     width: 16px;
     height: 16px;
