@@ -80,7 +80,8 @@ const [deliveryCode, setDeliveryCode] = useState("");
      setProcessingOrderId(order.id);
     setProcessingOrders((prev) => [...prev, order.id]);
     try {
-      await userCanceledOrder(order.id);
+      console.log(token, order.id);
+      await userCanceledOrder(order.id, token);
       toast.success(`Order ${order.orderNumber} cancelled successfully`);
 
       setOrders((prev) =>
@@ -334,10 +335,10 @@ const [deliveryCode, setDeliveryCode] = useState("");
 
               {activeTab === "Completed" && (
                 <>
-                  <button className="order-btn completed-btn" disabled>
+                  <button className="order-btn completed-btn"style={{background:"#80a171ff", color:"#236b09ff"}} disabled>
                     Completed
                   </button>
-                  <button className="order-btn track-btn">Delivered</button>
+                  {/* <button className="order-btn track-btn">Delivered</button> */}
                 </>
               )}
 
