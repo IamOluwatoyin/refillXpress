@@ -17,7 +17,9 @@ import ViewOrderModal from "../vendor-order-modals/view-order-modal";
 import { vendorAcceptRejectOrder } from "../../../../api/mutation";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useLoading } from "../../../../context/LoadingContext"; // ✅ import global loading
+import { useLoading } from "../../../../context/LoadingContext"; 
+import { useOrders } from "../../../../context/PendingOrderContext";
+import { useRefetch } from "../../../../api/refetch";
 
 const VendorDashboard = () => {
   const nav = useNavigate();
@@ -32,21 +34,19 @@ const VendorDashboard = () => {
   const [allReviews, setAllReviews] = useState(null);
 
   const { loading, setLoading } = useLoading() 
-
+   const {orders, refetchOrders} = useOrders()
+   const {refetch} = useRefetch(getSummary)
   useEffect(() => {
     const fetchVendorSummary = async () => {
-      setLoading(true); // ✅ show loading overlay
+      setLoading(true); 
       try {
         const id = localStorage.getItem(import.meta.env.VITE_VENDOR_ID);
         const vendorResponse = await getVendorId(id);
         setVendorInfo(vendorResponse.data.data);
 
         const response = await getSummary();
-        setVendorSummary(response.data.data);
-
-        const pendingRes = await getVendorPendingOrders();
-        setVendorPendingOrders(pendingRes.data?.data || []);
-
+        setVendorSummary(response.data.data)
+      
         const reviewsRes = await getAllReviews();
         setAllReviews(reviewsRes?.data?.data);
       } catch (error) {
@@ -59,7 +59,7 @@ const VendorDashboard = () => {
           nav("/vendor-login");
         }
       } finally {
-        setLoading(false); // ✅ hide loading overlay
+        setLoading(false); 
       }
     };
     fetchVendorSummary();
@@ -70,7 +70,8 @@ const VendorDashboard = () => {
       setIsProcessing(true);
       await vendorAcceptRejectOrder({ orderId: order.id, action, message: reason });
       setVendorPendingOrders((prev) => prev.filter((o) => o.id !== order.id));
-
+        refetchOrders()
+        refetch()
       if (action === "accept") {
         toast.success(`Order ${order.orderNumber} accepted successfully!`);
       } else if (action === "reject") {
@@ -154,8 +155,8 @@ const VendorDashboard = () => {
         </div>
         <p className="subtext">Requires immediate attention</p>
 
-        {vendorPendingOrders.length > 0 ? (
-          vendorPendingOrders
+        {orders.length > 0 ? (
+          orders
             .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
             .slice(0, 1)
             .map((order, index) => (

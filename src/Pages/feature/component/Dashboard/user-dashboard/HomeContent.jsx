@@ -15,7 +15,7 @@ import { useLoading } from "../../../../../context/LoadingContext";
 import SpinnerModal from "../../../../../Auth/vendor-auth/spinner-modal"; 
 const HomeContent = () => {
   const nav = useNavigate();
-  const { loading, setLoading } = useLoading(); // global loading context
+  const { loading, setLoading } = useLoading(); 
   const [info, setInfo] = useState(null);
   const [selectedVendor, setSelectedVendor] = useState(null);
   const [order, setOrder] = useState(false);

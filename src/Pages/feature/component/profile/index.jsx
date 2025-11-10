@@ -17,21 +17,20 @@ const ProfileManagement = () => {
  const id = localStorage.getItem(import.meta.env.VITE_VENDOR_ID);
   
 
- useEffect(() => {
-    const fetchVendorKycData = async() => {
-      try{
-          const response = await getVendorKyc(id)
-          setKycData(response?.data)
-          console.log("kycsingle",response.data)
-      }catch(error){
-         console.log("no kyc",error)
-         toast.error(error?.response?.data?.message || "Something went wrong!")
-      }
+ useEffect(() => { 
+  const fetchVendorKycData = async() => {
+    try {
+      const response = await getVendorKyc(id);
+      setKycData(response?.data);
+      console.log("kycsingle", response.data);
+    } catch (error) {
+      console.log("no kyc", error);
+      toast.error(error?.response?.data?.message || "Something went wrong!");
+    }
+  }; 
+  fetchVendorKycData();
+}, []);
 
-    } 
-    fetchVendorKycData()
-      
-  },[])
 
   return (
     <div className="profileWrapper">

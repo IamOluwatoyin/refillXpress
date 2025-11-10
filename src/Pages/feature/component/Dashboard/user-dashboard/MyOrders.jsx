@@ -73,12 +73,14 @@ const [deliveryCode, setDeliveryCode] = useState("");
   const [processingOrders, setProcessingOrders] = useState([]);
 
   const handleCancelOrder = async (order) => {
+    const token = localStorage.getItem("token");
+  console.log("Token before cancel request:", token);
 
     if (processingOrders.includes(order.id)) return;
      setProcessingOrderId(order.id);
     setProcessingOrders((prev) => [...prev, order.id]);
     try {
-      await userCanceledOrder(order.id, { reason: "User cancelled" });
+      await userCanceledOrder(order.id);
       toast.success(`Order ${order.orderNumber} cancelled successfully`);
 
       setOrders((prev) =>
@@ -96,8 +98,8 @@ const [deliveryCode, setDeliveryCode] = useState("");
     setProcessingOrderId(order.id); 
     setPayLoading(true);
     try {
-      const returnUrl = `${window.location.origin}/userdashboard/userPayment?orderId=${order.id}`;
-      const res = await handlePayment(order.id, { returnUrl });
+      
+      const res = await handlePayment(order.id );
       const link = res?.data?.data?.checkoutUrl;
 
       if (!link) throw new Error("Payment link missing");
@@ -166,7 +168,7 @@ const [deliveryCode, setDeliveryCode] = useState("");
 
   return (
     <main className="myorders" style={{ position: "relative" }}>
-      {/* Global page loading overlay */}
+      
       {loading && <div className="global-loading">Loading...</div>}
 
       {payLoading && <SpinnerModal message="Initializing payment..." />}

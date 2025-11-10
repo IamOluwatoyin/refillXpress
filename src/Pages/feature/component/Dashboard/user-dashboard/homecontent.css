@@ -127,8 +127,8 @@
     border-radius: 0.4rem;  
     background-color: none;
     text-transform: capitalize;
-    color: #fff;
-    background-color: hsl(144, 100%, 40%);
+    color: #00C950;
+    background-color: hsl(142, 66%, 77%);
     border-style: none;
     font-size: 1rem;
 }
@@ -166,7 +166,7 @@
     text-transform: capitalize;
     color: #fff;
     font-size: 0.8rem;
-    background: #00cc52;
+    background: #00C950;
     border-style: none;
 }
 .info {
@@ -203,8 +203,12 @@
     text-transform: capitalize;
     color: #fff;
     font-size: 0.8rem;
-    background: #ffae00;
+    background: #FF7F11;
     border-style: none;
+}
+
+.order-now:hover{
+    background-color: #b6b6b6;
 }
 .to-view {
     width: 5rem;
@@ -268,9 +272,87 @@
       }
       .right {
         width: max-content;
-        /* transform: translate(-3rem, 2rem); */
+       
         position: absolute;
         top: 70%;
         right: 0;
       }
+}
+
+/* Global adjustments for responsiveness */
+@media screen and (max-width: 1024px) {
+  .homecontent {
+    width: 95%;
+  }
+
+  .actions {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .action {
+    width: 45%;
+    margin-bottom: 1rem;
+  }
+
+  .views {
+    width: 95%;
+  }
+
+  .order-holder {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.5rem;
+  }
+
+  .my-order {
+    width: 100%;
+  }
+
+  .right {
+    width: 100%;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .action {
+    width: 100%;
+  }
+
+  .order-holder {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .right {
+    justify-content: flex-start;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  .action-type {
+    font-size: 0.9rem;
+  }
+
+  .isDelivered, .available, .verified, .order-now {
+    font-size: 0.7rem;
+    padding: 0.3rem;
+  }
+
+  .info small {
+    font-size: 0.7rem;
+  }
+
+  .views .top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
 }

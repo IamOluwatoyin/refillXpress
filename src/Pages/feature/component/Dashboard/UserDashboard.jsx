@@ -9,11 +9,13 @@ import { GrLocation } from "react-icons/gr";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { CgClose } from 'react-icons/cg';
 import "./UserDashboard.css";
+import { IoIosLogOut } from "react-icons/io";
 
 const UserDashboard = () => {
   const [sidebar, setSidebar] = useState(false);
-  const [info, setInfo] = useState(null);  info
+  const [info, setInfo] = useState(null);  
   const currentRoute = useLocation();
+  const [active, setActive] = useState("")
   const nav = useNavigate();
 
   
@@ -49,8 +51,9 @@ const UserDashboard = () => {
   };
 }, []);
 
-
+ 
   const switchTab = (curr, route) => {
+    setActive(curr)
     nav(route);
   };
 
@@ -87,9 +90,8 @@ const UserDashboard = () => {
        
         <div className="sidebar">
           <div className="navigation">
-            <NavLink className={({isActive}) => isActive ? "nav active" : "nav"} to="/userdashboard">
-              <BiHome className='nav-link'/><span>home</span>
-            </NavLink>
+            <nav onClick={()=>switchTab("home", "/userdashboard")} className={currentRoute.pathname === "/userdashboard" ?  "nav active" : "nav"} >
+              <BiHome className='nav-link'/><span>home</span></nav>
             <NavLink className={({isActive}) => isActive ? "nav active" : "nav"} to="browsevendors">
               <GrLocation className='nav-link'/><span>browse vendors</span>
             </NavLink>
@@ -102,9 +104,21 @@ const UserDashboard = () => {
             <NavLink className={({isActive}) => isActive ? "nav active" : "nav"} to="customer-account">
               <FiUser className='nav-link'/><span>account</span>
             </NavLink>
+               <span className='userDashboard-logout'>
+                 <IoIosLogOut
+                  style={{ fontSize: "28px", cursor:"pointer" }}
+                  onClick={() => {
+                   localStorage.removeItem("token");
+                   localStorage.removeItem("user");
+                    nav("/");
+                  }}
+                />
+                <p>Logout</p>
+                 </span>
           </div>
+       
         </div>
-
+  
       
         <div className="main">
           <Outlet />

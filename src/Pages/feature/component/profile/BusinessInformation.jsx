@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
  import { MdOutlineFileUpload,MdModeEdit } from "react-icons/md";
+import { vendorUploadPic } from '../../../../api/mutation';
 const BusinessInformation = ({vendor}) => {
   const [profileImage, setProfileImage] = useState(null);
 
@@ -7,8 +8,20 @@ const BusinessInformation = ({vendor}) => {
     const file = e.target.files[0];
     if (!file) return;
     const preview = URL.createObjectURL(file);
+  
     setProfileImage(preview);
+    const handlePicture = async () => {
+      try {
+        const res = await vendorUploadPic()
+
+      } catch (error) {
+        console.log("not working", error)
+      }
+    }
+    
   };
+
+  
   return (
      <div className="profileCard">
           <div className="profileHeader">

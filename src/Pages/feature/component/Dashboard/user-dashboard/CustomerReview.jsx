@@ -90,7 +90,7 @@ const CustomerReview = () => {
             </div>
             <div className='rate-section'>
                 <div className="the-rating">
-                <h1>4.4</h1><small>/5</small>
+                <h1>0</h1><small>/5</small>
             </div>
             <p><GoStar /> 264 reviews</p>
             </div>
