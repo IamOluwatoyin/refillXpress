@@ -214,7 +214,7 @@ export const router = createBrowserRouter([
         element: <RiderAccount />,
       },
       {
-        path: "order-tracker",
+        path: "order-tracker/:orderId",
         element: <OrderTracker />,
       },
     ],
