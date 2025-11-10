@@ -87,7 +87,7 @@ const UserDashboard = () => {
        
         <div className="sidebar">
           <div className="navigation">
-            <NavLink className={({isActive}) => isActive ? "nav active" : "nav"} to="/userdashboard">
+            <NavLink className={({isActive}) => isActive ? "nav active" : ""} to="/userdashboard">
               <BiHome className='nav-link'/><span>home</span>
             </NavLink>
             <NavLink className={({isActive}) => isActive ? "nav active" : "nav"} to="browsevendors">

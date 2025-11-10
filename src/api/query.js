@@ -70,4 +70,13 @@ export const getAllOrders = async () => {
   });
 };
 
+export const AcceptOrderbyRider = async()=>{
+  const token = localStorage.getItem("token")
+  return await axios.get(`${BASEURL}/orders/confirmOrder/{orderId}/{userId}`,{
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+  })
+}
+
 

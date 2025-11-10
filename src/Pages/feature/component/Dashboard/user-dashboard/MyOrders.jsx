@@ -78,7 +78,7 @@ const [deliveryCode, setDeliveryCode] = useState("");
      setProcessingOrderId(order.id);
     setProcessingOrders((prev) => [...prev, order.id]);
     try {
-      await userCanceledOrder(order.id, { reason: "User cancelled" });
+      await userCanceledOrder(order.id);
       toast.success(`Order ${order.orderNumber} cancelled successfully`);
 
       setOrders((prev) =>
@@ -96,8 +96,8 @@ const [deliveryCode, setDeliveryCode] = useState("");
     setProcessingOrderId(order.id); 
     setPayLoading(true);
     try {
-      const returnUrl = `${window.location.origin}/userdashboard/userPayment?orderId=${order.id}`;
-      const res = await handlePayment(order.id, { returnUrl });
+      // const returnUrl = `${window.location.origin}/userdashboard/userPayment?orderId=${order.id}`;
+      const res = await handlePayment(order.id );
       const link = res?.data?.data?.checkoutUrl;
 
       if (!link) throw new Error("Payment link missing");
