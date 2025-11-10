@@ -32,7 +32,7 @@ const signup = async (data) => {
     return true;
   } catch (err) {
     console.log("error", err);
-    toast.error(err.res?.data?.message || "Something went wrong");
+    toast.error(err.response?.data?.message || "Something went wrong");
     return false;
   } finally {
     setLoading(false);
@@ -60,7 +60,7 @@ const signup = async (data) => {
      
     } catch (err) {
         console.log("error", err);
-      toast.error(err?.res?.data?.message || "Something went wrong!");
+      toast.error(err?.response?.data?.message || "Something went wrong!");
         return false;
     } finally {
       setLoading(false);

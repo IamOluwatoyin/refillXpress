@@ -19,7 +19,14 @@ export const getAllReviews = () => api.get("/reviews");
 
 export const getSummaryReviews = () => api.get("/reviews/summary");
 
-export const getVendorKyc = (id) => api.get(`/vendorKyc/getOneVendorKyc/${id}`);
+export const getVendorKyc = (id) => {
+  const token = localStorage.getItem(import.meta.env.VITE_VENDOR_TOKEN);
+  return api.get(`/vendorKyc/getOneVendorKyc/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
 
 export const getAnalytics = (id) => api.get(`/vendor/${id}/analytics`);
 

@@ -11,17 +11,17 @@ const BankDetails = ({ vendor }) => {
     accountNumber: "",
   });
   console.log("info",bankInfo)
-  useEffect(() => {
-    if (vendor?.bankDetails) {
-      setBankInfo({
-        accountName: vendor?.bankAccountName || "",
-        bankName: vendor.bankDetails.bankName || "",
-        accountNumber: vendor.bankDetails.accountNumber
-          ? `******${vendor.bankDetails.accountNumber.slice(-4)}`
-          : "",
-      });
-    }
-  }, [vendor]);
+ useEffect(() => {
+  if (vendor) {
+    setBankInfo({
+      accountName: vendor.bankAccountName || "N/A",
+      bankName: vendor.bankName || "N/A",
+      accountNumber: vendor.accountNumber
+        ? `******${vendor.accountNumber.slice(-4)}`
+        : "N/A",
+    });
+  }
+}, [vendor]);
 
   const handleToggle = () => {
     const newValue = !isAutoPayout;
@@ -83,27 +83,43 @@ const BankDetails = ({ vendor }) => {
       </div>
 
       <div className="payout-section">
-        <h2 className="section-title">
-          <FaNairaSign className="icon" /> Recent Payouts
-        </h2>
+  <h2 className="section-title">
+    <FaNairaSign className="icon" /> Recent Payouts
+  </h2>
 
-        <div className="payout-list">
-          {payouts.map((p, index) => (
-            <div key={index} className="payout-item">
-              <div className="payout-info">
-                <div className="icon-circle">
-                  <FaNairaSign />
-                </div>
-                <div>
-                  <p className="payout-date">{p.date}</p>
-                  <span className="status">Completed</span>
-                </div>
-              </div>
-              <p className="payout-amount">{p.amount}</p>
-            </div>
-          ))}
+  <div className="payout-list">
+    {payouts.length === 0 ? (
+      <div className="payout-item">
+        <div className="payout-info">
+          <div className="icon-circle">
+            <FaNairaSign />
+          </div>
+          <div>
+            <p className="payout-date">No recent payouts</p>
+            <span className="status">Pending</span>
+          </div>
         </div>
+        <p className="payout-amount">₦0.00</p>
       </div>
+    ) : (
+      payouts.map((p, index) => (
+        <div key={index} className="payout-item">
+          <div className="payout-info">
+            <div className="icon-circle">
+              <FaNairaSign />
+            </div>
+            <div>
+              <p className="payout-date">{p.date}</p>
+              <span className="status">Completed</span>
+            </div>
+          </div>
+          <p className="payout-amount">{p.amount}</p>
+        </div>
+      ))
+    )}
+  </div>
+</div>
+
     </div>
   );
 };

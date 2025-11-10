@@ -94,7 +94,7 @@ const Sidebar = () => {
 
         <span
           onClick={() => navigate("/vendor-dashboard")}
-          className={`dashboards ${isDashboardActive ? "active" : ""}`}
+          className={`dashboards ${isDashboardActive ? "activated" : ""}`}
         >
           <MdDashboard style={{ fontSize: "25px" }} />
           <p>Dashboard</p>
@@ -102,7 +102,7 @@ const Sidebar = () => {
 
         <span
           onClick={() => navigate("/vendor-dashboard/vendor-order")}
-          className={`dashboard-order ${isOrderActive ? "active" : ""}`}
+          className={`dashboard-order ${isOrderActive ? "activated" : ""}`}
         >
           <GoPackage style={{ fontSize: "25px" }} />
           <sub>
@@ -113,7 +113,7 @@ const Sidebar = () => {
         <span
           onClick={() => navigate("/vendor-dashboard/vendor-analytics")}
           className={`analytics ${
-            currentPath === "/vendor-dashboard/vendor-analytics" ? "active" : ""
+            currentPath === "/vendor-dashboard/vendor-analytics" ? "activated" : ""
           }`}
         >
           <VscGraph style={{ fontSize: "25px" }} />
@@ -123,7 +123,7 @@ const Sidebar = () => {
         <span
           onClick={() => navigate("/vendor-dashboard/vendor-profile")}
           className={`profiles ${
-            currentPath === "/vendor-dashboard/vendor-profile" ? "active" : ""
+            currentPath === "/vendor-dashboard/vendor-profile" ? "activated": ""
           }`}
         >
           <FaRegUser style={{ fontSize: "25px" }} />
@@ -132,7 +132,7 @@ const Sidebar = () => {
         <span
           onClick={() => navigate("/vendor-dashboard/vendor-settings")}
           className={`settings ${
-            currentPath === "/vendor-dashboard/vendor-settings" ? "active" : ""
+            currentPath === "/vendor-dashboard/vendor-settings" ? "activated": ""
           }`}
         >
           <CiSettings style={{ fontSize: "28px" }} />

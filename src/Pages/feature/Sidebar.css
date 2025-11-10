@@ -170,7 +170,7 @@
   cursor: pointer;
 }
 
- .active {
+ .activated {
   background-color: #f0dccc !important;
   color: #ff7f11 !important;
 } 

@@ -45,11 +45,16 @@ export const verifyUser = (data) => api.post("/user/verify", data);
 export const resendOtp = (data) => api.post("/user/resend-otp", data);
 
 export const userCanceledOrder = (orderId) =>
-  api.patch(`/orders/${orderId}/cancel`,{
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
+  api.patch(
+    `/orders/${orderId}/cancel`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }
+  );
+
 
 
 export const handlePayment = (orderId) => {
@@ -72,4 +77,6 @@ export const userProfileUpdate = async (data) => {
     },
   });
 };
+
+export const vendorUploadPic = async (data) => api.put('/vendor/account/update',data)
 
