@@ -1,12 +1,10 @@
-import React from "react";
-import { useState } from "react";
+"use client";
+import { useState, useEffect, useCallback } from "react";
+import axios from "axios";
 import {
   MdOutlineCheckCircle,
   MdOutlineRemoveCircle,
-  MdOutlineTimer,
-  MdAutorenew,
   MdOutlineLocationOn,
-  MdOutlineStar,
   MdClose,
 } from "react-icons/md";
 import {
@@ -15,11 +13,21 @@ import {
   FaLocationArrow,
   FaExchangeAlt,
 } from "react-icons/fa";
-
 import "../../styles/riderOrder.css";
 
+const formatNaira = (amount) => {
+  if (amount == null) return "₦0";
+  return Number(amount)
+    .toLocaleString("en-NG", {
+      style: "currency",
+      currency: "NGN",
+      minimumFractionDigits: 0,
+    })
+    .replace("NGN", "₦");
+};
+
 const RefillOrderDetailsModal = ({ order, isOpen, onClose, onAccept }) => {
-  if (!isOpen || !order) return null;
+  if (!isOpen || !order || !order.steps) return null;
 
   const totalDistance = order.steps
     .reduce((sum, step) => {
@@ -31,24 +39,6 @@ const RefillOrderDetailsModal = ({ order, isOpen, onClose, onAccept }) => {
   const pickupStep = order.steps.find((step) => step.title.includes("Pickup"));
   const vendorStep = order.steps.find((step) => step.title.includes("Refill"));
   const returnStep = order.steps.find((step) => step.title.includes("Return"));
-
-  const extractLocationDetails = (location) => {
-    const parts = location.split(" • ");
-    const name = parts[0];
-    return {
-      name: name,
-      address: name.includes("Linda")
-        ? "Glory otene\nno 2 sinzu street magodo"
-        : "Sarah Johnson\nno 43 igando rd",
-    };
-  };
-
-  const extractVendorDetails = (location) => {
-    return {
-      name: location.split(" • ")[0],
-      address: "MaxGas Supply\nno 2 salsu street mago",
-    };
-  };
 
   const RefillStep = ({
     icon: Icon,
@@ -65,13 +55,11 @@ const RefillOrderDetailsModal = ({ order, isOpen, onClose, onAccept }) => {
       </div>
       <div className="step_info_modal">
         <span className="step_title_modal">{title}</span>
-        {type && (
-          <span
-            className={`step_type_tag ${type.toLowerCase().replace(" ", "_")}`}
-          >
-            {type}
-          </span>
-        )}
+        <span
+          className={`step_type_tag ${type.toLowerCase().replace(" ", "_")}`}
+        >
+          {type}
+        </span>
         <span className="step_location_modal">{location}</span>
         <span className="step_distance_phone">
           {distance} • {phone}
@@ -93,38 +81,37 @@ const RefillOrderDetailsModal = ({ order, isOpen, onClose, onAccept }) => {
 
         <div className="modal_summary_box">
           <span className="you_ll_earn">You'll Earn</span>
-          <span className="modal_earnings">₦{order.deliveryFee},00</span>
+          <span className="modal_earnings">
+            {formatNaira(order.deliveryFee)}
+          </span>
           <span className="total_distance_label">Total Distance</span>
           <span className="modal_total_distance">{totalDistance} km</span>
         </div>
 
         <h3 className="modal_section_title">Refill Journey</h3>
-
         <div className="modal_refill_journey">
           <RefillStep
             icon={MdOutlineCheckCircle}
             title="1. Pickup Empty Cylinder"
-            location={extractLocationDetails(pickupStep.location).address}
+            location={order.pickupAddress}
             distance={`${pickupStep.location.split(" • ")[1]} from customer`}
             type="First Stop"
             phone="08160994840"
           />
           <div className="step_separator">→</div>
-
           <RefillStep
             icon={FaExchangeAlt}
             title="2. Refill at Vendor"
-            location={extractVendorDetails(vendorStep.location).address}
+            location="MaxGas Supply (Vendor Refill Location)"
             distance={`${vendorStep.location.split(" • ")[1]} from customer`}
             type="Refill"
             phone="08105885894"
           />
           <div className="step_separator">→</div>
-
           <RefillStep
             icon={MdOutlineCheckCircle}
             title="3. Return Refilled Cylinder"
-            location={extractLocationDetails(returnStep.location).address}
+            location={order.deliveryAddress}
             distance={`${returnStep.location.split(" • ")[1]} from vendor`}
             type="Final Stop"
             phone="08160994840"
@@ -145,31 +132,38 @@ const RefillOrderDetailsModal = ({ order, isOpen, onClose, onAccept }) => {
 };
 
 const CompletedDeliveryItem = ({ order }) => {
-  const stars = "★".repeat(order.rating) + "☆".repeat(5 - order.rating);
+  const rating = order.rating || 5;
+  const stars = "★".repeat(rating) + "☆".repeat(5 - rating);
+  const fee = order.deliveryFee || 0;
+  const tip = order.tip || 0;
 
   return (
     <div className="completed_delivery_item">
       <div className="completed_header">
-        <span className="completed_order_id">#{order.deliveryId}</span>
+        <span className="completed_order_id">#{order.orderNumber}</span>
         <span className="status_badge completed">Completed</span>
-        <span className="completed_fee">₦{order.fee}</span>
+        <span className="completed_fee">{formatNaira(fee)}</span>
       </div>
 
       <div className="completed_details">
         <div className="customer_time">
-          <span className="customer_name_comp">{order.customerName}</span>
-          <span className="delivery_time_comp">{order.time}</span>
+          <span className="customer_name_comp">
+            {order.customerName || "Customer"}
+          </span>
+          <span className="delivery_time_comp">
+            Delivered on {new Date(order.updatedAt).toLocaleDateString()}
+          </span>
         </div>
         <span className="gas_quantity">
-          {order.gasType} &times; {order.quantity}
+          {order.cylinderSize}kg × {order.quantity}
         </span>
       </div>
 
       <div className="completed_meta">
         <span className="distance_rating">
-          {order.distance} km <span className="completed_rating">{stars}</span>
+          2.5 km <span className="completed_rating">{stars}</span>
         </span>
-        <span className="bonus_tip">+₦{order.tip} Tip</span>
+        <span className="bonus_tip">+{formatNaira(tip)} Tip</span>
       </div>
     </div>
   );
@@ -178,15 +172,17 @@ const CompletedDeliveryItem = ({ order }) => {
 const ActiveOrderItem = ({ order }) => (
   <div className="active_order_card">
     <div className="active_order_header">
-      <span className="active_order_id">Delivery #{order.deliveryId}</span>
-      <span className="status_badge in_progress">In-Progress</span>
-      <span className="active_order_fee">₦{order.fee}</span>
+      <span className="active_order_id">Delivery #{order.orderNumber}</span>
+      <span className="status_badge in_progress">{order.status}</span>
+      <span className="active_order_fee">{formatNaira(order.deliveryFee)}</span>
     </div>
 
     <div className="active_order_details">
-      <span className="refill_type">{order.refillType}</span>
+      <span className="refill_type">
+        LPG {order.cylinderSize}kg × {order.quantity}
+      </span>
       <span className="customer_name_detail">
-        Customer: {order.customerName}
+        Customer: {order.customerName || "Unknown"}
       </span>
     </div>
 
@@ -228,40 +224,57 @@ const RefillRequestItem = ({
   orderData,
 }) => (
   <div className="request_item">
-    <div className="request_header">
-      <span className="order_id">{orderId}</span>
-      <span className="order_meta">
-        {time} | <strong className="delivery_fee">₦{deliveryFee}</strong>{" "}
-        delivery fee
-      </span>
+    <div className="request_header_image_style">
+      <div className="request_info_group">
+        <span className="order_id">{orderId}</span>
+        <span className="order_time_details">{time}</span>
+      </div>
+      <div className="request_fee_group">
+        <strong className="delivery_fee_image_style">
+          {formatNaira(deliveryFee)}
+        </strong>
+        <span className="delivery_fee_label">delivery fee</span>
+      </div>
     </div>
 
-    <div className="request_steps">
+    <div className="request_steps_image_style">
       {steps.map((step, index) => (
-        <div key={index} className="step_item">
-          <div className="step_dot_line">
-            <span
-              className={`step_number ${step.completed ? "completed" : ""}`}
-            >
-              {index + 1}
-            </span>
-            {index < steps.length - 1 && <span className="step_line"></span>}
+        <div key={index} className="step_item_image_style">
+          <div className="step_dot_line_image_style">
+            {index === 0 ? (
+              <span className="step_dot_filled"></span>
+            ) : (
+              <span className="step_dot_hollow"></span>
+            )}
+            {index < steps.length - 1 && (
+              <span className="step_line_vertical"></span>
+            )}
           </div>
-          <div className="step_info">
-            <span className="step_title">{step.title}</span>
-            <span className="step_location">
-              {step.icon && <step.icon size={12} />} {step.location}
+
+          <div className="step_info_image_style">
+            <span className="step_title_image_style">{step.title}</span>
+            <span className="step_location_image_style">
+              {index === 1 ? step.location.split(" • ")[0] : step.location}
             </span>
           </div>
+
+          <div
+            className={`step_background ${
+              index === 0 ? "pickup" : index === 1 ? "refill" : "return"
+            }`}
+          ></div>
         </div>
       ))}
     </div>
 
-    <div className="request_actions">
-      <button className="btn_details" onClick={() => onDetailsClick(orderData)}>
+    <div className="request_actions_image_style">
+      <button
+        className="btn_details_image_style"
+        onClick={() => onDetailsClick({ ...orderData, steps })}
+      >
         <MdOutlineRemoveCircle size={18} /> Details
       </button>
-      <button className="btn_accept">
+      <button className="btn_accept_image_style">
         <MdOutlineCheckCircle size={18} /> Accept
       </button>
     </div>
@@ -272,113 +285,152 @@ const RiderOrder = () => {
   const [activeTab, setActiveTab] = useState("available");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [allOrders, setAllOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [authToken, setAuthToken] = useState(null);
+
+  const RIDER_ID = "e86e6a8c-2f5e-4293-b3fa-6ea783ccd126";
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("authToken");
+      setAuthToken(token);
+    } else {
+      setLoading(false);
+    }
+  }, []);
+
+  const transformRefillData = (refill) => ({
+    ...refill,
+    riderId: refill.riderId || refill.RiderId || null,
+    orderId: refill.orderNumber,
+    orderNumber: refill.orderNumber,
+    customerName:
+      `${refill.user?.firstName || ""} ${refill.user?.lastName || ""}`.trim() ||
+      "Customer",
+    cylinderSize: refill.cylinderSize,
+    quantity: refill.quantity,
+    deliveryFee: refill.deliveryFee,
+    totalPrice: refill.totalPrice,
+    pickupAddress: refill.pickupAddress,
+    deliveryAddress: refill.deliveryAddress,
+    userId: refill.userId,
+    time: `${refill.cylinderSize}kg LPG Refill x${refill.quantity} • 35 min`,
+    steps: [
+      {
+        title: "1. Pickup Empty Cylinder",
+        location: `${refill.pickupAddress} • 1.2 km`,
+      },
+      { title: "2. Refill at Vendor", location: "MaxGas Supply • 0.8 km" },
+      {
+        title: "3. Return Filled Cylinder",
+        location: `${refill.deliveryAddress} • 1.2 km`,
+      },
+    ],
+  });
+
+  const fetchAllOrders = useCallback(async () => {
+    if (!authToken) {
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
+    setError(null);
+
+    try {
+      const axiosInstance = axios.create({
+        baseURL: "https://refillexpress.onrender.com/api/v1",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+
+      const availableResponse = await axiosInstance.get(
+        "/rider/get/available-refills"
+      );
+      const availableData = availableResponse.data.data || [];
+
+      const activeCompletedResponse = await axiosInstance.get(
+        "/rider/get/getActiveAndCompletedOrders"
+      );
+      const activeCompletedData = activeCompletedResponse.data.data || {};
+
+      const activeData = activeCompletedData.active || [];
+      const completedData = activeCompletedData.completed || [];
+
+      const combinedRawData = [
+        ...availableData,
+        ...activeData,
+        ...completedData,
+      ];
+      const transformedOrders = combinedRawData.map(transformRefillData);
+      setAllOrders(transformedOrders);
+    } catch (err) {
+      console.error("Error fetching refills:", err);
+      setError(err.message || "Failed to fetch orders");
+    } finally {
+      setLoading(false);
+    }
+  }, [authToken]);
+
+  useEffect(() => {
+    fetchAllOrders();
+  }, [fetchAllOrders]);
+
+  const availableOrders = allOrders.filter(
+    (order) => order.status === "pending" && !order.riderId
+  );
+  const activeOrders = allOrders.filter(
+    (order) => order.status === "active" && order.riderId === RIDER_ID
+  );
+  const completedOrders = allOrders.filter(
+    (order) => order.status === "completed" && order.riderId === RIDER_ID
+  );
 
   const handleDetailsClick = (orderData) => {
     setSelectedOrder(orderData);
     setIsModalOpen(true);
   };
-
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedOrder(null);
   };
+  const handleAcceptModal = async () => {
+    if (!selectedOrder || !authToken) return;
+    const orderIdToAccept = selectedOrder.id;
+    const customerUserId = selectedOrder.userId;
 
-  const handleAcceptModal = () => {
-    alert(`Order ${selectedOrder.orderId} accepted!`);
-    handleCloseModal();
+    if (!customerUserId) {
+      alert("Cannot accept order: Customer ID is missing.");
+      return;
+    }
+
+    try {
+      const axiosInstance = axios.create({
+        baseURL: "https://refillexpress.onrender.com/api/v1",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+
+      await axiosInstance.get(
+        `/orders/confirmOrder/${orderIdToAccept}/${customerUserId}`
+      );
+      handleCloseModal();
+      fetchAllOrders();
+    } catch (error) {
+      console.error("Failed to accept order:", error);
+      alert("Failed to accept order. Please check the console for details.");
+    }
   };
-
-  const order1 = {
-    orderId: "ORD-7542",
-    time: "12kg LPG Refill • 35 min",
-    deliveryFee: "1,500",
-    steps: [
-      {
-        title: "Pickup Empty",
-        location: "Linda Anuogo • 1.2 km",
-        icon: FaTruckLoading,
-        completed: false,
-      },
-      {
-        title: "Refill at Vendor",
-        location: "MaroGlas Supply • 0.8 km",
-        icon: null,
-        completed: false,
-      },
-      {
-        title: "Return Filled",
-        location: "Linda Anuogo • 1.2 km",
-        icon: FaTruckLoading,
-        completed: false,
-      },
-    ],
-  };
-
-  const order2 = {
-    orderId: "ORD-7543",
-    time: "14kg LPG Refill • 28 min",
-    deliveryFee: "1,500",
-    steps: [
-      {
-        title: "Pickup Empty",
-        location: "Sarah Johnson • 3.2 km",
-        icon: FaTruckLoading,
-        completed: false,
-      },
-      {
-        title: "Refill at Vendor",
-        location: "QuickGas Supply • 0.8 km",
-        icon: null,
-        completed: false,
-      },
-      {
-        title: "Return Filled",
-        location: "Sarah Johnson • 3.2 km",
-        icon: FaTruckLoading,
-        completed: false,
-      },
-    ],
-  };
-  const availableOrders = [order1, order2];
-
-  const activeOrder = {
-    deliveryId: "DEL-5024",
-    refillType: "LPG 12kg",
-    customerName: "Linda Anuogo",
-    fee: "1,500",
-    pickupAddress: "no 2 Salau street magodo",
-    deliveryAddress: "no 2 Salau street magodo",
-  };
-
-  const completedDeliveries = [
-    {
-      deliveryId: "DEL-5023",
-      customerName: "Michael Chen",
-      time: "Today, 2:20 PM",
-      distance: "2.1",
-      rating: 5,
-      gasType: "Oxygen",
-      quantity: 1,
-      fee: "1,500",
-      tip: "62",
-    },
-    {
-      deliveryId: "DEL-5022",
-      customerName: "Emma Davis",
-      time: "Today, 11:45 AM",
-      distance: "4.5",
-      rating: 4,
-      gasType: "CO2",
-      quantity: 1,
-      fee: "1,500",
-      tip: "50",
-    },
-  ];
 
   const tabs = [
-    { key: "available", name: "Available (2)" },
-    { key: "active", name: "Active (1)" },
-    { key: "completed", name: "Completed" },
+    { key: "available", name: `Available (${availableOrders.length})` },
+    { key: "active", name: `Active (${activeOrders.length})` },
+    { key: "completed", name: `Completed (${completedOrders.length})` },
   ];
 
   return (
@@ -400,7 +452,10 @@ const RiderOrder = () => {
         ))}
       </div>
 
-      {activeTab === "available" && (
+      {loading && <p className="loading_message">Loading deliveries...</p>}
+      {error && !loading && <p className="error_message">Error: {error}</p>}
+
+      {activeTab === "available" && !loading && (
         <>
           <div className="request_info_section">
             <h3 className="request_info_title">Available Refill Requests</h3>
@@ -412,40 +467,59 @@ const RiderOrder = () => {
           <div className="gas_cylinder_service_info blue_bg">
             Gas Cylinder Refill service:{" "}
             <span className="service_details">
-              Collect empty cylinders &rarr; Take to vendors for refilling
-              &rarr; Return filled cylinders to customers
+              Collect empty cylinders → Take to vendors for refilling → Return
+              filled cylinders to customers
             </span>
           </div>
 
           <div className="requests_list">
-            {availableOrders.map((order, index) => (
-              <RefillRequestItem
-                key={index}
-                {...order}
-                onDetailsClick={handleDetailsClick}
-              />
-            ))}
+            {availableOrders.length === 0 ? (
+              <p className="loading_message">
+                No available orders at this time.
+              </p>
+            ) : (
+              availableOrders.map((order, index) => (
+                <RefillRequestItem
+                  key={index}
+                  {...order}
+                  onDetailsClick={handleDetailsClick}
+                  orderData={order}
+                />
+              ))
+            )}
           </div>
         </>
       )}
 
-      {activeTab === "active" && (
+      {activeTab === "active" && !loading && (
         <div className="active_order_content">
-          <ActiveOrderItem order={activeOrder} />
+          {activeOrders.length === 0 ? (
+            <p className="loading_message">No active orders currently.</p>
+          ) : (
+            activeOrders.map((order, index) => (
+              <ActiveOrderItem key={index} order={order} />
+            ))
+          )}
         </div>
       )}
 
-      {activeTab === "completed" && (
+      {activeTab === "completed" && !loading && (
         <div className="completed_order_content">
           <div className="request_info_section">
             <h3 className="request_info_title">Completed Deliveries</h3>
-            <p className="request_info_subtitle">3 Today</p>
+            <p className="request_info_subtitle">
+              {completedOrders.length} Completed
+            </p>
           </div>
 
           <div className="completed_deliveries_list">
-            {completedDeliveries.map((order, index) => (
-              <CompletedDeliveryItem key={index} order={order} />
-            ))}
+            {completedOrders.length === 0 ? (
+              <p className="loading_message">No completed deliveries yet.</p>
+            ) : (
+              completedOrders.map((order, index) => (
+                <CompletedDeliveryItem key={index} order={order} />
+              ))
+            )}
           </div>
         </div>
       )}
