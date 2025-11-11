@@ -174,7 +174,8 @@ const OrderModal = ({ onClose, vendor }) => {
             <p>Delivery Fee</p>
             <p>
               <TbCurrencyNaira size={20} />
-              {vendor?.deliveryFee || 0}
+              {/* {vendor?.deliveryFee || 0} */}
+              2000
             </p>
           </div>
 
