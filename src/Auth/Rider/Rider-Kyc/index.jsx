@@ -204,7 +204,6 @@ const PersonalInfoForm = ({ initialData, onNext }) => {
 };
 
 const VehicleDetailsForm = ({ initialData, onNext, onBack }) => {
-  // ... (No changes required here, it collects vehicle data) ...
   const [data, setData] = useState({
     type: "",
     make: "",
@@ -224,7 +223,6 @@ const VehicleDetailsForm = ({ initialData, onNext, onBack }) => {
     const formData = new FormData(e.target);
     const entries = Object.fromEntries(formData.entries());
 
-    // Map form fields to API fields for clarity
     const mappedEntries = {
       vehicleType: entries.type,
       vehicleMake: entries.make,
@@ -582,7 +580,7 @@ const BankingInfoForm = ({ initialData, onNext, onBack }) => {
         <div className="form-group">
           <label htmlFor="accountNumber">Account Number *</label>
           <input
-            type="password"
+            type="text"
             id="accountNumber"
             name="accountNumber"
             value={data.accountNumber}
