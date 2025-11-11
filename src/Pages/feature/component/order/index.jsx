@@ -27,7 +27,7 @@ const OrderManagement = () => {
 
   const [showRejectCard, setShowRejectCard] = useState(false);
   const [rejectReason, setRejectReason] = useState("");
-  const [isProcessing, setIsProcessing] = useState(false);
+ const [activeProcessingOrder, setActiveProcessingOrder] = useState(null);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -66,7 +66,7 @@ const OrderManagement = () => {
 
   const handleOrderDecision = async (order, action, reason = "") => {
     try {
-      setIsProcessing(true);
+       setActiveProcessingOrder(order.id); 
       const res = await vendorAcceptRejectOrder({
     orderId: order.id,
     action,
@@ -109,7 +109,7 @@ const OrderManagement = () => {
 
       toast.error(`Failed to ${action} order`);
     } finally {
-      setIsProcessing(false);
+      setActiveProcessingOrder(null);
     }
   };
   const handleRejectClick = (order) => {
@@ -226,14 +226,14 @@ const OrderManagement = () => {
                           <button
                             className="acceptBtn"
                             onClick={() => handleOrderDecision(order, "accept")}
-                            disabled={isProcessing}
+                             disabled={activeProcessingOrder === order.id}
                           >
                             Accept
                           </button>
                           <button
                             className="rejectBtn"
                             onClick={() => handleRejectClick(order)}
-                            disabled={isProcessing}
+                            disabled={activeProcessingOrder === order.id}
                           >
                             Reject
                           </button>
@@ -247,7 +247,7 @@ const OrderManagement = () => {
                             color: "white",
                           }}
                           onClick={() => handleOrderDecision(order, "complete")}
-                          disabled={isProcessing}
+                           disabled={activeProcessingOrder === order.id}
                         >
                           Complete
                         </button>

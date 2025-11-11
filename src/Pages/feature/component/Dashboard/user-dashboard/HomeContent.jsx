@@ -131,57 +131,78 @@ const HomeContent = () => {
       </div>
 
       {/* Nearby Vendors */}
-      <div className="views extreme">
-        <div className="top">
-          <p className="preview-title">nearby vendors</p>
-          <button onClick={() => nav("browsevendors")} className="view-all">
-            view all <BsArrowRight />
-          </button>
+      {/* Nearby Vendors */}
+<div className="views extreme">
+  <div className="top">
+    <p className="preview-title">nearby vendors</p>
+    <button onClick={() => nav("browsevendors")} className="view-all">
+      view all <BsArrowRight />
+    </button>
+  </div>
+
+  {nearby?.map((vendor) => (
+    <div key={vendor.id} className="order-holder">
+      <div className="my-order">
+        <div className="vendor-status">
+          <p>{vendor.businessName}</p>
+          <span className="available">
+            {vendor.isAvailable ? "Available" : "Unavailable"}
+          </span>
+          {vendor.verificationStatus === "approved" && (
+            <span className="verified">
+              <MdVerified /> Verified
+            </span>
+          )}
         </div>
 
-        {nearby?.map((vendor) => (
-          <div key={vendor.id} className="order-holder">
-            <div className="my-order">
-              <div className="vendor-status">
-                <p>{vendor.businessName}</p>
-                <span className="available">available</span>
-                <span className="verified">
-                  <MdVerified /> verified
-                </span>
-              </div>
-              <div className="info">
-                <small>
-                  <GoStar className="star" />
-                  4.8
-                </small>
-                <small>2.1km</small>
-                <small>
-                  <TbCurrencyNaira className="the-currency" />
-                  <span className="the-price">1,500/kg</span>
-                </small>
-              </div>
-              <p>
-                <span>
-                  <BiTimeFive />
-                </span>
-                <small>7:30AM - 8:30PM</small>
-              </p>
-              <small>Mon - Sun</small>
-            </div>
-            <div className="right">
-              <button
-                onClick={() => {
-                  setSelectedVendor(vendor);
-                  setOrder(true);
-                }}
-                className="order-now"
-              >
-                order now
-              </button>
-            </div>
-          </div>
-        ))}
+        <div className="info">
+          <small>
+            <GoStar className="star" />
+            {vendor.rating || "—"}
+          </small>
+          <small>{vendor.distance || "—"}</small>
+          <small>
+            <TbCurrencyNaira className="the-currency" />
+            <span className="the-price">{vendor.pricePerKg || "—"}/kg</span>
+          </small>
+        </div>
+
+        <p
+          className="vendor-time"
+          style={{ display: "flex", alignItems: "center", gap: "6px" }}
+        >
+          <BiTimeFive className="time-icon" />
+          <small>
+            {vendor.openingTime && vendor.closingTime
+              ? `${vendor.openingTime} - ${vendor.closingTime}`
+              : "—"}
+          </small>
+        </p>
+        <small>Mon - Sun</small>
       </div>
+
+      <div className="right">
+        <button
+          onClick={() => {
+            setSelectedVendor(vendor);
+            setOrder(true);
+          }}
+          className="order-now"
+          disabled={!vendor.isAvailable || vendor.inStock === false || vendor.verificationStatus !== "approved"}
+        >
+          {!vendor.isAvailable
+            ? "Vendor Unavailable"
+            : vendor.inStock === false
+            ? "Out of Stock"
+            : vendor.verificationStatus !== "approved"
+            ? "Vendor Not Verified"
+            : "Order Now"}
+        </button>
+      </div>
+    </div>
+  ))}
+</div>
+
     </main>
   );
 };

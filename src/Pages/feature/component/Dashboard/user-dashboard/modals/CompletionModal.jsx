@@ -32,8 +32,8 @@ const CompletionModal = ({ order, onClose, onGenerateCode }) => {
           <hr />
         </div>
         <div className="order-info">
-          <FiPackage className='icon-type' />
-          <div className="order-info-details">
+         <FiPackage className='icon-type' />
+           <div className="order-info-details">
             <span className="the-order-info">order</span>
             <p>Lpg 11kg</p>
           </div>
@@ -46,7 +46,6 @@ const CompletionModal = ({ order, onClose, onGenerateCode }) => {
           </div>
         </div>
          <div className="order-info">
-          <FiPhone className='icon-type' />
           <div className="order-info-details">
             <span className="the-order-info">vendor</span>
             <p>{order.vendor.businessName}</p>

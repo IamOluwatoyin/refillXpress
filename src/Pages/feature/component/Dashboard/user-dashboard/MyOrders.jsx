@@ -194,10 +194,12 @@ const [deliveryCode, setDeliveryCode] = useState("");
 
 {showDelivery && (
   <DeliveryVerification
+    order={orderDetails}   
     code={deliveryCode}
     onClose={() => setShowDelivery(false)}
   />
 )}
+
       <header className="heading">
         <div className="texts">
           <h3>My Orders</h3>

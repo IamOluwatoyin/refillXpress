@@ -29,7 +29,7 @@ const VendorDashboard = () => {
   const [showModal, setShowModal] = useState(false);
   const [vendorInfo, setVendorInfo] = useState(null);
   const [rejectReason, setRejectReason] = useState("");
-  const [isProcessing, setIsProcessing] = useState(false);
+ const [activeProcessingOrder, setActiveProcessingOrder] = useState(null);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [allReviews, setAllReviews] = useState(null);
 
@@ -67,7 +67,7 @@ const VendorDashboard = () => {
 
   const handleOrderDecision = async (order, action, reason = "") => {
     try {
-      setIsProcessing(true);
+      setActiveProcessingOrder(order.id);
       await vendorAcceptRejectOrder({ orderId: order.id, action, message: reason });
       setVendorPendingOrders((prev) => prev.filter((o) => o.id !== order.id));
         refetchOrders()
@@ -84,7 +84,7 @@ const VendorDashboard = () => {
       console.error(`Failed to ${action} order`, error);
       toast.error(error.response?.data?.message || `Failed to ${action} order.`);
     } finally {
-      setIsProcessing(false);
+      setActiveProcessingOrder(null);
     }
   };
 
@@ -212,14 +212,14 @@ const VendorDashboard = () => {
                   <button
                     className="accept-btn"
                     onClick={() => handleOrderDecision(order, "accept")}
-                    disabled={isProcessing}
+                   disabled={activeProcessingOrder === order.id}
                   >
                     Accept
                   </button>
                   <button
                     className="reject-btn"
                     onClick={() => handleRejectClick(order)}
-                    disabled={isProcessing}
+                    disabled={activeProcessingOrder === order.id}
                   >
                     Reject
                   </button>

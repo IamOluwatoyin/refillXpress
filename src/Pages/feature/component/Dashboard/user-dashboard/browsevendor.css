@@ -47,3 +47,14 @@ input:focus {
   box-shadow: none; 
   border: none;
 }
+
+.vendor-time {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.time-icon {
+  font-size: 1rem;
+  color: #555;
+}

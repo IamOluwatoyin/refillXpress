@@ -46,7 +46,7 @@ export const signInUser = (data) => api.post("/user/login", data);
 export const verifyUser = (data) => api.post("/user/verify", data);
 
 export const resendOtp = (data) => api.post("/user/resend-otp", data);
-// console.log(localStorage.getItem("token"));
+
 export const userCanceledOrder = (orderId, token) =>
   api.patch(
     `/orders/${orderId}/cancel`,

@@ -12,6 +12,7 @@ const AnalyticsManagement = () => {
   const [reviewSummary, setReviewSummary] = useState(null);
   const [vendorAnalytics, setVendorAnalytics] = useState(null);
   const id = localStorage.getItem(import.meta.env.VITE_VENDOR_ID);
+ 
 
   useEffect(() => {
     const fetchSummary = async () => {
@@ -20,7 +21,7 @@ const AnalyticsManagement = () => {
         setReviewSummary(res?.data?.data);
 
         const response = await getAnalytics(id);
-        setVendorAnalytics(response?.data?.data);
+        setVendorAnalytics(response?.data);
       } catch (error) {
         console.log("not working", error);
         toast.error(error.response?.data?.message || "Something went wrong!");
@@ -45,7 +46,7 @@ const AnalyticsManagement = () => {
             <div className="icon-analysis green">
               <FaNairaSign />
             </div>
-            <span className="icon-span">+15% vs last month</span>
+            <span className="icon-span">first month</span>
             <span className="icon-span">-</span>
           </div>
           <h3 className="summary-value-analysis">
@@ -60,7 +61,7 @@ const AnalyticsManagement = () => {
             <div className="icon-analysis blue">
               <GoPackage />
             </div>
-            <span className="icon-span">vs last month</span>
+            <span className="icon-span">This month</span>
             <span className="icon-span">-</span>
           </div>
           <h3 className="summary-value-analysis">
