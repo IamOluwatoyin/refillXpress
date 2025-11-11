@@ -525,6 +525,7 @@ const OrderTracker = () => {
   const handleCompleteOrder = async () => {
     const orderIdToComplete = orderId;
     const authToken = localStorage.getItem("authToken");
+    console.log(orderIdToComplete);
 
     if (!orderIdToComplete || !authToken) {
       alert("Missing Order ID or Auth Token.");
@@ -535,6 +536,7 @@ const OrderTracker = () => {
     try {
       await axios.patch(
         `https://refillexpress.onrender.com/api/v1/rider/complete/order/${orderIdToComplete}`,
+        {},
         {
           headers: {
             Authorization: `Bearer ${authToken}`,
