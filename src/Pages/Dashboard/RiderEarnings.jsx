@@ -1,17 +1,22 @@
-import React from "react";
+import React, { useState, useEffect, useMemo } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 import {
   MdOutlineAttachMoney,
   MdOutlineCalendarToday,
   MdOutlineTimeline,
   MdOutlineTimer,
   MdOutlineCheckCircle,
+  MdAutorenew,
 } from "react-icons/md";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import "../../styles/riderEarnings.css";
 
+const API_BASE_URL = "https://refillexpress.onrender.com/api/v1";
+
 const WeeklyPerformanceBar = ({ day, deliveries, earnings, maxEarnings }) => {
-  const widthPercent =
-    (parseInt(earnings.replace(/[^0-9]/g, "")) / maxEarnings) * 100;
+  const safeEarnings = parseInt(earnings.replace(/[^0-9]/g, "")) || 0;
+  const widthPercent = (safeEarnings / maxEarnings) * 100;
 
   return (
     <div className="weekly_bar_item">
@@ -44,7 +49,9 @@ const EarningsCard = ({
         <Icon size={24} />
       </div>
       {secondary && (
-        <span className="card_secondary" style={{ color: color }}></span>
+        <span className="card_secondary" style={{ color: color }}>
+          {secondary}
+        </span>
       )}
     </div>
     <span className="card_title">{title}</span>
@@ -87,21 +94,152 @@ const RecentDeliveryItem = ({
 );
 
 function RiderEarnings() {
-  const [activeTab, setActiveTab] = React.useState("recent");
+  const [activeTab, setActiveTab] = useState("recent");
+  const [loading, setLoading] = useState(true);
+  const [earningsOverview, setEarningsOverview] = useState({
+    today: "0.00",
+    thisWeek: "0.00",
+    thisMonth: "0.00",
+    pending: "0.00",
+  });
+  const [recentDeliveries, setRecentDeliveries] = useState([]);
+  const [weeklyData, setWeeklyData] = useState([]);
+
+  const authToken = useMemo(() => localStorage.getItem("authToken"), []);
+  const riderId = useMemo(() => localStorage.getItem("riderId"), []);
+
+  useEffect(() => {
+    if (!riderId || !authToken) {
+      toast.error("Authentication required. Please log in.");
+      setLoading(false);
+      return;
+    }
+
+    const headers = { Authorization: `Bearer ${authToken}` };
+
+    const fetchEarnings = async () => {
+      setLoading(true);
+      try {
+        const totalRes = await axios.get(`${API_BASE_URL}/total-earnings`, {
+          headers,
+        });
+        const totalData = totalRes.data.data;
+
+        const todayRes = await axios.get(`${API_BASE_URL}/todays-earnings`, {
+          headers,
+        });
+        const todayData = todayRes.data.data;
+
+        setEarningsOverview({
+          today: (totalData.todaysEarnings ?? 0).toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+          }),
+          thisWeek: (totalData.thisWeekEarnings ?? 0).toLocaleString(
+            undefined,
+            { minimumFractionDigits: 2 }
+          ),
+          thisMonth: (totalData.thisMonthEarnings ?? 0).toLocaleString(
+            undefined,
+            { minimumFractionDigits: 2 }
+          ),
+          pending: (totalData.pendingEarnings ?? 0).toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+          }),
+        });
+
+        const mappedDeliveries = (todayData.recentDeliveries || []).map(
+          (delivery) => ({
+            orderId: delivery.orderNumber || `#DEL-${delivery.id.slice(-4)}`,
+            status: delivery.status === "completed" ? "Paid" : "Pending",
+            customer: delivery.customerName || "Customer",
+            time: new Date(delivery.completedAt).toLocaleTimeString("en-US", {
+              hour: "2-digit",
+              minute: "2-digit",
+            }),
+            distance: (delivery.distance || "0").toFixed(1) + " km",
+            total: (delivery.deliveryFee || 0).toLocaleString(),
+            base: (delivery.deliveryFee * 0.8 || 0).toLocaleString(undefined, {
+              maximumFractionDigits: 0,
+            }),
+          })
+        );
+        setRecentDeliveries(mappedDeliveries);
+
+        setWeeklyData([
+          {
+            day: "Mon",
+            deliveries: totalData.monDeliveries || 0,
+            earnings: (totalData.monEarnings || 0).toLocaleString(undefined, {
+              maximumFractionDigits: 0,
+            }),
+          },
+          {
+            day: "Tue",
+            deliveries: totalData.tueDeliveries || 0,
+            earnings: (totalData.tueEarnings || 0).toLocaleString(undefined, {
+              maximumFractionDigits: 0,
+            }),
+          },
+          {
+            day: "Wed",
+            deliveries: totalData.wedDeliveries || 0,
+            earnings: (totalData.wedEarnings || 0).toLocaleString(undefined, {
+              maximumFractionDigits: 0,
+            }),
+          },
+          {
+            day: "Thu",
+            deliveries: totalData.thuDeliveries || 0,
+            earnings: (totalData.thuEarnings || 0).toLocaleString(undefined, {
+              maximumFractionDigits: 0,
+            }),
+          },
+          {
+            day: "Fri",
+            deliveries: totalData.friDeliveries || 0,
+            earnings: (totalData.friEarnings || 0).toLocaleString(undefined, {
+              maximumFractionDigits: 0,
+            }),
+          },
+          {
+            day: "Sat",
+            deliveries: totalData.satDeliveries || 0,
+            earnings: (totalData.satEarnings || 0).toLocaleString(undefined, {
+              maximumFractionDigits: 0,
+            }),
+          },
+          {
+            day: "Sun",
+            deliveries: totalData.sunDeliveries || 0,
+            earnings: (totalData.sunEarnings || 0).toLocaleString(undefined, {
+              maximumFractionDigits: 0,
+            }),
+          },
+        ]);
+      } catch (error) {
+        console.error("Error fetching earnings data:", error);
+        toast.error("Failed to load earnings data. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEarnings();
+  }, [riderId, authToken]);
 
   const earningsData = [
     {
       icon: MdOutlineAttachMoney,
-      title: "Earnings",
-      value: "₦96.50",
+      title: "Today's",
+      value: `₦${earningsOverview.today}`,
       color: "#4CAF50",
       bgColor: "#e8f5e9",
-      secondary: "Up",
+      secondary: "",
     },
     {
       icon: MdOutlineCalendarToday,
       title: "This Week",
-      value: "₦600.50",
+      value: `₦${earningsOverview.thisWeek}`,
       color: "#2196F3",
       bgColor: "#e3f2fd",
       secondary: "",
@@ -109,7 +247,7 @@ function RiderEarnings() {
     {
       icon: MdOutlineTimeline,
       title: "This Month",
-      value: "₦6000.50",
+      value: `₦${earningsOverview.thisMonth}`,
       color: "#9C27B0",
       bgColor: "#f3e5f5",
       secondary: "",
@@ -117,47 +255,25 @@ function RiderEarnings() {
     {
       icon: MdOutlineTimer,
       title: "Pending",
-      value: "₦2600.50",
+      value: `₦${earningsOverview.pending}`,
       color: "#FF9800",
       bgColor: "#fff3e0",
       secondary: "",
     },
   ];
 
-  const recentDeliveries = [
-    {
-      orderId: "#DEL-5024",
-      status: "Paid",
-      customer: "Sarah Johnson",
-      time: "Today, 2:49 PM",
-      distance: "3.2 km",
-      total: "5,000",
-      base: "1,800",
-    },
-    {
-      orderId: "#DEL-5021",
-      status: "Pending",
-      customer: "Robert Wilson",
-      time: "Today, 10:15 AM",
-      distance: "1.8 km",
-      total: "5,000",
-      base: "1,000",
-    },
-  ];
-
-  const weeklyData = [
-    { day: "Mon", deliveries: 8, earnings: "2,500" },
-    { day: "Tue", deliveries: 10, earnings: "3,500" },
-    { day: "Wed", deliveries: 12, earnings: "3,900" },
-    { day: "Thu", deliveries: 14, earnings: "5,000" },
-    { day: "Fri", deliveries: 9, earnings: "4,000" },
-    { day: "Sat", deliveries: 3, earnings: "1,500" },
-    { day: "Sun", deliveries: 2, earnings: "1,000" },
-  ];
-
   const maxEarnings = Math.max(
     ...weeklyData.map((d) => parseInt(d.earnings.replace(/[^0-9]/g, "")))
   );
+
+  if (loading) {
+    return (
+      <div className="rider_earnings_page loading_state">
+        <MdAutorenew className="spin" size={40} color="#FF9800" />
+        <p>Loading your earnings data...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="rider_earnings_page">
@@ -175,11 +291,7 @@ function RiderEarnings() {
           className={`segmented_tab ${
             activeTab === "recent" ? "active_segment" : ""
           }`}
-          onClick={() => {
-            setActiveTab("recent");
-            document.querySelector(".section_header").textContent =
-              "Recent Deliveries";
-          }}
+          onClick={() => setActiveTab("recent")}
         >
           Recent Earnings
         </div>
@@ -187,11 +299,7 @@ function RiderEarnings() {
           className={`segmented_tab ${
             activeTab === "weekly" ? "active_segment" : ""
           }`}
-          onClick={() => {
-            setActiveTab("weekly");
-            document.querySelector(".section_header").textContent =
-              "Weekly Performance";
-          }}
+          onClick={() => setActiveTab("weekly")}
         >
           Weekly Breakdown
         </div>
@@ -203,21 +311,29 @@ function RiderEarnings() {
 
       {activeTab === "recent" && (
         <div className="recent_deliveries_list">
-          {recentDeliveries.map((delivery, index) => (
-            <RecentDeliveryItem key={index} {...delivery} />
-          ))}
+          {recentDeliveries.length > 0 ? (
+            recentDeliveries.map((delivery, index) => (
+              <RecentDeliveryItem key={index} {...delivery} />
+            ))
+          ) : (
+            <p className="empty_state">No recent deliveries found today.</p>
+          )}
         </div>
       )}
 
       {activeTab === "weekly" && (
         <div className="weekly_breakdown_list">
-          {weeklyData.map((data, index) => (
-            <WeeklyPerformanceBar
-              key={index}
-              {...data}
-              maxEarnings={maxEarnings}
-            />
-          ))}
+          {weeklyData.length > 0 ? (
+            weeklyData.map((data, index) => (
+              <WeeklyPerformanceBar
+                key={index}
+                {...data}
+                maxEarnings={maxEarnings}
+              />
+            ))
+          ) : (
+            <p className="empty_state">No weekly earnings data available.</p>
+          )}
         </div>
       )}
 
@@ -231,7 +347,9 @@ function RiderEarnings() {
           Your earnings are paid out every Friday. Completed deliveries are
           processed within 24 hours.
         </p>
-        <p className="expected_amount">Expected Amount: ₦487.20</p>
+        <p className="expected_amount">
+          Expected Amount: ₦{earningsOverview.pending}
+        </p>
       </div>
     </div>
   );

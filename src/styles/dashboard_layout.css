@@ -1,0 +1,246 @@
+.dashboard-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f9fa;
+}
+
+.dashboard-main {
+  display: flex;
+  flex: 1;
+  position: relative;
+  min-height: calc(100vh - 80px);
+}
+
+/* Sidebar Container */
+.dashboard-sidebar {
+  width: 300px;
+  transition: transform 0.3s ease, width 0.3s ease;
+  flex-shrink: 0;
+  overflow-y: auto;
+  max-height: calc(100vh - 80px);
+  position: sticky;
+  top: 80px;
+  background-color: transparent;
+  padding: 20px 0;
+}
+
+/* Mobile Sidebar */
+.dashboard-sidebar.sidebar-mobile {
+  position: fixed;
+  top: 80px;
+  left: 0;
+  height: calc(100vh - 80px);
+  z-index: 1000;
+  transform: translateX(-100%);
+  background-color: rgba(248, 249, 250, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 20px 10px;
+}
+
+.dashboard-sidebar.sidebar-mobile.sidebar-open {
+  transform: translateX(0);
+}
+
+/* Sidebar Overlay for Mobile */
+.sidebar-overlay {
+  position: fixed;
+  top: 80px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* Main Content Area */
+.dashboard-content {
+  flex: 1;
+  padding: 30px;
+  background-color: #ffffff;
+  overflow-x: auto;
+  min-height: calc(100vh - 80px);
+  margin-left: 0;
+  border-radius: 20px 0 0 0;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.05);
+}
+
+@media (min-width: 1024px) {
+  .dashboard-sidebar:not(.sidebar-open) {
+    width: 80px;
+  }
+
+  .dashboard-sidebar:not(.sidebar-open) .sidebar_card {
+    width: 70px;
+    padding: 10px 5px;
+  }
+
+  .dashboard-sidebar:not(.sidebar-open) .nav_text {
+    display: none;
+  }
+
+  .dashboard-sidebar:not(.sidebar-open) .nav_badge {
+    display: none;
+  }
+
+  .dashboard-sidebar:not(.sidebar-open) .nav_item {
+    justify-content: center;
+    padding: 12px 8px;
+  }
+
+  .dashboard-sidebar:not(.sidebar-open) .nav_icon {
+    margin-right: 0;
+  }
+
+  .dashboard-sidebar:not(.sidebar-open) + .dashboard-content {
+    margin-left: -220px;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 768px) {
+  .dashboard-sidebar {
+    width: 280px;
+  }
+
+  .dashboard-content {
+    padding: 25px;
+  }
+}
+
+@media (max-width: 767px) {
+  .dashboard-sidebar {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .dashboard-sidebar.sidebar-mobile .sidebar_container {
+    width: 100%;
+    height: 100%;
+    justify-content: flex-start;
+    padding: 10px;
+  }
+
+  .dashboard-sidebar.sidebar-mobile .sidebar_card {
+    width: 100%;
+    height: auto;
+    min-height: auto;
+  }
+
+  .dashboard-content {
+    padding: 20px 15px;
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-main {
+    min-height: calc(100vh - 70px);
+  }
+
+  .dashboard-sidebar.sidebar-mobile {
+    top: 70px;
+    height: calc(100vh - 70px);
+  }
+
+  .sidebar-overlay {
+    top: 70px;
+  }
+
+  .dashboard-content {
+    padding: 15px 10px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .dashboard-sidebar {
+    width: 320px;
+  }
+
+  .dashboard-content {
+    padding: 40px;
+  }
+}
+
+.dashboard-sidebar,
+.dashboard-content,
+.sidebar-overlay,
+.sidebar_card {
+  transition: all 0.3s ease-in-out;
+}
+
+.dashboard-layout {
+  overflow-x: hidden;
+}
+
+.sidebar_container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 10px;
+}
+
+.sidebar_card {
+  width: 100%;
+  height: auto;
+  min-height: 500px;
+  padding: 15px;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar_nav {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.nav_item {
+  display: flex;
+  align-items: center;
+  padding: 14px 20px;
+  margin: 2px 0;
+  cursor: pointer;
+  color: #555;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+  border-radius: 12px;
+}
+
+.nav_item:hover:not(.active) {
+  background-color: #f5f5f5;
+  transform: translateX(5px);
+}
+
+.nav_item.active {
+  background-color: #fff3e0;
+  color: #ff9800;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(255, 152, 0, 0.2);
+}
+
+.nav_icon {
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+
+.nav_text {
+  white-space: nowrap;
+  transition: opacity 0.3s ease;
+}
+
+.nav_badge {
+  background-color: #f44336;
+  color: white;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 4px 6px;
+  margin-left: auto;
+  line-height: 1;
+  min-width: 18px;
+  text-align: center;
+}

@@ -54,27 +54,23 @@ const RiderLogin = () => {
         formData
       );
 
-      // ✅ Correct destructuring
       const token = response.data.token;
-      const riderData = response.data.data; // contains id, kycStatus, etc.
+      const riderData = response.data.data;
 
       const riderId = riderData.id;
       const kycStatus = riderData.kycStatus?.toLowerCase() || "pending";
 
-      // ✅ Save auth token & riderId
       localStorage.setItem("authToken", token);
       localStorage.setItem("riderId", riderId);
 
       toast.success("Login successful! Welcome back.");
 
-      // ✅ Redirect based on KYC status
       setTimeout(() => {
         if (kycStatus === "approved" || kycStatus === "pending") {
           navigate("/rider-dashboard");
         } else if (kycStatus === "rejected" || kycStatus === "not completed") {
           navigate("/rider-kyc");
         } else {
-          // fallback
           navigate("/rider-kyc");
         }
       }, 1000);

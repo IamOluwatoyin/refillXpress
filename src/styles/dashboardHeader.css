@@ -1,5 +1,8 @@
+/* --- Base Styles (Desktop First / Existing Styles Tweaked) --- */
+
 .dashboard_header {
   width: 100%;
+  /* Reduced height slightly, but kept it large for desktop */
   height: 12vh;
   background-color: white;
   border-bottom: 1px solid #e0e0e0;
@@ -23,6 +26,13 @@
 .header_left {
   display: flex;
   align-items: center;
+  cursor: pointer; /* Added cursor for the onClick event */
+}
+
+/* Ensure the image doesn't stretch the container */
+.header_left img {
+  max-height: 100%;
+  width: auto;
 }
 
 .logo_placeholder {
@@ -37,6 +47,7 @@
   font-size: 1.5rem;
   font-weight: 700;
   color: #ff9800;
+  /* Removed since JSX uses an image now, but kept for completeness */
 }
 
 .header_right {
@@ -73,4 +84,63 @@
   font-size: 0.8rem;
   font-weight: 400;
   color: #888;
+}
+
+/* --- New Mobile Sidebar/Menu Button Styles --- */
+
+.menu_button {
+  /* Initially hidden on desktop */
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-right: 20px;
+  /* Use a standard icon library or a simple div for the burger icon */
+}
+
+/* --- Media Query for Mobile (e.g., screens <= 768px) --- */
+
+@media (max-width: 768px) {
+  .dashboard_header {
+    /* Significantly reduced height for mobile */
+    height: 8vh;
+  }
+
+  .user_info {
+    /* Hide the user name and role to save space */
+    display: none;
+  }
+
+  .user_image_placeholder {
+    /* Removed margin-right to pull the profile image to the edge */
+    margin-right: 0;
+  }
+
+  .header_right {
+    /* Reorder: Menu button on the left, profile on the right */
+    order: 2;
+  }
+
+  .header_left {
+    /* Reorder: Logo/brand in the middle */
+    order: 1;
+    /* Add margin to separate from the menu button */
+    margin-left: 10px;
+  }
+
+  .menu_button {
+    /* Display the menu button on mobile */
+    display: block;
+  }
+
+  .dashboard_headerWrapper {
+    /* Add space between the logo and the right group */
+    justify-content: space-between;
+  }
+
+  /* Put the menu button and user profile into a new right group */
+  .mobile_right_group {
+    display: flex;
+    align-items: center;
+    order: 2;
+  }
 }
