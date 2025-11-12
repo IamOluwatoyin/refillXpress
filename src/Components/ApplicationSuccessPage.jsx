@@ -140,7 +140,7 @@ const ApplicationSuccessModal = ({
           an email notification once your application has been processed.
         </Message>
 
-        <WhatNextBox>
+        {/* <WhatNextBox>
           <WhatNextTitle>What's Next?</WhatNextTitle>
           <WhatNextList>
             <WhatNextListItem>Background verification check</WhatNextListItem>
@@ -148,7 +148,7 @@ const ApplicationSuccessModal = ({
             <WhatNextListItem>Vehicle inspection scheduling</WhatNextListItem>
             <WhatNextListItem>Training session invitation</WhatNextListItem>
           </WhatNextList>
-        </WhatNextBox>
+        </WhatNextBox> */}
 
         <ApplicationIdWrapper>
           Application ID: <ApplicationId>{applicationId}</ApplicationId>
