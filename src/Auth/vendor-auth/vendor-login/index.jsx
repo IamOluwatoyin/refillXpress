@@ -40,7 +40,7 @@ const VendorLogin = () => {
       toast.success("Login successfully created");
       setShowModal(true);
 
-      switch (response?.data?.data?.kycverificationStatus) {
+      switch (response?.data?.data?.kycStatus) {
         case "pending":
           navigate("/vendor-dashboardEmpty");
           break;
@@ -50,7 +50,7 @@ const VendorLogin = () => {
         case "rejected":
           navigate("/vendor-kyc");
           break;
-        case "approved":
+        case "verified":
           navigate("/vendor-dashboard");
           break;
         default:
