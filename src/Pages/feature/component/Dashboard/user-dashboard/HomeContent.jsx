@@ -12,15 +12,43 @@ import { getNearbyVendors, getRecentOrders } from "../../../../../api/query";
 import OrderModal from "./modals/OrderModal";
 import { useNavigate } from "react-router";
 import { useLoading } from "../../../../../context/LoadingContext";
-import SpinnerModal from "../../../../../Auth/vendor-auth/spinner-modal"; 
+import SpinnerModal from "../../../../../Auth/vendor-auth/spinner-modal";
+
 const HomeContent = () => {
   const nav = useNavigate();
-  const { loading, setLoading } = useLoading(); 
+  const { loading, setLoading } = useLoading();
   const [info, setInfo] = useState(null);
   const [selectedVendor, setSelectedVendor] = useState(null);
   const [order, setOrder] = useState(false);
   const [nearby, setNearby] = useState(null);
   const [recent, setRecent] = useState(null);
+
+  // 🧠 Availability check logic (copied from BrowseVendor)
+  const checkAvailability = (vendor) => {
+    if (!vendor?.openingTime || !vendor?.closingTime)
+      return vendor.isAvailable ?? true;
+
+    const now = new Date();
+
+    const parseTime = (timeStr) => {
+      const match = timeStr.toLowerCase().match(/(\d+)[.:]?(\d+)?(am|pm)/);
+      if (!match) return null;
+      let hours = parseInt(match[1], 10);
+      const minutes = match[2] ? parseInt(match[2], 10) : 0;
+      const modifier = match[3];
+      if (modifier === "pm" && hours !== 12) hours += 12;
+      if (modifier === "am" && hours === 12) hours = 0;
+      const d = new Date();
+      d.setHours(hours, minutes, 0, 0);
+      return d;
+    };
+
+    const opening = parseTime(vendor.openingTime);
+    const closing = parseTime(vendor.closingTime);
+
+    if (!opening || !closing) return vendor.isAvailable ?? true;
+    return now >= opening && now <= closing;
+  };
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("userInfo"));
@@ -30,14 +58,21 @@ const HomeContent = () => {
   useEffect(() => {
     const fetchNearby = async () => {
       try {
-        setLoading(true); // show global loading
+        setLoading(true);
         const res = await getNearbyVendors();
-        setNearby(res.data.data);
+
+        // ✅ Add dynamic isAvailable & keep other info intact
+        const updated = res.data.data.map((vendor) => ({
+          ...vendor,
+          isAvailable: checkAvailability(vendor),
+        }));
+
+        setNearby(updated);
       } catch (err) {
         console.error("Error fetching vendors:", err);
         toast.error(err.response?.data?.message || "Failed to fetch vendors");
       } finally {
-        setLoading(false); // hide global loading
+        setLoading(false);
       }
     };
     fetchNearby();
@@ -46,7 +81,7 @@ const HomeContent = () => {
   useEffect(() => {
     const fetchRecent = async () => {
       try {
-        setLoading(true); // show global loading
+        setLoading(true);
         const res = await getRecentOrders();
         setRecent(res.data.data);
       } catch (err) {
@@ -58,7 +93,7 @@ const HomeContent = () => {
           toast.error(err.response?.data?.message || "Failed to fetch orders");
         }
       } finally {
-        setLoading(false); // hide global loading
+        setLoading(false);
       }
     };
     fetchRecent();
@@ -66,7 +101,7 @@ const HomeContent = () => {
 
   return (
     <main className="homecontent" style={{ position: "relative" }}>
-  {loading && <div className="global-loading">Loading...</div>}
+      {loading && <div className="global-loading">Loading...</div>}
 
       {order && (
         <OrderModal onClose={() => setOrder(false)} vendor={selectedVendor} />
@@ -122,9 +157,12 @@ const HomeContent = () => {
                   })}
                 </small>
               </div>
-              <div className="right">
-                <div className="isDelivered">{order.status}</div>
+           <div className="right">
+              <div className={`isDelivered ${order.status?.toLowerCase()}`}>
+                {order.status}
               </div>
+        </div>
+
             </div>
           ))
         )}
@@ -144,30 +182,50 @@ const HomeContent = () => {
             <div className="my-order">
               <div className="vendor-status">
                 <p>{vendor.businessName}</p>
-                <span className="available">available</span>
-                <span className="verified">
-                  <MdVerified /> verified
+                <span
+                  className={
+                    vendor.isAvailable
+                      ? "vendor-status-available"
+                      : "vendor-status-unavailable"
+                  }
+                >
+                  {vendor.isAvailable ? "Available" : "Unavailable"}
                 </span>
+                {vendor.verificationStatus === "approved" && (
+                  <span className="verified">
+                    <MdVerified /> Verified
+                  </span>
+                )}
               </div>
+
               <div className="info">
                 <small>
                   <GoStar className="star" />
-                  4.8
+                  {vendor.rating || "—"}
                 </small>
-                <small>2.1km</small>
+                <small>{vendor.distance || "—"}</small>
                 <small>
                   <TbCurrencyNaira className="the-currency" />
-                  <span className="the-price">1,500/kg</span>
+                  <span className="the-price">
+                    {vendor.pricePerKg || "—"}/kg
+                  </span>
                 </small>
               </div>
-              <p>
-                <span>
-                  <BiTimeFive />
-                </span>
-                <small>7:30AM - 8:30PM</small>
+
+              <p
+                className="vendor-time"
+                style={{ display: "flex", alignItems: "center", gap: "6px" }}
+              >
+                <BiTimeFive className="time-icon" />
+                <small>
+                  {vendor.openingTime && vendor.closingTime
+                    ? `${vendor.openingTime} - ${vendor.closingTime}`
+                    : "—"}
+                </small>
               </p>
               <small>Mon - Sun</small>
             </div>
+
             <div className="right">
               <button
                 onClick={() => {
@@ -175,8 +233,19 @@ const HomeContent = () => {
                   setOrder(true);
                 }}
                 className="order-now"
+                disabled={
+                  !vendor.isAvailable ||
+                  vendor.inStock === false ||
+                  vendor.verificationStatus !== "approved"
+                }
               >
-                order now
+                {!vendor.isAvailable
+                  ? "Vendor Unavailable"
+                  : vendor.inStock === false
+                  ? "Out of Stock"
+                  : vendor.verificationStatus !== "approved"
+                  ? "Vendor Not Verified"
+                  : "Order Now"}
               </button>
             </div>
           </div>

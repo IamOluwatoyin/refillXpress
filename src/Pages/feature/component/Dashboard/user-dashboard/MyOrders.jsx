@@ -159,6 +159,15 @@ const [deliveryCode, setDeliveryCode] = useState("");
     }
   };
 
+  const orderCounts = {
+  Pending: orders.filter(o => o.status === "pending" || o.status === "created").length,
+  Accepted: orders.filter(o => o.status === "accepted" || (o.status === "active" && o.paymentStatus !== "paid")).length,
+  Active: orders.filter(o => o.status === "active" || o.status === "confirmed" || o.paymentStatus === "paid").length,
+  Completed: orders.filter(o => o.status === "completed").length,
+  Cancelled: orders.filter(o => o.status === "cancelled").length,
+};
+
+
   const handleGenerateCode = () => {
   const code = Math.floor(100000 + Math.random() * 900000); // Generate 6-digit code
   setDeliveryCode(code);
@@ -194,10 +203,12 @@ const [deliveryCode, setDeliveryCode] = useState("");
 
 {showDelivery && (
   <DeliveryVerification
+    order={orderDetails}   
     code={deliveryCode}
     onClose={() => setShowDelivery(false)}
   />
 )}
+
       <header className="heading">
         <div className="texts">
           <h3>My Orders</h3>
@@ -206,17 +217,19 @@ const [deliveryCode, setDeliveryCode] = useState("");
       </header>
 
       {/* Tabs */}
-      <div className="orderGasTabs">
-        {tabs.map((tab) => (
-          <button
-            key={tab.key}
-            className={activeTab === tab.key ? "activity" : ""}
-            onClick={() => setActiveTab(tab.key)}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
+     <div className="orderGasTabs">
+  {tabs.map((tab) => (
+    <button
+      key={tab.key}
+      className={activeTab === tab.key ? "activity" : ""}
+      onClick={() => setActiveTab(tab.key)}
+    >
+      {tab.label}
+      <span className="orderCountBadge">{orderCounts[tab.key] || 0}</span>
+    </button>
+  ))}
+</div>
+
 
       {/* Orders */}
       {getOrdersForTab().length === 0 ? (

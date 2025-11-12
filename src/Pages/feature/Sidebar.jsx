@@ -84,7 +84,7 @@ const Sidebar = () => {
                   </span>
                 )}
 
-                {verifyBadge?.verificationStatus === "verified" && (
+                {verifyBadge?.verificationStatus === "approved" && (
                   <button className="verified-btn">Verified</button>
                 )}
               </div>

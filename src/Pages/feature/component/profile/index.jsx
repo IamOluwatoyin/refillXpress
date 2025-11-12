@@ -19,7 +19,8 @@ const ProfileManagement = () => {
     const fetchVendorKycData = async () => {
       try {
         const response = await getVendorKyc(id);
-        setKycData(response?.data);
+        setKycData(response?.data)
+
         console.log("kycsingle", response.data);
       } catch (error) {
         console.log("no kyc", error);
@@ -41,12 +42,12 @@ const ProfileManagement = () => {
           <FaShieldAlt
             style={{
               color:
-                kycData?.data?.kyc?.kycVerificationStatus === "verified"
+                kycData?.verificationStatus === "approved"
                   ? "#16a34a"
                   : "#facc15",
             }}
           />{" "}
-          {kycData?.data?.kyc?.kycVerificationStatus === "verified"
+          {kycData?.verificationStatus === "approved"
             ? "Verified"
             : "Pending Verification"}
         </p>
@@ -67,7 +68,7 @@ const ProfileManagement = () => {
               className="progressFill"
               style={{
                 width:
-                  kycData?.data?.kyc?.verificationStatus === "verified"
+                  kycData?.verificationStatus === "approved"
                     ? "100%"
                     : "50%",
               }}
@@ -76,7 +77,7 @@ const ProfileManagement = () => {
         </div>
 
         <p className="verifiedCount">
-          {kycData?.data?.kyc?.verificationStatus === "verified"
+          {kycData?.verificationStatus === "approved"
             ? "4 of 4 documents verified"
             : "2 of 4 documents verified"}
         </p>

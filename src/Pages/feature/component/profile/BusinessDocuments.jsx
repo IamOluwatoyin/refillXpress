@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import "./BusinessDocuments.css"
-import { FaInfoCircle, FaUpload, FaCheckCircle, FaClock, FaTimesCircle } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import "./BusinessDocuments.css";
+import { FaInfoCircle, FaCheckCircle, FaClock, FaTimesCircle, FaUpload } from "react-icons/fa";
 import { IoDocumentTextOutline } from "react-icons/io5";
 
 const BusinessDocuments = ({ vendor }) => {
@@ -16,17 +16,19 @@ const BusinessDocuments = ({ vendor }) => {
     if (vendor?.kyc) {
       const updatedDocs = documents.map((doc) => {
         if (vendor.kyc[doc.key]) {
-          
           return {
             ...doc,
-            status: vendor.kyc.verificationStatus === "verified" ? "Verified" : "Pending",
+            status:
+              vendor?.verificationStatus === "approved" 
+                ? "Verified"
+                : "Pending",
           };
         }
         return doc;
       });
       setDocuments(updatedDocs);
     }
-  }, [vendor]);
+  }, [vendor?.kyc, vendor?.verificationStatus]);
 
   const handleFilesChange = (index, event) => {
     const file = event.target.files[0];
@@ -86,10 +88,7 @@ const BusinessDocuments = ({ vendor }) => {
         <h3>Upload Documents</h3>
         <div className="uploadContainer">
           {documents.map((doc, index) => (
-            <div
-              key={index}
-              className={`uploadRow ${doc.status === "Rejected" ? "rejectedRow" : ""}`}
-            >
+            <div key={index} className={`uploadRow ${doc.status === "Rejected" ? "rejectedRow" : ""}`}>
               <div className="uploadLeft">
                 <div
                   className={`docBadge ${
@@ -108,14 +107,7 @@ const BusinessDocuments = ({ vendor }) => {
                 </div>
               </div>
 
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "10px",
-                  alignItems: "flex-end",
-                }}
-              >
+              <div style={{ display: "flex", flexDirection: "column", gap: "10px", alignItems: "flex-end" }}>
                 {renderStatusBadge(doc.status)}
 
                 {doc.status === "Rejected" && (
