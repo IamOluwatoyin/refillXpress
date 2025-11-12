@@ -1,9 +1,5 @@
-/* --- Base Styles (Desktop First / Existing Styles Tweaked) --- */
-
 .dashboard_header {
   width: 100%;
-  /* Reduced height slightly, but kept it large for desktop */
-  height: 12vh;
   background-color: white;
   border-bottom: 1px solid #e0e0e0;
   display: flex;
@@ -12,60 +8,51 @@
   box-sizing: border-box;
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 100;
+  padding: 0 16px;
+  height: 60px;
 }
 
 .dashboard_headerWrapper {
-  width: 90%;
+  width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  max-width: 1400px;
 }
 
 .header_left {
   display: flex;
   align-items: center;
-  cursor: pointer; /* Added cursor for the onClick event */
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
-/* Ensure the image doesn't stretch the container */
-.header_left img {
-  max-height: 100%;
+.logo-image {
+  max-height: 35px;
   width: auto;
+  object-fit: contain;
 }
 
-.logo_placeholder {
-  width: 40px;
-  height: 40px;
-  background-color: #ff5722;
-  border-radius: 8px;
-  margin-right: 10px;
-}
-
-.brand_name {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #ff9800;
-  /* Removed since JSX uses an image now, but kept for completeness */
-}
-
-.header_right {
-  display: flex;
+.desktop_user_profile {
+  display: none;
   align-items: center;
+  gap: 12px;
 }
 
 .user_image_placeholder {
-  width: 35px;
-  height: 35px;
+  width: 40px;
+  height: 40px;
   background-color: #ff9800;
   border-radius: 50%;
-  margin-right: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
-  font-size: 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  flex-shrink: 0;
 }
 
 .user_info {
@@ -75,72 +62,237 @@
 }
 
 .user_name {
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: #333;
 }
 
 .user_role {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 400;
   color: #888;
 }
 
-/* --- New Mobile Sidebar/Menu Button Styles --- */
-
 .menu_button {
-  /* Initially hidden on desktop */
-  display: none;
-  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
   cursor: pointer;
-  margin-right: 20px;
-  /* Use a standard icon library or a simple div for the burger icon */
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
 }
 
-/* --- Media Query for Mobile (e.g., screens <= 768px) --- */
+.menu_button:hover {
+  background-color: #f5f5f5;
+}
 
-@media (max-width: 768px) {
-  .dashboard_header {
-    /* Significantly reduced height for mobile */
-    height: 8vh;
-  }
+.menu_icon {
+  font-size: 1.5rem;
+  color: #333;
+}
 
-  .user_info {
-    /* Hide the user name and role to save space */
+.mobile_right_group {
+  display: flex;
+  align-items: center;
+}
+
+.mobile_sidebar {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  transition: left 0.3s ease;
+}
+
+.mobile_sidebar--open {
+  left: 0;
+}
+
+.mobile_sidebar_overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.mobile_sidebar_content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 80%;
+  max-width: 300px;
+  height: 100%;
+  background-color: white;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+.mobile_sidebar_header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.mobile_sidebar_close {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #333;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar_user_profile {
+  display: flex;
+  align-items: center;
+  padding: 20px 16px;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 16px;
+}
+
+.sidebar_user_info {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar_user_name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.sidebar_user_role {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.sidebar_navigation {
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px;
+}
+
+.sidebar_nav_link {
+  padding: 12px 0;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  border-bottom: 1px solid #f0f0f0;
+  transition: color 0.2s ease;
+}
+
+.sidebar_nav_link:hover {
+  color: #ff9800;
+}
+
+.sidebar_logout_btn {
+  margin-top: 20px;
+  padding: 12px;
+  background-color: #ff5722;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+@media (min-width: 1024px) {
+  .mobile_right_group {
     display: none;
   }
 
+  .mobile_sidebar {
+    display: none;
+  }
+
+  .desktop_user_profile {
+    display: flex;
+  }
+
   .user_image_placeholder {
-    /* Removed margin-right to pull the profile image to the edge */
-    margin-right: 0;
+    width: 45px;
+    height: 45px;
+    font-size: 1.1rem;
   }
 
-  .header_right {
-    /* Reorder: Menu button on the left, profile on the right */
-    order: 2;
+  .user_name {
+    font-size: 1rem;
   }
 
-  .header_left {
-    /* Reorder: Logo/brand in the middle */
-    order: 1;
-    /* Add margin to separate from the menu button */
-    margin-left: 10px;
+  .user_role {
+    font-size: 0.8rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .dashboard_header {
+    height: 70px;
+    padding: 0 24px;
+  }
+
+  .logo-image {
+    max-height: 40px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .dashboard_header {
+    height: 90px;
+  }
+
+  .logo-image {
+    max-height: 50px;
+  }
+
+  .user_image_placeholder {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard_header {
+    padding: 0 12px;
+    height: 56px;
+  }
+
+  .logo-image {
+    max-height: 30px;
   }
 
   .menu_button {
-    /* Display the menu button on mobile */
-    display: block;
+    padding: 6px;
   }
 
-  .dashboard_headerWrapper {
-    /* Add space between the logo and the right group */
-    justify-content: space-between;
+  .menu_icon {
+    font-size: 1.3rem;
   }
 
-  /* Put the menu button and user profile into a new right group */
-  .mobile_right_group {
-    display: flex;
-    align-items: center;
-    order: 2;
+  .mobile_sidebar_content {
+    width: 65%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile_sidebar {
+    transition: none;
+  }
+
+  .menu_button {
+    transition: none;
   }
 }
