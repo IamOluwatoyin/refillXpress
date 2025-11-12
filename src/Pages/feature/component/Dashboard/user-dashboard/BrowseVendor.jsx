@@ -19,15 +19,14 @@ const BrowseVendor = () => {
   const [vendors, setVendors] = useState([]);
   const [findLocation, setFindLocation] = useState("");
 
-  // ✅ Function to check if vendor is open
- // ✅ Function to check if vendor is open
+
 const checkAvailability = (vendor) => {
   if (!vendor?.openingTime || !vendor?.closingTime) return vendor.isAvailable ?? true;
 
   const now = new Date();
 
   const parseTime = (timeStr) => {
-    // Handles both "HH:MMam/pm" and "HH.MMam/pm" formats
+    
     const match = timeStr.toLowerCase().match(/(\d+)[.:]?(\d+)?(am|pm)/);
     if (!match) return null;
     let hours = parseInt(match[1], 10);
@@ -58,7 +57,7 @@ useEffect(() => {
 
       const updated = res.data.data.map((vendor) => ({
         ...vendor,
-        isAvailable: checkAvailability(vendor), // fixed availability check
+        isAvailable: checkAvailability(vendor), 
         isVerified: vendor.verificationStatus === "approved",
         isInStock: vendor.inStock === true,
       }));
@@ -74,6 +73,7 @@ useEffect(() => {
   fetchVendors();
 }, [setLoading]);
 
+
   const openViewModal = (vendor) => {
     setSelectedVendor(vendor);
     setShowView(true);
@@ -84,7 +84,7 @@ useEffect(() => {
     setShowOrder(true);
   };
 
-  //  Filter by location
+  
   const filteredVendors = vendors.filter((vendor) =>
     !findLocation
       ? true
@@ -146,12 +146,15 @@ useEffect(() => {
                   <p>{vendor.businessName}</p>
 
                   <span
-                    className={
-                      vendor.isAvailable ? "available" : "unavailable"
-                    }
-                  >
-                    {vendor.isAvailable ? "Available" : "Unavailable"}
-                  </span>
+                        className={
+                          vendor.isAvailable
+                            ? "vendor-status-available"
+                            : "vendor-status-unavailable"
+                        }
+                      >
+                        {vendor.isAvailable ? "Available" : "Unavailable"}
+                </span>
+
 
                   {vendor.isVerified && (
                     <span className="verified">
@@ -184,21 +187,30 @@ useEffect(() => {
                 <small>Mon - Sun</small>
               </div>
 
-              <div className="right">
-                <button
-                  className="order-now"
-                  onClick={() => openOrderModal(vendor)}
-                  disabled={!canOrder}
-                >
-                  Order Now
-                </button>
-                <button
-                  className="order-now to-view"
-                  onClick={() => openViewModal(vendor)}
-                >
-                  View
-                </button>
+                <div className="right">
+                {vendor.isVerified ? (
+                  <>
+                    <button
+                      className="order-now"
+                      onClick={() => openOrderModal(vendor)}
+                      disabled={!canOrder}
+                    >
+                      Order Now
+                    </button>
+                    <button
+                      className="order-now to-view"
+                      onClick={() => openViewModal(vendor)}
+                    >
+                      View
+                    </button>
+                  </>
+                ) : (
+                  <button className="vendor-not-verified" disabled>
+                    Vendor Not Verified
+                  </button>
+                )}
               </div>
+
             </div>
           );
         })}

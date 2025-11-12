@@ -58,3 +58,42 @@ input:focus {
   font-size: 1rem;
   color: #555;
 }
+
+
+.vendor-status-available,
+.vendor-status-unavailable {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.vendor-status-available {
+  background-color: #1da851;
+  color: #fff;
+}
+
+.vendor-status-unavailable {
+  background-color: #e53935; 
+  color: #fff;
+}
+
+
+
+.vendor-not-verified {
+  background-color: #9e9e9e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: not-allowed;
+  text-align: center;
+  white-space: nowrap;   
+  display: inline-block; 
+  width: auto;         
+  align-self: center;  
+}
+
+
