@@ -86,4 +86,4 @@ export const AcceptOrderbyRider = async()=>{
   })
 }
 
-
+export const orderTrack = (id)=> api.get(`/user/order/tracking/${orderId}`)

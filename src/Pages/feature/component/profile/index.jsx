@@ -14,14 +14,16 @@ const ProfileManagement = () => {
   const [kycData, setKycData] = useState();
 
   const id = localStorage.getItem(import.meta.env.VITE_VENDOR_ID);
-
+   
+  
   useEffect(() => {
     const fetchVendorKycData = async () => {
       try {
         const response = await getVendorKyc(id);
+        console.log('response', response)
         setKycData(response?.data)
 
-        console.log("kycsingle", response.data);
+        console.log("kycsingle", response.data.data);
       } catch (error) {
         console.log("no kyc", error);
         toast.error(error?.response?.data?.message || "Something went wrong!");
@@ -42,12 +44,12 @@ const ProfileManagement = () => {
           <FaShieldAlt
             style={{
               color:
-                kycData?.verificationStatus === "approved"
+                kycData?.data?.verificationStatus === "approved"
                   ? "#16a34a"
                   : "#facc15",
             }}
           />{" "}
-          {kycData?.verificationStatus === "approved"
+          {kycData?.data?.verificationStatus === "approved"
             ? "Verified"
             : "Pending Verification"}
         </p>
@@ -68,7 +70,7 @@ const ProfileManagement = () => {
               className="progressFill"
               style={{
                 width:
-                  kycData?.verificationStatus === "approved"
+                  kycData?.data?.verificationStatus === "approved"
                     ? "100%"
                     : "50%",
               }}
@@ -77,7 +79,7 @@ const ProfileManagement = () => {
         </div>
 
         <p className="verifiedCount">
-          {kycData?.verificationStatus === "approved"
+          {kycData?.data?.verificationStatus === "approved"
             ? "4 of 4 documents verified"
             : "2 of 4 documents verified"}
         </p>

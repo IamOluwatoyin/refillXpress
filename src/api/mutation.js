@@ -47,9 +47,10 @@ export const verifyUser = (data) => api.post("/user/verify", data);
 
 export const resendOtp = (data) => api.post("/user/resend-otp", data);
 
-export const userCanceledOrder = (orderId, token) =>
-  api.patch(
-    `/orders/${orderId}/cancel`,
+export const userCanceledOrder = async (orderId) => {
+  const token = localStorage.getItem("token");
+ await axios.patch(
+    `${BASEURL}/orders/${orderId}/cancel`,
     {},
     {
       headers: {
@@ -57,6 +58,7 @@ export const userCanceledOrder = (orderId, token) =>
       },
     }
   );
+};
 
 export const handlePayment = (orderId) => {
   const token = getToken();
@@ -79,5 +81,13 @@ export const userProfileUpdate = async (data) => {
   });
 };
 
-export const vendorUploadPic = async (data) =>
-  api.put("/vendor/account/update", data);
+export const vendorUploadPic = async (data) => {
+  return api.put("/vendor/account/update", data, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+};
+
+export const vendorUpdateDetails = async (data) => {
+  return api.put("/vendor/account/update", data, {
+  });
+};

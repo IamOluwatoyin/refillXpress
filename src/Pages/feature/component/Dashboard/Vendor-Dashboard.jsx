@@ -12,15 +12,20 @@ import { IoIosArrowForward } from "react-icons/io";
 import "./VendorDashboard.css";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import { useNavigate } from "react-router";
-import { getAllReviews, getSummary, getVendorId, getVendorPendingOrders } from "../../../../api/query";
+import {
+  getAllReviews,
+  getSummary,
+  getVendorId,
+  getVendorPendingOrders,
+} from "../../../../api/query";
 import ViewOrderModal from "../vendor-order-modals/view-order-modal";
 import { vendorAcceptRejectOrder } from "../../../../api/mutation";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useLoading } from "../../../../context/LoadingContext"; 
+import { useLoading } from "../../../../context/LoadingContext";
 import { useOrders } from "../../../../context/PendingOrderContext";
 import { useRefetch } from "../../../../api/refetch";
-
+import {MdPending} from 'react-icons/md'
 const VendorDashboard = () => {
   const nav = useNavigate();
   const [vendorSummary, setVendorSummary] = useState(null);
@@ -29,37 +34,42 @@ const VendorDashboard = () => {
   const [showModal, setShowModal] = useState(false);
   const [vendorInfo, setVendorInfo] = useState(null);
   const [rejectReason, setRejectReason] = useState("");
- const [activeProcessingOrder, setActiveProcessingOrder] = useState(null);
+  const [activeProcessingOrder, setActiveProcessingOrder] = useState(null);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [allReviews, setAllReviews] = useState(null);
 
-  const { loading, setLoading } = useLoading() 
-   const {orders, refetchOrders} = useOrders()
-   const {refetch} = useRefetch(getSummary)
+  const { loading, setLoading } = useLoading();
+  const { orders, refetchOrders } = useOrders();
+  const { refetch } = useRefetch(getSummary);
   useEffect(() => {
     const fetchVendorSummary = async () => {
-      setLoading(true); 
+      setLoading(true);
       try {
         const id = localStorage.getItem(import.meta.env.VITE_VENDOR_ID);
         const vendorResponse = await getVendorId(id);
         setVendorInfo(vendorResponse.data.data);
 
         const response = await getSummary();
-        setVendorSummary(response.data.data)
-      
+        setVendorSummary(response.data.data);
+
         const reviewsRes = await getAllReviews();
         setAllReviews(reviewsRes?.data?.data);
       } catch (error) {
         console.error("failed to fetch summary or pending orders");
-        const message = error.response?.data?.message || "Something went wrong!";
+        const message =
+          error.response?.data?.message || "Something went wrong!";
         toast.dismiss();
         toast.error(message);
 
-        if (error?.response?.data?.message?.toLowerCase()?.includes("session timed out")) {
+        if (
+          error?.response?.data?.message
+            ?.toLowerCase()
+            ?.includes("session timed out")
+        ) {
           nav("/vendor-login");
         }
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
     fetchVendorSummary();
@@ -68,10 +78,14 @@ const VendorDashboard = () => {
   const handleOrderDecision = async (order, action, reason = "") => {
     try {
       setActiveProcessingOrder(order.id);
-      await vendorAcceptRejectOrder({ orderId: order.id, action, message: reason });
+      await vendorAcceptRejectOrder({
+        orderId: order.id,
+        action,
+        message: reason,
+      });
       setVendorPendingOrders((prev) => prev.filter((o) => o.id !== order.id));
-        refetchOrders()
-        refetch()
+      refetchOrders();
+      refetch();
       if (action === "accept") {
         toast.success(`Order ${order.orderNumber} accepted successfully!`);
       } else if (action === "reject") {
@@ -82,7 +96,9 @@ const VendorDashboard = () => {
       setShowRejectCard(false);
     } catch (error) {
       console.error(`Failed to ${action} order`, error);
-      toast.error(error.response?.data?.message || `Failed to ${action} order.`);
+      toast.error(
+        error.response?.data?.message || `Failed to ${action} order.`
+      );
     } finally {
       setActiveProcessingOrder(null);
     }
@@ -98,10 +114,11 @@ const VendorDashboard = () => {
 
   return (
     <div className="vendorDashboard-wrapper" style={{ position: "relative" }}>
-       {loading && <div className="global-loading">Loading...</div>}
+      {loading && <div className="global-loading">Loading...</div>}
       <h2>Dashboard</h2>
       <span>
-        Welcome back, {vendorInfo?.businessName || "Vendor"}! Here's what's happening today
+        Welcome back, {vendorInfo?.businessName || "Vendor"}! Here's what's
+        happening today
       </span>
 
       <div className="summary-section">
@@ -125,7 +142,9 @@ const VendorDashboard = () => {
           <div className="icon green">
             <FaCheckCircle />
           </div>
-          <h3 className="summary-value">{vendorSummary?.completedToday || 0}</h3>
+          <h3 className="summary-value">
+            {vendorSummary?.completedToday || 0}
+          </h3>
           <p className="summary-label">Completed Today</p>
         </div>
 
@@ -139,130 +158,145 @@ const VendorDashboard = () => {
           <p className="summary-label">Today's Revenue</p>
         </div>
       </div>
-
-      {/* Pending Orders */}
-      <div className="pending-orders">
-        <div className="pending-header">
-          <h3>Pending Orders</h3>
-          {vendorSummary?.pendingOrders > 0 && (
-            <button
-              className="view-all"
-              onClick={() => nav("/vendor-dashboard/vendor-order")}
-            >
-              View All <IoIosArrowForward />
-            </button>
-          )}
-        </div>
-        <p className="subtext">Requires immediate attention</p>
-
-        {orders.length > 0 ? (
-          orders
-            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-            .slice(0, 1)
-            .map((order, index) => (
-              <div className="order-card" key={index}>
-                <div className="order-header">
-                  <div>
-                    <span className="order-ids">{order.orderNumber}</span>
-                    <span className="order-status">{order.status}</span>
-                  </div>
-                  <span className="price">₦{order.price}</span>
-                </div>
-
-                <p className="customer-name">
-                  {order.user?.firstName} {order.user?.lastName}
-                </p>
-
-                <div className="order-details">
-                  <div className="details-row">
-                    <div className="left-info">
-                      <p>
-                        <GoPackage /> {order.quantity}
-                      </p>
-                    </div>
-                    <div className="center-info">
-                      <p>
-                        <FaCalendarAlt />{" "}
-                        {new Date(order.createdAt).toLocaleDateString()}
-                      </p>
-                      <p>
-                        <FaClock /> {new Date(order.createdAt).toLocaleTimeString()}
-                      </p>
-                      <p>
-                        <FaPhoneAlt /> {order.user?.phoneNumber}
-                      </p>
-                    </div>
-                  </div>
-
-                  <p className="address">
-                    <FaMapMarkerAlt /> {order.deliveryAddress}
-                  </p>
-                </div>
-
-                <div className="order-actions">
-                  <button
-                    className="view-btn"
-                    onClick={() => {
-                      setSelectedOrder(order);
-                      setShowModal(true);
-                    }}
-                  >
-                    View
-                  </button>
-                  <button
-                    className="accept-btn"
-                    onClick={() => handleOrderDecision(order, "accept")}
-                   disabled={activeProcessingOrder === order.id}
-                  >
-                    Accept
-                  </button>
-                  <button
-                    className="reject-btn"
-                    onClick={() => handleRejectClick(order)}
-                    disabled={activeProcessingOrder === order.id}
-                  >
-                    Reject
-                  </button>
-                </div>
-              </div>
-            ))
-        ) : (
-          <div className="order-placeholder">
-            <p>No pending orders yet</p>
+      {vendorInfo?.verificationStatus === "pending" ? (
+        <div className="kyc_notice_container">
+          <div className="kyc_card_header" style={{ color: "#FF9800" }}>
+            <MdPending size={30} color="#FF9800" />
+            <h3 className="kyc_status_title">
+              KYC Status: **{vendorInfo?.verificationStatus?.toUpperCase()}**
+            </h3>
           </div>
-        )}
-
-        {/* Reviews */}
-        <div className="reviews-section">
-          <h3>Recent Reviews</h3>
-          <p className="subtext">Customer feedback</p>
-
-          {allReviews && allReviews.length > 0 ? (
-            allReviews.slice(0, 3).map((review, index) => (
-              <div className="review-card" key={index}>
-                <div className="review-header">
-                  <strong>{review.user?.firstName || "Anonymous"}</strong>
-                  <span>{new Date(review.createdAt).toLocaleDateString()}</span>
-                </div>
-
-                <div className="stars">
-                  {[...Array(5)].map((_, i) =>
-                    i < review.rating ? (
-                      <FaStar key={i} className="filled" />
-                    ) : (
-                      <FaRegStar key={i} className="unfilled" />
-                    )
-                  )}
-                </div>
-
-                <p>{review.comment || "No comment provided."}</p>
-              </div>
-            ))
-          ) : (
-            <p>No reviews yet</p>
-          )}
+          <p className="kyc_message">
+            Your KYC application is under review. You will receive an update within 24-48 hours. Orders will appear once approved.
+          </p>
         </div>
-      </div>
+      ) : (
+        <div className="pending-orders">
+          <div className="pending-header">
+            <h3>Pending Orders</h3>
+            {vendorSummary?.pendingOrders > 0 && (
+              <button
+                className="view-all"
+                onClick={() => nav("/vendor-dashboard/vendor-order")}
+              >
+                View All <IoIosArrowForward />
+              </button>
+            )}
+          </div>
+          <p className="subtext">Requires immediate attention</p>
+
+          {orders.length > 0 ? (
+            orders
+              .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+              .slice(0, 1)
+              .map((order, index) => (
+                <div className="order-card" key={index}>
+                  <div className="order-header">
+                    <div>
+                      <span className="order-ids">{order.orderNumber}</span>
+                      <span className="order-status">{order.status}</span>
+                    </div>
+                    <span className="price">₦{order.price}</span>
+                  </div>
+
+                  <p className="customer-name">
+                    {order.user?.firstName} {order.user?.lastName}
+                  </p>
+
+                  <div className="order-details">
+                    <div className="details-row">
+                      <div className="left-info">
+                        <p>
+                          <GoPackage /> {order.quantity}
+                        </p>
+                      </div>
+                      <div className="center-info">
+                        <p>
+                          <FaCalendarAlt />{" "}
+                          {new Date(order.createdAt).toLocaleDateString()}
+                        </p>
+                        <p>
+                          <FaClock />{" "}
+                          {new Date(order.createdAt).toLocaleTimeString()}
+                        </p>
+                        <p>
+                          <FaPhoneAlt /> {order.user?.phoneNumber}
+                        </p>
+                      </div>
+                    </div>
+
+                    <p className="address">
+                      <FaMapMarkerAlt /> {order.deliveryAddress}
+                    </p>
+                  </div>
+
+                  <div className="order-actions">
+                    <button
+                      className="view-btn"
+                      onClick={() => {
+                        setSelectedOrder(order);
+                        setShowModal(true);
+                      }}
+                    >
+                      View
+                    </button>
+                    <button
+                      className="accept-btn"
+                      onClick={() => handleOrderDecision(order, "accept")}
+                      disabled={activeProcessingOrder === order.id}
+                    >
+                      Accept
+                    </button>
+                    <button
+                      className="reject-btn"
+                      onClick={() => handleRejectClick(order)}
+                      disabled={activeProcessingOrder === order.id}
+                    >
+                      Reject
+                    </button>
+                  </div>
+                </div>
+              ))
+          ) : (
+            <div className="order-placeholder">
+              <p>No pending orders yet</p>
+            </div>
+          )}
+
+          {/* Reviews */}
+          <div className="reviews-section">
+            <h3>Recent Reviews</h3>
+            <p className="subtext">Customer feedback</p>
+
+            {allReviews && allReviews.length > 0 ? (
+              allReviews.slice(0, 3).map((review, index) => (
+                <div className="review-card" key={index}>
+                  <div className="review-header">
+                    <strong>{review.user?.firstName || "Anonymous"}</strong>
+                    <span>
+                      {new Date(review.createdAt).toLocaleDateString()}
+                    </span>
+                  </div>
+
+                  <div className="stars">
+                    {[...Array(5)].map((_, i) =>
+                      i < review.rating ? (
+                        <FaStar key={i} className="filled" />
+                      ) : (
+                        <FaRegStar key={i} className="unfilled" />
+                      )
+                    )}
+                  </div>
+
+                  <p>{review.comment || "No comment provided."}</p>
+                </div>
+              ))
+            ) : (
+              <p>No reviews yet</p>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* View Order Modal */}
       {showModal && (

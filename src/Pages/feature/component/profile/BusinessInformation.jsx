@@ -1,38 +1,100 @@
-import React, { useState } from 'react'
- import { MdOutlineFileUpload,MdModeEdit } from "react-icons/md";
-import { vendorUploadPic } from '../../../../api/mutation';
-const BusinessInformation = ({vendor}) => {
-  const [profileImage, setProfileImage] = useState(null);
+import React, { useState } from "react";
+import { MdOutlineFileUpload } from "react-icons/md";
+import { vendorUpdateDetails, vendorUploadPic,  } from "../../../../api/mutation";
+import { toast } from "react-toastify";
+import { useRefetch } from "../../../../api/refetch";
+import { getVendorKyc } from "../../../../api/query";
+const BusinessInformation = ({ vendor }) => {
+  const [formData, setFormData] = useState({
+    phoneNumber: vendor?.businessPhoneNumber || "",
+    residentialAddress: vendor?.residentialAddress || "",
+  });
+const {refetch} = useRefetch(getVendorKyc)
+  const [uploading, setUploading] = useState(false);
+  const [saving, setSaving] = useState(false);
 
-  const handleImageUpload = (e) => {
+  const handleImageSelect = async (e) => {
     const file = e.target.files[0];
+    console.log("Selected file:", file);
     if (!file) return;
-    const preview = URL.createObjectURL(file);
-  
-    setProfileImage(preview);
-    const handlePicture = async () => {
-      try {
-        const res = await vendorUploadPic()
 
-      } catch (error) {
-        console.log("not working", error)
-      }
+    const uploadData = new FormData();
+
+    uploadData.append("vendorImage", file);
+
+    try {
+      setUploading(true);
+      const res = await vendorUploadPic(uploadData);
+      const updated = res?.data?.data;
+
+      const storedVendor =
+        JSON.parse(localStorage.getItem("vendor_token")) || {};
+      localStorage.setItem(
+        "vendor_token",
+        JSON.stringify({
+          ...storedVendor,
+          vendorImage: updated?.vendorImage,
+        })
+      );
+
+      toast.success("Profile picture updated successfully!");
+      refetch()
+    } catch (error) {
+      console.error("Image upload failed:", error);
+      toast.error(
+        error?.response?.data?.message || "Failed to upload profile picture"
+      );
+    } finally {
+      setUploading(false);
     }
-    
   };
 
-  
-  return (
-     <div className="profileCard">
-          <div className="profileHeader">
-            <h4>Personal Information</h4>
-          </div>
+  const handleSaveChanges = async () => {
+    try {
+      setSaving(true);
+      const payload = {
+        phoneNumber: formData.phoneNumber,
+        residentialAddress: formData.residentialAddress,
+      };
 
-         <div className="profilePicSection">
+      const res = await vendorUpdateDetails(payload);
+      const updated = res?.data?.data;
+
+      const storedVendor =
+        JSON.parse(localStorage.getItem("vendor_token")) || {};
+      localStorage.setItem(
+        "vendor_token",
+        JSON.stringify({
+          ...storedVendor,
+          businessPhoneNumber: updated?.businessPhoneNumber,
+          residentialAddress: updated?.residentialAddress,
+        })
+      );
+
+      toast.success("Profile information updated successfully!");
+       refetch()
+    } catch (error) {
+      console.error("Update failed:", error);
+      toast.error(
+        error?.response?.data?.message || "Failed to update information"
+      );
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <div className="profileCard">
+      <div className="profileHeader">
+        <h4>Personal Information</h4>
+      </div>
+
+      {/* Profile Picture Upload Section */}
+      <div className="profilePicSection">
         <div className="profileImageWrapper">
-          {profileImage ? (
+          {vendor?.vendorImage ? (
             <img
-              src={profileImage}
+              src={vendor?.vendorImage}
               alt="Profile"
               className="profileImagePlaceholder"
             />
@@ -46,61 +108,84 @@ const BusinessInformation = ({vendor}) => {
           <span>Upload a professional photo of yourself</span>
           <label htmlFor="profileUpload" className="uploadBtn">
             <MdOutlineFileUpload style={{ fontSize: "16px" }} />
-            Upload Photo
+            {uploading ? "Uploading..." : "Upload Photo"}
           </label>
           <input
             type="file"
             id="profileUpload"
             accept="image/*"
-            onChange={handleImageUpload}
+            onChange={handleImageSelect}
             style={{ display: "none" }}
+            disabled={uploading}
           />
         </div>
       </div>
 
-          <div className="formGrid">
-            <div className="formRow">
-              <div className="formGroup">
-                <label>Full Name</label>
-                <input
-                    type="text"
-                    value={`${vendor?.firstName || ""} ${vendor?.lastName || ""}`}
-                    readOnly
-                  />
-              </div>
-              <div className="formGroup">
-                <label>Email Address</label>
-                 <input
+      {/* Personal Info */}
+      <div className="formGrid">
+        <div className="formRow">
+          <div className="formGroup">
+            <label>Full Name</label>
+            <input
+              type="text"
+              value={`${vendor?.firstName || ""} ${vendor?.lastName || ""}`}
+              readOnly
+            />
+          </div>
+
+          <div className="formGroup">
+            <label>Email Address</label>
+            <input
               type="email"
               value={vendor?.businessEmail || ""}
               readOnly
-               className="faint-input"
-              
+              className="faint-input"
             />
-              </div>
-            </div>
-
-            <div className="formRow">
-              <div className="formGroup">
-                <label>Phone Number</label>
-                <input type="text"value={vendor?.businessPhoneNumber || ""} readOnly />
-              </div>
-              <div className="formGroup">
-                <label>Residential Address</label>
-               <input
-                    type="text"
-                    value={vendor?.residentialAddress || ""}
-                    readOnly
-                  />
-              </div>
-            </div>
-          </div>
-
-          <div className="saveSection">
-            <button className="saveBtn">Save Changes</button>
           </div>
         </div>
-  )
-}
 
-export default BusinessInformation
+        <div className="formRow">
+          <div className="formGroup">
+            <label>Phone Number</label>
+            <input
+              type="text"
+              value={formData.phoneNumber}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  phoneNumber: e.target.value,
+                }))
+              }
+            />
+          </div>
+
+          <div className="formGroup">
+            <label>Residential Address</label>
+            <input
+              type="text"
+              value={formData.residentialAddress}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  residentialAddress: e.target.value,
+                }))
+              }
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="saveSection">
+        <button
+          className="saveBtn"
+          onClick={handleSaveChanges}
+          disabled={saving}
+        >
+          {saving ? "Saving..." : "Save Changes"}
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default BusinessInformation;
