@@ -20,7 +20,7 @@ const MyOrders = ({ orderId }) => {
     try {
       const res = await orderTrack(orderId);
       const data = res?.data?.data;
-
+      console.log("nav", data )
       if (data) {
         setOrderData(data);
 
