@@ -77,7 +77,7 @@ const KYC = () => {
 
       switch (response?.data?.data?.verificationStatus) {
         case "pending":
-          navigate("/vendor-dashboardEmpty");
+          navigate("/vendor-dashboard");
           break;
       }
       setTimeout(() => {

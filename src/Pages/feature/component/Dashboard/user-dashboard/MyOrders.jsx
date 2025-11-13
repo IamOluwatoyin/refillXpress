@@ -13,6 +13,7 @@ import { handlePayment, userCanceledOrder } from "../../../../../api/mutation";
 import { useLoading } from "../../../../../context/LoadingContext";
 import SpinnerModal from "../../../../../Auth/vendor-auth/spinner-modal";
 import DeliveryVerification from "./modals/DeliveryVerification";
+import { useRefetch } from "../../../../../api/refetch";
 
 const MyOrders = () => {
   const location = useLocation();
@@ -21,7 +22,7 @@ const MyOrders = () => {
       setActiveTab(location.state.tab);
     }
   }, [location.state]);
-
+  const { refetch } = useRefetch(getAllOrders);
   const nav = useNavigate();
   const { loading, setLoading } = useLoading();
   const [activeTab, setActiveTab] = useState(location.state?.tab || "Pending");
@@ -34,8 +35,7 @@ const MyOrders = () => {
   const [payLoading, setPayLoading] = useState(false);
   const [processingOrderId, setProcessingOrderId] = useState(null);
   const [showDelivery, setShowDelivery] = useState(false);
-const [deliveryCode, setDeliveryCode] = useState("");
-
+  const [deliveryCode, setDeliveryCode] = useState("");
 
   const tabs = [
     { label: "Pending", key: "Pending" },
@@ -74,16 +74,16 @@ const [deliveryCode, setDeliveryCode] = useState("");
 
   const handleCancelOrder = async (order) => {
     const token = localStorage.getItem("token");
-  console.log("Token before cancel request:", token);
+    console.log("Token before cancel request:", token);
 
     if (processingOrders.includes(order.id)) return;
-     setProcessingOrderId(order.id);
+    setProcessingOrderId(order.id);
     setProcessingOrders((prev) => [...prev, order.id]);
     try {
       console.log(token, order.id);
-      await userCanceledOrder(order.id, token);
+      await userCanceledOrder(order.id);
       toast.success(`Order ${order.orderNumber} cancelled successfully`);
-
+      refetch();
       setOrders((prev) =>
         prev.map((o) => (o.id === order.id ? { ...o, status: "cancelled" } : o))
       );
@@ -91,16 +91,15 @@ const [deliveryCode, setDeliveryCode] = useState("");
       toast.error(err?.response?.data?.message || "Failed to cancel order");
     } finally {
       setProcessingOrders((prev) => prev.filter((id) => id !== order.id));
-       setProcessingOrderId(null);
+      setProcessingOrderId(null);
     }
   };
 
   const handlePayNow = async (order) => {
-    setProcessingOrderId(order.id); 
+    setProcessingOrderId(order.id);
     setPayLoading(true);
     try {
-      
-      const res = await handlePayment(order.id );
+      const res = await handlePayment(order.id);
       const link = res?.data?.data?.checkoutUrl;
 
       if (!link) throw new Error("Payment link missing");
@@ -160,25 +159,26 @@ const [deliveryCode, setDeliveryCode] = useState("");
   };
 
   const orderCounts = {
-  Pending: orders.filter(o => o.status === "pending" || o.status === "created").length,
-  Accepted: orders.filter(o => o.status === "accepted" || (o.status === "active" && o.paymentStatus !== "paid")).length,
-  Active: orders.filter(o => o.status === "active" || o.status === "confirmed" || o.paymentStatus === "paid").length,
-  Completed: orders.filter(o => o.status === "completed").length,
-  Cancelled: orders.filter(o => o.status === "cancelled").length,
-};
-
-
-  const handleGenerateCode = () => {
-  const code = Math.floor(100000 + Math.random() * 900000); // Generate 6-digit code
-  setDeliveryCode(code);
-  setShowCompletion(false);
-  setShowDelivery(true); 
-};
-
+    Pending: orders.filter(
+      (o) => o.status === "pending" || o.status === "created"
+    ).length,
+    Accepted: orders.filter(
+      (o) =>
+        o.status === "accepted" ||
+        (o.status === "active" && o.paymentStatus !== "paid")
+    ).length,
+    Active: orders.filter(
+      (o) =>
+        o.status === "active" ||
+        o.status === "confirmed" ||
+        o.paymentStatus === "paid"
+    ).length,
+    Completed: orders.filter((o) => o.status === "completed").length,
+    Cancelled: orders.filter((o) => o.status === "cancelled").length,
+  };
 
   return (
     <main className="myorders" style={{ position: "relative" }}>
-      
       {loading && <div className="global-loading">Loading...</div>}
 
       {payLoading && <SpinnerModal message="Initializing payment..." />}
@@ -193,21 +193,21 @@ const [deliveryCode, setDeliveryCode] = useState("");
       )}
 
       {/* Completion modal */}
-      {showCompletion && (
+      {/* {showCompletion && (
   <CompletionModal
     order={orderDetails}
     onClose={() => setShowCompletion(false)}
     onGenerateCode={handleGenerateCode} 
   />
-)}
+)} */}
 
-{showDelivery && (
-  <DeliveryVerification
-    order={orderDetails}   
-    code={deliveryCode}
-    onClose={() => setShowDelivery(false)}
-  />
-)}
+      {showDelivery && (
+        <DeliveryVerification
+          order={orderDetails}
+          code={deliveryCode}
+          onClose={() => setShowDelivery(false)}
+        />
+      )}
 
       <header className="heading">
         <div className="texts">
@@ -217,19 +217,18 @@ const [deliveryCode, setDeliveryCode] = useState("");
       </header>
 
       {/* Tabs */}
-     <div className="orderGasTabs">
-  {tabs.map((tab) => (
-    <button
-      key={tab.key}
-      className={activeTab === tab.key ? "activity" : ""}
-      onClick={() => setActiveTab(tab.key)}
-    >
-      {tab.label}
-      <span className="orderCountBadge">{orderCounts[tab.key] || 0}</span>
-    </button>
-  ))}
-</div>
-
+      <div className="orderGasTabs">
+        {tabs.map((tab) => (
+          <button
+            key={tab.key}
+            className={activeTab === tab.key ? "activity" : ""}
+            onClick={() => setActiveTab(tab.key)}
+          >
+            {tab.label}
+            <span className="orderCountBadge">{orderCounts[tab.key] || 0}</span>
+          </button>
+        ))}
+      </div>
 
       {/* Orders */}
       {getOrdersForTab().length === 0 ? (
@@ -291,16 +290,17 @@ const [deliveryCode, setDeliveryCode] = useState("");
             <div className="complete-track">
               {activeTab === "Pending" && (
                 <>
-                
-                  <button className="order-btn awaiting-btn"  disabled={processingOrderId === order.id}>
+                  <button
+                    className="order-btn awaiting-btn"
+                    disabled={processingOrderId === order.id}
+                  >
                     Awaiting Confirmation
                   </button>
 
-                
                   <button
                     className="order-btn cancel-btn"
                     onClick={() => handleCancelOrder(order)}
-                     disabled={processingOrderId === order.id}
+                    disabled={processingOrderId === order.id}
                   >
                     Cancel
                   </button>
@@ -312,7 +312,7 @@ const [deliveryCode, setDeliveryCode] = useState("");
                   <button
                     className="order-btn pay-btn"
                     onClick={() => handlePayNow(order)}
-                   disabled={processingOrderId === order.id}
+                    disabled={processingOrderId === order.id}
                   >
                     Pay Now
                   </button>
@@ -332,7 +332,8 @@ const [deliveryCode, setDeliveryCode] = useState("");
                     className="order-btn completed-btn"
                     onClick={() => {
                       setOrderDetails(order);
-                      setShowCompletion(true);
+                      setDeliveryCode(order?.otp);
+                      setShowDelivery(true);
                     }}
                   >
                     Complete
@@ -348,7 +349,11 @@ const [deliveryCode, setDeliveryCode] = useState("");
 
               {activeTab === "Completed" && (
                 <>
-                  <button className="order-btn completed-btn"style={{background:"#80a171ff", color:"#236b09ff"}} disabled>
+                  <button
+                    className="order-btn completed-btn"
+                    style={{ background: "#80a171ff", color: "#236b09ff" }}
+                    disabled
+                  >
                     Completed
                   </button>
                   {/* <button className="order-btn track-btn">Delivered</button> */}

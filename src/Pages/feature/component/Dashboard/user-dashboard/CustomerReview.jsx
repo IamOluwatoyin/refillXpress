@@ -1,141 +1,165 @@
-import React from 'react'
-import "./homecontent.css"
-import "./customerreview.css"
-import { MdVerified } from "react-icons/md";
+import React, { useState, useEffect } from 'react'
+import "./Homecontent.css"
+import "./Customerreview.css"
 import { GoStar } from "react-icons/go";
-import { TbCurrencyNaira } from "react-icons/tb";
-import { BiTimeFive } from "react-icons/bi";
-import { RxCaretDown } from "react-icons/rx";
 import { LuSearch } from "react-icons/lu";
-import { BsArrowRight } from "react-icons/bs";
-
+import { BsArrowDown, BsArrowRight } from "react-icons/bs";
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import { BASEURL } from '../../../../../api/base';
+import ReviewModal from './modals/ReviewModal';
 const CustomerReview = () => {
+
+    const [vendors, setVendors] = useState(null)
+    const [reviews, setReviews] = useState(null)
+    const [selectedVendor, setSelectedVendor] = useState(null)
+    const [text, setText] = useState("")
+    const [suggest, setSuggest] = useState(false)
+    const [pop, setPop] = useState(false)
+    useEffect(()=> {
+    const getReviews = async () => {
+        try {
+            const res = await axios.get(`${BASEURL}/reviews`)
+            setReviews(res.data.data)
+            console.log(res.data.data)
+        } catch (err) {
+            toast.error("unable to fetch reviews please check your internet connection")
+            console.log(err)
+        }
+    }
+    const getVendors = async () => {
+        try {
+            const res = await axios.get(`${BASEURL}/vendor/getAllvendors`)
+            setVendors(res.data.data)
+            const ans = res.data.data
+            console.log(ans)
+        } catch (err) {
+            toast.error("unable to fetch vendors please check your internet connection")
+            console.log(err)
+        }
+    }
+
+    getReviews()
+    getVendors()
+}, [])
+
+useEffect(() => {
+  console.log("Suggest state:", suggest);
+}, [suggest]);
+
   return (
     <main className='customer-review'>
+        {pop && <ReviewModal vendor={selectedVendor} onClose={()=> setPop(false)} />}
       <header className="extremes-header">
-                <div className="texts">
+                <div className="review-texts">
                 <h3>vendor reviews</h3>
-                <p>Share yout experience with vendors</p>
+                <p>Share your experience with vendors</p>
                 </div>
-                <button className="write-review">
-                    + Write a Review
+               <button className="write-review" onClick={() => {
+                  if (!selectedVendor) {
+                    toast.info("Please select a vendor first")
+                    return
+                  }
+                  setPop(true)
+                }}>
+                  + Write a Review
                 </button>
+
         </header>
-        <div className="views extreme">
-            <div className="top">
-                <p className="preview-title">
-                    Share your experience with vendors
-                </p>
+        <div className="search-review">
+            <div className="review-top">
+                <span className="review-title">
+                    select a vendor to review
+                </span>
             </div>
                 <div className="gas-vendor-select">
                         <div className="vendor-to-review">
-                            <p>quick gas supply co.</p>
-            
-                            <BsArrowRight />
-                            <div className="select-vendor">
-                                <ul>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                    <li>gas vendor</li>
-                                </ul>
-                            </div>
+                          <div className='setVendor'>
+                             <LuSearch /> <input  
+                             type='text' value={text} 
+                             onChange={(e)=> {
+                                 setText(e.target.value)
+                             }} 
+                             placeholder='search gas vendor'/>
+                          </div>
+                            <button onClick={()=> {  console.log("Arrow clicked!");
+                            
+                            setSuggest(!suggest)} }
+                            
+                            className='arrow-down'>
+                                <BsArrowDown />
+                            </button>
+                           <>
+  {suggest && (
+    <ul className="select-vendor">
+      {vendors && vendors.length > 0 ?
+       (
+        vendors
+          .filter((vendor) =>
+            vendor.businessName
+              ?.toLowerCase()
+              .includes(text.toLowerCase())
+          )
+          .map((v) => (
+            <li
+              key={v.id}
+              onClick={() => {
+                console.log("Clicked vendor:", v.businessName);
+                setText(v.businessName);
+                setSelectedVendor(v);
+                setSuggest(false);
+                toast.success(`${v.businessName} selected`);
+              }}
+            >
+              {v.businessName}
+            </li>
+          ))
+      ) : (
+        <li>No vendors found</li>
+      )}
+    </ul>
+  )}
+</>
+
                     </div>
                 </div>
         </div>
-        <section className="views extreme shrink">
-            <div className="top">
-                <p className="preview-title">
-                    overall
-                </p>
-                <button className="review-this-vendor">
-                    <GoStar />
-                    review this vendor
-                </button>
-            </div>
-            <div className='rate-section'>
-                <div className="the-rating">
-                <h1>0</h1><small>/5</small>
-            </div>
-            <p><GoStar /> 264 reviews</p>
-            </div>
-        </section>
-        <section className="views extreme shrink">
-            <div className="top">
-                <p className="preview-title">
-                    customer feedback
-                </p>
-            </div>
-            <div className="customer-feedback">
-                <div className="top">
-                    <span>Driver</span>
-                    <div>
-                        <GoStar />
-                    <GoStar />
-                    <GoStar />
-                    <GoStar />
-                    <GoStar />
-                    </div>
-                </div>
-                        <p>john driver</p>
-                        <p>+2348237824681</p>
-                        <div className="hr">
-                            <hr />
-                        </div>
-            </div>
-             <div className="customer-feedback">
-                <div className="top">
-                    <span>Driver</span>
-                    <div>
-                        <GoStar />
-                    <GoStar />
-                    <GoStar />
-                    <GoStar />
-                    <GoStar />
-                    </div>
-                </div>
-                        <p>john driver</p>
-                        <p>+2348237824681</p>
-                        <div className="hr">
-                            <hr />
-                        </div>
-            </div>
-        </section>
+       <section className="views extreme shrink">
+  <div className="top">
+    <p className="preview-title">customer feedback</p>
+  </div>
+
+  {reviews && reviews.length > 0 ? (
+    reviews.map((review) => (
+      <div className="customer-feedback" key={review.id}>
+        <div className="top">
+          <span>{review.vendor?.businessName || "Vendor"}</span>
+          <div>
+            {[...Array(5)].map((_, i) => (
+              <GoStar
+                key={i}
+                color={i < review.rating ? "#fbbf24" : "#d1d5db"}
+              />
+            ))}
+          </div>
+        </div>
+
+        <p>{review.user?.name || "Anonymous"}</p>
+        <p>{review.message}</p>
+
+        <div className="hr">
+          <hr />
+        </div>
+      </div>
+    ))
+  ) : (
+    <p style={{ padding: "1rem", textAlign: "center", color: "#888" }}>
+      No reviews yet.
+    </p>
+  )}
+</section>
+
+       
     </main>
   )
 }

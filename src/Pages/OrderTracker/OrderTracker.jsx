@@ -553,15 +553,51 @@ const OrderTracker = () => {
       setLoading(false);
     }
   };
+ const trackingStages = [
+      'navigatingToCustomer',
+      'pickedUpCylinder',
+      'navigatingToVendor',
+      'refillingCylinder',
+      'returningToCustomer',
+      'completed',
+    ]
 
-  const handleNextStep = () => {
-    if (currentStepIndex === deliverySteps.length - 1) {
-      handleCompleteOrder();
-    } else {
-      setCurrentStepIndex((prev) => prev + 1);
+ const handleNextStep = async () => {
+  const authToken = localStorage.getItem("authToken");
+
+  if (!authToken) {
+    alert("Missing auth token.");
+    return;
+  }
+
+  const currentStage = trackingStages[currentStepIndex];
+  const isFinalStep = currentStepIndex === trackingStages.length - 1;
+
+  setLoading(true);
+  try {
+
+    await axios.put(
+     ` https://refillexpress.onrender.com/api/v1/order/tracking/${orderId}/status`,
+      { status: currentStage },
+      {
+        headers: {
+          Authorization:`Bearer ${authToken}`,
+        },
+      }
+    );
+    if (isFinalStep) {
+      await handleCompleteOrder();
+      return;
     }
-  };
 
+    setCurrentStepIndex((prev) => prev + 1);
+  } catch (error) {
+    console.error("Failed to update tracking status:", error.response || error);
+    alert("Failed to update tracking status. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
   // --- Render Logic: Loading/Error State ---
   if (loading || !orderData) {
     return (

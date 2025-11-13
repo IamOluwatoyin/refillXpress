@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import "./vendor-login.css";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { Link, NavLink, useNavigate } from "react-router";
-import Password from "antd/es/input/Password";
+import { NavLink, useNavigate } from "react-router";
 import SpinnerModal from "../spinner-modal";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { loginVendor } from "../../../api/mutation";
-import VendorDashboardEmpty from "../../../Pages/feature/component/Dashboard/VendorDashboardEmpty";
-import KYC from "../../../Pages/feature/component/order/kyc";
-import VendorDashboard from "../../../Pages/feature/component/Dashboard/Vendor-Dashboard";
 
 const VendorLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -38,28 +34,15 @@ const VendorLogin = () => {
         response.data.data.id
       );
       toast.success("Login successfully created");
-      setShowModal(true);
-
-      switch (response?.data?.data?.kycStatus) {
-        case "pending":
-          navigate("/vendor-dashboardEmpty");
-          break;
-        case "Not submiited":
-          navigate("/vendor-kyc");
-          break;
-        case "rejected":
-          navigate("/vendor-kyc");
-          break;
-        case "verified":
-          navigate("/vendor-dashboard");
-          break;
-        default:
-          navigate("/vendor-login");
+      if(response.data.showKycPage === true) {
+        navigate('/vendor-kyc')
+      }else{
+        navigate('/vendor-dashboard')
       }
+      setShowModal(true);
 
       setTimeout(() => {
         setShowModal(false);
-       
       }, 2000);
     } catch (error) {
       console.log("not working", error);
@@ -214,7 +197,6 @@ const VendorLogin = () => {
           </section>
         </div>
       </div>
-      
     </>
   );
 };

@@ -74,7 +74,7 @@ const DashboardSkeleton = () => (
   </div>
 );
 
-const KycStatusNotice = ({ kycStatus, navigate }) => {
+export const KycStatusNotice = ({ kycStatus, navigate }) => {
   let message = "";
   let actionText = "";
   const actionLink = "/rider-kyc";

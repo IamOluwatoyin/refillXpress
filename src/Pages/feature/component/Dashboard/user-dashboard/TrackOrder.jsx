@@ -1,17 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./trackorder.css";
+import { orderTrack } from "../../../../../api/query";
 
-const MyOrders = () => {
+const MyOrders = ({ orderId }) => {
+  const [orderData, setOrderData] = useState(null);
+  const [currentStep, setCurrentStep] = useState(0);
+
   const progressSteps = [
-    "Navigate to Customer",
-    "Pick Up Empty Cylinder",
-    "Navigate to Vendor",
-    "Cylinder Refill at Vendor",
-    "Return to Customer",
-    "Deliver Filled Cylinder",
+    "Navigating to Customer",
+    "Picked Up Cylinder",
+    "Navigating to Vendor",
+    "Refilling Cylinder",
+    "Returning to Customer",
+    "Completed",
   ];
 
-  const currentStep = 6; // active step (1–6)
+  
+  const userOrderTrack = async () => {
+    try {
+      const res = await orderTrack(orderId);
+      const data = res?.data?.data;
+
+      if (data) {
+        setOrderData(data);
+
+        // match API stage to our local progress index
+        const currentIndex = data.trackingStages.findIndex(
+          (s) => s === data.currentStage
+        );
+        setCurrentStep(currentIndex + 1);
+      }
+    } catch (err) {
+      console.error("Error fetching order tracking:", err);
+    }
+  };
+
+  
+  useEffect(() => {
+    if (orderId) {
+      userOrderTrack();
+      const interval = setInterval(userOrderTrack, 10000); 
+      return () => clearInterval(interval);
+    }
+  }, [orderId]);
 
   return (
     <div className="orders-container">
@@ -24,7 +55,9 @@ const MyOrders = () => {
           <div className="progress-bar">
             <div
               className="progress-fill"
-              style={{ width: `${(currentStep / progressSteps.length) * 100}%` }}
+              style={{
+                width: `${(currentStep / progressSteps.length) * 100}%`,
+              }}
             ></div>
           </div>
 
@@ -47,30 +80,53 @@ const MyOrders = () => {
         <div className="details-column">
           <div className="details-card">
             <h4>Order Details</h4>
-            <p><strong>Order ID:</strong> #GR45821</p>
-            <p><strong>Quantity:</strong> 11kg</p>
-            <p><strong>Amount:</strong> ₦12,500</p>
-            <p><strong>Delivery Address:</strong> No 1 SINZU STREET OJODU</p>
+            <p>
+              <strong>Order Number:</strong> {orderData?.orderNumber || "--"}
+            </p>
+            <p>
+              <strong>Quantity:</strong> {orderData?.quantity} x{" "}
+              {orderData?.cylinderSize}
+            </p>
+            <p>
+              <strong>Total:</strong> ₦{orderData?.totalPrice?.toLocaleString()}
+            </p>
+            <p>
+              <strong>Delivery Fee:</strong> ₦
+              {orderData?.deliveryFee?.toLocaleString()}
+            </p>
+            <p>
+              <strong>Delivery Address:</strong> {orderData?.user?.address}
+            </p>
           </div>
 
           <div className="details-card">
-            <h4>Driver Information</h4>
+            <h4>Rider Information</h4>
             <div className="driver-info">
-              <div className="avatar">JD</div>
+              <div className="avatar">
+                {orderData?.user?.name
+                  ? orderData.user.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")
+                      .toUpperCase()
+                  : "RD"}
+              </div>
               <div>
-                <p className="driver-name">John Driver</p>
-                <span className="driver-status">En Route</span>
+                <p className="driver-name">{orderData?.user?.name || "—"}</p>
+                <span className="driver-status">
+                  {orderData?.currentStatus || "—"}
+                </span>
               </div>
             </div>
 
-            <p className="contact-title">Contact Driver</p>
+            <p className="contact-title">Contact Rider</p>
             <div className="contact-box">
               <span className="phone-icon">📞</span>
-              <span>+2347089765543</span>
+              <span>{orderData?.user?.phone || "--"}</span>
             </div>
 
             <p className="arrival-title">Estimated Arrival</p>
-            <h3 className="arrival-time">15 mins</h3>
+            <h3 className="arrival-time">—</h3>
           </div>
         </div>
       </div>
