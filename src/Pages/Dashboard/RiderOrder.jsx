@@ -379,7 +379,7 @@ const RiderOrder = () => {
         ...activeData,
         ...completedData,
       ];
-      const transformedOrders = combinedRawData.map(transformRefillData);
+      const transformedOrders = combinedRawData.map(transformRefillData());
       setAllOrders(transformedOrders);
     } catch (err) {
       console.error("Error fetching refills:", err);

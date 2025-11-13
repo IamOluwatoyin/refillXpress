@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MdOutlineFileUpload } from "react-icons/md";
-import { vendorUploadPic, vendorUpadeDetails } from "../../../../api/mutation";
+import { vendorUpdateDetails, vendorUploadPic,  } from "../../../../api/mutation";
 import { toast } from "react-toastify";
 import { useRefetch } from "../../../../api/refetch";
 import { getVendorKyc } from "../../../../api/query";
@@ -57,7 +57,7 @@ const {refetch} = useRefetch(getVendorKyc)
         residentialAddress: formData.residentialAddress,
       };
 
-      const res = await vendorUpadeDetails(payload);
+      const res = await vendorUpdateDetails(payload);
       const updated = res?.data?.data;
 
       const storedVendor =

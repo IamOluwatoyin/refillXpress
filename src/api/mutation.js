@@ -87,7 +87,7 @@ export const vendorUploadPic = async (data) => {
   });
 };
 
-export const vendorUpadeDetails = async (data) => {
+export const vendorUpdateDetails = async (data) => {
   return api.put("/vendor/account/update", data, {
   });
 };
