@@ -74,7 +74,7 @@ const DashboardSkeleton = () => (
   </div>
 );
 
-const KycStatusNotice = ({ kycStatus, navigate }) => {
+export const KycStatusNotice = ({ kycStatus, navigate }) => {
   let message = "";
   let actionText = "";
   const actionLink = "/rider-kyc";
@@ -85,7 +85,7 @@ const KycStatusNotice = ({ kycStatus, navigate }) => {
     case "pending":
       message =
         "Your KYC application is under review. You will receive an update within 24-48 hours. Orders will appear once approved.";
-      actionText = "View KYC Status";
+      // actionText = "View KYC Status";
       icon = MdPending;
       break;
     case "rejected":
