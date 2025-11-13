@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import "./homecontent.css"
-import "./Customerreview.css"
+import "./customerreview.css"
 import { GoStar } from "react-icons/go";
 import { LuSearch } from "react-icons/lu";
 import { BsArrowDown, BsArrowRight } from "react-icons/bs";
