@@ -15,7 +15,7 @@ const VerifyEmail = () => {
   const inputRefs = useRef([]);
 
   const userEmail = localStorage.getItem("userEmail") || "your email address";
-  const API_BASE_URL = "https://refillexpress.onrender.com/api/v1";
+  const API_BASE_URL = import.meta.env.VITE_BASEURL;
 
   useEffect(() => {
     let interval = null;

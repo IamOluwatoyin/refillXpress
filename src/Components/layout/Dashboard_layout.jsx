@@ -5,13 +5,11 @@ import Dashboard_Sidebar from "../static/Dashboard_Sidebar";
 import { Outlet } from "react-router";
 import axios from "axios";
 
-// --- Custom Rider Data Fetching Function (Using Axios with Token) ---
 const fetchRiderData = async (riderId) => {
   if (!riderId) return null;
 
-  // 1. Retrieve the Auth Token from localStorage
   const authToken = localStorage.getItem("authToken");
-  const API_BASE_URL = "https://refillexpress.onrender.com/api/v1";
+  const API_BASE_URL = import.meta.env.VITE_BASEURL;
 
   if (!authToken) {
     console.error("Auth Token not found in local storage.");
@@ -24,9 +22,8 @@ const fetchRiderData = async (riderId) => {
 
   try {
     const response = await axios.get(`${API_BASE_URL}/rider/${riderId}`, {
-      // 2. Pass the token in the Authorization Header
       headers: {
-        Authorization: `Bearer ${authToken}`, // Assuming a Bearer scheme
+        Authorization: `Bearer ${authToken}`,
         "Content-Type": "application/json",
       },
     });
@@ -43,7 +40,6 @@ const fetchRiderData = async (riderId) => {
     return { name: errorMessage, email: "error@example.com", role: "Rider" };
   }
 };
-// -----------------------------------------------------------
 
 const Dashboard_layout = () => {
   const [rider, setRider] = useState(null);
@@ -68,7 +64,12 @@ const Dashboard_layout = () => {
   }, []);
 
   if (isLoading) {
-    // return <div>Loading Dashboard...</div>;
+    return (
+      <LoadingContainer>
+        <div className="spinner"></div>
+        <p>Loading dashboard...</p>
+      </LoadingContainer>
+    );
   }
 
   return (
@@ -90,7 +91,6 @@ const Dashboard_layout = () => {
 
 export default Dashboard_layout;
 
-// Styled components remain the same...
 const LayoutContainer = styled.div`
   width: 100%;
   height: 100vh;
@@ -119,7 +119,7 @@ const SidebarWrapper = styled.aside`
   transition: all 0.3s ease;
 
   @media (max-width: 1024px) {
-    width: 200px;
+    width: 220px;
   }
 
   @media (max-width: 768px) {
@@ -135,5 +135,30 @@ const ContentWrapper = styled.main`
 
   @media (max-width: 768px) {
     padding: 16px;
+  }
+`;
+
+const LoadingContainer = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #e5e7eb;
+    border-top-color: #3b82f6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 12px;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
   }
 `;

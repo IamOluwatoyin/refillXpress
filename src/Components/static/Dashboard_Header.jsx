@@ -43,7 +43,6 @@ const DashboardHeader = ({ rider }) => {
             />
           </div>
 
-          {/* Desktop User Profile */}
           <div className="desktop_user_profile">
             <div className="user_image_placeholder">{initials}</div>
             <div className="user_info">
@@ -52,7 +51,6 @@ const DashboardHeader = ({ rider }) => {
             </div>
           </div>
 
-          {/* Mobile Menu Button */}
           <div className="mobile_right_group">
             <button
               className="menu_button"
@@ -65,7 +63,6 @@ const DashboardHeader = ({ rider }) => {
         </div>
       </header>
 
-      {/* Mobile Sidebar */}
       <div
         className={`mobile_sidebar ${
           isSidebarOpen ? "mobile_sidebar--open" : ""
@@ -84,7 +81,6 @@ const DashboardHeader = ({ rider }) => {
             </button>
           </div>
 
-          {/* User Profile in Sidebar (Mobile) */}
           <div className="sidebar_user_profile">
             <div className="user_image_placeholder">{initials}</div>
             <div className="sidebar_user_info">
@@ -93,7 +89,6 @@ const DashboardHeader = ({ rider }) => {
             </div>
           </div>
 
-          {/* Navigation Links */}
           <nav className="sidebar_navigation">
             <a href="/dashboard" className="sidebar_nav_link">
               Dashboard

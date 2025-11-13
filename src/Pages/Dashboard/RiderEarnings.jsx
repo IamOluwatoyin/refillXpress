@@ -12,7 +12,7 @@ import {
 import { FaMapMarkerAlt } from "react-icons/fa";
 import "../../styles/riderEarnings.css";
 
-const API_BASE_URL = "https://refillexpress.onrender.com/api/v1";
+const API_BASE_URL = import.meta.env.VITE_BASEURL;
 
 const WeeklyPerformanceBar = ({ day, deliveries, earnings, maxEarnings }) => {
   const safeEarnings = parseInt(earnings.replace(/[^0-9]/g, "")) || 0;

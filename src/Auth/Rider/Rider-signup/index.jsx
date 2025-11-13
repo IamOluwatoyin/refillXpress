@@ -69,7 +69,7 @@ const RiderSignup = () => {
 
     const { ...payload } = formData;
 
-    const API_BASE_URL = "https://refillexpress.onrender.com/api/v1";
+    const API_BASE_URL = import.meta.env.VITE_BASEURL;
 
     setShowModal(true);
 
