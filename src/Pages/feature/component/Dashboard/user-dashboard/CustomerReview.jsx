@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import "./Homecontent.css"
+import "./homecontent.css"
 import "./Customerreview.css"
 import { GoStar } from "react-icons/go";
 import { LuSearch } from "react-icons/lu";
