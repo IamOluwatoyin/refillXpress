@@ -139,24 +139,11 @@ const ApplicationSuccessModal = ({
           application and will review it within **24-48 hours**. You'll receive
           an email notification once your application has been processed.
         </Message>
-
-        {/* <WhatNextBox>
-          <WhatNextTitle>What's Next?</WhatNextTitle>
-          <WhatNextList>
-            <WhatNextListItem>Background verification check</WhatNextListItem>
-            <WhatNextListItem>Document validation</WhatNextListItem>
-            <WhatNextListItem>Vehicle inspection scheduling</WhatNextListItem>
-            <WhatNextListItem>Training session invitation</WhatNextListItem>
-          </WhatNextList>
-        </WhatNextBox> */}
-
         <ApplicationIdWrapper>
           Application ID: <ApplicationId>{applicationId}</ApplicationId>
         </ApplicationIdWrapper>
 
-        <ContinueButton onClick={handleClose}>
-          Go to Rider Dashboard
-        </ContinueButton>
+        <ContinueButton onClick={handleClose}>Go Home</ContinueButton>
       </ModalContent>
     </ModalBackdrop>
   );

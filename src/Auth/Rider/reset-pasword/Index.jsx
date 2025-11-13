@@ -12,7 +12,7 @@ const ResetPassword = () => {
 
   const userEmail = localStorage.getItem("userEmail");
 
-  const Base_url = "https://refillexpress.onrender.com/api/v1";
+  const Base_url = import.meta.env.VITE_BASEURL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

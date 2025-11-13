@@ -17,7 +17,7 @@ import { useNavigate } from "react-router";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const API_BASE_URL = "https://refillexpress.onrender.com/api/v1";
+const API_BASE_URL = import.meta.env.VITE_BASEURL;
 
 const DashboardSkeleton = () => (
   <div className="dashboard_home skeleton_container">

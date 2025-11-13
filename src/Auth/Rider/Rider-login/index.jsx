@@ -17,7 +17,7 @@ const RiderLogin = () => {
     password: "",
   });
 
-  const API_BASE_URL = "https://refillexpress.onrender.com/api/v1";
+  const API_BASE_URL = import.meta.env.VITE_BASEURL;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
