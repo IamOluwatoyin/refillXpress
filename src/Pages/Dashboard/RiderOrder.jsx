@@ -22,6 +22,7 @@ const formatNaira = (amount) => {
     .replace("NGN", "₦");
 };
 
+// --------------------- MODAL ---------------------
 const RefillOrderDetailsModal = ({ order, isOpen, onClose, onAccept }) => {
   if (!isOpen || !order || !order.steps) return null;
 
@@ -127,7 +128,7 @@ const RefillOrderDetailsModal = ({ order, isOpen, onClose, onAccept }) => {
             Close
           </button>
           <button className="btn_accept_modal" onClick={onAccept}>
-            <MdOutlineCheckCircle size={18} /> **Accept This Order**
+            <MdOutlineCheckCircle size={18} /> Accept This Order
           </button>
         </div>
       </div>
@@ -135,6 +136,7 @@ const RefillOrderDetailsModal = ({ order, isOpen, onClose, onAccept }) => {
   );
 };
 
+// --------------------- COMPONENTS ---------------------
 const CompletedDeliveryItem = ({ order }) => {
   const rating = order.rating || 5;
   const stars = "★".repeat(rating) + "☆".repeat(5 - rating);
@@ -210,7 +212,7 @@ const ActiveOrderItem = ({ order, onNavigateToTracker }) => (
 
     <div className="active_order_actions">
       <button className="btn_navigate" onClick={onNavigateToTracker}>
-        <FaLocationArrow size={18} /> **Start Route Navigation**
+        <FaLocationArrow size={18} /> Start Route Navigation
       </button>
       <button className="btn_complete">
         <MdOutlineCheckCircle size={18} /> Complete Delivery
@@ -282,19 +284,24 @@ const RefillRequestItem = ({
         <MdOutlineRemoveCircle size={18} /> Details
       </button>
       <button className="btn_accept_image_style" onClick={onAccept}>
-        <MdOutlineCheckCircle size={18} /> **Accept**
+        <MdOutlineCheckCircle size={18} /> Accept
       </button>
     </div>
   </div>
 );
 
+// --------------------- MAIN COMPONENT ---------------------
 const RiderOrder = () => {
   const navigate = useNavigate();
 
   const [activeTab, setActiveTab] = useState("available");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
-  const [allOrders, setAllOrders] = useState([]);
+  const [allOrders, setAllOrders] = useState({
+    available: [],
+    active: [],
+    completed: [],
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [authToken, setAuthToken] = useState(null);
@@ -313,7 +320,7 @@ const RiderOrder = () => {
 
   const transformRefillData = (refill) => ({
     ...refill,
-    riderId: refill.riderId || refill.RiderId || null,
+    riderId: refill?.riderId || refill?.RiderId || null,
     id: refill.id,
     orderId: refill.orderNumber,
     orderNumber: refill.orderNumber,
@@ -331,7 +338,7 @@ const RiderOrder = () => {
     steps: [
       {
         title: "1. Pickup Empty Cylinder",
-        location: `${refill.pickupAddress} • 1.2 km`,
+        location: `${refill.deliveryAddress} • 1.2 km`,
       },
       {
         title: "2. Refill at Vendor",
@@ -361,26 +368,24 @@ const RiderOrder = () => {
         },
       });
 
-      const availableResponse = await axiosInstance.get(
-        "/rider/get/available-refills"
-      );
-      const availableData = availableResponse.data.data || [];
-
-      const activeCompletedResponse = await axiosInstance.get(
+      const res = await axiosInstance.get(
         "/rider/get/getActiveAndCompletedOrders"
       );
-      const activeCompletedData = activeCompletedResponse.data.data || {};
+      const data = res.data.data || {};
 
-      const activeData = activeCompletedData.active || [];
-      const completedData = activeCompletedData.completed || [];
+      const availableData = (data.available || []).map(transformRefillData);
+      const activeData = (data.active || []).map(transformRefillData);
+      const completedData = (data.completed || []).map(transformRefillData);
 
-      const combinedRawData = [
-        ...availableData,
-        ...activeData,
-        ...completedData,
-      ];
-      const transformedOrders = combinedRawData.map(transformRefillData());
-      setAllOrders(transformedOrders);
+      setAllOrders({
+        available: availableData,
+        active: activeData,
+        completed: completedData,
+      });
+
+      console.log("✅ Available Orders:", availableData);
+      console.log("✅ Active Orders:", activeData);
+      console.log("✅ Completed Orders:", completedData);
     } catch (err) {
       console.error("Error fetching refills:", err);
       setError(err.message || "Failed to fetch orders");
@@ -392,16 +397,6 @@ const RiderOrder = () => {
   useEffect(() => {
     fetchAllOrders();
   }, [fetchAllOrders]);
-
-  const availableOrders = allOrders.filter(
-    (order) => order.status === "pending" && !order.riderId
-  );
-  const activeOrders = allOrders.filter(
-    (order) => order.status === "active" && order.riderId === RIDER_ID
-  );
-  const completedOrders = allOrders.filter(
-    (order) => order.status === "completed" && order.riderId === RIDER_ID
-  );
 
   const handleDetailsClick = (orderData) => {
     setSelectedOrder(orderData);
@@ -457,9 +452,9 @@ const RiderOrder = () => {
   };
 
   const tabs = [
-    { key: "available", name: `Available (${availableOrders.length})` },
-    { key: "active", name: `Active (${activeOrders.length})` },
-    { key: "completed", name: `Completed (${completedOrders.length})` },
+    { key: "available", name: `Available (${allOrders.available.length})` },
+    { key: "active", name: `Active (${allOrders.active.length})` },
+    { key: "completed", name: `Completed (${allOrders.completed.length})` },
   ];
 
   return (
@@ -484,6 +479,7 @@ const RiderOrder = () => {
       {loading && <p className="loading_message">Loading deliveries...</p>}
       {error && !loading && <p className="error_message">Error: {error}</p>}
 
+      {/* ---------- AVAILABLE ORDERS ---------- */}
       {activeTab === "available" && !loading && (
         <>
           <div className="request_info_section">
@@ -502,12 +498,12 @@ const RiderOrder = () => {
           </div>
 
           <div className="requests_list">
-            {availableOrders.length === 0 ? (
+            {allOrders.available.length === 0 ? (
               <p className="loading_message">
                 No available orders at this time.
               </p>
             ) : (
-              availableOrders.map((order, index) => (
+              allOrders.available.map((order, index) => (
                 <RefillRequestItem
                   key={index}
                   {...order}
@@ -521,12 +517,13 @@ const RiderOrder = () => {
         </>
       )}
 
+      {/* ---------- ACTIVE ORDERS ---------- */}
       {activeTab === "active" && !loading && (
         <div className="active_order_content">
-          {activeOrders.length === 0 ? (
+          {allOrders.active.length === 0 ? (
             <p className="loading_message">No active orders currently.</p>
           ) : (
-            activeOrders.map((order, index) => (
+            allOrders.active.map((order, index) => (
               <ActiveOrderItem
                 key={index}
                 order={order}
@@ -537,27 +534,20 @@ const RiderOrder = () => {
         </div>
       )}
 
+      {/* ---------- COMPLETED ORDERS ---------- */}
       {activeTab === "completed" && !loading && (
         <div className="completed_order_content">
-          <div className="request_info_section">
-            <h3 className="request_info_title">Completed Deliveries</h3>
-            <p className="request_info_subtitle">
-              {completedOrders.length} Completed
-            </p>
-          </div>
-
-          <div className="completed_deliveries_list">
-            {completedOrders.length === 0 ? (
-              <p className="loading_message">No completed deliveries yet.</p>
-            ) : (
-              completedOrders.map((order, index) => (
-                <CompletedDeliveryItem key={index} order={order} />
-              ))
-            )}
-          </div>
+          {allOrders.completed.length === 0 ? (
+            <p className="loading_message">No completed deliveries yet.</p>
+          ) : (
+            allOrders.completed.map((order, index) => (
+              <CompletedDeliveryItem key={index} order={order} />
+            ))
+          )}
         </div>
       )}
 
+      {/* ---------- MODAL ---------- */}
       <RefillOrderDetailsModal
         order={selectedOrder}
         isOpen={isModalOpen}
