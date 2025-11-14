@@ -34,7 +34,7 @@ const VendorLogin = () => {
         response.data.data.id
       );
       toast.success("Login successfully created");
-      if(response.data.showKycPage === true) {
+      if(response?.data?.data?.showKycPage === true) {
         navigate('/vendor-kyc')
       }else{
         navigate('/vendor-dashboard')
