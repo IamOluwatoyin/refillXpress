@@ -86,4 +86,15 @@ export const AcceptOrderbyRider = async()=>{
   })
 }
 
-export const orderTrack = (id)=> api.get(`/user/order/tracking/${orderId}`)
+export const orderTrack = (id) =>{
+  const token = localStorage.getItem("token");
+  return api.get(`/user/order/tracking/${id}`,
+    {
+      headers:{
+        Authorization: `Bearers $(token)`,
+      }
+    }
+  )
+
+} ;
+

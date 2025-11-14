@@ -340,7 +340,10 @@ const MyOrders = () => {
                   </button>
                   <button
                     className="order-btn track-btn"
-                    onClick={() => nav("/userdashboard/track-order")}
+                   onClick={() =>
+                      nav("/userdashboard/track-order", { state: { orderId: order.id } })
+                    }
+
                   >
                     Track Delivery
                   </button>

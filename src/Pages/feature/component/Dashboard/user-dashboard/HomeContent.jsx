@@ -23,7 +23,6 @@ const HomeContent = () => {
   const [nearby, setNearby] = useState(null);
   const [recent, setRecent] = useState(null);
 
-  // 🧠 Availability check logic (copied from BrowseVendor)
   const checkAvailability = (vendor) => {
     if (!vendor?.openingTime || !vendor?.closingTime)
       return vendor.isAvailable ?? true;
@@ -61,7 +60,7 @@ const HomeContent = () => {
         setLoading(true);
         const res = await getNearbyVendors();
 
-        // ✅ Add dynamic isAvailable & keep other info intact
+        
         const updated = res.data.data.map((vendor) => ({
           ...vendor,
           isAvailable: checkAvailability(vendor),

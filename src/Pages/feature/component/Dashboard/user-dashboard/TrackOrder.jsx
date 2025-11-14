@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from "react";
 import "./trackorder.css";
 import { orderTrack } from "../../../../../api/query";
+import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-const MyOrders = ({ orderId }) => {
+const TrackOrder = () => {
   const [orderData, setOrderData] = useState(null);
   const [currentStep, setCurrentStep] = useState(0);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+ 
+  const orderId = location.state?.orderId;
+  console.log("Received orderId:", orderId);
+
 
   const progressSteps = [
     "Navigating to Customer",
@@ -15,38 +24,44 @@ const MyOrders = ({ orderId }) => {
     "Completed",
   ];
 
-  
   const userOrderTrack = async () => {
     try {
       const res = await orderTrack(orderId);
       const data = res?.data?.data;
+      console.log("Tracking data:", data);
 
       if (data) {
         setOrderData(data);
 
-        // match API stage to our local progress index
-        const currentIndex = data.trackingStages.findIndex(
+        // match API stage to local progress index safely
+        const currentIndex = data.trackingStages?.findIndex(
           (s) => s === data.currentStage
         );
-        setCurrentStep(currentIndex + 1);
+        setCurrentStep(currentIndex >= 0 ? currentIndex + 1 : 0);
       }
     } catch (err) {
       console.error("Error fetching order tracking:", err);
+      toast.error(
+        err?.response?.data?.message || "Failed to fetch tracking data"
+      );
     }
   };
 
-  
   useEffect(() => {
-    if (orderId) {
-      userOrderTrack();
-      const interval = setInterval(userOrderTrack, 10000); 
-      return () => clearInterval(interval);
+    if (!orderId) {
+      toast.error("No order selected to track");
+      navigate("/userdashboard/myorders");
+      return;
     }
+
+    userOrderTrack();
+    const interval = setInterval(userOrderTrack, 10000); // refresh every 10s
+    return () => clearInterval(interval);
   }, [orderId]);
 
   return (
     <div className="orders-container">
-      <h2 className="page-title">My Orders</h2>
+      <h2 className="page-title">Track Delivery</h2>
 
       <div className="orders-grid">
         {/* LEFT SIDE – DELIVERY PROGRESS */}
@@ -88,14 +103,16 @@ const MyOrders = ({ orderId }) => {
               {orderData?.cylinderSize}
             </p>
             <p>
-              <strong>Total:</strong> ₦{orderData?.totalPrice?.toLocaleString()}
+              <strong>Total:</strong> ₦
+              {orderData?.totalPrice?.toLocaleString() || "--"}
             </p>
             <p>
               <strong>Delivery Fee:</strong> ₦
-              {orderData?.deliveryFee?.toLocaleString()}
+              {orderData?.deliveryFee?.toLocaleString() || "--"}
             </p>
             <p>
-              <strong>Delivery Address:</strong> {orderData?.user?.address}
+              <strong>Delivery Address:</strong>{" "}
+              {orderData?.user?.address || "--"}
             </p>
           </div>
 
@@ -103,8 +120,8 @@ const MyOrders = ({ orderId }) => {
             <h4>Rider Information</h4>
             <div className="driver-info">
               <div className="avatar">
-                {orderData?.user?.name
-                  ? orderData.user.name
+                {orderData?.driver?.name
+                  ? orderData.driver.name
                       .split(" ")
                       .map((n) => n[0])
                       .join("")
@@ -112,7 +129,7 @@ const MyOrders = ({ orderId }) => {
                   : "RD"}
               </div>
               <div>
-                <p className="driver-name">{orderData?.user?.name || "—"}</p>
+                <p className="driver-name">{orderData?.driver?.name || "—"}</p>
                 <span className="driver-status">
                   {orderData?.currentStatus || "—"}
                 </span>
@@ -122,11 +139,15 @@ const MyOrders = ({ orderId }) => {
             <p className="contact-title">Contact Rider</p>
             <div className="contact-box">
               <span className="phone-icon">📞</span>
-              <span>{orderData?.user?.phone || "--"}</span>
+              <span>{orderData?.driver?.phone || "--"}</span>
             </div>
 
             <p className="arrival-title">Estimated Arrival</p>
-            <h3 className="arrival-time">—</h3>
+            <h3 className="arrival-time">
+              {orderData?.estimatedArrival
+                ? new Date(orderData.estimatedArrival).toLocaleTimeString()
+                : "—"}
+            </h3>
           </div>
         </div>
       </div>
@@ -134,4 +155,4 @@ const MyOrders = ({ orderId }) => {
   );
 };
 
-export default MyOrders;
+export default TrackOrder;
