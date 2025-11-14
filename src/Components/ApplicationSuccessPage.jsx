@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { FaCheckCircle } from "react-icons/fa";
-import { useNavigate } from "react-router-dom"; // ✅ should come from react-router-dom, not react-router
+import { useNavigate } from "react-router-dom"; 
 
-// (keep your styled-components here...)
+
 
 const ApplicationSuccessModal = ({
   applicationId = "RDR-FNSL9GD2K",
@@ -15,7 +15,7 @@ const ApplicationSuccessModal = ({
     if (onComplete) {
       onComplete();
     } else {
-      navigate("/"); // ✅ Change to "/rider/dashboard" or whatever route you want
+      navigate("/"); 
     }
   };
 
