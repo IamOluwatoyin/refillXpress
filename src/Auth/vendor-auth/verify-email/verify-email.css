@@ -4,38 +4,44 @@
   display: flex;
   justify-content: center;
   padding: 10px;
-
+ flex-direction: column;
   position: fixed;
 }
 .form-container-verify {
-  width: 60%;
-  height: max-content;
-  /* background-color: aqua; */
+   width: 100%;
+  height: 100vh;
   display: flex;
+  justify-content: center; 
+  align-items: center;      
+  padding: 10px;
   flex-direction: column;
-  gap: 15px;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
-.form-container-verify > header {
+.form-wrapper-verify > header {
   width: 40%;
   display: flex;
   margin-top: 20px;
   padding-left: 30px;
   cursor: pointer;
+   position: absolute;
+  left: 3%;
+  top: 0%;
 }
 
 .image {
   width: 40px;
   height: 30px;
 }
-.form-container-verify > header > h1 {
+.form-wrapper-verify > header > h1 {
   font-size: 20px;
   font-weight: 600;
   line-height: 120%;
   color: #005bac;
 
 }
-.form-container-verify > header > h1 > span {
+.form-wrar-verify > header > h1 > span {
   font-size: 18px;
   font-weight: 600;
   line-height: 120%;
@@ -44,11 +50,14 @@
 .cardBodyWrapper-verify {
   width: 100%;
   display: flex;
-  padding: 20px;
-  justify-content: center;
-  /* background-color: yellow; */
   height: 58rem;
+ justify-content: center;
+  align-items: center;
+   
+   
 }
+
+
 
 .cardBody-verify {
   width: 48.8rem;

@@ -34,8 +34,7 @@
 
 .cardBodyWrapperlogin {
   width: 100%;
-  display: flex;
-  /* padding: 50px; */
+  display: flex;/* padding: 50px; */
  align-items: center;
   justify-content: center;
   /* background-color: yellow; */

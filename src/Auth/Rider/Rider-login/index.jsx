@@ -63,6 +63,9 @@ const RiderLogin = () => {
       localStorage.setItem("authToken", token);
       localStorage.setItem("riderId", riderId);
 
+      // localStorage.setItem("role", "rider");
+
+
       toast.success("Login successful! Welcome back.");
 
       setTimeout(() => {

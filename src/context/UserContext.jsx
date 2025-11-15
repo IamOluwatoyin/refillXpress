@@ -52,6 +52,8 @@ const signup = async (data) => {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("userId", res.data.data.id);
       localStorage.setItem("userInfo", JSON.stringify(res.data.data));
+    
+    // localStorage.setItem("role", "user");  
 
       
 
@@ -76,6 +78,7 @@ const signup = async (data) => {
     setToken(null);
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    
   };
 
   return (
