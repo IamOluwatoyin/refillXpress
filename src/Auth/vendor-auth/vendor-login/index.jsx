@@ -33,23 +33,25 @@ const VendorLogin = () => {
         import.meta.env.VITE_VENDOR_ID,
         response.data.data.id
       );
+
+      // localStorage.setItem("role", "vendor");
+
       toast.success("Login successfully created");
       const user = response?.data?.data;
 
-if (user.showKycPage === true) {
-  // KYC not submitted or pending
-  navigate("/vendor-kyc");
-} else if (user.showKycPage === false && user.verificationStatus === "approved") {
-  // First-time onboarding for new users
-  if (user.isNewUser) {
-    navigate("vendor-dashboard/vendor-settings"); // Setup page for new users
-  } else {
-    navigate("/vendor-dashboard");
-  }
-} else {
-  
-  navigate("/vendor-dashboard");
-}
+      if (user.showKycPage === true) {
+        // KYC not submitted or pending
+        navigate("/vendor-kyc");
+      } else if (user.showKycPage === false && user.kycStatus === "verified") {
+        // First-time onboarding for new users
+        if (user.isNewUser === true) {
+          navigate("/vendor-dashboard/vendor-settings"); // Setup page for new users
+        } else {
+          navigate("/vendor-dashboard");
+        }
+      } else {
+        navigate("/vendor-dashboard");
+      }
       setShowModal(true);
 
       setTimeout(() => {
@@ -67,10 +69,9 @@ if (user.showKycPage === true) {
     <>
       <div className="form-wrapperlogin">
         <header onClick={() => navigate("/")}>
-            <img src="/Images/RefillXpress.jpg" alt="logo" />
-          </header>
+          <img src="/Images/RefillXpress.jpg" alt="logo" />
+        </header>
         <div className="form-containerlogin">
-          
           <section className="cardBodyWrapperlogin">
             <main className="cardBodylogin">
               <article>

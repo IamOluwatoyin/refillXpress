@@ -1,11 +1,22 @@
-import React from 'react'
+import { Navigate } from "react-router-dom";
 
-const Private = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+const PrivateRoute = ({ role, children }) => {
+  const storedRole = localStorage.getItem("role");
 
-export default Private
+  // match role → correct token
+  const tokens = {
+    vendor: localStorage.getItem("vendor_token"),
+    user: localStorage.getItem("token"),
+    rider: localStorage.getItem("authToken"),
+  };
+
+  const hasToken = tokens[role];
+
+  if (!hasToken || storedRole !== role) {
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
+};
+
+export default PrivateRoute;

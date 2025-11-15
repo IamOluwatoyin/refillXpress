@@ -46,7 +46,7 @@ import ForgotPassword from "../Auth/Rider/Forget-password/ForgetPassword";
 import ForgotPasswordVerifyEmail from "../Auth/Rider/forgotPasswordVerifyEmail/Index";
 import ResetPassword from "../Auth/Rider/reset-pasword/Index";
 import PaymentPage from "../Pages/feature/component/Dashboard/PaymentPage";
-
+import PrivateRoute from "./Private";
 import OrderTracker from "../Pages/OrderTracker/OrderTracker";
 
 export const router = createBrowserRouter([
@@ -60,7 +60,11 @@ export const router = createBrowserRouter([
   },
   {
     path: "/userdashboard",
-    element: <UserDashboard />,
+   element: (
+      // <PrivateRoute role="user">
+        <UserDashboard />
+      // </PrivateRoute>
+    ),
     children: [
       {
         index: true,
@@ -159,7 +163,11 @@ export const router = createBrowserRouter([
 
   {
     path: "vendor-dashboard",
-    element: <DashboardLayout />,
+    element: (
+      // <PrivateRoute role="vendor">
+        <DashboardLayout />
+      // </PrivateRoute>
+    ),
     children: [
       {
         index: true,
@@ -182,16 +190,17 @@ export const router = createBrowserRouter([
         path: "vendor-settings",
         element: <SettingsMangement />,
       },
-      // {
-      //   path: "vendor-logout",
-      //   element: <SettingsManagement />,
-      // },
+     
     ],
   },
 
   {
     path: "/rider-dashboard",
-    element: <Dashboard_layout />,
+    element: (
+      // <PrivateRoute role="rider">
+        <Dashboard_layout />
+      //  </PrivateRoute>
+    ),
     children: [
       {
         index: true,
