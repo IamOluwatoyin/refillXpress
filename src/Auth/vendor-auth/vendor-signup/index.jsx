@@ -49,13 +49,11 @@ const VendorSignup = () => {
 
   return (
     <div className="form-wrapper">
-      <div className="form-container">
-        <header onClick={() => navigate("/")}>
-          <img src="/Images/logo.svg" alt="logo" className="image" />
-          <h1>
-            Refill<span>Xpress</span>
-          </h1>
+      <header onClick={() => navigate("/")}>
+          <img src="/Images/RefillXpress.png" alt="logo" />
         </header>
+      <div className="form-container">
+        
         <section className="cardBodyWrapper">
           <main className="cardBody">
             <article>
@@ -273,7 +271,7 @@ const VendorSignup = () => {
                       style={{
                         padding: "12px",
                         borderRadius: "8px",
-                        // border: "1px solid #ccc",
+                        border: "1px solid #ccc",
                         width: " 18.875rem",
                         background: "#F2F6F5",
                         boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",

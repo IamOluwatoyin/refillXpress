@@ -86,15 +86,16 @@ export const AcceptOrderbyRider = async()=>{
   })
 }
 
-export const orderTrack = (id) =>{
+export const orderTrack = async (id) => {
   const token = localStorage.getItem("token");
-  return api.get(`/user/order/tracking/${id}`,
-    {
-      headers:{
-        Authorization: `Bearers $(token)`,
-      }
-    }
-  )
+  
+  if (!token) {
+    console.warn("No USER token found in localStorage");
+  }
 
-} ;
-
+  return axios.get(`${BASEURL}/user/order/tracking/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};

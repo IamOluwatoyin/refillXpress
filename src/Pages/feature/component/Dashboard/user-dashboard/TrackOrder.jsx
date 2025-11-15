@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
 import "./trackorder.css";
-import { orderTrack } from "../../../../../api/query";
+
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { orderTrack } from "../../../../../api/query";
 
 const TrackOrder = () => {
   const [orderData, setOrderData] = useState(null);
   const [currentStep, setCurrentStep] = useState(0);
   const location = useLocation();
+
   const navigate = useNavigate();
 
- 
   const orderId = location.state?.orderId;
-  console.log("Received orderId:", orderId);
-
 
   const progressSteps = [
     "Navigating to Customer",
@@ -25,15 +24,17 @@ const TrackOrder = () => {
   ];
 
   const userOrderTrack = async () => {
+    const token = localStorage.getItem("token");
+
+    console.log(orderId);
     try {
       const res = await orderTrack(orderId);
+
       const data = res?.data?.data;
       console.log("Tracking data:", data);
 
       if (data) {
         setOrderData(data);
-
-        // match API stage to local progress index safely
         const currentIndex = data.trackingStages?.findIndex(
           (s) => s === data.currentStage
         );
@@ -55,10 +56,17 @@ const TrackOrder = () => {
     }
 
     userOrderTrack();
-    const interval = setInterval(userOrderTrack, 10000); // refresh every 10s
+    const interval = setInterval(userOrderTrack, 200000); // refresh every 10s
     return () => clearInterval(interval);
   }, [orderId]);
 
+  if (orderData?.rider.name === undefined) {
+    return (
+      <div style={{ marginTop: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80vh', width: '100%'}}>
+        <p>Tracking info not available, No rider has accepted the order</p>
+      </div>
+    );
+  }
   return (
     <div className="orders-container">
       <h2 className="page-title">Track Delivery</h2>
@@ -129,17 +137,15 @@ const TrackOrder = () => {
                   : "RD"}
               </div>
               <div>
-                <p className="driver-name">{orderData?.driver?.name || "—"}</p>
-                <span className="driver-status">
-                  {orderData?.currentStatus || "—"}
-                </span>
+                <p className="driver-name">{orderData?.rider?.name || "—"}</p>
+                <span className="driver-status">En Route</span>
               </div>
             </div>
 
             <p className="contact-title">Contact Rider</p>
             <div className="contact-box">
               <span className="phone-icon">📞</span>
-              <span>{orderData?.driver?.phone || "--"}</span>
+              <span>{orderData?.rider?.phoneNumber || "--"}</span>
             </div>
 
             <p className="arrival-title">Estimated Arrival</p>

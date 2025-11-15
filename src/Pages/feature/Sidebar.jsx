@@ -18,22 +18,27 @@ import {
 import { toast } from "react-toastify";
 import { useOrders } from "../../context/PendingOrderContext";
 
-const Sidebar = () => {
+const Sidebar = ({ onItemClick }) => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const handleNavigation = (path) => {
+    navigate(path);
+    if (onItemClick) onItemClick();
+  };
   const [vendor, setVendor] = useState(null);
   const [averageRating, setAverageRating] = useState(0);
   const [verifyBadge, setVerifyBadge] = useState();
   const id = localStorage.getItem(import.meta.env.VITE_VENDOR_ID);
 
-  const {orders} = useOrders()
- 
+  const { orders } = useOrders();
+
   useEffect(() => {
     const fetchVendor = async () => {
       try {
         const response = await getVendorId(id);
         setVendor(response.data);
-        
+
         const isVerifyRes = await getVendorKyc(id);
         setVerifyBadge(isVerifyRes?.data?.data);
 
@@ -93,7 +98,7 @@ const Sidebar = () => {
         </section>
 
         <span
-          onClick={() => navigate("/vendor-dashboard")}
+          onClick={() => handleNavigation("/vendor-dashboard")}
           className={`dashboards ${isDashboardActive ? "activated" : ""}`}
         >
           <MdDashboard style={{ fontSize: "25px" }} />
@@ -101,7 +106,7 @@ const Sidebar = () => {
         </span>
 
         <span
-          onClick={() => navigate("/vendor-dashboard/vendor-order")}
+          onClick={() => handleNavigation("/vendor-dashboard/vendor-order")}
           className={`dashboard-order ${isOrderActive ? "activated" : ""}`}
         >
           <GoPackage style={{ fontSize: "25px" }} />
@@ -111,9 +116,11 @@ const Sidebar = () => {
           </sub>
         </span>
         <span
-          onClick={() => navigate("/vendor-dashboard/vendor-analytics")}
+          onClick={() => handleNavigation("/vendor-dashboard/vendor-analytics")}
           className={`analytics ${
-            currentPath === "/vendor-dashboard/vendor-analytics" ? "activated" : ""
+            currentPath === "/vendor-dashboard/vendor-analytics"
+              ? "activated"
+              : ""
           }`}
         >
           <VscGraph style={{ fontSize: "25px" }} />
@@ -121,18 +128,22 @@ const Sidebar = () => {
         </span>
 
         <span
-          onClick={() => navigate("/vendor-dashboard/vendor-profile")}
+          onClick={() => handleNavigation("/vendor-dashboard/vendor-profile")}
           className={`profiles ${
-            currentPath === "/vendor-dashboard/vendor-profile" ? "activated": ""
+            currentPath === "/vendor-dashboard/vendor-profile"
+              ? "activated"
+              : ""
           }`}
         >
           <FaRegUser style={{ fontSize: "25px" }} />
           <p>Account</p>
         </span>
         <span
-          onClick={() => navigate("/vendor-dashboard/vendor-settings")}
+          onClick={() => handleNavigation("/vendor-dashboard/vendor-settings")}
           className={`settings ${
-            currentPath === "/vendor-dashboard/vendor-settings" ? "activated": ""
+            currentPath === "/vendor-dashboard/vendor-settings"
+              ? "activated"
+              : ""
           }`}
         >
           <CiSettings style={{ fontSize: "28px" }} />
@@ -146,6 +157,7 @@ const Sidebar = () => {
               localStorage.removeItem(import.meta.env.VITE_VENDOR_TOKEN);
               localStorage.removeItem(import.meta.env.VITE_VENDOR_ID);
               navigate("/");
+              if (onItemClick) onItemClick();
             }}
           />
           <p>Logout</p>
