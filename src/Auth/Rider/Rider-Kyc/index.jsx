@@ -699,8 +699,7 @@ const RiderKycForm = () => {
       );
       console.log(response);
       toast.success("KYC submission successful! Awaiting verification.");
-
-      navigate("/dashboard");
+      navigate("/rider-dashboard");
 
       setIsSubmitted(true);
     } catch (error) {
