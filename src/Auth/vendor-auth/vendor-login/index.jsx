@@ -34,11 +34,22 @@ const VendorLogin = () => {
         response.data.data.id
       );
       toast.success("Login successfully created");
-      if(response?.data?.data?.showKycPage === true){
-        navigate('/vendor-kyc')
-      }else{
-        navigate('/vendor-dashboard')
-      }
+      const user = response?.data?.data;
+
+if (user.showKycPage === true) {
+  // KYC not submitted or pending
+  navigate("/vendor-kyc");
+} else if (user.showKycPage === false && user.verificationStatus === "approved") {
+  // First-time onboarding for new users
+  if (user.isNewUser) {
+    navigate("vendor-dashboard/vendor-settings"); // Setup page for new users
+  } else {
+    navigate("/vendor-dashboard");
+  }
+} else {
+  
+  navigate("/vendor-dashboard");
+}
       setShowModal(true);
 
       setTimeout(() => {
@@ -55,14 +66,11 @@ const VendorLogin = () => {
   return (
     <>
       <div className="form-wrapperlogin">
-        <div className="form-containerlogin">
-          <header onClick={() => navigate("/")}>
-            <img src="/Images/logo.svg" alt="logo" className="image" />
-
-            <h1>
-              Refill<span>Xpress</span>
-            </h1>
+        <header onClick={() => navigate("/")}>
+            <img src="/Images/RefillXpress.jpg" alt="logo" />
           </header>
+        <div className="form-containerlogin">
+          
           <section className="cardBodyWrapperlogin">
             <main className="cardBodylogin">
               <article>

@@ -1,6 +1,8 @@
 .DashboardlayoutWrapper {
   width: 100%;
   height: 100vh;
+  position: relative;
+  overflow: hidden;
 }
 
 .Content-wrapper {
@@ -8,10 +10,110 @@
   display: flex;
   gap: 15px;
   padding: 10px;
+  height: calc(100vh - 15vh - 20px);
 }
 
 .sidebar-wrapper {
   width: 18%;
   display: flex;
   justify-content: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.main-content {
+  width: 82%;
+  overflow: auto;
+  padding: 10px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Tablet Styles */
+@media (max-width: 1024px) {
+  .Content-wrapper {
+    height: calc(100vh - 12vh - 20px);
+    padding: 8px;
+    gap: 0;
+  }
+  
+  .sidebar-wrapper {
+    position: fixed;
+    top: 0;
+    left: -100%; /* Completely hidden by default */
+    width: 350px;
+    height: 100vh;
+    background: white;
+    z-index: 99999;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: left 0.3s ease-in-out;
+    justify-content: flex-start;
+    padding: 0;
+  }
+  
+  .sidebar-wrapper.active {
+    left: 0; /* Fully visible when active */
+  }
+  
+  .main-content {
+    width: 100%;
+    padding: 8px;
+  }
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .Content-wrapper {
+    height: calc(100vh - 10vh - 20px);
+    padding: 5px;
+  }
+  
+  .sidebar-wrapper {
+    width: 50px;
+    left: -100%;
+  }
+  
+  .sidebar-wrapper.active {
+    left: 0;
+  }
+  
+  .main-content {
+    padding: 5px;
+  }
+}
+
+/* Small Mobile Styles */
+@media (max-width: 480px) {
+  .Content-wrapper {
+    padding: 5px 0;
+  }
+  
+  .sidebar-wrapper {
+    width: 80%;
+    left: -100%;
+  }
+  
+  .sidebar-wrapper.active {
+    left: 0;
+  }
+  
+  .main-content {
+    padding: 5px;
+  }
+}
+
+/* Prevent body scroll when sidebar is open */
+body.sidebar-open {
+  overflow: hidden;
+}
+
+/* Desktop Styles */
+@media (min-width: 1025px) {
+  .sidebar-wrapper {
+    position: static;
+    width: 18%;
+    height: auto;
+  }
+  
+  .main-content {
+    width: 82%;
+  }
 }

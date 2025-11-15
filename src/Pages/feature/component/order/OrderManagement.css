@@ -140,12 +140,21 @@
 }
 
 
-.rightBtns {
+/* .rightBtns {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
    justify-content: flex-start;
    margin-top: -60px;
+  gap: 15px;
+} */
+
+.rightBtns {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;  /* keeps buttons in one straight vertical line */
+  justify-content: flex-start;
+  margin-top: 0;            /* removes the weird upward shift */
   gap: 15px;
 }
 

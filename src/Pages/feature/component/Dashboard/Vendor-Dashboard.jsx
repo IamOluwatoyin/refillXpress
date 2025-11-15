@@ -115,9 +115,9 @@ const VendorDashboard = () => {
   return (
     <div className="vendorDashboard-wrapper" style={{ position: "relative" }}>
       {loading && <div className="global-loading">Loading...</div>}
-      <h2>Dashboard</h2>
+      <h2> Welcome back, {vendorInfo?.businessName || "Vendor"}!</h2>
       <span>
-        Welcome back, {vendorInfo?.businessName || "Vendor"}! Here's what's
+       Here's what's
         happening today
       </span>
 

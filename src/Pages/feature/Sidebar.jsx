@@ -1,24 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { BiShoppingBag } from "react-icons/bi";
-import { MdDashboard, MdRateReview } from "react-icons/md";
+import { MdDashboard } from "react-icons/md";
 import { FaStar, FaRegUser } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./Sidebar.css";
 import { GoPackage } from "react-icons/go";
 import { VscGraph } from "react-icons/vsc";
 import { CiSettings } from "react-icons/ci";
-import { LuImagePlus } from "react-icons/lu";
-import { IoIosLogOut } from "react-icons/io";
+import { IoIosLogOut, IoIosClose } from "react-icons/io";
 import {
   getAllReviews,
   getVendorId,
   getVendorKyc,
-  getVendorPendingOrders,
 } from "../../api/query";
 import { toast } from "react-toastify";
 import { useOrders } from "../../context/PendingOrderContext";
 
-const Sidebar = () => {
+const Sidebar = ({ onClose }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [vendor, setVendor] = useState(null);
@@ -26,8 +23,8 @@ const Sidebar = () => {
   const [verifyBadge, setVerifyBadge] = useState();
   const id = localStorage.getItem(import.meta.env.VITE_VENDOR_ID);
 
-  const {orders} = useOrders()
- 
+  const { orders } = useOrders();
+
   useEffect(() => {
     const fetchVendor = async () => {
       try {
@@ -58,20 +55,37 @@ const Sidebar = () => {
     fetchVendor();
   }, []);
 
-  console.log(vendor);
-  const currentPath = location.pathname;
+  const handleNavigation = (path) => {
+    navigate(path);
+    // Close sidebar on mobile after navigation
+    if (window.innerWidth <= 1024 && onClose) {
+      onClose();
+    }
+  };
 
-  console.log("PATH:", currentPath);
+  const currentPath = location.pathname;
   const isDashboardActive = currentPath === "/vendor-dashboard";
-  const isOrderActive = currentPath.startsWith(
-    "/vendor-dashboard/vendor-order"
-  );
+  const isOrderActive = currentPath.startsWith("/vendor-dashboard/vendor-order");
+
   return (
     <div className="sidebarWrapper">
       <div className="sidebarContainer">
+        {/* Logo and Close Button in same line */}
+        <div className="sidebar-header">
+          <div className="sidebar-logo">
+            <img src="/Images/logo.svg" alt="RefillXpress Logo" className="sidebar-logo-img" />
+            <h2 className="sidebar-logo-text">
+              Refill<span>Xpress</span>
+            </h2>
+          </div>
+          <button className="sidebar-close-btn" onClick={onClose}>
+            <IoIosClose />
+          </button>
+        </div>
+
         <section className="vendor-icon-holder">
           <div className="vendor-icon-wrapper">
-            <img src="/Images/Container.svg" />
+            <img src="/Images/Container.svg" alt="Vendor" />
             <aside>
               {vendor?.data?.businessName}
               <div className="spaceicon">
@@ -92,64 +106,72 @@ const Sidebar = () => {
           </div>
         </section>
 
-        <span
-          onClick={() => navigate("/vendor-dashboard")}
-          className={`dashboards ${isDashboardActive ? "activated" : ""}`}
-        >
-          <MdDashboard style={{ fontSize: "25px" }} />
-          <p>Dashboard</p>
-        </span>
+        <div className="sidebar-nav-items">
+          <span
+            onClick={() => handleNavigation("/vendor-dashboard")}
+            className={`sidebar-item dashboards ${isDashboardActive ? "activated" : ""}`}
+          >
+            <MdDashboard className="sidebar-icon" />
+            <p>Dashboard</p>
+          </span>
 
-        <span
-          onClick={() => navigate("/vendor-dashboard/vendor-order")}
-          className={`dashboard-order ${isOrderActive ? "activated" : ""}`}
-        >
-          <GoPackage style={{ fontSize: "25px" }} />
-          <sub>
-            Orders
-            <span className="profileNotification">{orders?.length}</span>
-          </sub>
-        </span>
-        <span
-          onClick={() => navigate("/vendor-dashboard/vendor-analytics")}
-          className={`analytics ${
-            currentPath === "/vendor-dashboard/vendor-analytics" ? "activated" : ""
-          }`}
-        >
-          <VscGraph style={{ fontSize: "25px" }} />
-          <p>Analytics</p>
-        </span>
+          <span
+            onClick={() => handleNavigation("/vendor-dashboard/vendor-order")}
+            className={`sidebar-item dashboard-order ${isOrderActive ? "activated" : ""}`}
+          >
+            <GoPackage className="sidebar-icon" />
+            <sub>
+              Orders
+              <span className="profileNotification">{orders?.length}</span>
+            </sub>
+          </span>
 
-        <span
-          onClick={() => navigate("/vendor-dashboard/vendor-profile")}
-          className={`profiles ${
-            currentPath === "/vendor-dashboard/vendor-profile" ? "activated": ""
-          }`}
-        >
-          <FaRegUser style={{ fontSize: "25px" }} />
-          <p>Account</p>
-        </span>
-        <span
-          onClick={() => navigate("/vendor-dashboard/vendor-settings")}
-          className={`settings ${
-            currentPath === "/vendor-dashboard/vendor-settings" ? "activated": ""
-          }`}
-        >
-          <CiSettings style={{ fontSize: "28px" }} />
-          <p>Settings</p>
-        </span>
+          <span
+            onClick={() => handleNavigation("/vendor-dashboard/vendor-analytics")}
+            className={`sidebar-item analytics ${
+              currentPath === "/vendor-dashboard/vendor-analytics" ? "activated" : ""
+            }`}
+          >
+            <VscGraph className="sidebar-icon" />
+            <p>Analytics</p>
+          </span>
 
-        <span className="Dashboard-logout">
-          <IoIosLogOut
-            style={{ fontSize: "28px" }}
+          <span
+            onClick={() => handleNavigation("/vendor-dashboard/vendor-profile")}
+            className={`sidebar-item profiles ${
+              currentPath === "/vendor-dashboard/vendor-profile" ? "activated" : ""
+            }`}
+          >
+            <FaRegUser className="sidebar-icon" />
+            <p>Account</p>
+          </span>
+
+          <span
+            onClick={() => handleNavigation("/vendor-dashboard/vendor-settings")}
+            className={`sidebar-item settings ${
+              currentPath === "/vendor-dashboard/vendor-settings" ? "activated" : ""
+            }`}
+          >
+            <CiSettings className="sidebar-icon" />
+            <p>Settings</p>
+          </span>
+        </div>
+
+        {/* Logout at the bottom */}
+        <div className="sidebar-footer">
+          <span 
+            className="sidebar-item Dashboard-logout"
             onClick={() => {
               localStorage.removeItem(import.meta.env.VITE_VENDOR_TOKEN);
               localStorage.removeItem(import.meta.env.VITE_VENDOR_ID);
               navigate("/");
+              if (onClose) onClose();
             }}
-          />
-          <p>Logout</p>
-        </span>
+          >
+            <IoIosLogOut className="sidebar-icon logout-icon" />
+            <p>Logout</p>
+          </span>
+        </div>
       </div>
     </div>
   );

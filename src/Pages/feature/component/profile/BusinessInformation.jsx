@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { MdOutlineFileUpload } from "react-icons/md";
-import { vendorUpdateDetails, vendorUploadPic,  } from "../../../../api/mutation";
+import { vendorUpdateDetails, vendorUploadPic } from "../../../../api/mutation";
 import { toast } from "react-toastify";
 import { useRefetch } from "../../../../api/refetch";
 import { getVendorKyc } from "../../../../api/query";
 const BusinessInformation = ({ vendor }) => {
   const [formData, setFormData] = useState({
-    phoneNumber: vendor?.businessPhoneNumber || "",
+    phoneNumber: vendor?.phoneNumber || "",
     residentialAddress: vendor?.residentialAddress || "",
   });
-const {refetch} = useRefetch(getVendorKyc)
+  console.log("formata oooo", vendor);
+  console.log("formata heiii", formData);
+  const { refetch } = useRefetch(getVendorKyc);
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
 
@@ -38,7 +40,7 @@ const {refetch} = useRefetch(getVendorKyc)
       );
 
       toast.success("Profile picture updated successfully!");
-      refetch()
+      refetch();
     } catch (error) {
       console.error("Image upload failed:", error);
       toast.error(
@@ -53,7 +55,7 @@ const {refetch} = useRefetch(getVendorKyc)
     try {
       setSaving(true);
       const payload = {
-        phoneNumber: formData.phoneNumber,
+        phoneNumber: formData.businessPhoneNumber,
         residentialAddress: formData.residentialAddress,
       };
 
@@ -70,9 +72,10 @@ const {refetch} = useRefetch(getVendorKyc)
           residentialAddress: updated?.residentialAddress,
         })
       );
+      console.log(storedVendor);
 
       toast.success("Profile information updated successfully!");
-       refetch()
+      refetch();
     } catch (error) {
       console.error("Update failed:", error);
       toast.error(
