@@ -692,3 +692,461 @@
 .btn_accept_modal:hover {
   background-color: #e68900;
 }
+
+/* MOBILE RESPONSIVENESS - Media queries for all mobile devices */
+
+/* Tablet and Large Phones (481px - 768px) */
+@media (max-width: 768px) {
+  .rider_order_page {
+    padding: 15px;
+  }
+
+  .order_title {
+    font-size: 1.5rem;
+  }
+
+  .order_tabs_wrapper {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 8px;
+  }
+
+  .order_tab {
+    padding: 8px 4px;
+    font-size: 0.85rem;
+  }
+
+  .request_info_title {
+    font-size: 1.1rem;
+  }
+
+  .request_item,
+  .active_order_card,
+  .completed_delivery_item {
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+
+  .request_header_image_style {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .location_sections {
+    gap: 8px;
+  }
+
+  .active_order_actions {
+    gap: 8px;
+  }
+
+  .request_actions_image_style {
+    gap: 10px;
+  }
+
+  .modal_content {
+    padding: 20px;
+  }
+
+  .modal_actions {
+    gap: 10px;
+  }
+
+  .btn_navigate,
+  .btn_complete {
+    padding: 8px 12px;
+  }
+
+  .step_info_image_style {
+    padding: 5px 10px;
+  }
+}
+
+/* Small Phones (361px - 480px) */
+@media (max-width: 480px) {
+  .rider_order_page {
+    padding: 12px;
+  }
+
+  .order_title {
+    font-size: 1.3rem;
+    margin-bottom: 3px;
+  }
+
+  .order_subtitle {
+    font-size: 0.8rem;
+    margin-bottom: 15px;
+  }
+
+  .order_tabs_wrapper {
+    width: 100%;
+    gap: 4px;
+    padding: 4px;
+    border-radius: 6px;
+  }
+
+  .order_tab {
+    padding: 6px 3px;
+    font-size: 0.75rem;
+    border-radius: 6px;
+  }
+
+  .request_info_section {
+    margin-bottom: 10px;
+  }
+
+  .request_info_title {
+    font-size: 0.95rem;
+  }
+
+  .request_info_subtitle {
+    font-size: 0.8rem;
+  }
+
+  .gas_cylinder_service_info {
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 0.8rem;
+  }
+
+  .request_item,
+  .active_order_card,
+  .completed_delivery_item {
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+  }
+
+  .request_header_image_style {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .order_time_details {
+    font-size: 0.8rem;
+  }
+
+  .request_fee_group {
+    align-items: flex-start;
+    margin-top: 5px;
+  }
+
+  .delivery_fee_image_style {
+    font-size: 1rem;
+  }
+
+  .delivery_fee_label {
+    font-size: 0.7rem;
+  }
+
+  .step_item_image_style {
+    padding: 8px 0;
+  }
+
+  .step_dot_line_image_style {
+    padding: 0 6px;
+  }
+
+  .step_info_image_style {
+    padding: 5px 8px;
+  }
+
+  .step_title_image_style {
+    font-size: 0.85rem;
+  }
+
+  .step_location_image_style {
+    font-size: 0.75rem;
+  }
+
+  .request_actions_image_style {
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 12px;
+  }
+
+  .btn_details_image_style,
+  .btn_accept_image_style {
+    padding: 8px 10px;
+    gap: 5px;
+    font-size: 0.8rem;
+  }
+
+  .active_order_header {
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+  }
+
+  .active_order_id {
+    font-size: 0.95rem;
+  }
+
+  .status_badge {
+    padding: 3px 6px;
+    font-size: 0.7rem;
+  }
+
+  .active_order_fee {
+    font-size: 0.9rem;
+    margin-top: 5px;
+    width: 100%;
+    text-align: right;
+  }
+
+  .active_order_details {
+    margin-bottom: 12px;
+  }
+
+  .refill_type {
+    font-size: 0.9rem;
+    margin-bottom: 3px;
+  }
+
+  .customer_name_detail {
+    font-size: 0.8rem;
+  }
+
+  .location_sections {
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 15px;
+  }
+
+  .location_card {
+    padding: 8px;
+  }
+
+  .location_title {
+    font-size: 0.75rem;
+    margin-bottom: 4px;
+  }
+
+  .location_address {
+    font-size: 0.7rem;
+    gap: 4px;
+  }
+
+  .active_order_actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .btn_navigate,
+  .btn_complete {
+    padding: 8px 10px;
+    font-size: 0.8rem;
+    gap: 5px;
+  }
+
+  .completed_header {
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .completed_order_id {
+    font-size: 0.9rem;
+  }
+
+  .completed_fee {
+    font-size: 0.9rem;
+  }
+
+  .completed_details {
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+  }
+
+  .customer_time {
+    width: 100%;
+  }
+
+  .customer_name_comp {
+    font-size: 0.9rem;
+  }
+
+  .delivery_time_comp {
+    font-size: 0.75rem;
+  }
+
+  .gas_quantity {
+    font-size: 0.8rem;
+    width: 100%;
+    text-align: right;
+    margin-top: 5px;
+  }
+
+  .completed_meta {
+    flex-direction: column;
+    gap: 5px;
+    font-size: 0.75rem;
+  }
+
+  .modal_overlay {
+    align-items: flex-end;
+  }
+
+  .modal_content {
+    width: 95%;
+    max-width: 100%;
+    padding: 15px;
+    border-radius: 10px;
+    max-height: 95vh;
+  }
+
+  .modal_header {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    flex-wrap: wrap;
+  }
+
+  .modal_title {
+    font-size: 1.1rem;
+  }
+
+  .modal_subtitle {
+    font-size: 0.75rem;
+    top: 45px;
+  }
+
+  .modal_summary_box {
+    gap: 3px;
+    padding: 10px;
+    margin-bottom: 15px;
+  }
+
+  .you_ll_earn,
+  .total_distance_label {
+    font-size: 0.7rem;
+  }
+
+  .modal_earnings,
+  .modal_total_distance {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+  }
+
+  .modal_section_title {
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    padding-top: 8px;
+  }
+
+  .modal_refill_step {
+    padding: 8px 0;
+    margin-left: 8px;
+  }
+
+  .step_icon_wrapper {
+    margin-left: -10px;
+    margin-right: 10px;
+  }
+
+  .step_info_modal {
+    padding-bottom: 4px;
+  }
+
+  .step_title_modal {
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+  }
+
+  .step_type_tag {
+    font-size: 0.7rem;
+    padding: 2px 4px;
+  }
+
+  .step_location_modal {
+    font-size: 0.8rem;
+    margin-bottom: 4px;
+  }
+
+  .step_distance_phone {
+    font-size: 0.7rem;
+  }
+
+  .modal_actions {
+    gap: 8px;
+    margin-top: 15px;
+    padding-top: 10px;
+    flex-direction: column;
+  }
+
+  .btn_close_modal,
+  .btn_accept_modal {
+    padding: 10px 12px;
+    font-size: 0.8rem;
+    gap: 6px;
+  }
+}
+
+/* Extra Small Phones (max 360px) */
+@media (max-width: 360px) {
+  .rider_order_page {
+    padding: 10px;
+  }
+
+  .order_title {
+    font-size: 1.1rem;
+    margin-bottom: 2px;
+  }
+
+  .order_subtitle {
+    font-size: 0.75rem;
+    margin-bottom: 10px;
+  }
+
+  .order_tabs_wrapper {
+    gap: 3px;
+    padding: 3px;
+  }
+
+  .order_tab {
+    padding: 5px 2px;
+    font-size: 0.7rem;
+  }
+
+  .request_info_title {
+    font-size: 0.85rem;
+  }
+
+  .request_item,
+  .active_order_card,
+  .completed_delivery_item {
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .delivery_fee_image_style {
+    font-size: 0.95rem;
+  }
+
+  .btn_details_image_style,
+  .btn_accept_image_style {
+    padding: 6px 8px;
+    font-size: 0.75rem;
+  }
+
+  .btn_navigate,
+  .btn_complete {
+    padding: 6px 8px;
+    font-size: 0.7rem;
+  }
+
+  .modal_content {
+    padding: 12px;
+  }
+
+  .modal_title {
+    font-size: 1rem;
+  }
+
+  .modal_earnings,
+  .modal_total_distance {
+    font-size: 1rem;
+  }
+}

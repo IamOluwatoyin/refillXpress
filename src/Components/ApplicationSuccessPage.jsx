@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { FaCheckCircle } from "react-icons/fa";
-import { useNavigate } from "react-router-dom"; 
-
-
+import { useNavigate } from "react-router-dom";
 
 const ApplicationSuccessModal = ({
   applicationId = "RDR-FNSL9GD2K",
@@ -15,7 +13,7 @@ const ApplicationSuccessModal = ({
     if (onComplete) {
       onComplete();
     } else {
-      navigate("/"); 
+      navigate("/");
     }
   };
 

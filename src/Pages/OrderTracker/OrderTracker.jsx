@@ -783,51 +783,56 @@ const OrderTracker = () => {
       setLoading(false);
     }
   };
- const trackingStages = [
-      'navigatingToCustomer',
-      'pickedUpCylinder',
-      'navigatingToVendor',
-      'refillingCylinder',
-      'returningToCustomer',
-      'completed',
-    ]
 
- const handleNextStep = async () => {
-  const authToken = localStorage.getItem("authToken");
+  const trackingStages = [
+    "navigatingToCustomer",
+    "pickedUpCylinder",
+    "navigatingToVendor",
+    "refillingCylinder",
+    "returningToCustomer",
+    "completed",
+  ];
 
-  if (!authToken) {
-    alert("Missing auth token.");
-    return;
-  }
+  const handleNextStep = async () => {
+    const authToken = localStorage.getItem("authToken");
 
-  const currentStage = trackingStages[currentStepIndex];
-  const isFinalStep = currentStepIndex === trackingStages.length - 1;
-
-  setLoading(true);
-  try {
-
-    await axios.put(
-     ` https://refillexpress.onrender.com/api/v1/order/tracking/${orderId}/status`,
-      { status: currentStage },
-      {
-        headers: {
-          Authorization:`Bearer ${authToken}`,
-        },
-      }
-    );
-    if (isFinalStep) {
-      await handleCompleteOrder();
+    if (!authToken) {
+      alert("Missing auth token.");
       return;
     }
 
-    setCurrentStepIndex((prev) => prev + 1);
-  } catch (error) {
-    console.error("Failed to update tracking status:", error.response || error);
-    alert("Failed to update tracking status. Please try again.");
-  } finally {
-    setLoading(false);
-  }
-};
+    const currentStage = trackingStages[currentStepIndex];
+    const isFinalStep = currentStepIndex === trackingStages.length - 1;
+
+    setLoading(true);
+    try {
+      await axios.put(
+        `https://refillexpress.onrender.com/api/v1/order/tracking/${orderId}/status`,
+        { orderStatus: currentStage },
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+      if (isFinalStep) {
+        setIsModalOpen(true);
+        setLoading(false);
+        return;
+      }
+
+      setCurrentStepIndex((prev) => prev + 1);
+    } catch (error) {
+      console.error(
+        "Failed to update tracking status:",
+        error.response || error
+      );
+      alert("Failed to update tracking status. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // --- Render Logic: Loading/Error State ---
   if (loading || !orderData) {
     return (

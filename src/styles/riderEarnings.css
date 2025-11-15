@@ -279,3 +279,359 @@
   font-weight: 700;
   color: #333;
 }
+
+/* Mobile Responsiveness - Tablets and large phones (481px-768px) */
+@media (max-width: 768px) {
+  .rider_earnings_page {
+    padding: 20px;
+  }
+
+  .page_title {
+    font-size: 1.3rem;
+  }
+
+  .earnings_grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .earnings_card {
+    padding: 12px;
+  }
+
+  .earnings_card .card_value {
+    font-size: 1.3rem;
+  }
+
+  .earnings_card .card_title {
+    font-size: 0.85rem;
+  }
+
+  .segmented_tabs_wrapper {
+    width: 100%;
+    height: 40px;
+  }
+
+  .segmented_tab {
+    font-size: 0.85rem;
+  }
+
+  .delivery_item {
+    padding: 12px;
+  }
+
+  .delivery_details {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .delivery_financials {
+    text-align: left;
+  }
+
+  .weekly_bar_item {
+    gap: 8px;
+  }
+
+  .day_info {
+    width: 120px;
+  }
+
+  .payout_schedule_card {
+    padding: 12px;
+  }
+
+  .payout_details {
+    font-size: 0.85rem;
+    padding-left: 25px;
+  }
+
+  .expected_amount {
+    font-size: 0.85rem;
+    margin-left: 25px;
+  }
+
+  .payout_header {
+    gap: 8px;
+  }
+}
+
+/* Mobile Responsiveness - Small phones (361px-480px) */
+@media (max-width: 480px) {
+  .rider_earnings_page {
+    padding: 15px;
+  }
+
+  .page_title {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+  }
+
+  .page_subtitle {
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+  }
+
+  .earnings_grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .earnings_card {
+    padding: 10px;
+  }
+
+  .earnings_card .card_value {
+    font-size: 1.1rem;
+  }
+
+  .earnings_card .card_title {
+    font-size: 0.8rem;
+  }
+
+  .earnings_card .card_icon {
+    font-size: 18px;
+  }
+
+  .section_header {
+    font-size: 1rem;
+    margin: 20px 0 12px 0;
+  }
+
+  .segmented_tabs_wrapper {
+    width: 100%;
+    height: 38px;
+    padding: 2px;
+    margin-bottom: 15px;
+  }
+
+  .segmented_tab {
+    font-size: 0.8rem;
+  }
+
+  .delivery_item {
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+  }
+
+  .delivery_header {
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+  }
+
+  .delivery_id {
+    font-size: 0.9rem;
+  }
+
+  .status_badge {
+    font-size: 0.7rem;
+    padding: 2px 6px;
+  }
+
+  .delivery_meta p {
+    font-size: 0.8rem;
+    margin: 3px 0;
+  }
+
+  .total_earning {
+    font-size: 1rem;
+  }
+
+  .base_fare {
+    font-size: 0.75rem;
+  }
+
+  .weekly_bar_item {
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .day_info {
+    width: 100px;
+    min-width: 100px;
+  }
+
+  .day_label {
+    font-size: 0.9rem;
+  }
+
+  .delivery_count {
+    font-size: 0.75rem;
+  }
+
+  .bar_container {
+    flex: 1;
+    min-width: 100px;
+  }
+
+  .daily_earning {
+    width: 70px;
+    font-size: 0.9rem;
+  }
+
+  .payout_schedule_card {
+    padding: 10px;
+    border-left-width: 4px;
+  }
+
+  .payout_header {
+    font-size: 0.9rem;
+    gap: 6px;
+    margin-bottom: 3px;
+  }
+
+  .payout_details {
+    font-size: 0.8rem;
+    margin: 3px 0;
+    padding-left: 20px;
+  }
+
+  .expected_amount {
+    font-size: 0.8rem;
+    padding: 2px 4px;
+    margin-top: 8px;
+    margin-left: 20px;
+  }
+}
+
+/* Mobile Responsiveness - Extra small phones (≤360px) */
+@media (max-width: 360px) {
+  .rider_earnings_page {
+    padding: 12px;
+  }
+
+  .page_title {
+    font-size: 1rem;
+    margin-bottom: 3px;
+  }
+
+  .page_subtitle {
+    font-size: 0.8rem;
+    margin-bottom: 12px;
+  }
+
+  .earnings_grid {
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .earnings_card {
+    padding: 8px;
+  }
+
+  .earnings_card .card_value {
+    font-size: 1rem;
+  }
+
+  .earnings_card .card_title {
+    font-size: 0.75rem;
+  }
+
+  .earnings_card .card_icon {
+    font-size: 16px;
+  }
+
+  .section_header {
+    font-size: 0.95rem;
+    margin: 15px 0 10px 0;
+  }
+
+  .segmented_tabs_wrapper {
+    height: 36px;
+    padding: 2px;
+    margin-bottom: 12px;
+  }
+
+  .segmented_tab {
+    font-size: 0.75rem;
+  }
+
+  .delivery_item {
+    padding: 8px;
+    margin-bottom: 6px;
+  }
+
+  .delivery_header {
+    padding-bottom: 6px;
+    margin-bottom: 6px;
+    gap: 5px;
+  }
+
+  .delivery_id {
+    font-size: 0.85rem;
+  }
+
+  .status_badge {
+    font-size: 0.65rem;
+    padding: 2px 5px;
+  }
+
+  .delivery_details {
+    gap: 8px;
+  }
+
+  .delivery_meta p {
+    font-size: 0.75rem;
+    margin: 2px 0;
+  }
+
+  .total_earning {
+    font-size: 0.95rem;
+  }
+
+  .base_fare {
+    font-size: 0.7rem;
+  }
+
+  .weekly_bar_item {
+    gap: 4px;
+  }
+
+  .day_info {
+    width: 80px;
+    min-width: 80px;
+  }
+
+  .day_label {
+    font-size: 0.8rem;
+  }
+
+  .delivery_count {
+    font-size: 0.7rem;
+  }
+
+  .bar_container {
+    min-width: 80px;
+    height: 8px;
+  }
+
+  .daily_earning {
+    width: 60px;
+    font-size: 0.8rem;
+  }
+
+  .payout_schedule_card {
+    padding: 8px;
+  }
+
+  .payout_header {
+    font-size: 0.85rem;
+    gap: 5px;
+  }
+
+  .payout_details {
+    font-size: 0.75rem;
+    margin: 2px 0;
+    padding-left: 18px;
+  }
+
+  .expected_amount {
+    font-size: 0.75rem;
+    padding: 1px 3px;
+    margin-top: 6px;
+    margin-left: 18px;
+  }
+}

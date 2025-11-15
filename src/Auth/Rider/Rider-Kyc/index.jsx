@@ -10,7 +10,6 @@ import {
 import "./RiderApplicationForm.css";
 import Header from "../../../assets/Header.png";
 import { useNavigate } from "react-router-dom";
-import ApplicationSuccessPage from "../../../Components/ApplicationSuccessPage";
 import axios from "axios";
 import { toast } from "react-toastify";
 import SpinnerModal from "../../vendor-auth/spinner-modal";
@@ -700,6 +699,8 @@ const RiderKycForm = () => {
       );
       console.log(response);
       toast.success("KYC submission successful! Awaiting verification.");
+      navigate("/rider-dashboard");
+
       setIsSubmitted(true);
     } catch (error) {
       console.error("KYC Submission Error:", error.response || error);
@@ -760,11 +761,6 @@ const RiderKycForm = () => {
         return null;
     }
   };
-
-  if (isSubmitted) {
-    return <ApplicationSuccessPage applicationId={"RDR-FNSL9GD2K"} />;
-  }
-
   if (isLoading) {
     return <SpinnerModal />;
   }

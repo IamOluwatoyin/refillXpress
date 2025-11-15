@@ -90,18 +90,30 @@ const DashboardHeader = ({ rider }) => {
           </div>
 
           <nav className="sidebar_navigation">
-            <a href="/dashboard" className="sidebar_nav_link">
+            <h4
+              onClick={() => navigate("/rider-dashboard")}
+              className="sidebar_nav_link"
+            >
               Dashboard
-            </a>
-            <a href="/rides" className="sidebar_nav_link">
-              My Rides
-            </a>
-            <a href="/profile" className="sidebar_nav_link">
-              Profile
-            </a>
-            <a href="/settings" className="sidebar_nav_link">
-              Settings
-            </a>
+            </h4>
+            <h4
+              onClick={() => navigate("/rider-dashboard/order")}
+              className="sidebar_nav_link"
+            >
+              Order
+            </h4>
+            <h4
+              onClick={() => navigate("/rider-dashboard/earnings")}
+              className="sidebar_nav_link"
+            >
+              Earnings
+            </h4>
+            <h4
+              onClick={() => navigate("/rider-dashboard/account")}
+              className="sidebar_nav_link"
+            >
+              Account
+            </h4>
             <button className="sidebar_logout_btn">Logout</button>
           </nav>
         </div>

@@ -510,3 +510,438 @@ input:checked + .slider:before {
   color: #555;
   line-height: 1.6;
 }
+
+/* Mobile Responsiveness - Tablet and Large Phones (481px - 768px) */
+@media (max-width: 768px) {
+  .rider_account_page {
+    padding: 20px;
+  }
+
+  .page_title {
+    font-size: 1.5rem;
+  }
+
+  .account_tabs_wrapper {
+    width: 100%;
+    height: 45px;
+  }
+
+  .account_tab {
+    font-size: 0.85rem;
+    padding: 0 8px;
+  }
+
+  .personal_info_section,
+  .banking_section,
+  .documents_section {
+    padding: 20px;
+  }
+
+  .personal_info_grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 15px;
+    margin-bottom: 20px;
+  }
+
+  .banking_info_grid {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .account_number_field {
+    width: 100%;
+  }
+
+  .card_header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .btn_update_banking_info {
+    width: 100%;
+    padding: 10px 15px;
+  }
+
+  .automatic_payouts {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .profile_picture_area {
+    gap: 15px;
+  }
+
+  .save_changes_footer {
+    justify-content: center;
+  }
+
+  .btn_save_changes_orange {
+    width: 100%;
+    padding: 12px 20px;
+  }
+
+  .document_item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .doc_actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .btn_reupload {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Mobile Responsiveness - Small Phones (361px - 480px) */
+@media (max-width: 480px) {
+  .rider_account_page {
+    padding: 15px;
+  }
+
+  .page_title {
+    font-size: 1.25rem;
+  }
+
+  .page_subtitle {
+    font-size: 0.85rem;
+    margin-bottom: 20px;
+  }
+
+  .account_tabs_wrapper {
+    height: 50px;
+    margin-bottom: 20px;
+  }
+
+  .account_tab {
+    font-size: 0.75rem;
+    padding: 0 5px;
+  }
+
+  .personal_info_section,
+  .banking_section,
+  .documents_section {
+    padding: 15px;
+    border-radius: 8px;
+  }
+
+  .section_title {
+    font-size: 1rem;
+  }
+
+  .section_title_card {
+    font-size: 0.95rem;
+  }
+
+  .personal_info_grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+
+  .input_label {
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+  }
+
+  .text_input {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+
+  .profile_picture_area {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 0 20px 0;
+    margin-bottom: 20px;
+  }
+
+  .profile_avatar_wrapper {
+    width: 70px;
+    height: 70px;
+  }
+
+  .btn_edit_avatar {
+    width: 28px;
+    height: 28px;
+  }
+
+  .upload_text {
+    font-size: 0.9rem;
+  }
+
+  .upload_subtitle {
+    font-size: 0.75rem;
+  }
+
+  .banking_info_grid {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .banking_info_grid .form_group {
+    flex: 1;
+  }
+
+  .account_number_field {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .bank_details_card,
+  .recent_payouts_card {
+    padding: 15px;
+  }
+
+  .card_header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .btn_update_banking_info {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 0.85rem;
+  }
+
+  .automatic_payouts {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+  }
+
+  .payouts_title {
+    font-size: 0.95rem;
+  }
+
+  .payouts_subtitle {
+    font-size: 0.8rem;
+  }
+
+  .payout_item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .payout_icon_wrapper {
+    width: 28px;
+    height: 28px;
+    font-size: 1rem;
+    margin-right: 0;
+  }
+
+  .payout_date {
+    font-size: 0.9rem;
+  }
+
+  .payout_amount {
+    font-size: 0.95rem;
+    align-self: flex-start;
+  }
+
+  .save_changes_footer {
+    justify-content: center;
+    padding-top: 8px;
+  }
+
+  .btn_save_changes_orange {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+  }
+
+  .section_title_documents {
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-bottom: 12px;
+  }
+
+  .doc_alert {
+    padding: 10px 12px;
+    font-size: 0.85rem;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .document_item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 0;
+  }
+
+  .doc_info {
+    gap: 10px;
+  }
+
+  .doc_icon {
+    font-size: 0.9rem;
+  }
+
+  .doc_title {
+    font-size: 0.9rem;
+  }
+
+  .doc_date {
+    font-size: 0.75rem;
+  }
+
+  .doc_actions {
+    width: 100%;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .doc_status {
+    padding: 3px 8px;
+    font-size: 0.7rem;
+  }
+
+  .btn_reupload {
+    width: 100%;
+    padding: 8px 10px;
+    justify-content: center;
+    font-size: 0.8rem;
+  }
+
+  .doc_verification_process {
+    padding: 15px;
+    margin-top: 15px;
+  }
+
+  .doc_verification_header {
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .doc_verification_title {
+    font-size: 0.95rem;
+  }
+
+  .verification_list {
+    padding-left: 18px;
+  }
+
+  .verification_list li {
+    font-size: 0.85rem;
+  }
+}
+
+/* Mobile Responsiveness - Extra Small Phones (≤360px) */
+@media (max-width: 360px) {
+  .rider_account_page {
+    padding: 12px;
+  }
+
+  .page_title {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+  }
+
+  .page_subtitle {
+    font-size: 0.8rem;
+    margin-bottom: 15px;
+  }
+
+  .account_tabs_wrapper {
+    height: 48px;
+    margin-bottom: 15px;
+  }
+
+  .account_tab {
+    font-size: 0.7rem;
+    padding: 0 3px;
+  }
+
+  .personal_info_section,
+  .banking_section,
+  .documents_section {
+    padding: 12px;
+  }
+
+  .section_title {
+    font-size: 0.95rem;
+  }
+
+  .section_title_card {
+    font-size: 0.9rem;
+  }
+
+  .personal_info_grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .input_label {
+    font-size: 0.8rem;
+  }
+
+  .text_input {
+    padding: 8px;
+    font-size: 0.85rem;
+  }
+
+  .profile_avatar_wrapper {
+    width: 65px;
+    height: 65px;
+  }
+
+  .btn_edit_avatar {
+    width: 26px;
+    height: 26px;
+  }
+
+  .upload_text {
+    font-size: 0.85rem;
+  }
+
+  .bank_details_card,
+  .recent_payouts_card {
+    padding: 12px;
+  }
+
+  .button {
+    font-size: 0.8rem;
+  }
+
+  .btn_update_banking_info {
+    font-size: 0.8rem;
+    padding: 8px 10px;
+  }
+
+  .btn_save_changes_orange {
+    font-size: 0.85rem;
+    padding: 9px 12px;
+  }
+
+  .payout_icon_wrapper {
+    width: 26px;
+    height: 26px;
+    font-size: 0.95rem;
+  }
+
+  .btn_reupload {
+    font-size: 0.75rem;
+    padding: 6px 8px;
+  }
+
+  .section_title_documents {
+    font-size: 0.95rem;
+    margin-top: 15px;
+  }
+
+  .doc_verification_process {
+    padding: 12px;
+  }
+}
