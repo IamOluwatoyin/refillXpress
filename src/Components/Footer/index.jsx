@@ -1,5 +1,5 @@
 import React from "react";
-import "./footer.css";
+import "./Footer.css";
 import { CiFacebook } from "react-icons/ci";
 import { MdOutlineWhatsapp } from "react-icons/md";
 import { BsInstagram } from "react-icons/bs";
