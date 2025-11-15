@@ -35,6 +35,7 @@ const InputField = ({
 
 const UploadModal = ({ isOpen, documentType, onClose, onUpload, loading }) => {
   const [dragActive, setDragActive] = useState(false);
+  const [uploadError, setUploadError] = useState(""); // Track upload errors
   const fileInputRef = React.useRef(null);
 
   const handleDrag = (e) => {
@@ -51,15 +52,35 @@ const UploadModal = ({ isOpen, documentType, onClose, onUpload, loading }) => {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
+    setUploadError(""); // Clear previous errors
 
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      onUpload(e.dataTransfer.files[0]);
+      validateAndUpload(e.dataTransfer.files[0]);
     }
   };
 
+  const validateAndUpload = (file) => {
+    const validExtensions = ["image/jpeg", "image/png", "application/pdf"];
+    const maxSize = 10 * 1024 * 1024; // 10MB
+
+    if (!validExtensions.includes(file.type)) {
+      setUploadError("Invalid file type. Please upload PDF, JPG, or PNG only.");
+      return;
+    }
+
+    if (file.size > maxSize) {
+      setUploadError("File size exceeds 10MB. Please upload a smaller file.");
+      return;
+    }
+
+    setUploadError("");
+    onUpload(file);
+  };
+
   const handleFileSelect = (e) => {
+    setUploadError("");
     if (e.target.files && e.target.files[0]) {
-      onUpload(e.target.files[0]);
+      validateAndUpload(e.target.files[0]);
     }
   };
 
@@ -81,7 +102,9 @@ const UploadModal = ({ isOpen, documentType, onClose, onUpload, loading }) => {
 
         <div className="modal_body">
           <div
-            className={`upload_drop_zone ${dragActive ? "active" : ""}`}
+            className={`upload_drop_zone ${dragActive ? "active" : ""} ${
+              uploadError ? "error" : ""
+            }`}
             onDragEnter={handleDrag}
             onDragLeave={handleDrag}
             onDragOver={handleDrag}
@@ -92,7 +115,7 @@ const UploadModal = ({ isOpen, documentType, onClose, onUpload, loading }) => {
               type="file"
               className="file_input_hidden"
               onChange={handleFileSelect}
-              accept="image/*,.pdf"
+              accept=".pdf,.jpg,.jpeg,.png,image/*"
               disabled={loading}
             />
             <MdCloudUpload size={48} className="upload_icon" />
@@ -102,12 +125,15 @@ const UploadModal = ({ isOpen, documentType, onClose, onUpload, loading }) => {
               className="btn_browse_files"
               onClick={() => fileInputRef.current?.click()}
               disabled={loading}
+              type="button"
             >
-              Browse Files
+              {loading ? "Uploading..." : "Browse Files"}
             </button>
             <p className="upload_hint">
               Supported formats: PDF, JPG, PNG (Max 10MB)
             </p>
+            {uploadError && <p className="upload_error_text">{uploadError}</p>}{" "}
+            {/* Display validation errors */}
           </div>
 
           <div className="modal_requirements">
@@ -204,7 +230,14 @@ const RecentPayouts = () => {
   );
 };
 
-const DocumentItem = ({ icon: Icon, title, date, status, onUploadClick }) => {
+const DocumentItem = ({
+  icon: Icon,
+  title,
+  date,
+  status,
+  onUploadClick,
+  isLoading,
+}) => {
   let statusClass = "";
   let statusText = "";
 
@@ -217,6 +250,9 @@ const DocumentItem = ({ icon: Icon, title, date, status, onUploadClick }) => {
   } else if (status === "Rejected") {
     statusClass = "status_rejected";
     statusText = "Rejected";
+  } else if (status === "Not Uploaded") {
+    statusClass = "status_not_uploaded";
+    statusText = "Not Uploaded";
   }
 
   return (
@@ -230,7 +266,12 @@ const DocumentItem = ({ icon: Icon, title, date, status, onUploadClick }) => {
       </div>
       <div className="doc_actions">
         <div className={`doc_status ${statusClass}`}>{statusText}</div>
-        <button className="btn_reupload" onClick={onUploadClick}>
+        <button
+          className="btn_reupload"
+          onClick={onUploadClick}
+          disabled={isLoading}
+          type="button"
+        >
           <MdCloudUpload size={18} />{" "}
           {status === "Rejected"
             ? "Re-upload"
@@ -245,37 +286,52 @@ const DocumentItem = ({ icon: Icon, title, date, status, onUploadClick }) => {
 
 const DocumentsSection = ({
   formData,
+  newlyUploadedDocs,
   onFileChange,
   loading,
   onUploadClick,
 }) => {
+  const getDocumentStatus = (docKey) => {
+    // If newly uploaded, show "Pending" until backend verifies
+    if (newlyUploadedDocs.has(docKey)) {
+      return "Pending";
+    }
+    // If document exists from backend, show verified status
+    if (formData[docKey]) {
+      return formData.kycVerificationStatus === "approved"
+        ? "Verified"
+        : "Pending";
+    }
+    return "Not Uploaded";
+  };
+
   const documents = [
     {
       icon: BsFileEarmarkCheckFill,
       title: "Driver's License",
-      date: "2025-01-15",
-      status: "Verified",
+      date: formData.driversLicense ? "Recently uploaded" : "Not uploaded",
+      status: getDocumentStatus("driversLicense"),
       key: "driversLicense",
     },
     {
       icon: BsFileEarmarkCheckFill,
       title: "Vehicle Registration",
-      date: "2025-01-15",
-      status: "Verified",
+      date: formData.vehicleRegistration ? "Recently uploaded" : "Not uploaded",
+      status: getDocumentStatus("vehicleRegistration"),
       key: "vehicleRegistration",
     },
     {
       icon: BsFileEarmarkTextFill,
       title: "National ID / Passport",
-      date: "2025-01-15",
-      status: "Pending",
+      date: formData.ownerIdCard ? "Recently uploaded" : "Not uploaded",
+      status: getDocumentStatus("ownerIdCard"),
       key: "ownerIdCard",
     },
     {
       icon: BsFileEarmarkMinusFill,
       title: "Utility Bill",
-      date: "2025-10-20",
-      status: "Rejected",
+      date: formData.utilityBill ? "Recently uploaded" : "Not uploaded",
+      status: getDocumentStatus("utilityBill"),
       key: "utilityBill",
     },
   ];
@@ -299,6 +355,7 @@ const DocumentsSection = ({
             title={doc.title}
             date={doc.date}
             status={doc.status}
+            isLoading={loading}
             onUploadClick={() => onUploadClick(doc.title, doc.key)}
           />
         ))}
@@ -335,11 +392,15 @@ const RiderAccount = () => {
     documentKey: "",
   });
 
+  const [newlyUploadedDocs, setNewlyUploadedDocs] = useState(new Set());
+
   const [formData, setFormData] = useState({
     fullName: "Glory Otene",
     email: "",
     phoneNumber: "+234 706099440",
     residentialAddress: "",
+    riderImage: null,
+    riderImagePreview: null,
     accountName: "MaxGas Supply",
     bankName: "UBA",
     accountNumber: "******8086",
@@ -347,6 +408,7 @@ const RiderAccount = () => {
     vehicleRegistration: null,
     ownerIdCard: null,
     utilityBill: null,
+    kycVerificationStatus: "pending",
   });
 
   useEffect(() => {
@@ -365,7 +427,7 @@ const RiderAccount = () => {
 
         console.log("[v0] Fetching rider data for ID:", riderId);
         const response = await axios.get(
-          `https://refillexpress.onrender.com/api/v1/rider/${riderId}`,
+          `https://refillexpress.onrender.com/api/v1/getOneRider/${riderId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -386,6 +448,14 @@ const RiderAccount = () => {
           accountName: riderData.accountName || prev.accountName,
           bankName: riderData.bankName || prev.bankName,
           accountNumber: riderData.accountNumber || prev.accountNumber,
+          riderImage: riderData.riderImage || prev.riderImage,
+          driversLicense: riderData.kyc?.driversLicense || prev.driversLicense,
+          vehicleRegistration:
+            riderData.kyc?.vehicleRegistration || prev.vehicleRegistration,
+          ownerIdCard: riderData.kyc?.ownerIdCard || prev.ownerIdCard,
+          utilityBill: riderData.kyc?.utilityBill || prev.utilityBill,
+          kycVerificationStatus:
+            riderData.kycVerificationStatus || prev.kycVerificationStatus,
         }));
 
         setDataLoaded(true);
@@ -401,6 +471,14 @@ const RiderAccount = () => {
     fetchRiderData();
   }, []);
 
+  useEffect(() => {
+    return () => {
+      if (formData.riderImagePreview) {
+        URL.revokeObjectURL(formData.riderImagePreview);
+      }
+    };
+  }, [formData.riderImagePreview]);
+
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
       ...prev,
@@ -411,10 +489,48 @@ const RiderAccount = () => {
   };
 
   const handleFileChange = (field, file) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: file,
-    }));
+    const validImageTypes = ["image/jpeg", "image/png"];
+    const validDocTypes = ["image/jpeg", "image/png", "application/pdf"];
+    const maxSize = 10 * 1024 * 1024; // 10MB
+
+    if (field === "riderImage") {
+      if (!validImageTypes.includes(file.type)) {
+        setError("Profile picture must be JPG or PNG format.");
+        return;
+      }
+      if (file.size > maxSize) {
+        setError("Profile picture size must not exceed 10MB");
+        return;
+      }
+
+      if (formData.riderImagePreview) {
+        URL.revokeObjectURL(formData.riderImagePreview);
+      }
+
+      const previewUrl = URL.createObjectURL(file);
+      setFormData((prev) => ({
+        ...prev,
+        riderImage: file,
+        riderImagePreview: previewUrl,
+      }));
+    } else {
+      if (!validDocTypes.includes(file.type)) {
+        setError(`${field} must be in PDF, JPG, or PNG format.`);
+        return;
+      }
+      if (file.size > maxSize) {
+        setError(`${field} size must not exceed 10MB`);
+        return;
+      }
+
+      setNewlyUploadedDocs((prev) => new Set(prev).add(field));
+
+      setFormData((prev) => ({
+        ...prev,
+        [field]: file,
+      }));
+    }
+
     setMessage("");
     setError("");
     setUploadModal({ isOpen: false, documentType: "", documentKey: "" });
@@ -461,16 +577,22 @@ const RiderAccount = () => {
       form.append("bankName", formData.bankName);
       form.append("accountNumber", formData.accountNumber);
 
-      if (formData.driversLicense) {
+      if (formData.riderImage && formData.riderImage instanceof File) {
+        form.append("riderImage", formData.riderImage);
+      }
+      if (formData.driversLicense && formData.driversLicense instanceof File) {
         form.append("driversLicense", formData.driversLicense);
       }
-      if (formData.vehicleRegistration) {
+      if (
+        formData.vehicleRegistration &&
+        formData.vehicleRegistration instanceof File
+      ) {
         form.append("vehicleRegistration", formData.vehicleRegistration);
       }
-      if (formData.ownerIdCard) {
+      if (formData.ownerIdCard && formData.ownerIdCard instanceof File) {
         form.append("ownerIdCard", formData.ownerIdCard);
       }
-      if (formData.utilityBill) {
+      if (formData.utilityBill && formData.utilityBill instanceof File) {
         form.append("utilityBill", formData.utilityBill);
       }
 
@@ -498,14 +620,19 @@ const RiderAccount = () => {
         accountName: updatedData.accountName || prev.accountName,
         bankName: updatedData.bankName || prev.bankName,
         accountNumber: updatedData.accountNumber || prev.accountNumber,
+        riderImage: updatedData.riderImage || prev.riderImage,
+        riderImagePreview: null,
         driversLicense: updatedData.kyc?.driversLicense || prev.driversLicense,
         vehicleRegistration:
           updatedData.kyc?.vehicleRegistration || prev.vehicleRegistration,
         ownerIdCard: updatedData.kyc?.ownerIdCard || prev.ownerIdCard,
         utilityBill: updatedData.kyc?.utilityBill || prev.utilityBill,
+        kycVerificationStatus:
+          updatedData.kycVerificationStatus || prev.kycVerificationStatus,
       }));
 
-      // Persist the updated data to localStorage
+      setNewlyUploadedDocs(new Set());
+
       localStorage.setItem("riderData", JSON.stringify(updatedData));
 
       setMessage("✓ Account updated successfully!");
@@ -532,8 +659,34 @@ const RiderAccount = () => {
 
             <div className="profile_picture_area">
               <div className="profile_avatar_wrapper">
-                <div className="profile_avatar"></div>
-                <button className="btn_edit_avatar" disabled={loading}>
+                <div className="profile_avatar">
+                  {formData.riderImagePreview || formData.riderImage ? (
+                    <img
+                      src={
+                        formData.riderImagePreview ||
+                        (typeof formData.riderImage === "string"
+                          ? formData.riderImage
+                          : URL.createObjectURL(formData.riderImage))
+                      }
+                      alt="Profile"
+                      className="avatar_img"
+                    />
+                  ) : (
+                    <img
+                      src="/user-profile-avatar.png"
+                      alt="Default"
+                      className="avatar_img"
+                    />
+                  )}
+                </div>
+
+                <button
+                  className="btn_edit_avatar"
+                  disabled={loading}
+                  onClick={() =>
+                    handleOpenUploadModal("Profile Picture", "riderImage")
+                  }
+                >
                   <MdEdit size={16} />
                 </button>
               </div>
@@ -586,6 +739,16 @@ const RiderAccount = () => {
                 {loading ? "Saving..." : "Save Changes"}
               </button>
             </div>
+
+            <UploadModal
+              isOpen={uploadModal.isOpen}
+              documentType={uploadModal.documentType}
+              onClose={handleCloseUploadModal}
+              onUpload={(file) =>
+                handleFileChange(uploadModal.documentKey, file)
+              }
+              loading={loading}
+            />
           </div>
         );
       case "documents":
@@ -593,6 +756,7 @@ const RiderAccount = () => {
           <>
             <DocumentsSection
               formData={formData}
+              newlyUploadedDocs={newlyUploadedDocs}
               onFileChange={handleFileChange}
               loading={loading}
               onUploadClick={handleOpenUploadModal}
