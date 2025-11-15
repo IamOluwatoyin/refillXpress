@@ -1,5 +1,5 @@
 import React from "react";
-import "./Footer.css";
+import "./footer.css";
 import { CiFacebook } from "react-icons/ci";
 import { MdOutlineWhatsapp } from "react-icons/md";
 import { BsInstagram } from "react-icons/bs";
@@ -60,7 +60,7 @@ const Footer = () => {
             </h2>
           </div>
           <div className="right">
-            <div style={{ display: "flex", gap: "30px" }}>
+            <div className="social-icons">
               <CiFacebook />
               <MdOutlineWhatsapp />
               <BsInstagram />
