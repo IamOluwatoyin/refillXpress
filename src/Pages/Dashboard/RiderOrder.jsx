@@ -1,4 +1,3 @@
-"use client";
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
@@ -9,7 +8,7 @@ import {
   MdClose,
 } from "react-icons/md";
 import { FaCheckCircle, FaLocationArrow, FaExchangeAlt } from "react-icons/fa";
-import "../../styles/riderOrder.css";
+import "../..//styles/riderOrder.css";
 
 const formatNaira = (amount) => {
   if (amount == null) return "₦0";
@@ -22,7 +21,6 @@ const formatNaira = (amount) => {
     .replace("NGN", "₦");
 };
 
-// --------------------- MODAL ---------------------
 const RefillOrderDetailsModal = ({ order, isOpen, onClose, onAccept }) => {
   if (!isOpen || !order || !order.steps) return null;
 
@@ -103,10 +101,10 @@ const RefillOrderDetailsModal = ({ order, isOpen, onClose, onAccept }) => {
             <RefillStep
               icon={FaExchangeAlt}
               title="2. Refill at Vendor"
-              location="MaxGas Supply (Vendor Refill Location)"
+              location={order.vendorLocation || "Vendor Refill Location"}
               distance={vendorStep.location.split(" • ")[1] || "N/A"}
               type="Refill"
-              phone="08105885894"
+              phone={order.vendorPhone || "N/A"}
             />
           )}
           <div className="step_separator">→</div>
@@ -127,7 +125,10 @@ const RefillOrderDetailsModal = ({ order, isOpen, onClose, onAccept }) => {
           <button className="btn_close_modal" onClick={onClose}>
             Close
           </button>
-          <button className="btn_accept_modal" onClick={onAccept}>
+          <button
+            className="btn_accept_modal"
+            onClick={() => onAccept(order.userId)}
+          >
             <MdOutlineCheckCircle size={18} /> Accept This Order
           </button>
         </div>
@@ -136,7 +137,6 @@ const RefillOrderDetailsModal = ({ order, isOpen, onClose, onAccept }) => {
   );
 };
 
-// --------------------- COMPONENTS ---------------------
 const CompletedDeliveryItem = ({ order }) => {
   const rating = order.rating || 5;
   const stars = "★".repeat(rating) + "☆".repeat(5 - rating);
@@ -290,7 +290,6 @@ const RefillRequestItem = ({
   </div>
 );
 
-// --------------------- MAIN COMPONENT ---------------------
 const RiderOrder = () => {
   const navigate = useNavigate();
 
@@ -305,9 +304,6 @@ const RiderOrder = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [authToken, setAuthToken] = useState(null);
-
-  const RIDER_ID = "e86e6a8c-2f5e-4293-b3fa-6ea783ccd126";
-  const VENDOR_ADDRESS = "MaxGas Supply";
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -334,6 +330,10 @@ const RiderOrder = () => {
     pickupAddress: refill.pickupAddress,
     deliveryAddress: refill.deliveryAddress,
     userId: refill.userId,
+    vendorLocation: `${refill.vendor?.businessName || "Vendor"} (${
+      refill.vendor?.businessAddress || "N/A"
+    })`,
+    vendorPhone: refill.vendor?.phoneNumber || "N/A",
     time: `${refill.cylinderSize}kg LPG Refill x${refill.quantity} • 35 min`,
     steps: [
       {
@@ -342,7 +342,9 @@ const RiderOrder = () => {
       },
       {
         title: "2. Refill at Vendor",
-        location: `${VENDOR_ADDRESS} • 0.8 km`,
+        location: `${refill.vendor?.businessName || "Vendor"} (${
+          refill.vendor?.businessAddress || "N/A"
+        }) • 0.8 km`,
       },
       {
         title: "3. Return Filled Cylinder",
@@ -412,9 +414,9 @@ const RiderOrder = () => {
     navigate(`/rider-dashboard/order-tracker/${orderId}`);
   };
 
-  const handleAcceptOrder = async (orderToAccept) => {
+  const handleAcceptOrder = async (orderToAccept, userId) => {
     const orderIdToAccept = orderToAccept.id;
-    const customerUserId = orderToAccept.userId;
+    const customerUserId = userId || orderToAccept.userId;
 
     if (!orderIdToAccept || !customerUserId || !authToken) {
       console.error("Cannot accept order: Missing required data.");
@@ -445,9 +447,9 @@ const RiderOrder = () => {
     }
   };
 
-  const handleAcceptModal = () => {
+  const handleAcceptModal = (userId) => {
     if (selectedOrder) {
-      handleAcceptOrder(selectedOrder);
+      handleAcceptOrder(selectedOrder, userId);
     }
   };
 

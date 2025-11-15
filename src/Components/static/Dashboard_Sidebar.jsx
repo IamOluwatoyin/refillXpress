@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "../../styles/dashboardSidebar.css";
 import { AiOutlineLogout } from "react-icons/ai";
 import { TbCurrencyNaira } from "react-icons/tb";
-
 import {
   MdDashboard,
   MdShoppingCart,
@@ -131,7 +130,6 @@ const Dashboard_Sidebar = () => {
 
   const handleConfirmLogout = () => {
     setShowLogoutModal(false);
-
     navigate("/");
   };
 

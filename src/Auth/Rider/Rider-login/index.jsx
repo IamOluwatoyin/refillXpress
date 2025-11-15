@@ -70,6 +70,10 @@ const RiderLogin = () => {
           navigate("/rider-dashboard");
         } else if (kycStatus === "rejected" || kycStatus === "not completed") {
           navigate("/rider-kyc");
+          {
+            kycStatus === "approved";
+            navigate("/rider-dashboard");
+          }
         } else {
           navigate("/rider-kyc");
         }

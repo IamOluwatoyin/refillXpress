@@ -113,7 +113,6 @@
 .segmented_tab {
   flex: 1;
   display: flex;
-
   justify-content: center;
   align-items: center;
   cursor: pointer;
@@ -163,6 +162,7 @@
   color: #555;
   margin-bottom: 20px;
 }
+
 .service_details {
   color: #ff9800;
 }
@@ -193,6 +193,7 @@
   color: #555;
   text-align: right;
 }
+
 .delivery_fee {
   font-size: 1.2rem;
   color: #4caf50;
@@ -379,6 +380,7 @@
   color: #ffc107;
   font-size: 14px;
 }
+
 .modal_overlay {
   position: fixed;
   top: 0;
@@ -737,4 +739,573 @@
 .detail_badge.payment_completed {
   background-color: #d4edda;
   color: #155724;
+}
+
+/* ADDING MOBILE RESPONSIVE MEDIA QUERIES */
+
+/* Extra Small Devices (320px - 480px) */
+@media (max-width: 480px) {
+  .dashboard_home {
+    padding: 15px;
+  }
+
+  .welcome_title {
+    font-size: 1.5rem;
+  }
+
+  .welcome_subtitle {
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+  }
+
+  .section_title {
+    font-size: 1rem;
+    margin-bottom: 12px;
+  }
+
+  .performance_grid {
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 30px;
+  }
+
+  .performance_card {
+    height: 130px;
+    padding: 12px;
+  }
+
+  .card_value {
+    font-size: 1.4rem;
+  }
+
+  .card_title {
+    font-size: 0.8rem;
+  }
+
+  .card_secondary {
+    font-size: 0.7rem;
+  }
+
+  .segmented_tabs_wrapper {
+    width: 95%;
+    height: 45px;
+    margin-bottom: 20px;
+  }
+
+  .segmented_tab {
+    font-size: 0.8rem;
+    gap: 5px;
+  }
+
+  .tab_badge {
+    font-size: 0.65rem;
+    padding: 1px 4px;
+  }
+
+  .tab_content_title {
+    font-size: 1rem;
+  }
+
+  .tab_content_subtitle {
+    font-size: 0.8rem;
+    margin: 3px 0 12px;
+  }
+
+  .gas_cylinder_service_info {
+    font-size: 0.75rem;
+    padding: 8px;
+  }
+
+  .request_item {
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+  }
+
+  .request_header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 15px;
+  }
+
+  .order_id {
+    font-size: 1rem;
+  }
+
+  .order_meta {
+    font-size: 0.8rem;
+    text-align: left;
+  }
+
+  .delivery_fee {
+    font-size: 1rem;
+  }
+
+  .refill_details_grid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+    padding: 10px;
+    margin: 10px 0;
+  }
+
+  .detail_label {
+    font-size: 11px;
+  }
+
+  .detail_value {
+    font-size: 13px;
+  }
+
+  .detail_value.highlight {
+    font-size: 14px;
+  }
+
+  .request_steps {
+    padding: 12px;
+    margin-bottom: 15px;
+  }
+
+  .step_item {
+    margin-bottom: 8px;
+  }
+
+  .step_dot_line {
+    margin-right: 10px;
+  }
+
+  .step_number {
+    width: 18px;
+    height: 18px;
+    font-size: 0.7rem;
+  }
+
+  .step_title {
+    font-size: 0.9rem;
+  }
+
+  .step_location {
+    font-size: 0.8rem;
+  }
+
+  .request_actions {
+    gap: 8px;
+  }
+
+  .btn_details,
+  .btn_accept {
+    width: 50%;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    gap: 4px;
+  }
+
+  .completed_refill_item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .refill_details {
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  .refill_earnings {
+    font-size: 14px;
+    margin-bottom: 3px;
+  }
+
+  .time_rating {
+    font-size: 12px;
+    gap: 8px;
+  }
+
+  .modal_content {
+    width: 95%;
+    padding: 15px;
+    max-width: 95%;
+  }
+
+  .modal_title {
+    font-size: 1.1rem;
+  }
+
+  .modal_subtitle {
+    font-size: 0.8rem;
+  }
+
+  .modal_summary_box {
+    padding: 12px;
+    margin-bottom: 15px;
+  }
+
+  .you_ll_earn,
+  .total_distance_label {
+    font-size: 0.75rem;
+  }
+
+  .modal_earnings,
+  .modal_total_distance {
+    font-size: 1.3rem;
+    margin-top: 3px;
+  }
+
+  .modal_section_title {
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+  }
+
+  .modal_refill_step {
+    padding: 8px 0;
+    gap: 10px;
+  }
+
+  .step_icon_wrapper {
+    min-width: 18px;
+  }
+
+  .step_arrow {
+    font-size: 1rem;
+    margin: 3px 0;
+    height: 18px;
+  }
+
+  .step_title_modal {
+    font-size: 0.85rem;
+  }
+
+  .step_type_tag {
+    font-size: 0.65rem;
+    padding: 1px 4px;
+    margin-left: 5px;
+  }
+
+  .step_location_modal {
+    font-size: 0.75rem;
+  }
+
+  .step_distance_phone {
+    font-size: 0.7rem;
+  }
+
+  .modal_actions {
+    flex-direction: column-reverse;
+    gap: 8px;
+    padding-top: 15px;
+    margin-top: 15px;
+  }
+
+  .btn_close_modal,
+  .btn_accept_modal {
+    padding: 10px 15px;
+    font-size: 0.85rem;
+    flex-grow: 1 !important;
+    width: 100%;
+  }
+
+  .kyc_notice_container {
+    padding: 20px;
+  }
+
+  .kyc_status_title {
+    font-size: 1rem;
+  }
+
+  .kyc_message {
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
+
+  .btn_kyc_action {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+
+  .customer_name {
+    font-size: 13px;
+  }
+
+  .refill_type {
+    font-size: 12px;
+  }
+}
+
+/* Small Devices (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  .dashboard_home {
+    padding: 20px;
+  }
+
+  .welcome_title {
+    font-size: 1.75rem;
+  }
+
+  .welcome_subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
+
+  .section_title {
+    font-size: 1.1rem;
+    margin-bottom: 14px;
+  }
+
+  .performance_grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .performance_card {
+    flex: 1 1 calc(50% - 6px);
+    height: 140px;
+    padding: 14px;
+  }
+
+  .card_value {
+    font-size: 1.5rem;
+  }
+
+  .card_title {
+    font-size: 0.85rem;
+  }
+
+  .segmented_tabs_wrapper {
+    width: 90%;
+    height: 48px;
+    margin-bottom: 22px;
+  }
+
+  .segmented_tab {
+    font-size: 0.9rem;
+    gap: 6px;
+  }
+
+  .tab_badge {
+    font-size: 0.7rem;
+    padding: 2px 5px;
+  }
+
+  .tab_content_title {
+    font-size: 1.05rem;
+  }
+
+  .tab_content_subtitle {
+    font-size: 0.85rem;
+    margin: 4px 0 14px;
+  }
+
+  .gas_cylinder_service_info {
+    font-size: 0.8rem;
+    padding: 9px;
+  }
+
+  .request_item {
+    padding: 17px;
+    margin-bottom: 17px;
+  }
+
+  .request_header {
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 17px;
+  }
+
+  .order_id {
+    font-size: 1.1rem;
+  }
+
+  .order_meta {
+    font-size: 0.85rem;
+  }
+
+  .refill_details_grid {
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 11px;
+    padding: 11px;
+  }
+
+  .detail_label {
+    font-size: 11px;
+  }
+
+  .detail_value {
+    font-size: 13px;
+  }
+
+  .detail_value.highlight {
+    font-size: 15px;
+  }
+
+  .request_steps {
+    padding: 13px;
+    margin-bottom: 17px;
+  }
+
+  .step_item {
+    margin-bottom: 9px;
+  }
+
+  .step_dot_line {
+    margin-right: 12px;
+  }
+
+  .step_number {
+    width: 19px;
+    height: 19px;
+    font-size: 0.75rem;
+  }
+
+  .step_title {
+    font-size: 0.95rem;
+  }
+
+  .step_location {
+    font-size: 0.85rem;
+  }
+
+  .btn_details,
+  .btn_accept {
+    padding: 9px 15px;
+    font-size: 0.9rem;
+  }
+
+  .completed_refill_item {
+    flex-direction: row;
+    align-items: center;
+    padding: 11px;
+    justify-content: space-between;
+  }
+
+  .refill_details {
+    align-items: flex-end;
+  }
+
+  .refill_earnings {
+    font-size: 15px;
+  }
+
+  .time_rating {
+    font-size: 13px;
+    gap: 9px;
+  }
+
+  .customer_name {
+    font-size: 14px;
+  }
+
+  .refill_type {
+    font-size: 13px;
+  }
+
+  .modal_content {
+    width: 92%;
+    padding: 17px;
+  }
+
+  .modal_title {
+    font-size: 1.15rem;
+  }
+
+  .modal_subtitle {
+    font-size: 0.85rem;
+  }
+
+  .modal_summary_box {
+    padding: 13px;
+  }
+
+  .you_ll_earn,
+  .total_distance_label {
+    font-size: 0.8rem;
+  }
+
+  .modal_earnings,
+  .modal_total_distance {
+    font-size: 1.4rem;
+  }
+
+  .modal_section_title {
+    font-size: 0.98rem;
+  }
+
+  .modal_refill_step {
+    padding: 9px 0;
+    gap: 12px;
+  }
+
+  .step_arrow {
+    font-size: 1.1rem;
+  }
+
+  .step_title_modal {
+    font-size: 0.9rem;
+  }
+
+  .step_type_tag {
+    font-size: 0.7rem;
+  }
+
+  .step_location_modal {
+    font-size: 0.8rem;
+  }
+
+  .step_distance_phone {
+    font-size: 0.75rem;
+  }
+
+  .modal_actions {
+    flex-direction: row;
+    gap: 9px;
+  }
+
+  .btn_close_modal {
+    flex-grow: 1;
+  }
+
+  .btn_accept_modal {
+    flex-grow: 1.5;
+  }
+
+  .kyc_notice_container {
+    padding: 25px;
+  }
+
+  .kyc_status_title {
+    font-size: 1.1rem;
+  }
+
+  .kyc_message {
+    font-size: 0.93rem;
+  }
+
+  .btn_kyc_action {
+    padding: 11px 25px;
+    font-size: 0.93rem;
+  }
+}
+
+/* Tablets and Medium Devices (769px and above) */
+@media (min-width: 769px) {
+  .performance_grid {
+    flex-direction: row;
+  }
+
+  .performance_card {
+    flex: 1;
+  }
+
+  .request_header {
+    flex-direction: row;
+  }
+
+  .completed_refill_item {
+    flex-direction: row;
+  }
+
+  .modal_actions {
+    flex-direction: row;
+  }
 }

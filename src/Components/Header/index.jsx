@@ -9,6 +9,10 @@ import { CgClose } from "react-icons/cg";
 const Header = () => {
   const [loginDrop, setDrop] = useState(false);
   const [getStated, setGetStated] = useState(false);
+
+  const [mobileLoginDrop, setMobileLogin] = useState(false);
+  const [mobileGetStartedDrop, setMobileGetStarted] = useState(false);
+
   const nav = useNavigate();
   const [show, setShow] = useState(false);
 
@@ -24,8 +28,8 @@ const Header = () => {
 
   const ToggleSow = () => {
     setShow(!show);
-    setDrop(false);
-    setGetStated(false);
+    setMobileLogin(false);
+    setMobileGetStarted(false);
   };
 
   const handleLinkClick = () => {
@@ -43,69 +47,42 @@ const Header = () => {
             Refill <span>Xpress</span>
           </h3>
         </LogoHolder>
+
         <MidContainer>
           <ul>
-            <SmoothLink to="home" smooth={true} duration={600}>
+            <SmoothLink to="home" smooth duration={600}>
               Home
             </SmoothLink>
-            <SmoothLink to="how" smooth={true} duration={600}>
+            <SmoothLink to="how" smooth duration={600}>
               How it works
             </SmoothLink>
-            <SmoothLink to="contact" smooth={true} duration={600}>
+            <SmoothLink to="contact" smooth duration={600}>
               Contact Us
             </SmoothLink>
           </ul>
         </MidContainer>
+
         <ButtonHolder>
           <button className="box1" onClick={handleLoginDrop}>
             Sign in
           </button>
           <button className="box2" onClick={handleGetstated}>
-            Get Stated
+            Get Started
           </button>
+
           {loginDrop && (
             <div className="drop">
-              <button
-                onClick={() => nav("/userlogin")}
-                className="customer_button"
-              >
-                As Customer
-              </button>
-              <button
-                className="vendor_button"
-                onClick={() => nav("/vendor-login")}
-              >
-                As Vendor
-              </button>
-              <button
-                className="vendor_button"
-                onClick={() => nav("/riderlogin")}
-              >
-                As Rider
-              </button>
+              <button onClick={() => nav("/userlogin")}>As Customer</button>
+              <button onClick={() => nav("/vendor-login")}>As Vendor</button>
+              <button onClick={() => nav("/riderlogin")}>As Rider</button>
             </div>
           )}
 
           {getStated && (
             <div className="drop2">
-              <button
-                onClick={() => nav("/usersignup")}
-                className="customer_button1"
-              >
-                As Customer
-              </button>
-              <button
-                className="vendor_button1"
-                onClick={() => nav("/vendor-signup")}
-              >
-                As Vendor
-              </button>
-              <button
-                className="vendor_button1"
-                onClick={() => nav("/ridersignup")}
-              >
-                As Rider
-              </button>
+              <button onClick={() => nav("/usersignup")}>As Customer</button>
+              <button onClick={() => nav("/vendor-signup")}>As Vendor</button>
+              <button onClick={() => nav("/ridersignup")}>As Rider</button>
             </div>
           )}
         </ButtonHolder>
@@ -122,46 +99,64 @@ const Header = () => {
           <Dropdown show={show}>
             <SmoothLink2
               to="home"
-              smooth={true}
+              smooth
               duration={600}
               onClick={handleLinkClick}
             >
               Home
             </SmoothLink2>
+
             <SmoothLink2
               to="how"
-              smooth={true}
+              smooth
               duration={600}
               onClick={handleLinkClick}
             >
               How it works
             </SmoothLink2>
+
             <SmoothLink2
               to="contact"
-              smooth={true}
+              smooth
               duration={600}
               onClick={handleLinkClick}
             >
               Contact Us
             </SmoothLink2>
-            <button
-              className="box3"
+
+            <MobileBtn
               onClick={() => {
-                handleLoginDrop();
-                setShow(false);
+                setMobileLogin(!mobileLoginDrop);
+                setMobileGetStarted(false);
               }}
             >
-              Sign in
-            </button>
-            <button
-              className="box4"
+              Sign In
+            </MobileBtn>
+
+            {mobileLoginDrop && (
+              <MobileDrop>
+                <button onClick={() => nav("/userlogin")}>As Customer</button>
+                <button onClick={() => nav("/vendor-login")}>As Vendor</button>
+                <button onClick={() => nav("/riderlogin")}>As Rider</button>
+              </MobileDrop>
+            )}
+
+            <MobileBtn
               onClick={() => {
-                handleGetstated();
-                setShow(false);
+                setMobileGetStarted(!mobileGetStartedDrop);
+                setMobileLogin(false);
               }}
             >
-              Get Stated
-            </button>
+              Get Started
+            </MobileBtn>
+
+            {mobileGetStartedDrop && (
+              <MobileDrop>
+                <button onClick={() => nav("/usersignup")}>As Customer</button>
+                <button onClick={() => nav("/vendor-signup")}>As Vendor</button>
+                <button onClick={() => nav("/ridersignup")}>As Rider</button>
+              </MobileDrop>
+            )}
           </Dropdown>
         </Dropdownholder>
       </ContainerWrapper>
@@ -174,68 +169,58 @@ export default Header;
 const SmoothLink2 = styled(Link)`
   width: 100%;
   display: flex;
-  margin-bottom: 30px;
-  font-size: 1.1rem;
+  margin-bottom: 20px;
+  font-size: 1.05rem;
   font-weight: 500;
   cursor: pointer;
   color: #333;
-  &:hover {
-    color: #2887db;
+`;
+
+const MobileBtn = styled.button`
+  margin-top: 10px;
+  width: 100%;
+  height: 45px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #2887db;
+  background-color: white;
+  color: #2887db;
+  cursor: pointer;
+`;
+
+const MobileDrop = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  padding-left: 10px;
+
+  button {
+    width: 100%;
+    height: 40px;
+    margin-top: 8px;
+    background: #f4f4f4;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
   }
 `;
 
 const Dropdown = styled.div`
   width: 75%;
-  max-width: 250px;
+  max-width: 260px;
   display: flex;
   flex-direction: column;
-  min-height: 350px;
+  padding: 25px;
   background-color: #fff;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-  padding: 30px;
-
   position: absolute;
   top: 0;
   right: 0;
   height: 100%;
-
   transform: translateX(100%);
-  transition: transform 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
 
-  ${(props) =>
-    props.show &&
-    `
-    transform: translateX(0);
-  `}
-
-  .box3 {
-    width: 100%;
-    height: 50px;
-    border: 1px solid #2887db;
-    color: #2887db;
-    border-radius: 8px;
-    cursor: pointer;
-    background-color: #fff;
-    margin-bottom: 20px;
-  }
-
-  .box3:hover {
-    color: white;
-    background-color: #2887db;
-  }
-  .box4 {
-    width: 100%;
-    height: 50px;
-    background-color: #ff7f11;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-
-  .box4:hover {
-    background-color: #ee750cc0;
-  }
+  ${(props) => props.show && "transform: translateX(0);"}
 `;
 
 const Dropdownholder = styled.div`
@@ -247,11 +232,8 @@ const Dropdownholder = styled.div`
   display: flex;
   justify-content: flex-end;
   z-index: 5;
-
   background-color: ${({ show }) => (show ? "#00000075" : "transparent")};
   opacity: ${({ show }) => (show ? 1 : 0)};
-  transition: opacity 0.3s ease-in-out;
-
   pointer-events: ${({ show }) => (show ? "auto" : "none")};
 
   @media (min-width: 769px) {
@@ -263,6 +245,7 @@ const Iconholder = styled.div`
   display: none;
   cursor: pointer;
   z-index: 15;
+
   @media (max-width: 768px) {
     display: flex;
   }
@@ -278,7 +261,6 @@ const Container = styled.div`
   top: 0;
   z-index: 10;
   background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
 `;
 
 const ContainerWrapper = styled.div`
@@ -296,6 +278,7 @@ const LogoHolder = styled.div`
 
   h3 {
     color: #2887db;
+
     span {
       color: #ff7f11;
     }
@@ -304,17 +287,13 @@ const LogoHolder = styled.div`
 
 const SmoothLink = styled(Link)`
   cursor: pointer;
-  &:hover {
-    color: #2887db;
-  }
 `;
 
 const MidContainer = styled.div`
   ul {
     display: flex;
-    list-style: none;
     gap: 35px;
-    cursor: pointer;
+    list-style: none;
   }
 
   @media (max-width: 768px) {
@@ -323,101 +302,42 @@ const MidContainer = styled.div`
 `;
 
 const ButtonHolder = styled.div`
-  width: auto;
-  min-width: 230px;
-  height: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
   gap: 15px;
+  position: relative;
 
-  .drop {
-    width: 150px;
-    height: 120px;
-    background-color: white;
-    border-radius: 10px;
-    position: absolute;
-    right: 145px;
-    top: 60px;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    padding: 10px;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+  @media (max-width: 768px) {
+    display: none;
   }
+
+  .drop,
   .drop2 {
-    width: 150px;
-    height: 120px;
+    width: 160px;
     background-color: white;
+    padding: 12px;
     border-radius: 10px;
     position: absolute;
-    right: 0;
-    top: 60px;
-    z-index: 10;
+    top: 55px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    padding: 10px;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+    gap: 8px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 15px;
   }
 
   .box1 {
-    width: 90px;
+    width: 95px;
     height: 45px;
     border: 1px solid #2887db;
     color: #2887db;
+    background: white;
     border-radius: 8px;
-    cursor: pointer;
-    background-color: #fff;
-    transition: all 0.2s;
-  }
-
-  .box1:hover {
-    color: white;
-    background-color: #2887db;
   }
   .box2 {
     width: 130px;
     height: 45px;
-    background-color: #ff7f11;
+    background: #ff7f11;
     color: white;
-    border: none;
     border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .box2:hover {
-    background-color: #ee750cc0;
-  }
-
-  .customer_button,
-  .vendor_button,
-  .customer_button1,
-  .vendor_button1 {
-    width: 100%;
-    height: 35px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    background-color: white;
-    font-size: 0.9rem;
-    transition: all 0.2s;
-  }
-  .customer_button:hover,
-  .vendor_button:hover,
-  .customer_button1:hover,
-  .vendor_button1:hover {
-    color: #ff7f11;
-    background-color: #f7f7f7;
-  }
-
-  @media (max-width: 768px) {
-    display: none;
   }
 `;
 
