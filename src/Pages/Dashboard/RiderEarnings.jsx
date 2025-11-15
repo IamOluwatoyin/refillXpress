@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -12,7 +13,7 @@ import {
 import { FaMapMarkerAlt } from "react-icons/fa";
 import "../../styles/riderEarnings.css";
 
-const API_BASE_URL = import.meta.env.VITE_BASEURL;
+const API_BASE_URL = "https://refillexpress.onrender.com/api/v1";
 
 const WeeklyPerformanceBar = ({ day, deliveries, earnings, maxEarnings }) => {
   const safeEarnings = parseInt(earnings.replace(/[^0-9]/g, "")) || 0;
@@ -123,95 +124,112 @@ function RiderEarnings() {
         const totalRes = await axios.get(`${API_BASE_URL}/total-earnings`, {
           headers,
         });
-        const totalData = totalRes.data.data;
+        console.log("[v0] Full total-earnings response:", totalRes);
+        console.log("[v0] totalRes.data:", totalRes.data);
+        console.log("[v0] totalRes.data.data:", totalRes.data?.data);
+        const totalData = totalRes.data?.data || totalRes.data;
+        console.log("[v0] Extracted totalData:", totalData);
 
         const todayRes = await axios.get(`${API_BASE_URL}/todays-earnings`, {
           headers,
         });
-        const todayData = todayRes.data.data;
+        console.log("[v0] Full todays-earnings response:", todayRes);
+        console.log("[v0] todayRes.data:", todayRes.data);
+        console.log("[v0] todayRes.data.data:", todayRes.data?.data);
+        const todayData = todayRes.data?.data || todayRes.data;
+        console.log("[v0] Extracted todayData:", todayData);
 
         setEarningsOverview({
-          today: (totalData.todaysEarnings ?? 0).toLocaleString(undefined, {
+          today: (
+            totalData?.todaysEarnings ??
+            totalData?.earnings ??
+            0
+          ).toLocaleString(undefined, {
             minimumFractionDigits: 2,
           }),
-          thisWeek: (totalData.thisWeekEarnings ?? 0).toLocaleString(
+          thisWeek: (totalData?.thisWeekEarnings ?? 0).toLocaleString(
             undefined,
             { minimumFractionDigits: 2 }
           ),
-          thisMonth: (totalData.thisMonthEarnings ?? 0).toLocaleString(
+          thisMonth: (totalData?.thisMonthEarnings ?? 0).toLocaleString(
             undefined,
             { minimumFractionDigits: 2 }
           ),
-          pending: (totalData.pendingEarnings ?? 0).toLocaleString(undefined, {
+          pending: (totalData?.pendingEarnings ?? 0).toLocaleString(undefined, {
             minimumFractionDigits: 2,
           }),
         });
 
-        const mappedDeliveries = (todayData.recentDeliveries || []).map(
-          (delivery) => ({
-            orderId: delivery.orderNumber || `#DEL-${delivery.id.slice(-4)}`,
-            status: delivery.status === "completed" ? "Paid" : "Pending",
-            customer: delivery.customerName || "Customer",
-            time: new Date(delivery.completedAt).toLocaleTimeString("en-US", {
-              hour: "2-digit",
-              minute: "2-digit",
-            }),
-            distance: (delivery.distance || "0").toFixed(1) + " km",
-            total: (delivery.deliveryFee || 0).toLocaleString(),
-            base: (delivery.deliveryFee * 0.8 || 0).toLocaleString(undefined, {
-              maximumFractionDigits: 0,
-            }),
-          })
-        );
+        const mappedDeliveries = (
+          todayData?.recentDeliveries ||
+          todayData?.deliveries ||
+          []
+        ).map((delivery) => ({
+          orderId:
+            delivery.orderNumber || `#DEL-${delivery.id?.slice(-4) || "UNK"}`,
+          status: delivery.status === "completed" ? "Paid" : "Pending",
+          customer: delivery.customerName || "Customer",
+          time: delivery.completedAt
+            ? new Date(delivery.completedAt).toLocaleTimeString("en-US", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })
+            : "N/A",
+          distance: (delivery.distance || "0").toFixed(1) + " km",
+          total: (delivery.deliveryFee || 0).toLocaleString(),
+          base: (delivery.deliveryFee * 0.8 || 0).toLocaleString(undefined, {
+            maximumFractionDigits: 0,
+          }),
+        }));
         setRecentDeliveries(mappedDeliveries);
 
         setWeeklyData([
           {
             day: "Mon",
-            deliveries: totalData.monDeliveries || 0,
-            earnings: (totalData.monEarnings || 0).toLocaleString(undefined, {
+            deliveries: totalData?.monDeliveries || 0,
+            earnings: (totalData?.monEarnings || 0).toLocaleString(undefined, {
               maximumFractionDigits: 0,
             }),
           },
           {
             day: "Tue",
-            deliveries: totalData.tueDeliveries || 0,
-            earnings: (totalData.tueEarnings || 0).toLocaleString(undefined, {
+            deliveries: totalData?.tueDeliveries || 0,
+            earnings: (totalData?.tueEarnings || 0).toLocaleString(undefined, {
               maximumFractionDigits: 0,
             }),
           },
           {
             day: "Wed",
-            deliveries: totalData.wedDeliveries || 0,
-            earnings: (totalData.wedEarnings || 0).toLocaleString(undefined, {
+            deliveries: totalData?.wedDeliveries || 0,
+            earnings: (totalData?.wedEarnings || 0).toLocaleString(undefined, {
               maximumFractionDigits: 0,
             }),
           },
           {
             day: "Thu",
-            deliveries: totalData.thuDeliveries || 0,
-            earnings: (totalData.thuEarnings || 0).toLocaleString(undefined, {
+            deliveries: totalData?.thuDeliveries || 0,
+            earnings: (totalData?.thuEarnings || 0).toLocaleString(undefined, {
               maximumFractionDigits: 0,
             }),
           },
           {
             day: "Fri",
-            deliveries: totalData.friDeliveries || 0,
-            earnings: (totalData.friEarnings || 0).toLocaleString(undefined, {
+            deliveries: totalData?.friDeliveries || 0,
+            earnings: (totalData?.friEarnings || 0).toLocaleString(undefined, {
               maximumFractionDigits: 0,
             }),
           },
           {
             day: "Sat",
-            deliveries: totalData.satDeliveries || 0,
-            earnings: (totalData.satEarnings || 0).toLocaleString(undefined, {
+            deliveries: totalData?.satDeliveries || 0,
+            earnings: (totalData?.satEarnings || 0).toLocaleString(undefined, {
               maximumFractionDigits: 0,
             }),
           },
           {
             day: "Sun",
-            deliveries: totalData.sunDeliveries || 0,
-            earnings: (totalData.sunEarnings || 0).toLocaleString(undefined, {
+            deliveries: totalData?.sunDeliveries || 0,
+            earnings: (totalData?.sunEarnings || 0).toLocaleString(undefined, {
               maximumFractionDigits: 0,
             }),
           },
@@ -341,7 +359,7 @@ function RiderEarnings() {
       <div className="payout_schedule_card">
         <div className="payout_header">
           <MdOutlineCheckCircle size={20} className="check_icon" />
-          <span>Next Payout: **Friday, Oct 25**</span>
+          <span>Next Payout: **Fridays</span>
         </div>
         <p className="payout_details">
           Your earnings are paid out every Friday. Completed deliveries are

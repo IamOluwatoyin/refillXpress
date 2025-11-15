@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import axios from "axios";
+import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router";
 import {
   FaChevronRight,
@@ -18,9 +19,16 @@ import {
   FiSend,
   FiBox,
   FiAlertTriangle,
+  FiLoader,
 } from "react-icons/fi";
-import { toast } from "react-toastify";
+import styled from "styled-components";
 
+const ContentWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+`;
 const PageContainer = styled.div`
   min-height: 100vh;
   width: 100%;
@@ -30,13 +38,6 @@ const PageContainer = styled.div`
   justify-content: center;
 `;
 
-const ContentWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-`;
-
 const Card = styled.div`
   background-color: white;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
@@ -44,6 +45,156 @@ const Card = styled.div`
   overflow: hidden;
   padding: 1rem 1.25rem;
 `;
+
+const SkeletonBase = styled.div`
+  background: linear-gradient(90deg, #f3f4f6 0%, #e5e7eb 50%, #f3f4f6 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 0.25rem;
+
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+`;
+
+const SkeletonCard = styled(Card)`
+  padding: 1rem 1.25rem;
+`;
+
+const SkeletonLoader = () => (
+  <ContentWrapper>
+    {/* Header skeleton */}
+    <SkeletonCard>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          gap: "1rem",
+        }}
+      >
+        <SkeletonBase
+          style={{ height: "1.5rem", width: "30%", borderRadius: "0.375rem" }}
+        />
+        <SkeletonBase
+          style={{ height: "1.5rem", width: "20%", borderRadius: "9999px" }}
+        />
+      </div>
+    </SkeletonCard>
+
+    {/* Status card skeleton */}
+    <SkeletonCard>
+      <div
+        style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}
+      >
+        <SkeletonBase
+          style={{
+            height: "2.5rem",
+            width: "2.5rem",
+            borderRadius: "9999px",
+            flexShrink: 0,
+          }}
+        />
+        <div style={{ flex: 1, width: "100%" }}>
+          <SkeletonBase
+            style={{ height: "1rem", width: "60%", marginBottom: "0.5rem" }}
+          />
+          <SkeletonBase style={{ height: "0.875rem", width: "80%" }} />
+        </div>
+      </div>
+    </SkeletonCard>
+
+    {/* Progress card skeleton */}
+    <SkeletonCard>
+      <SkeletonBase
+        style={{ height: "1rem", width: "40%", marginBottom: "1rem" }}
+      />
+      <SkeletonBase
+        style={{ height: "0.5rem", width: "100%", marginBottom: "1.5rem" }}
+      />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          gap: "0.5rem",
+          paddingInline: "10px",
+        }}
+      >
+        {[...Array(6)].map((_, i) => (
+          <div key={i} style={{ flex: 1, textAlign: "center" }}>
+            <SkeletonBase
+              style={{
+                height: "2rem",
+                width: "100%",
+                borderRadius: "9999px",
+                margin: "0 auto 0.5rem",
+                maxWidth: "2rem",
+              }}
+            />
+            <SkeletonBase
+              style={{ height: "0.5rem", width: "70%", margin: "0 auto" }}
+            />
+          </div>
+        ))}
+      </div>
+    </SkeletonCard>
+
+    {/* Details card skeleton */}
+    <SkeletonCard>
+      <SkeletonBase
+        style={{ height: "1rem", width: "40%", marginBottom: "1rem" }}
+      />
+      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+        {[...Array(3)].map((_, blockIndex) => (
+          <div
+            key={blockIndex}
+            style={{
+              paddingBottom: blockIndex < 2 ? "1rem" : "0",
+              borderBottom: blockIndex < 2 ? "1px solid #f3f4f6" : "none",
+            }}
+          >
+            {[...Array(3)].map((_, itemIndex) => (
+              <div
+                key={itemIndex}
+                style={{
+                  display: "flex",
+                  gap: "0.5rem",
+                  marginBottom: itemIndex < 2 ? "0.75rem" : "0",
+                }}
+              >
+                <SkeletonBase
+                  style={{ height: "1rem", width: "1rem", flexShrink: 0 }}
+                />
+                <div style={{ flex: 1 }}>
+                  <SkeletonBase
+                    style={{
+                      height: "0.75rem",
+                      width: "40%",
+                      marginBottom: "0.25rem",
+                    }}
+                  />
+                  <SkeletonBase style={{ height: "0.875rem", width: "70%" }} />
+                </div>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </SkeletonCard>
+
+    {/* Button skeleton */}
+    <div style={{ padding: "0 1.25rem", marginBottom: "1rem" }}>
+      <SkeletonBase
+        style={{ height: "2.7rem", width: "100%", borderRadius: "0.375rem" }}
+      />
+    </div>
+  </ContentWrapper>
+);
 
 const ModalBackdrop = styled.div`
   position: fixed;
@@ -258,6 +409,80 @@ const VerificationModal = ({ expectedCode, onSubmit, onClose, loading }) => {
     </ModalBackdrop>
   );
 };
+
+const SuccessModalContent = styled.div`
+  max-width: 400px;
+  width: 100%;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  position: relative;
+  text-align: center;
+`;
+
+const SuccessIcon = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+
+  svg {
+    width: 3rem;
+    height: 3rem;
+    color: #22c55e;
+  }
+`;
+
+const SuccessTitle = styled.h2`
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+`;
+
+const SuccessMessage = styled.p`
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+`;
+
+const SuccessButton = styled.button`
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  background-color: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #16a34a;
+  }
+
+  &:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+  }
+`;
+
+const SuccessModal = ({ onClose }) => (
+  <ModalBackdrop onClick={onClose}>
+    <SuccessModalContent onClick={(e) => e.stopPropagation()}>
+      <SuccessIcon>
+        <FiCheckCircle />
+      </SuccessIcon>
+      <SuccessTitle>Delivery Completed!</SuccessTitle>
+      <SuccessMessage>
+        Your delivery has been completed successfully. Thank you for your
+        excellent service.
+      </SuccessMessage>
+      <SuccessButton onClick={onClose}>Okay</SuccessButton>
+    </SuccessModalContent>
+  </ModalBackdrop>
+);
 
 const HeaderCard = styled(Card)`
   display: flex;
@@ -575,6 +800,23 @@ const ActionButton = styled.button`
     width: 0.75rem;
     height: 0.75rem;
   }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .loading-spinner {
+    animation: spin 1s linear infinite;
+    margin-right: 0.5rem;
+    margin-left: 0;
+    width: 1rem;
+    height: 1rem;
+  }
 `;
 
 const DetailItem = ({ icon: Icon, title, content }) => (
@@ -652,9 +894,61 @@ const StepIndicator = ({ step, index, currentStepIndex }) => {
   );
 };
 
+const FullPageLoadingOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
+const LoadingSpinnerIcon = styled(FiLoader)`
+  width: 3rem;
+  height: 3rem;
+  color: white;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+`;
+
+const LoadingText = styled.p`
+  color: white;
+  font-size: 1.125rem;
+  font-weight: 600;
+`;
+
+const mapStatusToStepIndex = (orderStatus) => {
+  const statusMap = {
+    pending: 0,
+    navigatingToCustomer: 0,
+    pickedUpCylinder: 1,
+    navigatingToVendor: 2,
+    refillingCylinder: 3,
+    returningToCustomer: 4,
+    deliveryComplete: 5,
+  };
+  return statusMap[orderStatus] || 0;
+};
+
 const OrderTracker = () => {
   const navigate = useNavigate();
   const { orderId } = useParams();
+
+  const actualOrderId = orderId || localStorage.getItem("currentOrderId");
 
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [notes, setNotes] = useState("");
@@ -662,6 +956,7 @@ const OrderTracker = () => {
   const [orderData, setOrderData] = useState(null);
   const [fetchError, setFetchError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [expectedCode] = useState("742891");
 
   const deliverySteps = [
@@ -716,7 +1011,7 @@ const OrderTracker = () => {
     const fetchOrderDetails = async () => {
       const authToken = localStorage.getItem("authToken");
 
-      if (!orderId || !authToken) {
+      if (!actualOrderId || !authToken) {
         setLoading(false);
         setFetchError("Missing Order ID or Auth Token.");
         return;
@@ -727,12 +1022,23 @@ const OrderTracker = () => {
 
       try {
         const response = await axios.get(
-          `https://refillexpress.onrender.com/api/v1/orders/getOneOrder/${orderId}`,
+          `https://refillexpress.onrender.com/api/v1/orders/getOneOrder/${actualOrderId}`,
           { headers: { Authorization: `Bearer ${authToken}` } }
         );
 
         const data = response.data.data;
         setOrderData(data);
+
+        const savedStepIndex = localStorage.getItem(
+          `orderStep_${actualOrderId}`
+        );
+        if (savedStepIndex) {
+          setCurrentStepIndex(parseInt(savedStepIndex, 10));
+        } else {
+          const currentStatus = data.orderStatus || "pending";
+          const stepIndex = mapStatusToStepIndex(currentStatus);
+          setCurrentStepIndex(stepIndex);
+        }
       } catch (error) {
         console.error(
           "Failed to fetch order details:",
@@ -747,10 +1053,20 @@ const OrderTracker = () => {
     };
 
     fetchOrderDetails();
-  }, [orderId]);
+  }, [actualOrderId]);
+
+  useEffect(() => {
+    if (actualOrderId && currentStepIndex !== null) {
+      localStorage.setItem("currentOrderId", actualOrderId);
+      localStorage.setItem(
+        `orderStep_${actualOrderId}`,
+        currentStepIndex.toString()
+      );
+    }
+  }, [currentStepIndex, actualOrderId]);
 
   const handleCompleteOrder = async (verificationCode) => {
-    const orderIdToComplete = orderId;
+    const orderIdToComplete = actualOrderId;
     const authToken = localStorage.getItem("authToken");
 
     if (!orderIdToComplete || !authToken) {
@@ -760,28 +1076,42 @@ const OrderTracker = () => {
 
     setLoading(true);
     try {
-      await axios.patch(
-        `https://refillexpress.onrender.com/api/v1/rider/complete/order/${orderIdToComplete}`,
-        { verificationCode: verificationCode },
+      const endpoint = `https://refillexpress.onrender.com/api/v1/rider/complete/order/${orderIdToComplete}`;
+
+      const response = await axios.patch(
+        endpoint,
+        { otp: verificationCode },
         {
           headers: {
             Authorization: `Bearer ${authToken}`,
+            "Content-Type": "application/json",
           },
         }
       );
 
-      toast.success("Order completed successfully!");
-      navigate("/rider/order");
+      setIsModalOpen(false);
+      window.scrollTo(0, 0);
+      setIsSuccessModalOpen(true);
     } catch (error) {
-      console.error("Error completing order:", error.response || error);
-      alert(
+      console.error(
+        "Error completing order:",
+        error.response?.status,
+        error.response?.data
+      );
+      toast.error(
         error.response?.data?.message ||
-          "Failed to complete order. Please check the code and try again."
+          "Failed to complete order. Please verify the OTP and try again."
       );
     } finally {
-      setIsModalOpen(false);
       setLoading(false);
     }
+  };
+
+  const handleSuccessModalClose = () => {
+    setIsSuccessModalOpen(false);
+    localStorage.removeItem(`orderStep_${actualOrderId}`);
+    localStorage.removeItem("currentOrderId");
+    navigate("/rider-dashboard/order");
   };
 
   const trackingStages = [
@@ -790,7 +1120,6 @@ const OrderTracker = () => {
     "navigatingToVendor",
     "refillingCylinder",
     "returningToCustomer",
-    "completed",
   ];
 
   const handleNextStep = async () => {
@@ -807,7 +1136,7 @@ const OrderTracker = () => {
     setLoading(true);
     try {
       await axios.put(
-        `https://refillexpress.onrender.com/api/v1/order/tracking/${orderId}/status`,
+        `https://refillexpress.onrender.com/api/v1/order/tracking/${actualOrderId}/status`,
         { orderStatus: currentStage },
         {
           headers: {
@@ -821,6 +1150,7 @@ const OrderTracker = () => {
         return;
       }
 
+      window.scrollTo(0, 0);
       setCurrentStepIndex((prev) => prev + 1);
     } catch (error) {
       console.error(
@@ -833,16 +1163,16 @@ const OrderTracker = () => {
     }
   };
 
-  // --- Render Logic: Loading/Error State ---
+  if (fetchError) {
+    return <PageContainer style={{ color: "red" }}>{fetchError}</PageContainer>;
+  }
+
   if (loading || !orderData) {
     return (
       <PageContainer>
-        {loading ? "Loading order details..." : "Initializing..."}
+        <SkeletonLoader />
       </PageContainer>
     );
-  }
-  if (fetchError) {
-    return <PageContainer style={{ color: "red" }}>{fetchError}</PageContainer>;
   }
 
   const orderInfo = {
@@ -877,6 +1207,13 @@ const OrderTracker = () => {
 
   return (
     <PageContainer>
+      {loading && (
+        <FullPageLoadingOverlay>
+          <LoadingSpinnerIcon />
+          <LoadingText>Processing...</LoadingText>
+        </FullPageLoadingOverlay>
+      )}
+
       <ContentWrapper>
         <HeaderCard>
           <OrderId>Order **{orderInfo.orderId}**</OrderId>
@@ -994,7 +1331,16 @@ const OrderTracker = () => {
 
         <div style={{ padding: "0 1.25rem", marginBottom: "1rem" }}>
           <ActionButton onClick={handleNextStep} disabled={loading}>
-            {loading ? "Processing..." : buttonText} <FaChevronRight />
+            {loading ? (
+              <>
+                <FiLoader className="loading-spinner" />
+                Processing...
+              </>
+            ) : (
+              <>
+                {buttonText} <FaChevronRight />
+              </>
+            )}
           </ActionButton>
         </div>
       </ContentWrapper>
@@ -1007,6 +1353,8 @@ const OrderTracker = () => {
           loading={loading}
         />
       )}
+
+      {isSuccessModalOpen && <SuccessModal onClose={handleSuccessModalClose} />}
     </PageContainer>
   );
 };

@@ -1,10 +1,52 @@
-import React, { useState } from "react";
+/* eslint-disable no-unused-vars */
+"use client";
+import React, { useState, useEffect } from "react";
 import "../../styles/dashboardHeader.css";
 import { useNavigate } from "react-router";
+import axios from "axios";
 
-const DashboardHeader = ({ rider }) => {
+const DashboardHeader = ({ rider: propRider }) => {
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [rider, setRider] = useState(propRider || {});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchRiderData = async () => {
+      try {
+        const riderId = localStorage.getItem("riderId");
+        const token = localStorage.getItem("authToken");
+
+        if (!riderId || !token) {
+          console.error("[v0] Rider ID or token not found in localStorage");
+          setLoading(false);
+          return;
+        }
+
+        const response = await axios.get(
+          `https://refillexpress.onrender.com/api/v1/rider/${riderId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (response.data.data) {
+          setRider(response.data.data);
+        }
+      } catch (err) {
+        console.error(
+          "[v0] Error fetching rider data:",
+          err.response?.data || err.message
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRiderData();
+  }, []);
 
   const handleGoBack = () => {
     navigate("/");
@@ -16,6 +58,11 @@ const DashboardHeader = ({ rider }) => {
 
   const closeSidebar = () => {
     setIsSidebarOpen(false);
+  };
+
+  const handleNavigation = (path) => {
+    navigate(path);
+    closeSidebar();
   };
 
   const riderName =
@@ -91,25 +138,25 @@ const DashboardHeader = ({ rider }) => {
 
           <nav className="sidebar_navigation">
             <h4
-              onClick={() => navigate("/rider-dashboard")}
+              onClick={() => handleNavigation("/rider-dashboard")}
               className="sidebar_nav_link"
             >
               Dashboard
             </h4>
             <h4
-              onClick={() => navigate("/rider-dashboard/order")}
+              onClick={() => handleNavigation("/rider-dashboard/order")}
               className="sidebar_nav_link"
             >
               Order
             </h4>
             <h4
-              onClick={() => navigate("/rider-dashboard/earnings")}
+              onClick={() => handleNavigation("/rider-dashboard/earnings")}
               className="sidebar_nav_link"
             >
               Earnings
             </h4>
             <h4
-              onClick={() => navigate("/rider-dashboard/account")}
+              onClick={() => handleNavigation("/rider-dashboard/account")}
               className="sidebar_nav_link"
             >
               Account

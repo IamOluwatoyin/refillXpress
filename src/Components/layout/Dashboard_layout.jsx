@@ -111,7 +111,7 @@ const MainContent = styled.div`
 `;
 
 const SidebarWrapper = styled.aside`
-  width: 300px;
+  width: 350px;
   background-color: #ffffff;
   border-right: 1px solid #e5e7eb;
   flex-shrink: 0;

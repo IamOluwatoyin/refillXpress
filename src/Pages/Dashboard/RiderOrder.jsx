@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
@@ -416,9 +417,8 @@ const RiderOrder = () => {
 
   const handleAcceptOrder = async (orderToAccept, userId) => {
     const orderIdToAccept = orderToAccept.id;
-    const customerUserId = userId || orderToAccept.userId;
 
-    if (!orderIdToAccept || !customerUserId || !authToken) {
+    if (!orderIdToAccept || !authToken) {
       console.error("Cannot accept order: Missing required data.");
       return;
     }
@@ -434,9 +434,7 @@ const RiderOrder = () => {
         },
       });
 
-      await axiosInstance.get(
-        `/orders/confirmOrder/${orderIdToAccept}/${customerUserId}`
-      );
+      await axiosInstance.post(`/orders/confirmOrder/${orderIdToAccept}`);
 
       await fetchAllOrders();
 
