@@ -3,7 +3,7 @@ import { HiFire } from "react-icons/hi";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import SpinnerModal from "../../vendor-auth/spinner-modal";import { resendOtp, verifyUser } from "../../../api/mutation";
-;
+import "./signupverify.css";
 
 const UserVerify = () => {
   const nav = useNavigate();
@@ -79,12 +79,17 @@ const UserVerify = () => {
   return (
     <div className="verify">
       <article className="article">
-        <header className="form-header" onClick={() => nav("/")}>
-          <h6 className="logo-heading">
-            <span className="fire"><HiFire /></span>
-            Refill<span className="logo-style">Xpress</span>
-          </h6>
-        </header>
+        <header className="verify-header">
+  <div className="logo-heading">
+    <img 
+      src="/Images/dashboard_logo.png"
+      alt=""
+      onClick={() => nav("/")}
+      className="logo-img"  /* <–– changed only this */
+    />
+  </div>
+</header>
+
 
         <form className="form" onSubmit={handleSubmit}>
           <div className="form-heading">

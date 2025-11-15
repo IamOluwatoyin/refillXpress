@@ -101,7 +101,7 @@ const Login = () => {
             <button disabled={loading} className="submit">
               sign in
             </button>
-            <p>
+            <p style={{color: "#000"}}>
               Don't have an account?{" "}
               <Link to="/usersignup" className="link">
                 sign up

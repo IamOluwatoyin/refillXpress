@@ -114,12 +114,12 @@ const HomeContent = () => {
       </header>
 
       <section className="actions">
-        <div className="action">
+        <div onClick={()=> nav("browsevendors")} className="action">
           <GrLocation className="icon" style={{ color: "blue" }} />
           <p className="action-type">find vendors</p>
           <p>Browse gas suppliers near you</p>
         </div>
-        <div className="action">
+        <div onClick={()=> nav("myorders")} className="action">
           <FiPackage className="icon" style={{ color: "orange" }} />
           <p className="action-type">my orders</p>
           <p>Track your deliveries</p>
@@ -138,7 +138,7 @@ const HomeContent = () => {
         {!recent || recent.length === 0 ? (
           <div className="empty-state">
             <p className="empty-message">You don’t have any orders yet.</p>
-            <button className="order-now" onClick={() => nav("browsevendors")}>
+            <button className="place" onClick={() => nav("browsevendors")}>
               Place your first order
             </button>
           </div>

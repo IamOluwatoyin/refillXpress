@@ -99,11 +99,11 @@ const formatter = (time) => {
 }
 
   return (
-    <div className='otpforgot'>
+    <div className='verify'>
         <article className="article">
-                <header className="header">
+                <header className="verify-header">
                     <div className='logo-heading'>
-                        <img src="/Images/dashboard_logo.png"lt="" onClick={()=> nav("/")} className='logo-heading' />
+                        <img src="/Images/dashboard_logo.png" alt="Dashboard Logo" onClick={()=> nav("/")} className='logo-heading' />
                     </div>
                 </header>
                 <form className="form">
@@ -140,7 +140,7 @@ const formatter = (time) => {
                 { 
                     timer > 0 ? (
                     <>
-                    <p>didn’t receive code? resend in  {formatter(timer)}</p>
+                    <p style={{color: "#000"}}>didn’t receive code? resend in  {formatter(timer)}</p>
                     </>
                     ) : (
                         <>

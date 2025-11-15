@@ -45,7 +45,7 @@ const Forgot = () => {
            <article className="article">
                 <header className="form-header">
                         <div className='logo-heading'>
-                        <img src="/Images/dashboard_logo.png" alt="" onClick={()=> nav("/")} className='logo-heading' />
+                        <img src="/Images/dashboard_logo.png" alt="" onClick={()=> nav("#")} className='logo-heading' />
                     </div>
                     
                 </header>
@@ -68,7 +68,7 @@ const Forgot = () => {
             </div>
             <div className='submit-section small'>
                 <button onClick={requestCode} className="submit">send code</button>
-                <p>Remember password? <Link className="link" to="/userlogin">sign in</Link></p>
+                <p style={{color: "#000"}}>Remember password? <Link className="link" to="/userlogin">sign in</Link></p>
             </div>
       </form>
       </article>
