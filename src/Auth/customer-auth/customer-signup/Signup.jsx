@@ -35,7 +35,7 @@ const Signup = () => {
            <article className="article">
                 <header className="form-header">
                      <div className='logo-heading'>
-                        <img src="/Images/dashboard_logo.png" alt="" onClick={()=> nav("/")} className='logo-heading' />
+                        <img src="/Images/dashboard_logo.jpg" alt="" onClick={()=> nav("/")} className='logo-heading' />
                     </div>
                 </header>
                 <form className="form" onSubmit={handleSubmit(onSubmit)}>

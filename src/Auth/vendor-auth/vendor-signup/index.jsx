@@ -50,7 +50,7 @@ const VendorSignup = () => {
   return (
     <div className="form-wrapper">
       <header onClick={() => navigate("/")}>
-        <img src="/Images/RefillXpress.jpg" alt="logo" />
+        <img src="/Images/dashboard_logo.jpg" alt="logo" />
       </header>
       <div className="form-container">
         <section className="cardBodyWrapper">

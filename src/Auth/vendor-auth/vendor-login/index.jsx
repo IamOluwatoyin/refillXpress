@@ -69,7 +69,7 @@ const VendorLogin = () => {
     <>
       <div className="form-wrapperlogin">
         <header onClick={() => navigate("/")}>
-          <img src="/Images/RefillXpress.jpg" alt="logo" />
+          <img src="/Images/dashboard_logo.jpg" alt="logo" />
         </header>
         <div className="form-containerlogin">
           <section className="cardBodyWrapperlogin">

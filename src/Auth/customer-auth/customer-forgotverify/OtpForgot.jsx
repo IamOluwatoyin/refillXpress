@@ -103,7 +103,7 @@ const formatter = (time) => {
         <article className="article">
                 <header className="verify-header">
                     <div className='logo-heading'>
-                        <img src="/Images/dashboard_logo.png" alt="Dashboard Logo" onClick={()=> nav("/")} className='logo-heading' />
+                        <img src="/Images/dashboard_logo.jpg" alt="Dashboard Logo" onClick={()=> nav("/")} className='logo-heading' />
                     </div>
                 </header>
                 <form className="form">

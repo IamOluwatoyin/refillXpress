@@ -32,7 +32,7 @@ const Login = () => {
         <header className="form-header">
           <div className="logo-heading">
             <img
-             src="/Images/dashboard_logo.png"
+             src="/Images/dashboard_logo.jpg"
               alt=""
               onClick={() => nav("/")}
               className="logo-heading"

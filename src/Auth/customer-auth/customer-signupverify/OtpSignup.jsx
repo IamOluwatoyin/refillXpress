@@ -82,10 +82,10 @@ const UserVerify = () => {
         <header className="verify-header">
   <div className="logo-heading">
     <img 
-      src="/Images/dashboard_logo.png"
+      src="/Images/dashboard_logo.jpg"
       alt=""
       onClick={() => nav("/")}
-      className="logo-img"  /* <–– changed only this */
+      className="logo-img"  
     />
   </div>
 </header>

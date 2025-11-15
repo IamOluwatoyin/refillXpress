@@ -94,8 +94,7 @@ const VendorVerify = () => {
   return (
     <div>
       <div className="form-wrapper-verify">
-        <div className="form-container-verify">
-          <header  onClick={() => navigate("/")}>
+        <header  onClick={() => navigate("/")}>
             <img
               src="/Images/logo.svg"
               alt="logo"
@@ -106,6 +105,8 @@ const VendorVerify = () => {
               Refill<span>Xpress</span>
             </h1>
           </header>
+        <div className="form-container-verify">
+          
           <section className="cardBodyWrapper-verify">
             <main className="cardBody-verify">
               <article>
@@ -163,8 +164,11 @@ const VendorVerify = () => {
                   <div
                     style={{
                       display: "flex",
-                      gap: "10px",
+                      gap: "15px",
                       justifyContent: "center",
+                    
+                      
+                      alignItems: "center",
                     }}
                   >
                     <span>Didn’t receive code?</span>
