@@ -1,331 +1,470 @@
 .sidebarWrapper {
-  width: 18%;
-  height: 89vh;
+  width: 100%;
+  height: 83vh;
   display: flex;
-  position: fixed;
-  /* background-color: red; */
+  position: relative;
 }
+
 .sidebarContainer {
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: relative;
   display: flex;
   flex-direction: column;
-  /* Default sidebar styles (restored) */
+  align-items: center;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  padding: 0;
+  justify-content: space-between; /* Space between header, nav, and footer */
+  background: white;
+  overflow-y: auto;
+}
+
+/* Sidebar Header - Logo and Close Button in same line */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px 20px 15px 20px;
+  flex-shrink: 0;
+}
+
+/* Sidebar Logo */
+.sidebar-logo {
+  display: none;
+  align-items: center;
+  gap: 12px;
+}
+
+.sidebar-logo-img {
+  width: 40px;
+  height: 35px;
+}
+
+.sidebar-logo-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: #005bac;
+  margin: 0;
+}
+
+.sidebar-logo-text span {
+  color: #ff7f11;
+}
+
+/* Close Button */
+.sidebar-close-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #666;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  line-height: 1;
+}
+
+.sidebar-close-btn:hover {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.vendor-icon-holder {
+  width: 90%;
+  max-width: 100%; 
+  height: auto;
+  min-height: 81px;
+  border-radius: 12px;
+  border-bottom: 0.75px;
+  background-color: #f9fafb;
+  padding: 15px;
+  margin: 10px 0;
+  flex-shrink: 0;
+}
+
+.vendor-icon-wrapper {
+  width: 100%;           
+  max-width: 100%; 
+  height: auto;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.vendor-icon-wrapper > aside {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: #333;
+}
+
+.verified-btn {
+  width: 59.25px;
+  height: 21.5px;
+  border-radius: 8px;
+  border: 0.75px;
+  background: #22c55e;
+  color: white;
+  font-size: 10px;
+  font-weight: 500;
+  border: none;
+  cursor: default;
+}
+
+.spaceicon {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+}
+
+/* Sidebar Navigation Items */
+.sidebar-nav-items {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 10px;
+}
+
+/* Sidebar Items */
+.sidebar-item {
+  width: 100%;
+  height: 47.98px;
+  border-radius: 10px;
+  display: flex;
+  gap: 12px;
+  padding: 12px 15px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  align-items: center;
+  transition: all 0.3s ease;
+  color: #666;
+  cursor: pointer;
+}
+
+.sidebar-icon {
+  font-size: 22px;
+  transition: all 0.3s ease;
+}
+
+.logout-icon {
+  color: #ef4444;
+}
+
+.dashboard-order > sub {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  color: inherit;
+}
+
+.profileNotification {
+  width: 30px;
+  height: 23px;
+  border-radius: 8px;
+  border: 0.75px;
+  text-align: center;
+  background-color: #d4183d;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+/* Sidebar Footer - Logout at bottom */
+.sidebar-footer {
+  width: 100%;
+  padding: 20px 10px;
+  flex-shrink: 0;
+  border-top: 1px solid #e5e7eb;
+  margin-top: auto;
+}
+
+.Dashboard-logout {
+  border-radius: 8px;
+  display: flex;
+  justify-content: flex-start;  
+  align-items: center;      
+  gap: 10px;
+  padding: 12px 15px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  border: 1px solid #ef4444; 
+  color: #ef4444; 
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.vendor-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #333;
+}
+
+/* Desktop Hover Effects */
+@media (min-width: 1025px) {
+  .sidebar-item:not(.Dashboard-logout):hover {
+    background-color: #f8f9fa;
+    color: #005bac;
+    transform: translateX(5px);
+  }
+  
+  .sidebar-item:not(.Dashboard-logout):hover .sidebar-icon {
+    color: #005bac;
+    transform: scale(1.1);
+  }
+  
+  .Dashboard-logout:hover {
+    background-color: #ef4444;
+    color: white;
+    transform: translateX(5px);
+  }
+  
+  .Dashboard-logout:hover .logout-icon {
+    color: white;
+  }
+}
+
+/* Active State */
+.activated {
+  background-color: #f0dccc !important;
+  color: #ff7f11 !important;
+  font-weight: 600;
+}
+
+.activated .sidebar-icon {
+  color: #ff7f11 !important;
+}
+
+/* Tablet and Mobile Styles */
+@media (max-width: 1024px) {
   .sidebarWrapper {
-    width: 18%;
-    height: 89vh;
-    display: flex;
-    position: fixed;
+    width: 100%;
+    height: 100vh;
+    position: relative;
   }
 
   .sidebarContainer {
     width: 100%;
-    height: 100%;
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    padding-top: 10px;
-    align-items: center;
-    gap: 25px;
-    cursor: pointer;
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-    padding: 2px;
+    height: 100vh;
+    padding: 0;
+    background: white;
+  }
+
+  .sidebar-header {
+    padding: 20px 20px 15px 20px;
+  }
+
+  .sidebar-close-btn {
+    display: block;
+  }
+
+  .sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+  .sidebar-logo-img {
+    width: 35px;
+    height: 30px;
+  }
+
+  .sidebar-logo-text {
+    font-size: 16px;
   }
 
   .vendor-icon-holder {
-    width: 17.5rem;
-    height: 81px;
-    /* Restored default Sidebar styles (flat, no nested selectors) */
-    .sidebarWrapper {
-      width: 18%;
-      height: 89vh;
-      display: flex;
-      position: fixed;
-    }
+    width: 100%;
+    padding: 12px 20px;
+    margin: 5px 0;
+    background-color: #f9fafb;
+    border-radius: 0;
+  }
 
-    .sidebarContainer {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      display: flex;
-      flex-direction: column;
-      padding-top: 10px;
-      align-items: center;
-      gap: 25px;
-      cursor: pointer;
-      box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-      padding: 2px;
-    }
+  .vendor-icon-wrapper {
+    width: 100%;
+  }
 
-    .vendor-icon-holder {
-      width: 17.5rem;
-      height: 81px;
-      border-top-left-radius: 18px;
-      border-top-right-radius: 18px;
-      border-bottom: 0.75px;
-      background-color: #f9fafb;
-      padding: 18px 0.75px 18px 18px;
-    }
+  .sidebar-nav-items {
+    padding: 0;
+    gap: 5px;
+  }
 
-    .vendor-icon-wrapper {
-      width: 217px;
-      height: 48px;
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-    .vendor-icon-wrapper > aside {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-    .verified-btn {
-      width: 59.25px;
-      height: 21.5px;
-      border-radius: 8px;
-      border: 0.75px;
-    }
-    .spaceicon {
-      display: flex;
-      gap: 7px;
-      align-items: center;
-    }
+  .sidebar-item {
+    width: 100%;
+    height: 50px;
+    padding: 12px 20px;
+    font-size: 16px;
+    color: #666;
+    border-radius: 0;
+  }
 
-    .dashboards {
-      width: 223px;
-      height: 47.98px;
-      border-radius: 10px;
-      display: flex;
-      gap: 10px;
-      padding: 15px;
-      font-size: 18px;
-      line-height: 24px;
-      font-weight: 400;
-      align-items: center;
-    }
-    .dashboard-order {
-      width: 223px;
-      height: 47.98px;
-      border-radius: 10px;
-      display: flex;
-      gap: 10px;
-      padding: 15px;
-      font-size: 18px;
-      line-height: 24px;
-      font-weight: 400;
-      align-items: center;
-    }
+  .sidebar-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #e5e7eb;
+  }
 
-    .analytics {
-      width: 223px;
-      height: 47.98px;
-      border-radius: 10px;
-      display: flex;
-      gap: 10px;
-      padding: 15px;
-      font-size: 18px;
-      line-height: 24px;
-      font-weight: 400;
-      align-items: center;
-    }
-    .profiles {
-      width: 223px;
-      height: 47.98px;
-      border-radius: 10px;
-      display: flex;
-      gap: 10px;
-      padding: 15px;
-      font-size: 18px;
-      line-height: 24px;
-      font-weight: 400;
-      align-items: center;
-    }
+  /* Mobile Hover Effects */
+  .sidebar-item:not(.Dashboard-logout):hover {
+    color: #005bac;
+  }
+  
+  .sidebar-item:not(.Dashboard-logout):hover .sidebar-icon {
+    color: #005bac;
+  }
+  
+  .Dashboard-logout:hover {
+    color: #ef4444;
+  }
 
-    .settings {
-      width: 223px;
-      height: 47.98px;
-      border-radius: 10px;
-      display: flex;
-      gap: 10px;
-      padding: 15px;
-      font-size: 18px;
-      line-height: 24px;
-      font-weight: 400;
-      align-items: center;
-    }
+  /* Remove background color on mobile for active state, use color only */
+  .activated {
+    background-color: transparent !important;
+    color: #ff7f11 !important;
+    font-weight: 600;
+  }
 
-    .dashboard-order > sub {
-      display: flex;
-      width: 100%;
-      justify-content: space-between;
-    }
+  .profileNotification {
+    width: 25px;
+    height: 20px;
+    font-size: 11px;
+  }
 
-    .profileNotification {
-      width: 30px;
-      height: 23px;
-      border-radius: 8px;
-      border: 0.75px;
-      text-align: center;
-      background-color: #d4183d;
-      color: #fff;
-    }
+  .verified-btn {
+    width: 55px;
+    height: 20px;
+    font-size: 9px;
+  }
+}
 
-    .Dashboard-logout {
-      width: 223px;
-      height: 47.98px;
-      border-radius: 10px;
-      display: flex;
-      gap: 10px;
-      padding: 15px;
-      font-size: 18px;
-      line-height: 24px;
-      font-weight: 400;
-      align-items: center;
-    }
+@media (max-width: 768px) {
+  .sidebar-header {
+    padding: 15px 15px 10px 15px;
+  }
 
-    .vendor-rating {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
+  .sidebar-item {
+    height: 45px;
+    padding: 10px 15px;
+    font-size: 15px;
+  }
 
-    .dashboard:hover,
-    .order:hover,
-    .analytics:hover,
-    .profile:hover,
-    .settings:hover {
-      background-color: #f5f5f5;
-      cursor: pointer;
-    }
+  .sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
-    .activated {
-      background-color: #f0dccc !important;
-      color: #ff7f11 !important;
-    }
+  .sidebar-logo-img {
+    width: 30px;
+    height: 25px;
+  }
 
-    /* Sidebar Responsive */
-    @media (max-width: 992px) {
-      .sidebarWrapper {
-        width: 100%;
-        height: auto; 
-        position: relative; 
-        display: flex;
-        flex-direction: column;
-        padding: 10px 5px;
-        box-shadow: none;
-        margin-bottom: 20px; 
-      }
+  .sidebar-logo-text {
+    font-size: 15px;
+  }
 
-      .sidebarContainer {
-        width: 100%;
-        flex-direction: column;
-        gap: 10px;
-        padding-top: 5px;
-        align-items: flex-start;
-      }
+  .vendor-icon-holder {
+    padding: 10px 15px;
+  }
 
-      .vendor-icon-holder {
-        width: 100%;
-        padding: 10px;
-      }
+  .sidebar-close-btn {
+    font-size: 24px;
+    padding: 5px;
+  }
 
-      .vendor-icon-wrapper {
-        width: 100%;
-        gap: 8px;
-        font-size: 14px;
-      }
+  .sidebar-footer {
+    padding: 12px 15px;
+  }
+}
 
-      .dashboards,
-      .dashboard-order,
-      .analytics,
-      .profiles,
-      .settings,
-      .Dashboard-logout {
-        width: 100%;
-        height: 40px;
-        padding: 8px 12px;
-        font-size: 14px;
-      }
+@media (max-width: 480px) {
+  .sidebar-header {
+    padding: 12px 12px 8px 12px;
+  }
 
-      .profileNotification {
-        width: 22px;
-        height: 18px;
-        font-size: 10px;
-      }
+  .sidebar-item {
+    height: 42px;
+    padding: 8px 12px;
+    font-size: 14px;
+  }
 
-      .verified-btn {
-        width: auto;
-        height: 18px;
-        font-size: 10px;
-      }
-    }
+  .sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
+  .sidebar-logo-img {
+    width: 28px;
+    height: 23px;
+  }
 
-    @media (max-width: 768px) {
-      .sidebarWrapper {
-        padding: 8px 5px;
-      }
+  .sidebar-logo-text {
+    font-size: 14px;
+  }
 
-      .dashboards,
-      .dashboard-order,
-      .analytics,
-      .profiles,
-      .settings,
-      .Dashboard-logout {
-        padding: 6px 10px;
-        font-size: 12px;
-        height: 36px;
-      }
+  .vendor-icon-holder {
+    padding: 8px 12px;
+  }
 
-      .vendor-icon-wrapper {
-        gap: 5px;
-      }
-    }
+  .sidebar-close-btn {
+    font-size: 22px;
+    padding: 4px;
+  }
 
+  .sidebar-footer {
+    padding: 10px 12px;
+  }
+}
 
-    .dashboard-layout {
-      display: flex;
-      gap: 20px; 
-    }
+/* Desktop Styles */
+@media (min-width: 1025px) {
+  .sidebarWrapper {
+    position: relative;
+    height: 83vh;
+    width: 100%;
+  }
 
+  .sidebar-close-btn {
+    display: none;
+  }
 
-    @media (max-width: 992px) {
-      .dashboard-layout {
-        flex-direction: column; 
-        gap: 15px; 
-      }
+  .sidebar-header {
+    padding: 20px 15px 15px 15px;
+  }
 
-      .dashboard-main {
-        margin-left: 0; 
-        width: 100%;
-        padding: 10px;
-      }
-    }
+  .sidebar-footer {
+    border-top: 1px solid #e5e7eb;
+  }
+}
 
-    .sidebarWrapper {
-      width: 18%;
-      height: 89vh;
-      display: flex;
-      position: fixed;
-      margin-right: 20px; 
-    }
+/* Ensure all text is visible */
+.sidebarContainer * {
+  color: #333;
+}
 
-    .dashboard-main {
-      flex: 1;
-      margin-left: 18%; 
-      padding: 20px;
-    }
+.sidebarContainer p,
+.sidebarContainer sub,
+.sidebarContainer span:not(.profileNotification) {
+  color: inherit;
+}
 
+/* Specific white text for notification */
+.profileNotification {
+  color: white !important;
+}
 
-    @media (max-width: 768px) {
-      .dashboard-main {
-        margin-left: 0;
-        padding: 10px;
-      }
-    }
-
-    .Dashboard-logout p {
-      margin-left: 8px;
-      font-weight: 600;
-    }
+.verified-btn {
+  color: white !important;
+}

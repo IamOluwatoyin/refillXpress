@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DashboardHeader from "./Dashboard-Header";
 import "./DashboardLayout.css";
 import Sidebar from "./Sidebar";
@@ -15,11 +15,24 @@ const DashboardLayout = () => {
     setIsSidebarOpen(false);
   };
 
+  // Prevent body scroll when sidebar is open
+  useEffect(() => {
+    if (isSidebarOpen) {
+      document.body.classList.add('sidebar-open');
+    } else {
+      document.body.classList.remove('sidebar-open');
+    }
+
+    return () => {
+      document.body.classList.remove('sidebar-open');
+    };
+  }, [isSidebarOpen]);
+
   return (
-  <div className="DashboardlayoutWrapper">
-      <DashboardHeader 
-        isSidebarOpen={isSidebarOpen} 
-        toggleSidebar={toggleSidebar} 
+    <div className="DashboardlayoutWrapper">
+      <DashboardHeader
+        isSidebarOpen={isSidebarOpen}
+        toggleSidebar={toggleSidebar}
       />
       
       <div className="Content-wrapper">
