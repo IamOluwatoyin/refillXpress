@@ -125,20 +125,20 @@ useEffect(() => {
           value={findLocation}
           onChange={(e) => setFindLocation(e.target.value)}
         />
-        <div className="search-drop">
+        {/* <div className="search-drop">
           <span>
             Newest first <RxCaretDown />
           </span>
-        </div>
+        </div> */}
       </div>
 
-      <section className="views extreme">
-        {filteredVendors.length === 0 && <p>No vendors available</p>}
+      <section  className= {filteredVendors.length > 0? "views extreme": ""}>
+        {filteredVendors.length === 0 && <div className="no-vendor"> <p>No vendors available yet</p></div>}
 
         {filteredVendors.map((vendor) => {
           const canOrder =
             vendor.isAvailable && vendor.isVerified && vendor.isInStock;
-
+          
           return (
             <div key={vendor.id} className="order-holder">
               <div className="my-order">
@@ -198,7 +198,7 @@ useEffect(() => {
                       Order Now
                     </button>
                     <button
-                      className="order-now to-view"
+                      className="to-view"
                       onClick={() => openViewModal(vendor)}
                     >
                       View

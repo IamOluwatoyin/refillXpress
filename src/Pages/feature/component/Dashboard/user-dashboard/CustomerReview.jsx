@@ -82,10 +82,9 @@ useEffect(() => {
                              }} 
                              placeholder='search gas vendor'/>
                           </div>
-                            <button onClick={()=> {  console.log("Arrow clicked!");
-                            
-                            setSuggest(!suggest)} }
-                            
+                            <button onClick={()=> { ;
+                            setSuggest(!suggest)} 
+                          }
                             className='arrow-down'>
                                 <BsArrowDown />
                             </button>
@@ -124,7 +123,7 @@ useEffect(() => {
                     </div>
                 </div>
         </div>
-       <section className="views extreme shrink">
+       <section className={reviews?.length === 0 ? "" : "views extreme shrink"}>
   <div className="top">
     <p className="preview-title">customer feedback</p>
   </div>
