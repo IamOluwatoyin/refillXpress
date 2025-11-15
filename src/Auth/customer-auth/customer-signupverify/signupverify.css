@@ -6,6 +6,7 @@
     align-items: center;
 }
 
+/* Article container */
 .article {
     width: 95%;
     height: 95%;
@@ -15,15 +16,18 @@
     align-items: center;
 }
 
-.header {
+/* FIXED: Header stays left-aligned */
+.verify-header {
     width: 100%;
     height: 6rem;
     display: flex;
-    justify-content: flex-start;
+    justify-content: flex-start;   /* Ensures logo stays at the left */
     align-items: center;
-    margin-bottom: 6rem;
+    padding-left: 1rem;            /* Small spacing from the left */
+    margin-bottom: 4rem;
 }
 
+/* Form container */
 .form {
     width: 40rem;
     height: max-content;
@@ -34,18 +38,7 @@
     gap: 2rem;
 }
 
-.logo-heading {
-    color: #ff5711;
-    margin: 0 0;
-    text-transform: capitalize;
-    font-size: 2rem;
-}
-.logo-style {
-    color: blue;
-    font-size: 2rem;
-    text-transform: capitalize;
-}
-
+/* Form heading */
 .form-heading {
     width: 52%;
     height: max-content;
@@ -54,31 +47,34 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-
-    h1 {
-        text-transform: capitalize;
-        margin-block: 0.8rem;
-    }
-    p {
-        margin-bottom: 0;
-    }
 }
 
+.form-heading h1 {
+    text-transform: capitalize;
+    margin-block: 0.8rem;
+}
 
+.form-heading p {
+    margin-bottom: 0;
+}
+
+/* Submit button */
 .submit {
     width: 50%;
     height: 2.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    border: none;
     border-radius: 0.3rem;
-    border-style: none;
     background: #ff7300;
     color: #fff;
     font-size: 1rem;
     cursor: pointer;
     text-transform: capitalize;
 }
+
+/* Code input wrapper */
 .code {
     width: 70%;
     height: 4rem;
@@ -87,6 +83,7 @@
     justify-content: space-between;
 }
 
+/* Individual code boxes */
 .code-box {
     width: 4rem;
     height: 4rem;
@@ -98,7 +95,25 @@
     font-size: 1.4rem;
     font-weight: 500;
 }
+
+/* Placeholder style */
 ::placeholder {
     color: #ccc;
     font-weight: lighter;
+}
+
+@media screen and (max-width: 630px) {
+    .form {
+        width: 90%;
+    }
+    .code {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 4px;
+    }
+    .code-box {
+        width: 3rem;
+        height: 3rem;
+    }
 }

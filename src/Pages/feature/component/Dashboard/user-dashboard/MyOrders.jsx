@@ -51,11 +51,9 @@ const MyOrders = () => {
         setLoading(true);
         const res = await getAllOrders();
         const data = res?.data?.data || {};
-        console.log("RAW ORDERS FROM BACKEND:", data);
 
         setOrders([
           ...(data.pending || []),
-          ...(data.accepted || []),
           ...(data.active || []),
           ...(data.completed || []),
           ...(data.cancelled || []),
@@ -119,9 +117,9 @@ const MyOrders = () => {
       setProcessingOrderId(null);
     }
   };
+
   const getOrdersForTab = () => {
     if (!orders || orders.length === 0) return [];
-    console.log("Orders:", orders);
 
     switch (activeTab) {
       case "Pending":
@@ -133,15 +131,18 @@ const MyOrders = () => {
       case "Accepted":
         // Orders accepted but not yet paid
         return orders.filter(
-          (o) => o.status === "active" && o.paymentStatus === "unpaid"
+          (o) =>
+            o.status === "accepted" ||
+            (o.status === "active" && o.paymentStatus !== "paid")
         );
 
       case "Active":
         // Orders that are paid and in-progress
         return orders.filter(
           (o) =>
-            o.paymentStatus === "paid" &&
-            (o.status === "active" || o.status === "confirmed")
+            o.status === "active" ||
+            o.status === "confirmed" ||
+            o.paymentStatus === "paid"
         );
 
       case "Completed":
@@ -162,15 +163,16 @@ const MyOrders = () => {
       (o) => o.status === "pending" || o.status === "created"
     ).length,
     Accepted: orders.filter(
-      (o) => o.status === "active" && o.paymentStatus === "unpaid"
+      (o) =>
+        o.status === "accepted" ||
+        (o.status === "active" && o.paymentStatus !== "paid")
     ).length,
-
     Active: orders.filter(
       (o) =>
-        o.paymentStatus === "paid" &&
-        (o.status === "active" || o.status === "confirmed")
+        o.status === "active" ||
+        o.status === "confirmed" ||
+        o.paymentStatus === "paid"
     ).length,
-
     Completed: orders.filter((o) => o.status === "completed").length,
     Cancelled: orders.filter((o) => o.status === "cancelled").length,
   };
@@ -338,11 +340,10 @@ const MyOrders = () => {
                   </button>
                   <button
                     className="order-btn track-btn"
-                    onClick={() =>
-                      nav("/userdashboard/track-order", {
-                        state: { orderId: order.id },
-                      })
+                   onClick={() =>
+                      nav("/userdashboard/track-order", { state: { orderId: order.id } })
                     }
+
                   >
                     Track Delivery
                   </button>

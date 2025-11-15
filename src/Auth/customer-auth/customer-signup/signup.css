@@ -38,20 +38,9 @@
     box-sizing: border-box;
 }
     
-.fire {
-    width: 3rem;
-    height: 3rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: orangered;
-    color: #fff;
-    border-radius: 0.3rem;
-    margin-inline: 0.5rem;
-}
 }
 .form {
-    width: 45rem;
+    width: 45%;
     height: max-content;
     display: flex;
     flex-direction: column;
@@ -67,19 +56,6 @@
     height: 70%;
 }
 
-.logo-heading {
-    color: blue;
-    margin: 0 0;
-    text-transform: capitalize;
-    font-size: 1.3rem;
-    display: flex;
-    align-items: center;
-}
-.logo-style {
-    color: #FF7F11;
-    font-size: 1.3rem;
-    text-transform: capitalize;
-}
 
 .form-heading {
     width: 100%;
@@ -250,4 +226,27 @@ input[type="password"]::-ms-clear {
 
 .link {
     color: green;
+}
+@media screen and (max-width: 630px) {
+    .article {
+        width: 95%;
+        display: flex;
+        justify-content: flex-start;
+    }
+    .form {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+
+    }
+    .row-input {
+        width: 100%;
+        flex-direction: column;
+    }
+    .small-input {
+        width: 90%;
+    }
+    .small {
+        width: 90%;
+    }
 }
