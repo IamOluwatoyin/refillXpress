@@ -4,8 +4,7 @@ import "./homecontent.css";
 import { MdVerified } from "react-icons/md";
 import { GoStar } from "react-icons/go";
 import { TbCurrencyNaira } from "react-icons/tb";
-import { BiTimeFive } from "react-icons/bi";
-import { RxCaretDown } from "react-icons/rx";
+import { BiTimeFive, BiSearch } from "react-icons/bi";
 import OrderModal from "./modals/OrderModal";
 import ViewVendor from "./modals/ViewVendor";
 import { getNearbyVendors } from "../../../../../api/query";
@@ -118,20 +117,17 @@ useEffect(() => {
         </div>
       </header>
 
-      <div className="search-bar">
-        <input
-          placeholder="Search location"
-          className="searchinput"
-          value={findLocation}
-          onChange={(e) => setFindLocation(e.target.value)}
-        />
-        {/* <div className="search-drop">
-          <span>
-            Newest first <RxCaretDown />
-          </span>
-        </div> */}
-      </div>
-
+     <div className="search-bar">
+  <div className="searchinput-wrapper">
+    <BiSearch className="search-icon" />
+    <input
+      placeholder="Search location"
+      className="searchinput"
+      value={findLocation}
+      onChange={(e) => setFindLocation(e.target.value)}
+    />
+  </div>
+</div>
       <section  className= {filteredVendors.length > 0? "views extreme": ""}>
         {filteredVendors.length === 0 && <div className="no-vendor"> <p>No vendors available yet</p></div>}
 

@@ -8,7 +8,7 @@ const ViewVendor = ({ vendor, onClose }) => {
 
   if (!vendor) return null;
 
-  // ✅ Determine verification and availability for display & button
+  //  Determine verification and availability for display & button
   const isVerified = vendor.verificationStatus === "approved";
   const isUnavailable = !vendor.isAvailable || !vendor.inStock || !isVerified;
 
@@ -102,7 +102,7 @@ const ViewVendor = ({ vendor, onClose }) => {
         <button
           className="vendor-order-btn"
           onClick={() => setShowOrderModal(true)}
-          disabled={isUnavailable} // ✅ disabled if not verified, unavailable, or out of stock
+          disabled={isUnavailable} 
         >
           {!vendor.isAvailable
             ? "Vendor Unavailable"

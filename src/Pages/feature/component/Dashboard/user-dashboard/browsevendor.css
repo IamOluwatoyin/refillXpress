@@ -1,3 +1,11 @@
+.main .browsevendor{
+    width: 100% !important;   
+    max-width: none;          
+    margin-left: 0;           
+    padding-left: 1rem
+   
+}
+
 .browsevendor {
     width: 100%;
     height: max-content;
@@ -16,33 +24,32 @@
     }
 }
 
-.search-bar {
-    width: 94%;
-    height: 4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* Wrapper for input and icon */
+.searchinput-wrapper {
+  width: 75%;              
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
+/* Position the icon inside input */
+.search-icon {
+  position: absolute;
+  left: 0.8rem;           
+  color: #555;
+  font-size: 1.2rem;
+  pointer-events: none;     
+}
+
+/* Adjust the input to leave space for icon */
 .searchinput {
-    width: 75%;
-    padding: 0.6rem;
-    background-color: #eee;
-    border-radius: 0.5rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    border: none;
-}
-
-.search-drop {
-    width: 20%;
-    padding: 0.6rem;
-    background-color: #eee;
-    border-radius: 0.5rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+  width: 100%;
+  padding: 0.6rem 0.6rem 0.6rem 2.5rem; 
+  background-color: #eee;
+  border-radius: 0.5rem;
+  border: none;
+  display: flex;
+  align-items: center;
 }
 
 input:focus {
@@ -65,7 +72,7 @@ input:focus {
 .vendor-status-available,
 .vendor-status-unavailable {
     display: inline-block;
-    padding: 4px 10px;
+    padding: 3px 6px;
     border-radius: 6px;
     font-size: 0.85rem;
     font-weight: 600;
@@ -73,8 +80,8 @@ input:focus {
 }
 
 .vendor-status-available {
-    background-color: #1da851;
-    color: #fff;
+    background-color: #9cdab4;
+    color: #3ba865;
 }
 .no-vendor {
   width: max-content;
