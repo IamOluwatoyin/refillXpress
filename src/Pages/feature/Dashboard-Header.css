@@ -22,12 +22,8 @@
   justify-content: space-between; /* Space between logo and hamburger */
   width: 100%;
 }
-
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
+ 
+ 
 
 .hamburger-menu {
   display: none; /* Hidden by default on desktop */
@@ -47,9 +43,10 @@
 }
 
 .imgLogo {
-  width: 70px;
-  height: 50px;
+ 
   cursor: pointer;
+   margin: 0;
+    padding: 0;
 }
 
 .header-container h2 {
@@ -58,6 +55,7 @@
   line-height: 120%;
   color: #005bac;
   margin: 0;
+  
 }
 
 .header-container h2 span {

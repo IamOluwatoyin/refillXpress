@@ -98,7 +98,7 @@ const UserDashboard = () => {
         <header className="header">
           <div className="header-content">
             <div className="header-left">
-              <img src="/Images/dashboard_logo.png" onClick={()=> nav("")} className='logo-heading' /> 
+              <img src="/Images/dashboard_logo.jpg" onClick={()=> nav("")} className='logo-heading' /> 
             </div>
             <div className="header-right">
               <div onClick={hoverShow} onMouseLeave={()=> setTimeout(() => {
@@ -154,7 +154,7 @@ const UserDashboard = () => {
             <NavLink className={({isActive}) => isActive ? "nav active" : "nav"} to="customer-account" onClick={closeSidebar}>
               <FiUser className='nav-link'/><span>account</span>
             </NavLink>
-            <span className='userDashboard-logout'>
+            {/* <span className='userDashboard-logout'>
               {sidebar && <>
               <IoIosLogOut
                 style={{ fontSize: "28px", cursor:"pointer" }}
@@ -164,7 +164,7 @@ const UserDashboard = () => {
               />
               <p>Logout</p>
               </>}
-            </span>
+            </span> */}
           </div>
         </div>
   

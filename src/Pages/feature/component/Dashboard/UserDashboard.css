@@ -126,6 +126,8 @@
     justify-content: center;
     align-items: flex-start;
     transition: transform 0.3s ease-in-out;
+     padding-top: 1rem;
+
 }
 .navigation {
     width: 15rem;
@@ -134,12 +136,15 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    position: fixed;
     gap: 1rem;
     margin-top: 3rem;
     margin-left: 0;
     border-radius: 0.9rem;
     background-color: #fff;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+
 }
 .navigation .nav {
     width: 80%;
@@ -333,3 +338,4 @@
   border-radius: 50%;
   object-fit: cover;
 }
+

@@ -114,12 +114,12 @@ const HomeContent = () => {
       </header>
 
       <section className="actions">
-        <div onClick={()=> nav("browsevendors")} className="action">
+        <div onClick={()=> nav("/userdashboard/browsevendors")} className="action">
           <GrLocation className="icon" style={{ color: "blue" }} />
           <p className="action-type">find vendors</p>
           <p>Browse gas suppliers near you</p>
         </div>
-        <div onClick={()=> nav("myorders")} className="action">
+        <div onClick={()=> nav("/userdashboard/myorders")} className="action">
           <FiPackage className="icon" style={{ color: "orange" }} />
           <p className="action-type">my orders</p>
           <p>Track your deliveries</p>
