@@ -140,11 +140,15 @@ const UserDashboard = () => {
             <div className="sidebar-header">
               <CgClose className="close-sidebar" onClick={closeSidebar} />
             </div>
-            <nav onClick={()=>switchTab("home", "/userdashboard")} className={currentRoute.pathname === "/userdashboard" ?  "nav active" : "nav"} >
+            
+              <nav onClick={()=>switchTab("home", "/userdashboard")} className={currentRoute.pathname === "/userdashboard" ?  "nav active" : "nav"} >
               <BiHome className='nav-link'/><span>home</span></nav>
+            
+            
             <NavLink className={({isActive}) => isActive ? "nav active" : "nav"} to="browsevendors" onClick={closeSidebar}>
               <GrLocation className='nav-link'/><span>browse vendors</span>
             </NavLink>
+            
             <NavLink className={({isActive}) => isActive ? "nav active" : "nav"} to="myorders" onClick={closeSidebar}>
               <FiPackage className='nav-link'/><span>my orders</span>
             </NavLink>

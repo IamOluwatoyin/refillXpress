@@ -36,6 +36,7 @@ const MyOrders = () => {
   const [processingOrderId, setProcessingOrderId] = useState(null);
   const [showDelivery, setShowDelivery] = useState(false);
   const [deliveryCode, setDeliveryCode] = useState("");
+  const [trackLoading, setTrackLoading] = useState(null);
 
   const tabs = [
     { label: "Pending", key: "Pending" },
@@ -323,29 +324,35 @@ const MyOrders = () => {
                 </>
               )}
 
-              {activeTab === "Active" && (
-                <>
-                  <button
-                    className="order-btn completed-btn"
-                    onClick={() => {
-                      setOrderDetails(order);
-                      setDeliveryCode(order?.otp);
-                      setShowDelivery(true);
-                    }}
-                  >
-                    Complete
-                  </button>
-                  <button
-                    className="order-btn track-btn"
-                   onClick={() =>
-                      nav("/userdashboard/track-order", { state: { orderId: order.id } })
-                    }
+             {activeTab === "Active" && (
+  <>
+    <button
+      className="order-btn completed-btn"
+      onClick={() => {
+        setOrderDetails(order);
+        setDeliveryCode(order?.otp);
+        setShowDelivery(true);
+      }}
+      disabled={trackLoading === order.id}
+    >
+      Complete
+    </button>
 
-                  >
-                    Track Delivery
-                  </button>
-                </>
-              )}
+    <button
+      className="order-btn track-btn"
+      onClick={async () => {
+        setTrackLoading(order.id);
+        await new Promise((res) => setTimeout(res, 500)); // simulate loading
+        nav("/userdashboard/track-order", { state: { orderId: order.id, tab: activeTab } });
+        setTrackLoading(null);
+      }}
+      disabled={trackLoading === order.id}
+    >
+      {trackLoading === order.id ? "Loading..." : "Track Delivery"}
+    </button>
+  </>
+)}
+
 
               {activeTab === "Completed" && (
                 <>
