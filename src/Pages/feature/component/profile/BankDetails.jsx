@@ -30,9 +30,7 @@ const BankDetails = ({ vendor }) => {
   };
 
   const payouts = [
-    { date: "Oct 20, 2024", amount: "₦1250.00" },
-    { date: "Oct 13, 2024", amount: "₦980.50" },
-    { date: "Oct 6, 2024", amount: "₦1100.25" },
+   
   ];
 
   return (

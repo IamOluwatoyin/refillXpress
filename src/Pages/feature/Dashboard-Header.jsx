@@ -10,10 +10,8 @@ const DashboardHeader = ({ isSidebarOpen, toggleSidebar }) => {
       <div className='header-wrapper'>
         <header className='header-container'>
           <div className="header-left">
-            <img src="/Images/logo.svg" className='imgLogo' onClick={()=>nav("/")} alt="Logo"/>
-            <h2>
-              Refill<span>Xpress</span>
-            </h2>
+            <img src="/Images/dashboard_logo.jpg" className='imgLogo' onClick={()=>nav("/")} alt="Logo"/>
+           
           </div>
           
           {/* Hamburger Menu */}
