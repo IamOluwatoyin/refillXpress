@@ -154,17 +154,6 @@ const UserDashboard = () => {
             <NavLink className={({isActive}) => isActive ? "nav active" : "nav"} to="customer-account" onClick={closeSidebar}>
               <FiUser className='nav-link'/><span>account</span>
             </NavLink>
-            {/* <span className='userDashboard-logout'>
-              {sidebar && <>
-              <IoIosLogOut
-                style={{ fontSize: "28px", cursor:"pointer" }}
-                onClick={() => {
-                 setLogoutModal(true)
-                }}
-              />
-              <p>Logout</p>
-              </>}
-            </span> */}
           </div>
         </div>
   
