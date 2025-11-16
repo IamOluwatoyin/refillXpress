@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import "../../styles/dashboardHeader.css";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import logo from "../../assets/Header.png";
 
 const DashboardHeader = ({ rider: propRider }) => {
   const navigate = useNavigate();
@@ -83,11 +84,7 @@ const DashboardHeader = ({ rider: propRider }) => {
       <header className="dashboard_header">
         <div className="dashboard_headerWrapper">
           <div className="header_left" onClick={handleGoBack}>
-            <img
-              src="/Images/dashboard_logo.png"
-              alt="Brand Logo"
-              className="logo-image"
-            />
+            <img src={logo} alt="logo" />
           </div>
 
           <div className="desktop_user_profile">
