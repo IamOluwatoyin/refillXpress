@@ -5,3 +5,4 @@ const RiderLeaderboard = () => {
 };
 
 export default RiderLeaderboard;
+const API_BASE_URL = import.meta.env.VITE_BASEURL;
