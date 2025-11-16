@@ -53,11 +53,13 @@ const MyOrders = () => {
         const data = res?.data?.data || {};
 
         setOrders([
-          ...(data.pending || []),
-          ...(data.active || []),
-          ...(data.completed || []),
-          ...(data.cancelled || []),
-        ]);
+            ...(data.pending || []),
+            ...(data.accepted || []),
+            ...(data.active || []),
+            ...(data.completed || []),
+            ...(data.cancelled || []),
+          ]);
+
       } catch (err) {
         console.error("Error fetching orders:", err);
         toast.error(err?.response?.data?.message || "Failed to fetch orders");
@@ -133,17 +135,12 @@ const MyOrders = () => {
         return orders.filter(
           (o) =>
             o.status === "accepted" ||
-            (o.status === "active" && o.paymentStatus !== "paid")
+            (o.status === "active" && o.paymentStatus === "unpaid")
         );
 
       case "Active":
         // Orders that are paid and in-progress
-        return orders.filter(
-          (o) =>
-            o.status === "active" ||
-            o.status === "confirmed" ||
-            o.paymentStatus === "paid"
-        );
+         return orders.filter((o) => o.paymentStatus === "paid");
 
       case "Completed":
         // Fully delivered/completed orders

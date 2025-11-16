@@ -322,9 +322,8 @@ const OrderManagement = () => {
                 style={{ backgroundColor: "red", color: "#fff" }}
                 onClick={() =>
                   handleOrderDecision(selectedOrder, "reject", rejectReason)
-                }
-                disabled={isProcessing}
-              >
+                }>
+              
                 Confirm Rejection
               </button>
             </div>
