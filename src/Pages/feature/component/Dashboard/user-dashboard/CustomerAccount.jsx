@@ -15,6 +15,7 @@ const CustomerAccount = () => {
     phoneNumber: "",
     residentialAddress: "",
     profilePicture: "",
+    selectedFile: null,
   });
 
   const [loading, setLoading] = useState(false);
@@ -69,17 +70,18 @@ const CustomerAccount = () => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setProfileAccount({ ...profileAccount, profilePicture: file });
+      const preview = URL.createObjectURL(file)
+      setProfileAccount({ ...profileAccount, profilePicture: preview, selectedFile: file });
     }
   };
-
+  console.log(profileAccount.profilePicture)
   
   const updateProfile = async () => {
   try {
     const formData = new FormData();
 
-    if (profileAccount.profilePicture instanceof File) {
-      formData.append("profilePicture", profileAccount.profilePicture);
+    if (profileAccount.selectedFile) {
+      formData.append("profilePicture", profileAccount.selectedFile);
     }
 
     formData.append("residentialAddress", profileAccount.residentialAddress || "");

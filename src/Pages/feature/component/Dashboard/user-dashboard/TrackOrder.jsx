@@ -122,6 +122,10 @@ const TrackOrder = () => {
               <strong>Delivery Address:</strong>{" "}
               {orderData?.user?.address || "--"}
             </p>
+            <p>
+              <strong>Confirmation:</strong>{" "}
+              {orderData?.user?.otp || "--"}
+            </p>
           </div>
 
           <div className="details-card">
