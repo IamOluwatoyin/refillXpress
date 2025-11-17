@@ -1,8 +1,11 @@
 .DashboardlayoutWrapper {
   width: 100%;
   height: 100vh;
+  height: 100dvh; 
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .Content-wrapper {
@@ -10,7 +13,9 @@
   display: flex;
   gap: 15px;
   padding: 10px;
-  height: calc(100vh - 15vh - 20px);
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
 }
 
 .sidebar-wrapper {
@@ -18,94 +23,18 @@
   display: flex;
   justify-content: center;
   transition: all 0.3s ease-in-out;
+  overflow: hidden;
 }
 
 .main-content {
   width: 82%;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
   padding: 10px;
   transition: all 0.3s ease-in-out;
+  min-width: 0;
 }
 
-/* Tablet Styles */
-@media (max-width: 1024px) {
-  .Content-wrapper {
-    height: calc(100vh - 12vh - 20px);
-    padding: 8px;
-    gap: 0;
-  }
-  
-  .sidebar-wrapper {
-    position: fixed;
-    top: 0;
-    left: -100%; /* Completely hidden by default */
-    width: 350px;
-    height: 100vh;
-    background: white;
-    z-index: 99999;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-    transition: left 0.3s ease-in-out;
-    justify-content: flex-start;
-    padding: 0;
-  }
-  
-  .sidebar-wrapper.active {
-    left: 0; /* Fully visible when active */
-  }
-  
-  .main-content {
-    width: 100%;
-    padding: 8px;
-  }
-}
-
-/* Mobile Styles */
-@media (max-width: 768px) {
-  .Content-wrapper {
-    height: calc(100vh - 10vh - 20px);
-    padding: 5px;
-  }
-  
-  .sidebar-wrapper {
-    width: 50px;
-    left: -100%;
-  }
-  
-  .sidebar-wrapper.active {
-    left: 0;
-  }
-  
-  .main-content {
-    padding: 5px;
-  }
-}
-
-/* Small Mobile Styles */
-@media (max-width: 480px) {
-  .Content-wrapper {
-    padding: 5px 0;
-  }
-  
-  .sidebar-wrapper {
-    width: 80%;
-    left: -100%;
-  }
-  
-  .sidebar-wrapper.active {
-    left: 0;
-  }
-  
-  .main-content {
-    padding: 5px;
-  }
-}
-
-/* Prevent body scroll when sidebar is open */
-body.sidebar-open {
-  overflow: hidden;
-}
-
-/* Desktop Styles */
 @media (min-width: 1025px) {
   .sidebar-wrapper {
     position: static;
@@ -115,5 +44,143 @@ body.sidebar-open {
   
   .main-content {
     width: 82%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .Content-wrapper {
+    gap: 0;
+    padding: 8px;
+  }
+  
+  .sidebar-wrapper {
+    position: fixed;
+    top: 60px;
+    left: -100%;
+    width: 350px;
+    max-width: 80vw;
+    height: calc(100dvh - 60px);
+    background: #fff;
+    z-index: 99999;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: left 0.3s ease-in-out;
+    justify-content: flex-start;
+    padding: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .sidebar-wrapper.active {
+    left: 0;
+  }
+  
+  .main-content {
+    width: 100%;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .Content-wrapper {
+    gap: 0;
+    padding: 5px;
+    height: auto;
+    flex-direction: column;
+  }
+  
+  .sidebar-wrapper {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 70vw;
+    max-width: 300px;
+    height: 100dvh;
+    background: #fff;
+    z-index: 99999;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: left 0.3s ease-in-out;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .sidebar-wrapper.active {
+    left: 0;
+  }
+  
+  .main-content {
+    width: 100%;
+    padding: 5px;
+    flex: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .Content-wrapper {
+    gap: 0;
+    padding: 4px;
+  }
+  
+  .sidebar-wrapper {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 50vw;
+    max-width: 280px;
+    height: 100dvh;
+    background: #fff;
+    z-index: 99999;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: left 0.25s ease-in-out;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .sidebar-wrapper.active {
+    left: 0;
+  }
+  
+  .main-content {
+    width: 100%;
+    padding: 4px;
+  }
+}
+
+@media (max-width: 360px) {
+  .Content-wrapper {
+    gap: 0;
+    padding: 3px;
+  }
+  
+  .sidebar-wrapper {
+    width: 90vw;
+    max-width: 260px;
+  }
+  
+  .main-content {
+    padding: 3px;
+  }
+}
+
+body.sidebar-open {
+  overflow: hidden;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  button, [role="button"], a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .sidebar-wrapper.active::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: -1;
   }
 }

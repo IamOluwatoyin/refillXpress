@@ -1,42 +1,66 @@
+
 .orderWrapper {
   width: 100%;
   background-color: #f9fafb;
-  padding: 20px;
+  padding: clamp(12px, 4vw, 20px);
 }
 
 .orderWrapper h2 {
-  font-size: 22px;
+  font-size: clamp(18px, 5vw, 28px);
   font-weight: 600;
-  margin-bottom: 15px;
+  margin-bottom: clamp(10px, 3vw, 20px);
   color: #111827;
 }
 
 .orderGasTabs {
-  display: inline-flex;
-  background: #e5e7eb; 
+  display: flex;
+  background: #e5e7eb;
   border-radius: 10px;
-  padding: 4px;
-  margin-bottom: 25px;
+  padding: clamp(3px, 1vw, 6px);
+  margin-bottom: clamp(15px, 4vw, 25px);
+  overflow-x: auto;
+  gap: clamp(4px, 1vw, 8px);
+  -webkit-overflow-scrolling: touch;
+}
+
+.orderGasTabs::-webkit-scrollbar {
+  height: 4px;
+}
+
+.orderGasTabs::-webkit-scrollbar-track {
+  background: #e5e7eb;
+  border-radius: 10px;
+}
+
+.orderGasTabs::-webkit-scrollbar-thumb {
+  background: #9ca3af;
+  border-radius: 10px;
 }
 
 .orderGasTabs button {
   border: none;
-  background: transparent; 
-  padding: 8px 16px;
+  background: transparent;
+  padding: clamp(8px, 2vw, 12px) clamp(10px, 3vw, 18px);
   border-radius: 8px;
   cursor: pointer;
   font-weight: 500;
   color: #111827;
   transition: all 0.3s ease;
+  font-size: clamp(12px, 2.5vw, 14px);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
 }
+
 .orderGasTabs button.activity {
   background-color: #fff;
   color: #000;
- 
 }
+
 .orderPlaceholder {
   width: 100%;
-  height: 200px;
+  height: clamp(150px, 50vh, 250px);
   border: 1px solid #e5e7eb;
   border-radius: 10px;
   background: #fff;
@@ -45,22 +69,20 @@
   justify-content: center;
   color: #6b7280;
   font-weight: 500;
-  margin-top: 10px;
+  margin-top: clamp(8px, 2vw, 15px);
+  font-size: clamp(14px, 2.5vw, 16px);
 }
-
-
-
 
 .ordersList {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: clamp(10px, 3vw, 20px);
 }
 
 .orderCard {
   background: #fff;
   border-radius: 10px;
-  padding: 30px 25px; 
+  padding: clamp(12px, 4vw, 30px) clamp(12px, 3vw, 25px);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
@@ -68,106 +90,140 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: clamp(8px, 2vw, 16px);
+  flex-wrap: wrap;
+  margin-bottom: clamp(10px, 2vw, 15px);
 }
 
 .orderId {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: clamp(6px, 2vw, 12px);
   font-weight: 500;
   color: #111827;
-  margin-top: 4px;
+  margin-top: 0;
+  flex-wrap: wrap;
+  font-size: clamp(13px, 2.5vw, 15px);
 }
 
 .statusP {
-  font-size: 13px;
-  padding: 3px 10px;
+  font-size: clamp(11px, 2vw, 13px);
+  padding: clamp(3px, 1vw, 6px) clamp(8px, 2vw, 12px);
   border-radius: 8px;
   color: #fff;
+  white-space: nowrap;
 }
 
 .statusP.pendings {
   background-color: #111827;
 }
 
+.statusP.pending {
+  background: #000;
+  color: #fff;
+}
+
+.statusP.accepted {
+  background: rgb(230, 224, 224);
+  color: #000;
+}
+
+.statusP.completed {
+  background: #fff;
+  color: #2e7d32;
+  box-shadow: 2px 2px 5px gray;
+}
+
+.statusP.cancelled {
+  background: #c62828;
+  color: #ffebee;
+}
+
 .priceSection {
   display: flex;
   align-items: center;
-  gap: 15px;
-   position: relative;
-  right: 10%; 
+  gap: clamp(8px, 2vw, 15px);
+  position: relative;
 }
 
 .price {
   font-weight: 600;
   color: #111827;
-  
+  font-size: clamp(14px, 3vw, 18px);
 }
 
 .orderDetails {
-   display: flex;
+  display: flex;
   flex-direction: column;
-  gap: 14px;
-  color: #374151;;
+  gap: clamp(10px, 2.5vw, 16px);
+  color: #374151;
 }
 
+.orderDetails .name {
+  font-size: clamp(13px, 2.5vw, 15px);
+  font-weight: 500;
+  margin: 0;
+}
 
 .infoRow {
- display: flex;
-  justify-content: space-between;
- align-items: flex-start;
- gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 3vw, 20px);
 }
-
 
 .leftInfo {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: clamp(4px, 1.5vw, 8px);
   margin: 0;
- 
 }
-
-
 
 .centerInfo {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 40px;
-  flex: 1;
+  flex-direction: column;
+  gap: clamp(6px, 2vw, 12px);
   color: #4b5563;
 }
 
-
-/* .rightBtns {
+.item {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-   justify-content: flex-start;
-   margin-top: -60px;
-  gap: 15px;
-} */
+  align-items: center;
+  gap: clamp(4px, 1.5vw, 8px);
+  margin: 0;
+  font-size: clamp(12px, 2.3vw, 14px);
+  word-break: break-word;
+}
+
+.address {
+  color: #6b7280;
+  margin-top: 0;
+}
 
 .rightBtns {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;  /* keeps buttons in one straight vertical line */
+  flex-direction: row;
+  align-items: center;
   justify-content: flex-start;
-  margin-top: 0;            /* removes the weird upward shift */
-  gap: 15px;
+  margin-top: 0;
+  gap: clamp(6px, 2vw, 12px);
+  flex-wrap: wrap;
 }
 
 .rightBtns button {
-  width: 90px;
   font-weight: 500;
   border-radius: 8px;
-  padding: 6px 0;
+  padding: clamp(8px, 2vw, 10px) clamp(10px, 3vw, 16px);
   cursor: pointer;
   border: none;
   transition: all 0.3s ease;
-  
-  
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(12px, 2vw, 14px);
+  white-space: nowrap;
+  flex: 1;
+  min-width: 80px;
 }
 
 .viewBtn {
@@ -186,62 +242,9 @@
   color: #fff;
 }
 
-.item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin: 0;
-  
-}
-
-.address {
-  color: #6b7280;
-  margin-top: 8px;
-}
-  
-
-
-.views.extreme.shrink {
-  background: #fff; 
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  margin-bottom: 24px; 
-  padding: 16px;
-  transition: all 0.2s ease;
-}
-
-
-.views.extreme.shrink:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
-}
-
-
-.myorders {
-  padding-bottom: 40px;
-}
-
-
-
-
-@media (max-width: 768px) {
-  .infoRow {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .centerInfo {
-    justify-content: flex-start;
-    gap: 15px;
-  }
-
-  .rightBtns {
-    align-items: flex-start;
-  }
-
-  .rightBtns button {
-    width: 100%;
-  }
+.completeBtn {
+  background-color: green !important;
+  color: #fff !important;
 }
 
 .rejectOverlay {
@@ -250,82 +253,160 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2000; 
+  z-index: 2000;
+  padding: clamp(12px, 3vw, 20px);
 }
 
 .rejectCard {
   background: #fff;
-  padding: 20px;
+  padding: clamp(16px, 4vw, 24px);
   border-radius: 10px;
-  width: 600px;
-  max-width: 90%;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  width: 100%;
+  max-width: 90vw;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.rejectCard h3 {
+  font-size: clamp(16px, 3vw, 20px);
+  margin: 0 0 clamp(8px, 2vw, 12px) 0;
+  font-weight: 600;
+}
+
+.rejectCard p {
+  font-size: clamp(12px, 2.3vw, 14px);
+  margin: 0 0 clamp(12px, 2vw, 16px) 0;
+  color: #6b7280;
 }
 
 .rejectCard input {
   width: 100%;
-  padding: 8px;
-  margin: 12px 0;
+  padding: clamp(8px, 2vw, 12px);
+  margin: clamp(10px, 2vw, 14px) 0;
   border-radius: 6px;
   border: 1px solid #ccc;
-  height: 120px;
-  
+  height: clamp(100px, 25vh, 150px);
+  font-size: clamp(12px, 2vw, 14px);
+  font-family: inherit;
+  box-sizing: border-box;
 }
-
 
 .cardBtns {
   display: flex;
-  justify-content: space-between;
+  gap: clamp(8px, 2vw, 12px);
+  flex-direction: row;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.closeBtnReject,
+.rejectBtnReject {
+  padding: clamp(8px, 2vw, 12px) clamp(12px, 3vw, 18px);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: clamp(12px, 2vw, 14px);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  flex: 1;
+  min-width: 100px;
 }
 
 .closeBtnReject {
-  padding: 8px 12px;
   background: #ccc;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
+  color: #333;
 }
 
 .rejectBtnReject {
-  padding: 8px 12px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-
-
-.statusP.accepted {
-  background: rgb(230, 224, 224);
-  color: #000;
-}
-
-.statusP.pending {
-  background: #000;;
+  background: red;
   color: #fff;
 }
-
-.statusP.completed {
-  background: #fff;
-  color: #2e7d32;
-  box-shadow: 2px 2px 5px gray;
-}
-
-.statusP.cancelled {
-  background: #c62828;
-  color: #ffebee;
-}
-
-
 
 button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
-  background-color: #ccc; 
-  color: #666 !important;            
+  background-color: #ccc !important;
+  color: #666 !important;
   pointer-events: none;
 }
+
+@media (min-width: 480px) {
+  .infoRow {
+    flex-direction: row;
+    gap: clamp(16px, 3vw, 24px);
+  }
+
+  .centerInfo {
+    flex-direction: row;
+    gap: clamp(12px, 2vw, 20px);
+  }
+
+  .rightBtns {
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  .rightBtns button {
+    flex: 0 1 auto;
+    min-width: auto;
+  }
+
+  .rejectCard {
+    max-width: 500px;
+  }
+}
+
+@media (min-width: 768px) {
+  .orderTop {
+    gap: 20px;
+  }
+
+  .infoRow {
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .centerInfo {
+    flex: 1;
+    justify-content: flex-start;
+  }
+
+  .rightBtns {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+  }
+
+  .rightBtns button {
+    width: 110px;
+    flex: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .orderCard {
+    padding: 30px 28px;
+  }
+
+  .rightBtns button {
+    width: 130px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .orderCard {
+    padding: clamp(10px, 2vw, 20px) clamp(10px, 2vw, 20px);
+  }
+
+  .orderGasTabs {
+    margin-bottom: 12px;
+  }
+}
+
