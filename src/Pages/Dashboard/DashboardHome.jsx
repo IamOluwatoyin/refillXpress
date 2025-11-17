@@ -100,12 +100,12 @@ export const KycStatusNotice = ({ kycStatus, navigate }) => {
       actionText = "Complete KYC Form";
       icon = MdOutlineRemoveCircle;
       break;
-    default:
-      message =
-        "Your account is currently inactive. Please complete the full registration process or wait for KYC approval.";
-      actionText = "Start Registration";
-      icon = MdOutlineRemoveCircle;
-      break;
+    // default:
+    // message =
+    //   "Your account is currently inactive. Please complete the full registration process or wait for KYC approval.";
+    // actionText = "Start Registration";
+    // icon = MdOutlineRemoveCircle;
+    // break;
   }
 
   const IconComponent = icon;
