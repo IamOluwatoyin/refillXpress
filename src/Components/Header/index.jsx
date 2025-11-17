@@ -80,7 +80,7 @@ const Header = () => {
             Sign in
           </button>
           <button className="box2" onClick={handleGetstated}>
-            Get Stated
+            Get Started
           </button>
           {loginDrop && (
             <div className="drop">
