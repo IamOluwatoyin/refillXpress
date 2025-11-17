@@ -1,251 +1,667 @@
+* {
+  box-sizing: border-box;
+}
+
 .profileWrapper {
-width: 100%;
-display: flex;
-flex-direction: column;
-gap: 25px;
-padding: 30px 50px;
-background-color: #f9fafb;
-font-family: "Inter", sans-serif;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: #f9fafb;
+  font-family: "Inter", sans-serif;
+}
+
+@media (min-width: 480px) {
+  .profileWrapper {
+    gap: 1.25rem;
+    padding: 1.25rem;
+  }
+}
+
+/* Tablet: 768px and up */
+@media (min-width: 768px) {
+  .profileWrapper {
+    gap: 1.5rem;
+    padding: 1.5rem 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .profileWrapper {
+    gap: 1.75rem;
+    padding: 2rem 3rem;
+  }
 }
 
 .profileheader {
   display: flex;
-  justify-content: space-between; 
-  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
   width: 100%;
-  /* margin-bottom: 6px; */
+  align-items: flex-start;
+}
+
+@media (min-width: 768px) {
+  .profileheader {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+  }
+}
+
+.profileheaderContent {
+  flex: 1;
 }
 
 .profileheader h2 {
-font-size: 23px;
-font-weight: 600;
-color: #111827;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+  line-height: 1.4;
+}
+
+@media (min-width: 480px) {
+  .profileheader h2 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .profileheader h2 {
+    font-size: 1.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .profileheader h2 {
+    font-size: 2rem;
+  }
 }
 
 .profileheader span {
-color: #6b7280;
-font-size: 16px;
+  color: #6b7280;
+  font-size: 0.875rem;
+  display: block;
+  margin-top: 0.25rem;
+  line-height: 1.4;
 }
 
-.verificationCard {
-position: relative;
-background: #16a34a;
-color: #fff;
-border-radius: 10px;
-padding: 25px;
-overflow: hidden;
-
+@media (min-width: 480px) {
+  .profileheader span {
+    font-size: 0.95rem;
+  }
 }
 
-.verificationHeader {
-display: flex;
-justify-content: space-between;
-align-items: center;
+@media (min-width: 768px) {
+  .profileheader span {
+    font-size: 1rem;
+  }
 }
 
 .verifiedText {
-display: flex;
-align-items: center;
-gap: 6px;
-font-size: 20px;
-font-weight: 500;
-text-align: right;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+  margin: 0;
+  padding: 0.5rem 0.75rem;
+  background: #f3f4f6;
+  border-radius: 6px;
+}
+
+@media (min-width: 480px) {
+  .verifiedText {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .verifiedText {
+    font-size: 1.1rem;
+    background: transparent;
+    padding: 0;
+  }
+}
+
+.verificationCard {
+  position: relative;
+  background: #16a34a;
+  color: #fff;
+  border-radius: 10px;
+  padding: 1.25rem;
+  overflow: hidden;
+}
+
+@media (min-width: 480px) {
+  .verificationCard {
+    padding: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .verificationCard {
+    padding: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .verificationCard {
+    padding: 2.5rem;
+  }
+}
+
+.verificationHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.verificationHeader h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+@media (min-width: 480px) {
+  .verificationHeader h4 {
+    font-size: 1.1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .verificationHeader h4 {
+    font-size: 1.2rem;
+  }
+}
+
+.verificationCardText {
+  font-size: 0.875rem;
+  margin: 0 0 1rem 0;
+  opacity: 0.95;
+  line-height: 1.4;
+}
+
+@media (min-width: 480px) {
+  .verificationCardText {
+    font-size: 0.95rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .verificationCardText {
+    font-size: 1rem;
+  }
 }
 
 .progressSection {
-position: relative;
-margin: 15px 0;
+  position: relative;
+  margin: 1.25rem 0;
 }
 
-
 .progressContainer {
-width: 50%;
-height: 8px;
-background: rgba(255, 255, 255, 0.3);
-border-radius: 5px;
-overflow: hidden;
-position: relative;
-z-index: 1;
+  width: 100%;
+  max-width: 200px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 768px) {
+  .progressContainer {
+    max-width: 300px;
+  }
 }
 
 .progressFill {
-height: 100%;
-background: #fff;
-border-radius: 5px;
-transition: width 0.4s ease;
+  height: 100%;
+  background: #fff;
+  border-radius: 5px;
+  transition: width 0.4s ease;
 }
 
 .verifiedCount {
-font-size: 14px;
+  font-size: 0.85rem;
+  margin: 0.75rem 0 0 0;
+  opacity: 0.9;
+}
+
+@media (min-width: 480px) {
+  .verifiedCount {
+    font-size: 0.9rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .verifiedCount {
+    font-size: 0.95rem;
+  }
 }
 
 .shieldIcon {
-position: absolute;
-right: 25px;
-top: 20px;
-font-size: 40px;
-
-color: white;
+  position: absolute;
+  right: 1.25rem;
+  top: 1.25rem;
+  font-size: 2rem;
+  color: white;
+  opacity: 0.3;
 }
 
+@media (min-width: 768px) {
+  .shieldIcon {
+    font-size: 2.5rem;
+    right: 2rem;
+    top: 2rem;
+  }
+}
 
 .tabs {
-display: flex;
-background: #f3f4f6;
-border-radius: 8px;
-overflow: hidden;
+  display: flex;
+  background: #f3f4f6;
+  border-radius: 8px;
+  overflow: auto;
+  gap: 0;
+  -webkit-overflow-scrolling: touch;
 }
 
 .tabs button {
-flex: 1;
-padding: 6px 0;
-border: none;
-background: transparent;
-cursor: pointer;
-font-weight: 500;
-color: #6b7280;
-transition: all 0.3s ease;
+  flex: 1;
+  min-width: 100px;
+  padding: 0.75rem 0.5rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 500;
+  color: #6b7280;
+  transition: all 0.3s ease;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  border-radius: 8px;
+  margin: 2px;
 }
 
+@media (min-width: 480px) {
+  .tabs button {
+    padding: 0.75rem 0.75rem;
+    font-size: 0.85rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .tabs button {
+    flex: 1;
+    min-width: auto;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    margin: 0;
+    border-radius: 8px;
+  }
+}
+
+.tabs button:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
 
 .tabs button.actived {
-background: #fff;
-color: #111827;
-
+  background: #fff;
+  color: #111827;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .profileCard {
-background: #fff;
-border: 1px solid #e5e7eb;
-border-radius: 10px;
-padding: 25px;
-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-display: flex;
-flex-direction: column;
-gap: 25px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (min-width: 480px) {
+  .profileCard {
+    padding: 1.5rem;
+    gap: 1.75rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .profileCard {
+    padding: 1.75rem;
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .profileCard {
+    padding: 2rem;
+  }
 }
 
 .profileHeader {
-display: flex;
-justify-content: space-between;
-align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+@media (min-width: 768px) {
+  .profileHeader {
+    flex-direction: row;
+    align-items: center;
+  }
 }
 
 .saveTop {
-background-color: #16a34a;
-color: #fff;
-padding: 6px 12px;
-border-radius: 6px;
-border: none;
-cursor: pointer;
-font-size: 13px;
-font-weight: 500;
+  background-color: #16a34a;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  white-space: nowrap;
+}
+
+@media (min-width: 480px) {
+  .saveTop {
+    font-size: 0.85rem;
+    padding: 0.5rem 1.25rem;
+  }
+}
+
+.saveTop:hover {
+  background-color: #15803d;
 }
 
 .profilePicSection {
-display: flex;
-gap: 20px;
-align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+  width: 100%;
+}
+
+@media (min-width: 480px) {
+  .profilePicSection {
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .profilePicSection {
+    gap: 2rem;
+  }
 }
 
 .profileImageWrapper {
-position: relative;
+  position: relative;
+  flex-shrink: 0;
 }
 
 .profileImagePlaceholder {
-width: 100px;
-height: 100px;
-background: #d1d5db;
-border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  background: #d1d5db;
+  border-radius: 50%;
+}
+
+@media (min-width: 480px) {
+  .profileImagePlaceholder {
+    width: 90px;
+    height: 90px;
+  }
+}
+
+@media (min-width: 768px) {
+  .profileImagePlaceholder {
+    width: 100px;
+    height: 100px;
+  }
 }
 
 .editIcon {
-position: absolute;
-bottom: 0;
-right: 0;
-background: #16a34a;
-border-radius: 50%;
-color: #fff;
-display: flex;
-align-items: center;
-padding: 6px;
-font-size: 10px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: #16a34a;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  font-size: 0.75rem;
+  width: 28px;
+  height: 28px;
+}
+
+@media (min-width: 768px) {
+  .editIcon {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
 }
 
 .uploadBtn {
-background: none;
-border: 1px solid #d1d5db;
-border-radius: 6px;
-padding: 4px 6px;
-width: 60%;
-height: 40%;
-cursor: pointer;
-color: #111827;
-font-weight: 500;
-margin-top: 8px;
-display: flex;
-gap: 5px;
-align-items: center;
+  background: none;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  color: #111827;
+  font-weight: 500;
+  font-size: 0.8rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
 
+@media (min-width: 480px) {
+  .uploadBtn {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+  }
+}
+
+.uploadBtn:hover {
+  background: #f3f4f6;
+  border-color: #16a34a;
 }
 
 .formGrid {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1.25rem;
   width: 100%;
+}
+
+@media (min-width: 480px) {
+  .formGrid {
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .formGrid {
+    gap: 2rem;
+  }
 }
 
 .formRow {
   display: flex;
-  gap: 20px;
+  flex-direction: column;
+  gap: 1.25rem;
   width: 100%;
+}
+
+@media (min-width: 480px) {
+  .formRow {
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .formRow {
+    flex-direction: row;
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .formRow {
+    gap: 2rem;
+  }
 }
 
 .formGroup {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  flex: 1; 
+  gap: 0.5rem;
+  flex: 1;
 }
 
 .formGroup label {
-  font-size: 14px;
+  font-size: 0.85rem;
   color: #374151;
   font-weight: 500;
 }
 
+@media (min-width: 480px) {
+  .formGroup label {
+    font-size: 0.9rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .formGroup label {
+    font-size: 0.95rem;
+  }
+}
+
 .formGroup input {
-  padding: 10px;
+  padding: 0.75rem;
   border: 1px solid #e5e7eb;
   border-radius: 6px;
   background: #f3f4f6;
   outline: none;
   width: 100%;
-  font-size: 14px;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+}
+
+@media (min-width: 480px) {
+  .formGroup input {
+    padding: 0.85rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .formGroup input {
+    padding: 1rem;
+    font-size: 1rem;
+  }
 }
 
 .formGroup input:focus {
   border-color: #16a34a;
   background: #fff;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+}
+
+.formGroup input::placeholder {
+  color: #9ca3af;
 }
 
 .saveSection {
-display: flex;
-justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+@media (min-width: 480px) {
+  .saveSection {
+    margin-top: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .saveSection {
+    margin-top: 2rem;
+  }
 }
 
 .saveBtn {
-background-color: #f97316;
-color: #fff;
-padding: 10px 20px;
-border-radius: 8px;
-border: none;
-cursor: pointer;
-font-weight: 500;
-transition: 0.3s;
+  background-color: #f97316;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+@media (min-width: 480px) {
+  .saveBtn {
+    padding: 0.85rem 2rem;
+    font-size: 0.95rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .saveBtn {
+    padding: 1rem 2.5rem;
+    font-size: 1rem;
+  }
 }
 
 .saveBtn:hover {
-background-color: #ea580c;
+  background-color: #ea580c;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+}
+
+.saveBtn:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 479px) {
+  .profileWrapper {
+    padding: 0.75rem;
+  }
+  
+  .profileheader {
+    gap: 0.75rem;
+  }
+  
+  .tabs {
+    overflow-x: auto;
+    justify-content: flex-start;
+  }
+  
+  .tabs button {
+    flex: 0 0 auto;
+  }
 }

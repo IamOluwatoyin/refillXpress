@@ -1,9 +1,13 @@
 .bank-details-container {
   background-color: #f8f9fb;
-  padding: 30px;
-  min-height: 100vh;
+  padding: clamp(16px, 4vw, 30px);
+  min-height: 100dvh;
   font-family: "Inter", sans-serif;
   color: #333;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 4vw, 24px);
 }
 
 .bank-section,
@@ -11,46 +15,56 @@
   background: #fff;
   border: 1px solid #e6e6e6;
   border-radius: 12px;
-  padding: 24px;
-  margin-bottom: 24px;
+  padding: clamp(16px, 4vw, 24px);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+  box-sizing: border-box;
 }
 
 .section-title {
-  font-size: 16px;
+  font-size: clamp(14px, 3.5vw, 18px);
   font-weight: 600;
   color: #444;
-  margin-bottom: 16px;
+  margin: 0 0 clamp(12px, 2vw, 16px) 0;
   display: flex;
   gap: 8px;
   align-items: center;
+  min-height: 44px;
 }
 
 .input-row {
   display: flex;
-  gap: 16px;
-  margin-bottom: 16px;
+  flex-direction: column;
+  gap: clamp(12px, 2vw, 16px);
+  margin-bottom: clamp(12px, 2vw, 16px);
+}
+
+@media (min-width: 640px) {
+  .input-row {
+    flex-direction: row;
+  }
 }
 
 .input-group {
   flex: 1;
   display: flex;
   flex-direction: column;
+  gap: clamp(4px, 1vw, 6px);
 }
 
 .input-group label {
-  font-size: 13px;
+  font-size: clamp(12px, 2.5vw, 14px);
   color: #666;
-  margin-bottom: 6px;
 }
 
 .input-group input {
   background: #f1f3f5;
   border: 1px solid #ddd;
   border-radius: 6px;
-  padding: 10px;
-  font-size: 14px;
+  padding: clamp(8px, 2vw, 12px);
+  font-size: clamp(13px, 2.5vw, 14px);
   color: #333;
+  min-height: 44px;
+  box-sizing: border-box;
 }
 
 .input-group input:disabled {
@@ -59,30 +73,43 @@
 
 .payout-toggle {
   border-top: 1px solid #f0f0f0;
-  margin-top: 20px;
-  padding-top: 15px;
+  margin-top: clamp(16px, 3vw, 20px);
+  padding-top: clamp(12px, 2vw, 15px);
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: clamp(12px, 2vw, 16px);
+  align-items: flex-start;
+}
+
+@media (min-width: 640px) {
+  .payout-toggle {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 .toggle-title {
-  font-size: 14px;
+  font-size: clamp(13px, 2.5vw, 15px);
   font-weight: 600;
   margin-bottom: 4px;
 }
 
 .toggle-subtext {
-  font-size: 12px;
+  font-size: clamp(11px, 2vw, 13px);
   color: #777;
+  line-height: 1.4;
 }
 
-
-switch {
+.switch {
   position: relative;
   display: inline-block;
   width: 44px;
   height: 24px;
+  cursor: pointer;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
 }
 
 .switch input {
@@ -94,13 +121,15 @@ switch {
 .slider {
   position: absolute;
   cursor: pointer;
-  top: 0;
+  top: 50%;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: black; 
+  transform: translateY(-50%);
+  background-color: #ccc;
   border-radius: 34px;
   transition: 0.3s ease;
+  height: 24px;
 }
 
 .slider::before {
@@ -109,15 +138,14 @@ switch {
   height: 18px;
   width: 18px;
   left: 3px;
-  bottom: 3px;
+  top: 3px;
   background-color: white;
   border-radius: 50%;
   transition: 0.3s ease;
 }
 
-
 .slider.active {
-  background-color: #000; 
+  background-color: #16a34a;
 }
 
 .slider.active::before {
@@ -126,41 +154,57 @@ switch {
 
 .update-btn-container {
   display: flex;
-  justify-content: flex-end;
-  margin-top: 16px;
+  justify-content: flex-start;
+  margin-top: clamp(12px, 2vw, 16px);
+}
+
+@media (min-width: 640px) {
+  .update-btn-container {
+    justify-content: flex-end;
+  }
 }
 
 .update-btn {
   background-color: #22c55e;
   color: white;
   border: none;
-  padding: 10px 18px;
+  padding: clamp(8px, 2vw, 12px) clamp(16px, 3vw, 20px);
   border-radius: 6px;
-  font-size: 14px;
+  font-size: clamp(12px, 2.5vw, 14px);
   cursor: pointer;
   transition: background 0.2s;
+  min-height: 44px;
+  font-weight: 500;
 }
 
 .update-btn:hover {
   background-color: #16a34a;
 }
 
- 
 .payout-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: clamp(10px, 2vw, 12px);
 }
 
 .payout-item {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: clamp(12px, 2vw, 16px);
   background: #f8fafc;
   border: 1px solid #e6e6e6;
   border-radius: 8px;
-  padding: 12px 16px;
+  padding: clamp(12px, 3vw, 16px);
   transition: background 0.2s;
+  box-sizing: border-box;
+}
+
+@media (min-width: 640px) {
+  .payout-item {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 .payout-item:hover {
@@ -170,27 +214,31 @@ switch {
 .payout-info {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: clamp(8px, 2vw, 10px);
 }
 
 .icon-circle {
   background: #dcfce7;
   color: #22c55e;
   border-radius: 50%;
-  padding: 6px;
+  padding: clamp(6px, 1.5vw, 8px);
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 40px;
+  min-height: 40px;
+  font-size: clamp(18px, 4vw, 20px);
 }
 
 .payout-date {
-  font-size: 13px;
+  font-size: clamp(12px, 2.5vw, 14px);
   color: #444;
+  margin: 0;
 }
 
 .status {
   display: inline-block;
-  font-size: 11px;
+  font-size: clamp(10px, 2vw, 12px);
   color: #16a34a;
   font-weight: 500;
 }
@@ -198,4 +246,28 @@ switch {
 .payout-amount {
   font-weight: 600;
   color: #22c55e;
+  font-size: clamp(13px, 2.5vw, 15px);
+  margin: 0;
+}
+
+@media (max-height: 600px) and (orientation: landscape) {
+  .bank-details-container {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .bank-section,
+  .payout-section {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 380px) {
+  .bank-details-container {
+    padding: 12px;
+  }
+
+  .section-title {
+    flex-wrap: wrap;
+  }
 }
