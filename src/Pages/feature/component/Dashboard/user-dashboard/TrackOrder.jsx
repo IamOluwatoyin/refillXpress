@@ -55,7 +55,7 @@ const TrackOrder = () => {
     }
 
     userOrderTrack();
-    const interval = setInterval(userOrderTrack, 10000); // refresh every 10s
+    const interval = setInterval(userOrderTrack, 200000); // refresh every 20s
     return () => clearInterval(interval);
   }, [orderId]);
 
