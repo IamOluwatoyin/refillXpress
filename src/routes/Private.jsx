@@ -12,7 +12,7 @@ const PrivateRoute = ({ role, children }) => {
 
   const hasToken = tokens[role];
 
-  if (!hasToken || storedRole !== role) {
+  if (!hasToken ) {
     return <Navigate to="/" replace />;
   }
 

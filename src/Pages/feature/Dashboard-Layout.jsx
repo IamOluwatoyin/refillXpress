@@ -15,17 +15,20 @@ const DashboardLayout = () => {
     setIsSidebarOpen(false);
   };
 
-  // Prevent body scroll when sidebar is open
   useEffect(() => {
     if (isSidebarOpen) {
       document.body.classList.add('sidebar-open');
+      // Handle escape key to close sidebar
+      const handleEscape = (e) => {
+        if (e.key === 'Escape') {
+          closeSidebar();
+        }
+      };
+      document.addEventListener('keydown', handleEscape);
+      return () => document.removeEventListener('keydown', handleEscape);
     } else {
       document.body.classList.remove('sidebar-open');
     }
-
-    return () => {
-      document.body.classList.remove('sidebar-open');
-    };
   }, [isSidebarOpen]);
 
   return (
