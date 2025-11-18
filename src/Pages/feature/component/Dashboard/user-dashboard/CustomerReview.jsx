@@ -75,7 +75,7 @@ useEffect(() => {
                 <div className="gas-vendor-select">
                         <div className="vendor-to-review">
                           <div className='setVendor'>
-                             <LuSearch /> <input  
+                             {!text? <LuSearch /> : null} <input  
                              type='text' value={text} 
                              onChange={(e)=> {
                                  setText(e.target.value)
@@ -152,7 +152,7 @@ useEffect(() => {
       </div>
     ))
   ) : (
-    <p style={{ padding: "1rem", textAlign: "center", color: "#888" }}>
+    <p style={{ transform: "translate(75%,-50%)", color: "#888" }}>
       No reviews yet.
     </p>
   )}
