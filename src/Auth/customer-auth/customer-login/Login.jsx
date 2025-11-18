@@ -23,6 +23,7 @@ const Login = () => {
     if (success) {
       navigate("/userdashboard");
     }
+    
   };
 
   return (
@@ -32,7 +33,7 @@ const Login = () => {
         <header className="form-header">
           <div className="logo-heading">
             <img
-             src="/Images/dashboard_logo.jpg"
+              src="/Images/dashboard_logo.jpg"
               alt=""
               onClick={() => nav("/")}
               className="logo-heading"
@@ -101,7 +102,7 @@ const Login = () => {
             <button disabled={loading} className="submit">
               sign in
             </button>
-            <p style={{color: "#000"}}>
+            <p style={{ color: "#000" }}>
               Don't have an account?{" "}
               <Link to="/usersignup" className="link">
                 sign up

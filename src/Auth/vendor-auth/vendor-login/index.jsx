@@ -39,7 +39,7 @@ const VendorLogin = () => {
       toast.success("Login successfully created");
       const user = response?.data?.data;
 
-      if (user.showKycPage === true) {
+      if (user.showKycPage === true || user.showKycPage ==="not submitted") {
         // KYC not submitted or pending
         navigate("/vendor-kyc");
       } else if (user.showKycPage === false && user.kycStatus === "verified") {

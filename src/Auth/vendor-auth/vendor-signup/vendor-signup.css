@@ -1,74 +1,79 @@
 .form-wrapper {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 10px;
+  position: relative;
+  overflow-y: auto;
 }
+
+.form-wrapper > header {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 200px;
+  position: absolute;
+  left: 3%;
+  top: 20px;
+}
+
 .form-container {
   width: 60%;
   height: max-content;
-  /* background-color: aqua; */
   display: flex;
   flex-direction: column;
   gap: 15px;
   position: relative;
 }
-.form-wrapper > header {
-  width: 40%;
-  display: flex;
-  margin-top: 20px;
-  padding-left: 30px;
-  cursor: pointer;
-  position: absolute;
-  left: 3%;
-  top: 0%;
-
-}
-
 
 .cardBodyWrapper {
   width: 100%;
   display: flex;
-  padding: 20px;
+  align-items: center;
   justify-content: center;
-  /* background-color: yellow; */
-  height: 65rem;
+  height: auto;
+  padding: 20px 0;
+  margin-top: 60px;
 }
 
 .cardBody {
   width: 48.875rem;
-  height: 62rem;
+  height: auto;
   padding: 2rem;
-  /* background-color: red; */
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-
-  article {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 20px;
-    text-align: center;
-    padding: 10px;
-
-    h3 {
-      font-weight: 700;
-      font-size: 32px;
-      
-    }
-
-    p {
-      font-size: 16px;
-      font-weight: 400;
-
-      line-height: 120%;
-    }
-  }
 }
+
+.cardBody article {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+  text-align: center;
+  padding: 10px;
+}
+
+.cardBody article h3 {
+  font-weight: 700;
+  font-size: 32px;
+}
+
+.cardBody article p {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 120%;
+}
+
 .cardBody > h4 {
   padding-left: 2.7rem;
   margin-bottom: 15px;
 }
+
 .formWrapper {
   display: flex;
   align-items: center;
@@ -76,260 +81,244 @@
   flex-direction: column;
 }
 
-.btnsignup{
+.btnsignup {
   padding: 12px 10px;
   border-radius: 8px;
   cursor: pointer;
   background: #FF7F11;
   border: none;
   width: 39.3125rem;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
- }
+}
+
 .btnsignup:disabled {
   opacity: 0.6;
   cursor: not-allowed;
   background-color: #ccc;
   transition: all 0.2s ease;
 }
+
 input:focus {
   outline: none;
   box-shadow: none; 
   border: none;
 }
 
-
-/* ============================
-   RESPONSIVENESS ADDED BELOW
-===============================*/
-
-/* 📌 Large Tablets (max-width: 1200px) */
-@media (max-width: 1200px) {
-  .form-container {
-    width: 80%;
-  }
-
-  .cardBody {
-    width: 90%;
-  }
-
-  input,
-  .btnsignup {
-    width: 100% !important;
-  }
-
-  .cardBodyWrapper {
-    height: auto;
-  }
+/* Password input styling */
+div[style*="padding: 12px 6px"] {
+  position: relative; 
+  display: flex;
+  align-items: center;
+  padding: 12px 40px 12px 12px !important; 
+  background: #F2F6F5;
+  border-radius: 4px;
+  border: 1px solid #9b9191cc;
 }
 
+div[style*="padding: 12px 6px"] input {
+  width: 100% !important;
+  border: none;
+  outline: none;
+  background: transparent; 
+  font-size: 14px;
+}
 
-/* 📌 Tablets & Small Laptop (max-width: 992px) */
-@media (max-width: 992px) {
+div[style*="padding: 12px 6px"] svg {
+  position: absolute;
+  right: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #6b7280;
+}
+
+/* Mobile Responsive Styles ONLY */
+@media (max-width: 768px) {
+  .form-wrapper {
+    padding: 15px 10px;
+    min-height: 100vh;
+  }
+  
   .form-wrapper > header {
-    width: 100%;
     position: relative;
     left: 0;
-    /* justify-content: center; */
-    padding-left: 0;
+    top: 0;
+    justify-content: center;
+    margin: 10px auto 20px auto;
+    max-width: 150px;
   }
-
+  
   .form-container {
-    width: 90%;
+    width: 95%;
+    padding: 0;
   }
-
+  
+  .cardBodyWrapper {
+    padding: 10px 0;
+    margin-top: 0;
+  }
+  
   .cardBody {
     width: 100%;
     padding: 1.5rem;
+    box-shadow: none;
   }
-
-  .cardBody > h4 {
-    padding-left: 0rem;
-  }
-
-  .formStyle {
-    width: 100%;
-  }
-
-  /* Convert 2-column rows into 1 column */
-  .formStyle > div[style*="display: flex"][style*="gap: 20px"] {
-    flex-direction: column !important;
-    width: 100%;
-  }
-
-  input {
-    width: 100% !important;
-  }
-
-  .btnsignup {
-    width: 100% !important;
-  }
-}
-
-
-/* 📌 Mobile Devices (max-width: 768px) */
-@media (max-width: 768px) {
-  .cardBodyWrapper {
-    padding: 10px;
-  }
-
-  .cardBody {
-    width: 100%;
-    padding: 1rem;
-  }
-
-  .form-container {
-    width: 95%;
-  }
-
-  input,
-  .btnsignup {
-    width: 100% !important;
-  }
-
-  /* Fix phone field wrapper */
-  .formStyle div[style*="overflow: hidden"] {
-    width: 100% !important;
-  }
-
-  /* Adjust vendor image header */
-  .form-wrapper > header img {
-    width: 150px;
-  }
-
-  article h3 {
-    font-size: 24px !important;
-  }
-
-  article p {
-    font-size: 14px !important;
-  }
-}
-
-
-/* 📌 Small Mobile (max-width: 480px) */
-@media (max-width: 480px) {
-  .cardBody {
-    padding: 0.8rem;
-  }
-
-  article h3 {
-    font-size: 20px !important;
-  }
-
-  .btnsignup {
-    font-size: 0.9rem;
-    padding: 10px;
-  }
-
-  input {
-    font-size: 0.9rem !important;
-    padding: 10px !important;
-  }
-}
-
-/* MOBILE FIXES */
-@media (max-width: 768px) {
-
-  .form-wrapper {
-    height: auto; /* allow scroll */
-    padding-top: 80px; /* space for header */
-  }
-
-  .form-wrapper > header {
-    width: 100%;
-    
-    top: 0;
-    left: 0;
-    background: #fff;
-    padding: 10px 15px;
-    z-index: 999;
-    display: flex;
-    justify-content: center;
-  }
-
-  .form-wrapper > header img {
-    width: 150px;
-    height: auto;
-  }
-
-  .form-container {
-    width: 100%;
-    padding: 0 15px;
-  }
-
-  .cardBodyWrapper {
-    padding: 0;
-    height: auto;
-  }
-
-  .cardBody {
-    width: 100%;
-    height: auto;
-    padding: 1rem;
-  }
-
-  .cardBody h4 {
-    padding-left: 0 !important;
-  }
-
-  /* Make inputs full width */
-  input,
-  .btnsignup,
-  .cardBody input {
-    width: 100% !important;
-  }
-
   
-
-  /* Phone input container */
-  .formStyle > div div[style*="align-items: center"] {
+  .cardBody article {
+    padding: 5px;
+  }
+  
+  .cardBody article h3 {
+    font-size: 24px;
+  }
+  
+  .cardBody article p {
+    font-size: 14px;
+  }
+  
+  .cardBody article p br {
+    display: none;
+  }
+  
+  .cardBody > h4 {
+    padding-left: 0;
+    text-align: center;
+  }
+  
+  .formWrapper {
+    width: 100%;
+  }
+  
+  .formStyle {
+    gap: 15px !important;
     width: 100% !important;
   }
+  
+  /* Make all inputs full width */
+  .formStyle input,
+  .btnsignup {
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+  
+  /* Stack form elements vertically */
+  .formStyle > div[style*="display: flex"] {
+    flex-direction: column !important;
+    gap: 15px !important;
+  }
+  
+  .formStyle > div[style*="display: flex"] > div {
+    width: 100% !important;
+  }
+  
+  /* Password container - make same size as other inputs */
+  .formStyle > div > div[style*="padding: 12px 6px"] {
+    width: 100% !important;
+    padding: 12px !important; /* Remove extra padding for icon */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    border: 1px solid #ccc !important;
+    border-radius: 8px !important;
+    background: #F2F6F5 !important;
+  }
+  
+  .formStyle > div > div[style*="padding: 12px 6px"] input {
+    width: 90% !important; /* Give space for icon */
+    flex: 1 !important;
+    border: none !important;
+    outline: none !important;
+    background: #F2F6F5 !important;
+    padding: 0 !important;
+  }
+  
+  /* Phone input container */
+  .formStyle > div > div[style*="display: flex"][style*="align-items: center"] {
+    width: 100% !important;
+  }
+  
+  /* Checkbox - make tiny square and keep at left edge */
+  .formStyle input[type="checkbox"] {
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+  }
+  
+  /* Checkbox container - ensure left-aligned layout */
+  .formStyle > div[style*="display: flex"][style*="gap: 3px"] {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important; /* Force left alignment */
+    gap: 8px !important;
+    flex-wrap: nowrap !important;
+    font-size: 14px;
+    white-space: nowrap !important;
+    width: 100% !important;
+    text-align: left !important;
+  }
+  
+  .btnsignup {
+    width: 100%;
+    font-size: 14px;
+    padding: 10px;
+  }
 }
 
-@media (max-width: 768px) {
-  /* Password + Confirm Password wrapper */
-  .formStyle div[style*="padding: 12px 6px"],
-  .formStyle div[style*="padding: 12px 6px"] {
-    width: 100% !important;        /* Same as other inputs */
-    max-width: 100% !important;
+/* Small Mobile Devices ONLY */
+@media (max-width: 480px) {
+  .form-wrapper {
+    padding: 10px 5px;
   }
-
-  /* Inner password inputs */
-  .formStyle input[name="password"],
-  .formStyle input[name="confirmPassword"] {
-    width: 100% !important;        /* Match other inputs */
+  
+  .form-wrapper > header {
+    max-width: 120px;
   }
-
-  /* Ensure eye icon doesn't push width out */
-  .formStyle div[style*="padding: 12px 6px"] {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  
+  .cardBody {
+    padding: 1rem;
   }
-
-  .formStyle svg {
-    flex-shrink: 0;
+  
+  .cardBody article h3 {
+    font-size: 20px;
   }
-}
-
-@media (max-width: 768px) {
-  /* Password wrappers */
-  .formStyle div[style*="padding: 12px 6px"] {
-    height: 48px !important;       /* Match other inputs */
-    display: flex;
-    align-items: center;
+  
+  .cardBody article p {
+    font-size: 12px;
   }
-
-  /* Password input itself */
-  .formStyle input[name="password"],
-  .formStyle input[name="confirmPassword"] {
-    height: 100% !important;
-    padding: 0 !important;         /* Remove extra padding causing overflow */
+  
+  .formStyle input {
+    padding: 10px !important;
+    font-size: 14px;
   }
-
-  /* Eye icons stay vertically centered */
-  .formStyle svg {
-    margin-left: 6px;
+  
+  .btnsignup {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+  }
+  
+  /* Password input adjustments for small mobile */
+  .formStyle > div > div[style*="padding: 12px 6px"] {
+    padding: 10px 12px !important;
+  }
+  
+  .formStyle > div > div[style*="padding: 12px 6px"] input {
+    width: 85% !important;
+    font-size: 14px;
+  }
+  
+  /* Checkbox size for very small screens */
+  .formStyle input[type="checkbox"] {
+    width: 10px !important;
+    height: 10px !important;
+    min-width: 10px !important;
+    min-height: 10px !important;
+  }
+  
+  .formStyle > div[style*="display: flex"][style*="gap: 3px"] {
+    font-size: 12px;
+    gap: 6px !important;
+    justify-content: flex-start !important; /* Force left alignment */
   }
 }
