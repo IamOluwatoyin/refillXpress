@@ -4,8 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { signInUser, signUpUser } from "../api/mutation";
 import { useNavigate } from "react-router";
-import Signup from "../Auth/customer-auth/customer-signup/Signup";
-
+import Signup from "../Auth/customer-auth/customer-signup/Signup";;
 export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
  
@@ -52,9 +51,7 @@ const signup = async (data) => {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("userId", res.data.data.id);
       localStorage.setItem("userInfo", JSON.stringify(res.data.data));
-    
-    // localStorage.setItem("role", "user");  
-
+       
       
 
       toast.success("Login successful!");
@@ -63,6 +60,7 @@ const signup = async (data) => {
     } catch (err) {
         console.log("error", err);
       toast.error(err?.response?.data?.message || "Something went wrong!");
+
         return false;
     } finally {
       setLoading(false);

@@ -34,7 +34,7 @@ const OrderManagement = () => {
       try {
         const response = await getAllVendorsOrders();
         const ordersData = response.data.data || {};
-
+            console.log("ordersData", ordersData);
         setVendororderPending(
           (ordersData.pending || []).map((o) => ({ ...o, status: "Pending" }))
         );

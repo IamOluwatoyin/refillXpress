@@ -1,3 +1,4 @@
+
 .dashboard-wrapper {
   width: 100%;
   height: max-content;
@@ -111,7 +112,7 @@
   }
   
   .imgLogo {
-    width: 50px;
+    width: 150px;
     height: 40px;
   }
   
@@ -132,10 +133,10 @@
   }
   
   /* .imgLogo {
-    width: 45px;
+    width: 75px;
     height: 35px;
-  }
-   */
+  } */
+  
   .hamburger-menu {
     font-size: 18px;
     padding: 5px;

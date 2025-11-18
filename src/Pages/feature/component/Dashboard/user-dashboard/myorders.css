@@ -438,6 +438,10 @@ hr {
         font-size: 0.7rem;
         padding: 1px 4px;
     }
+    .no-orders {
+        /* margin-left: 20%; */
+        transform: translate(-25%, -40%);
+    }
 }
 
 /* Extra small devices */

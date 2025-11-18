@@ -98,7 +98,7 @@ const UserDashboard = () => {
         <header className="header">
           <div className="header-content">
             <div className="header-left">
-              <img src="/Images/dashboard_logo.jpg" onClick={()=> nav("")} className='logo-heading' /> 
+              <img src="/public/Images/dashboard_logo.jpg" onClick={()=> nav("")} className='logo-heading' /> 
             </div>
             <div className="header-right">
               <div onClick={hoverShow} onMouseLeave={()=> setTimeout(() => {
@@ -134,21 +134,17 @@ const UserDashboard = () => {
        
         {/* Overlay for mobile */}
         {sidebar && <div className="sidebar-overlay" onClick={closeSidebar}></div>}
-        
         <div className={`sidebar ${sidebar ? 'sidebar-open' : ''}`}>
+          {sidebar && <img src="/public/images/dashboard_logo.jpg" alt="logo" />}
           <div className="navigation">
             <div className="sidebar-header">
               <CgClose className="close-sidebar" onClick={closeSidebar} />
             </div>
-            
-              <nav onClick={()=>switchTab("home", "/userdashboard")} className={currentRoute.pathname === "/userdashboard" ?  "nav active" : "nav"} >
+            <nav onClick={()=>switchTab("home", "/userdashboard")} className={currentRoute.pathname === "/userdashboard" ?  "nav active" : "nav"} >
               <BiHome className='nav-link'/><span>home</span></nav>
-            
-            
             <NavLink className={({isActive}) => isActive ? "nav active" : "nav"} to="browsevendors" onClick={closeSidebar}>
               <GrLocation className='nav-link'/><span>browse vendors</span>
             </NavLink>
-            
             <NavLink className={({isActive}) => isActive ? "nav active" : "nav"} to="myorders" onClick={closeSidebar}>
               <FiPackage className='nav-link'/><span>my orders</span>
             </NavLink>
@@ -158,6 +154,17 @@ const UserDashboard = () => {
             <NavLink className={({isActive}) => isActive ? "nav active" : "nav"} to="customer-account" onClick={closeSidebar}>
               <FiUser className='nav-link'/><span>account</span>
             </NavLink>
+            <span className='userDashboard-logout'>
+              {sidebar && <>
+              <IoIosLogOut
+                style={{ fontSize: "28px", cursor:"pointer" }}
+                onClick={() => {
+                 setLogoutModal(true)
+                }}
+              />
+              <p onClick={()=> setLogoutModal(true)} style={{cursor: "pointer", color: "red", paddingBlock: "0.4rem"}}>Logout</p>
+              </>}
+            </span>
           </div>
         </div>
   

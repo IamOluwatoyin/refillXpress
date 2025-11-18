@@ -1,153 +1,104 @@
 .form-wrapperlogin {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
- padding: 10px;
- position: fixed;
+  padding: 20px 10px;
+  position: relative;
+  overflow-y: auto;
 }
+
 .form-containerlogin {
   width: 60%;
   height: max-content;
-  /* background-color: aqua; */
   display: flex;
   flex-direction: column;
   gap: 15px;
   position: relative;
 }
+
 .form-wrapperlogin > header {
-  /* width: 40%; */
   display: flex;
-  margin-top: 20px;
-  /* padding-left: 30px; */
+  justify-content: flex-start;
+  margin-bottom: 20px;
   cursor: pointer;
+  width: 100%;
+  max-width: 200px;
   position: absolute;
   left: 3%;
-  top: 0%;
-
- 
+  top: 20px;
 }
-
-
 
 .cardBodyWrapperlogin {
   width: 100%;
-  display: flex;/* padding: 50px; */
- align-items: center;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  /* background-color: yellow; */
-  height: 58rem;
+  height: auto;
+  padding: 20px 0;
+  margin-top: 60px;
 }
 
 .cardBodylogin {
   width: 48.875rem;
-  height: 40rem;
+  height: auto;
   padding: 2rem;
-  /* background-color: red; */
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-
-  article {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 20px;
-    text-align: center;
-    padding: 10px;
-
-    h3 {
-      font-weight: 700;
-  
-    }
-
-    p {
-      font-size: 16px;
-      font-weight: 400;
-
-      line-height: 120%;
-    }
-  }
 }
-.cardBodylogin > h4 {
-  padding-left: 2.7rem;
-  margin-bottom: 15px;
+
+.cardBodylogin article {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+  text-align: center;
+  padding: 10px;
 }
+
+.cardBodylogin article h3 {
+  font-weight: 700;
+  font-size: 32px;
+}
+
+.cardBodylogin article p {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 120%;
+}
+
 .formWrapperlogin {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  
 }
-.btnlogin {padding: 12px 10px;
-   border-radius: 8px;
-   cursor: pointer;
-   background: #FF7F11;
-   border: none;
-   width: 39.3125rem;
-   }
-   .btnlogin:disabled {
+
+.btnlogin {
+  padding: 12px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #FF7F11;
+  border: none;
+  width: 39.3125rem;
+}
+
+.btnlogin:disabled {
   opacity: 0.6;
   cursor: not-allowed;
   background-color: #ccc;
   transition: all 0.2s ease;
 }
 
-
-
-
-@media (max-width: 768px) {
-  .form-containerlogin {
-    padding: 25px 15px;
-  }
-
-  header h1 {
-    font-size: 24px;
-  }
-
-  .cardBodylogin article h3 {
-    font-size: 20px;
-  }
-
-  .cardBodylogin article p {
-    font-size: 13px;
-  }
-
-  .btnlogin {
-    padding: 10px;
-    font-size: 14px;
-  }
+input:focus {
+  outline: none;
+  box-shadow: none; 
+  border: none;
 }
 
-@media (max-width: 480px) {
-  .form-containerlogin {
-    padding: 20px 10px;
-  }
-
-  header h1 {
-    font-size: 20px;
-  }
-
-  .cardBodylogin article h3 {
-    font-size: 18px;
-  }
-
-  .cardBodylogin article p {
-    font-size: 12px;
-  }
-
-  .btnlogin {
-    width: 100%; 
-  max-width: 400px; 
-  padding: 12px;
-  font-size: 16px;
-  }
-}
-
-
-
+/* Password input styling */
 div[style*="padding: 12px 6px"] {
   position: relative; 
   display: flex;
@@ -158,7 +109,6 @@ div[style*="padding: 12px 6px"] {
   border: 1px solid #9b9191cc;
 }
 
-
 div[style*="padding: 12px 6px"] input {
   width: 100% !important;
   border: none;
@@ -166,7 +116,6 @@ div[style*="padding: 12px 6px"] input {
   background: transparent; 
   font-size: 14px;
 }
-
 
 div[style*="padding: 12px 6px"] svg {
   position: absolute;
@@ -176,43 +125,149 @@ div[style*="padding: 12px 6px"] svg {
   color: #6b7280;
 }
 
-
+/* Mobile Responsive Styles ONLY */
 @media (max-width: 768px) {
-  .form-containerlogin,
-  .cardBodylogin,
-  .formWrapperlogin form,
-  .formWrapperlogin input,
-  .formWrapperlogin div {
+  .form-wrapperlogin {
+    padding: 15px 10px;
+    min-height: 100vh;
+  }
+  
+  .form-wrapperlogin > header {
+    position: relative;
+    left: 0;
+    top: 0;
+    justify-content: center;
+    margin: 10px auto 20px auto;
+    max-width: 150px;
+  }
+  
+  .form-containerlogin {
+    width: 95%;
+    padding: 0;
+  }
+  
+  .cardBodyWrapperlogin {
+    padding: 10px 0;
+    margin-top: 0;
+  }
+  
+  .cardBodylogin {
+    width: 100%;
+    padding: 1.5rem;
+    box-shadow: none;
+  }
+  
+  .cardBodylogin article {
+    padding: 5px;
+  }
+  
+  .cardBodylogin article h3 {
+    font-size: 24px;
+  }
+  
+  .cardBodylogin article p {
+    font-size: 14px;
+  }
+  
+  .cardBodylogin article p br {
+    display: none;
+  }
+  
+  .formWrapperlogin {
+    width: 100%;
+  }
+  
+  .formWrapperlogin form {
+    gap: 15px !important;
     width: 100% !important;
   }
-
-  .cardBodylogin input,
-  .cardBodylogin button.btnlogin {
-    font-size: 14px;
-    padding: 10px;
+  
+  /* Make all inputs full width */
+  .formWrapperlogin input,
+  .btnlogin {
+    width: 100% !important;
+    box-sizing: border-box;
   }
-}
-
-@media (max-width: 480px) {
-  .cardBodylogin input,
-  .cardBodylogin button.btnlogin {
-    font-size: 12px;
-    padding: 8px;
+  
+  /* Password container - make same size as other inputs */
+  .formWrapperlogin > form > div > div[style*="padding: 12px 6px"] {
+    width: 100% !important;
+    padding: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    border: 1px solid #ccc !important;
+    border-radius: 8px !important;
+    background: #F2F6F5 !important;
   }
-}
-
-@media (max-width: 768px) {
+  
+  .formWrapperlogin > form > div > div[style*="padding: 12px 6px"] input {
+    width: 90% !important;
+    flex: 1 !important;
+    border: none !important;
+    outline: none !important;
+    background: #F2F6F5 !important;
+    padding: 0 !important;
+  }
+  
   .btnlogin {
     width: 100%;
     font-size: 14px;
     padding: 10px;
   }
+  
+  /* Fix for "Already have an account" text alignment */
+  .formWrapperlogin > form > div[style*="justify-content: center"] {
+    flex-wrap: wrap;
+    text-align: center;
+    font-size: 14px;
+  }
 }
 
+/* Small Mobile Devices ONLY */
 @media (max-width: 480px) {
+  .form-wrapperlogin {
+    padding: 10px 5px;
+  }
+  
+  .form-wrapperlogin > header {
+    max-width: 120px;
+  }
+  
+  .cardBodylogin {
+    padding: 1rem;
+  }
+  
+  .cardBodylogin article h3 {
+    font-size: 20px;
+  }
+  
+  .cardBodylogin article p {
+    font-size: 12px;
+  }
+  
+  .formWrapperlogin input {
+    padding: 10px !important;
+    font-size: 14px;
+  }
+  
   .btnlogin {
     width: 100%;
+    padding: 12px;
+    font-size: 16px;
+  }
+  
+  /* Password input adjustments for small mobile */
+  .formWrapperlogin > form > div > div[style*="padding: 12px 6px"] {
+    padding: 10px 12px !important;
+  }
+  
+  .formWrapperlogin > form > div > div[style*="padding: 12px 6px"] input {
+    width: 85% !important;
+    font-size: 14px;
+  }
+  
+  .formWrapperlogin > form > div[style*="justify-content: center"] {
     font-size: 12px;
-    padding: 8px;
   }
 }

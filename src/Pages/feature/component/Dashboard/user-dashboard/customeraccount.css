@@ -189,6 +189,14 @@ label {
         align-items: center;
         gap: 1.5rem;
     }
+    .green-circle {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1rem;
+        position: absolute;
+        top: 30%;
+        left: 55%;
+    }
 
     .inputs {
         flex-direction: column;
@@ -203,15 +211,6 @@ label {
         width: 8rem;
         height: 8rem;
     }
-
-    .green-circle {
-        width: 2.5rem;
-        height: 2.5rem;
-        font-size: 1rem;
-        top: 70%;
-        left: 60%;
-        transform: translate(-50%, -50%);
-    }
 }
 
 @media screen and (max-width: 480px) {
@@ -225,8 +224,12 @@ label {
     }
 
     .green-circle {
-        width: 2.2rem;
-        height: 2.2rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1rem;
+        position: absolute;
+        top: 20%;
+        left: 60%;
     }
 
     .div-input input {
@@ -248,11 +251,15 @@ label {
     .profile-box {
         width: 9rem;
         height: 9rem;
+        position: relative;
     }
 
     .green-circle {
         width: 3rem;
         height: 3rem;
         font-size: 1.2rem;
+        position: absolute;
+        top: 50%;
+        left: 20%;
     }
 }
