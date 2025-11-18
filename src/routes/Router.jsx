@@ -164,9 +164,9 @@ export const router = createBrowserRouter([
   {
     path: "vendor-dashboard",
     element: (
-      // <PrivateRoute role="vendor">
+      <PrivateRoute role="vendor">
         <DashboardLayout />
-      // </PrivateRoute>
+       </PrivateRoute>
     ),
     children: [
       {
@@ -197,9 +197,9 @@ export const router = createBrowserRouter([
   {
     path: "/rider-dashboard",
     element: (
-      // <PrivateRoute role="rider">
+      <PrivateRoute role="rider">
         <Dashboard_layout />
-      //  </PrivateRoute>
+        </PrivateRoute>
     ),
     children: [
       {

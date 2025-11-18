@@ -6,12 +6,15 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  padding: 16px; /* Added padding for mobile */
 }
 
 .orderModal {
   position: relative;
   background: #fff;
   width: 30rem;
+  max-width: 100%; /* Ensure it doesn't overflow on mobile */
+  max-height: 90vh; /* Limit height on mobile */
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   padding: 25px 30px;
@@ -19,9 +22,102 @@
   flex-direction: column;
   gap: 20px;
   font-family: "Inter", sans-serif;
-   z-index: 1001;
+  z-index: 1001;
+  overflow-y: auto; /* Enable scrolling if content is too long */
 }
 
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .orderOverlay {
+    padding: 12px;
+    align-items: flex-start; /* Start from top on mobile */
+    padding-top: 40px; /* Space for top close button */
+  }
+  
+  .orderModal {
+    width: 100%; /* Full width on mobile */
+    max-height: 85vh; /* Slightly less height for better appearance */
+    padding: 20px;
+    gap: 16px;
+  }
+  
+  .closeBtn {
+    position: fixed; /* Changed to fixed for better mobile accessibility */
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    color: #374151;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 1002; /* Higher z-index to ensure it's above everything */
+  }
+  
+  .orderHeader {
+    padding: 12px;
+    margin-top: 10px; /* Space for close button */
+  }
+  
+  .pendingBtns {
+    width: auto; /* Auto width on mobile */
+    min-width: 80px;
+    padding: 6px 12px;
+  }
+  
+  .actionBtns {
+    flex-direction: column; /* Stack buttons vertically on mobile */
+    gap: 8px;
+  }
+  
+  .rejectBtn,
+  .acceptBtn {
+    margin-right: 0;
+    padding: 12px 0; /* Larger touch targets */
+  }
+  
+  .section {
+    gap: 8px;
+  }
+  
+  .section h5 {
+    font-size: 14px;
+  }
+  
+  .customerDetails p,
+  .detailRow {
+    font-size: 13px;
+  }
+}
+
+/* For very small screens */
+@media (max-width: 480px) {
+  .orderOverlay {
+    padding: 8px;
+    padding-top: 35px;
+  }
+  
+  .orderModal {
+    padding: 16px;
+    max-height: 82vh;
+  }
+  
+  .closeBtn {
+    top: 15px;
+    right: 15px;
+    width: 36px;
+    height: 36px;
+  }
+  
+  .orderHeader {
+    padding: 10px;
+  }
+}
 
 .closeBtn {
   position: absolute;
@@ -31,8 +127,13 @@
   border: none;
   color: #374151;
   cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
+.closeBtn:hover {
+  background: #f3f4f6;
+  border-radius: 50%;
+}
 
 .orderHeader {
   display: flex;
@@ -66,7 +167,6 @@
   border: none;
   cursor: default;
 }
-
 
 .section {
   display: flex;
@@ -126,3 +226,6 @@
 .acceptBtn {
   background: #16a34a;
 }
+
+
+

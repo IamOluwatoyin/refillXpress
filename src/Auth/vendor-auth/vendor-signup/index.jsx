@@ -185,7 +185,7 @@ const VendorSignup = () => {
                         }}
                       ></div>
 
-                      <span>+234</span>
+                      <span className="phone-prefix">+234</span>
 
                       <input
                         id="vendorPhoneno"
@@ -406,12 +406,12 @@ const VendorSignup = () => {
                   </p>
                 )}
 
-                <div style={{ display: "flex", gap: "3px" }}>
+                <div style={{ display: "flex", gap: "3px" }} className="checkbox">
                   <input
                     type="checkbox"
                     {...register("agree", {
                       required: "You must agree to the terms.",
-                    })}
+                    })} className="tickBox"
                   />
                   <span>
                     {" "}

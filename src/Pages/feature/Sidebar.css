@@ -736,3 +736,20 @@
   }
 }
 
+ @media (max-width: 425px) {
+  .verified-btn {
+    height: auto !important;
+    padding: 1px 4px !important;
+    font-size: 7px !important;
+    min-width: 40px !important;
+    border-radius: 6px !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .verified-btn {
+    font-size: 6px !important;
+    padding: 1px 3px !important;
+    min-width: 35px !important;
+  }
+} 
