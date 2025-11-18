@@ -119,7 +119,7 @@ useEffect(() => {
 
      <div className="search-bar">
   <div className="searchinput-wrapper">
-    <BiSearch className="search-icon" />
+    {!findLocation? <BiSearch className="search-icon" /> : null}
     <input
       placeholder="Search location"
       className="searchinput"
@@ -128,7 +128,7 @@ useEffect(() => {
     />
   </div>
 </div>
-      <section  className= {filteredVendors.length > 0? "views extreme": ""}>
+      <section  className= {filteredVendors.length > 0? "views extreme": "empty"}>
         {filteredVendors.length === 0 && <div className="no-vendor"> <p>No vendors available yet</p></div>}
 
         {filteredVendors.map((vendor) => {
