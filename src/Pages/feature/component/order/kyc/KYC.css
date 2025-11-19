@@ -1,13 +1,61 @@
 .kycWrapper {
   width: 100%;
+  max-width: 112.5rem;   
+  margin: 0 auto;       
   background: #f9fafb;
   padding: 40px 60px;
   font-family: "Inter", sans-serif;
   display: flex;
   flex-direction: column;
   gap: 25px;
+  box-sizing: border-box;
+  height: 100%;
+
 }
 
+/* ---------- MOBILE VIEW ---------- */
+@media (max-width: 600px) {
+  .kycWrapper {
+    padding: 20px 15px;
+    gap: 20px;
+  }
+
+  .uploadContainer,
+  .bankCard,
+  .verifyBox {
+    padding: 12px !important;
+  }
+
+  .uploadRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .formRow {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .submitContainer {
+    justify-content: center;
+  }
+
+  .modalBox {
+    width: 90% !important;
+    height: auto !important;
+    padding: 20px;
+  }
+
+  .modalContent {
+    padding: 15px;
+  }
+  
+
+
+}
+
+/* -------------------------------- */
 
 .kycHeader {
   text-align: center;
@@ -35,10 +83,9 @@
   text-align: center;
 }
 
-.infoIcon{
+.infoIcon {
   color: #0369a1;
 }
-
 
 .uploadSection h3 {
   font-size: 16px;
@@ -96,8 +143,8 @@
 }
 
 .docBadge.rejected {
-  background: #ffe4e6; 
-  color: #dc2626; 
+  background: #ffe4e6;
+  color: #dc2626;
 }
 
 .docName {
@@ -110,7 +157,6 @@
   font-size: 13px;
   color: #6b7280;
 }
-
 
 .uploadSmallBtn {
   background: #f3f4f6;
@@ -139,7 +185,6 @@
   background: #fee2e2;
 }
 
-
 .verifyBox {
   display: flex;
   align-items: flex-start;
@@ -155,18 +200,16 @@
 }
 .verifyBox ul > li {
   color: #6b7280;
-  
   font-size: 14px;
   line-height: 1.7;
 }
-
 
 .bankSection p {
   font-size: 30px;
   padding: 20px;
   color: #111827;
-
 }
+
 .bankCard {
   background: #fff;
   border: 1px solid #e5e7eb;
@@ -174,23 +217,27 @@
   padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px !important;
 }
+
 .formRow {
   display: flex;
   gap: 15px;
 }
+
 .formGroup {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
+
 .formGroup label {
   font-size: 14px;
   color: #374151;
   font-weight: 500;
 }
+
 .formGroup input {
   padding: 10px;
   border: 1px solid #e5e7eb;
@@ -207,6 +254,7 @@
   background: #f3f4f6;
   padding: 15px;
 }
+
 .checkbox input[type="checkbox"]:checked::after {
   content: "✔";
   position: absolute;
@@ -215,6 +263,7 @@
   font-size: 13px;
   color: #000;
 }
+
 .toggle {
   width: 40px;
   height: 20px;
@@ -223,15 +272,19 @@
   position: relative;
 }
 
-.submitContainer {
+/* .submitContainer {
   display: flex;
   justify-content: flex-end;
-}
+  margin-top: -23rem;
+  padding-top: 0;
+  padding-right: 3rem;
+} */
+
 .submitBtn {
   background: #f97316;
   color: #fff;
   border: none;
-  padding: 10px 24px;
+  padding: 10px 30px;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 500;
@@ -248,12 +301,10 @@
   z-index: 9;
 }
 
-
 .blurred {
   filter: blur(2px);
   pointer-events: none;
 }
-
 
 .modalContainer {
   position: fixed;
@@ -266,7 +317,7 @@
 .modalBox {
   width: 32rem;
   height: 21rem;
-   background: black;
+  background: black;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -294,7 +345,7 @@
   font-size: 14px;
   line-height: 1.5;
 }
- 
+
 .pendingBtn {
   background: #b6aa2a;
   color: #92400e;
@@ -317,4 +368,28 @@
 
 .rejectedRow {
   background: #fef2f2;
+}
+
+.submitContainer {
+  display: flex;
+  justify-content: flex-end; 
+  margin-top: 20px;         
+  padding-right: 0;          
+}
+
+@media (max-width: 768px) {
+  .submitContainer {
+    justify-content: center; 
+    margin-top: 15px;
+    padding-right: 0;
+  }
+}
+
+.kyc-header-logo
+{
+  width: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
 }

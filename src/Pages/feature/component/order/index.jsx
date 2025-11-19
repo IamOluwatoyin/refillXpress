@@ -14,6 +14,9 @@ import { toast } from "react-toastify";
 import AcceptOrderModal from "../vendor-order-modals/accept-order-modal";
 import RejectedOrder from "../vendor-order-modals/rejected-order";
 import OrderDetails from "../vendor-order-modals/order-details";
+import { useLoading} from "../../../../context/LoadingContext";
+import GlobalLoading from "../../../../context/GlobalLoading";
+
 
 const OrderManagement = () => {
   const [activeTab, setActiveTab] = useState("Pending");
@@ -28,9 +31,11 @@ const OrderManagement = () => {
   const [showRejectCard, setShowRejectCard] = useState(false);
   const [rejectReason, setRejectReason] = useState("");
  const [activeProcessingOrder, setActiveProcessingOrder] = useState(null);
+   const { loading, setLoading } = useLoading();
 
   useEffect(() => {
     const fetchOrders = async () => {
+      setLoading(true);
       try {
         const response = await getAllVendorsOrders();
         const ordersData = response.data.data || {};
@@ -56,17 +61,20 @@ const OrderManagement = () => {
       } catch (error) {
         console.error("Failed to fetch orders", error);
         toast.error(error.response?.data?.message || "Something went wrong!");
+      } finally{
+        setLoading(false);
       }
     };
     fetchOrders();
 
-    const interval = setInterval(fetchOrders, 30000);
-    return () => clearInterval(interval);
+    // const interval = setInterval(fetchOrders, 30000);
+    // return () => clearInterval(interval);
   }, []);
 
   const handleOrderDecision = async (order, action, reason = "") => {
     try {
        setActiveProcessingOrder(order.id); 
+       refetchOrders();
       const res = await vendorAcceptRejectOrder({
     orderId: order.id,
     action,
@@ -142,6 +150,7 @@ const OrderManagement = () => {
 
   return (
     <div className="pageContainer">
+       <GlobalLoading /> 
       <div
         className={`orderWrapper ${
           showModal || showRejectCard ? "blurred" : ""
@@ -202,7 +211,7 @@ const OrderManagement = () => {
                         {new Date(order.createdAt).toLocaleTimeString()}
                       </div>
                       <div className="item">
-                        <FaPhoneAlt /> {order.user.phoneNumber}
+                        <FaPhoneAlt />  {order?.user?.phoneNumber}
                       </div>
                     </div>
 
@@ -230,6 +239,7 @@ const OrderManagement = () => {
                           >
                             Accept
                           </button>
+                          
                           <button
                             className="rejectBtn"
                             onClick={() => handleRejectClick(order)}
@@ -239,7 +249,7 @@ const OrderManagement = () => {
                           </button>
                         </>
                       )}
-                      {activeTab === "Active" && (
+                      {/* {activeTab === "Active" && (
                         <button
                           className="completeBtn"
                           style={{
@@ -251,7 +261,7 @@ const OrderManagement = () => {
                         >
                           Complete
                         </button>
-                      )}
+                      )} */}
                     </div>
                   </div>
                 </div>

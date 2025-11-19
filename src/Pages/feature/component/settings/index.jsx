@@ -4,6 +4,9 @@ import { GoPackage, GoDotFill } from "react-icons/go";
 import { vendorSettings } from "../../../../api/mutation";
 import { toast } from "react-toastify";
 import { getVendorId } from "../../../../api/query";
+import { useLoading } from "../../../../context/LoadingContext";
+import GlobalLoading from "../../../../context/GlobalLoading";
+import { set } from "react-hook-form";
 
 const SettingsManagement = () => {
   const vendorId = localStorage.getItem("vendorId");
@@ -15,6 +18,8 @@ const SettingsManagement = () => {
   const [inStock, setInStock] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
   const [vendorOperationgHour, setVendorOperatingHour] = useState()
+  const { loading, setLoading } = useLoading();
+
 
   const handleSettings = async () => {
 
@@ -36,6 +41,7 @@ const SettingsManagement = () => {
 
     setIsUpdating(true);
     try {
+      setLoading
       const res = await vendorSettings(vendorId, payload);
       const updatedData = res?.data?.data;
 
@@ -55,6 +61,7 @@ const SettingsManagement = () => {
       toast.error(error?.response?.data?.message || "Something went wrong!");
     } finally {
       setIsUpdating(false);
+      setLoading(false);
     }
   };
 
@@ -65,7 +72,7 @@ const SettingsManagement = () => {
       console.error("Vendor ID not found in localStorage");
       return;
     }
-
+  setLoading(true);
     try {
       const res = await getVendorId(id);
       const data = res?.data?.data;
@@ -85,6 +92,8 @@ const SettingsManagement = () => {
       setInStock(Boolean(data?.inStock));
     } catch (error) {
       console.log("No data", error);
+    }finally {
+      setLoading(false);
     }
   };
 
@@ -93,6 +102,7 @@ const SettingsManagement = () => {
 
   return (
     <div className="settingsWrapper">
+      <GlobalLoading />
       <h2 className="settingsTitle">Settings</h2>
 
       {/* Pricing & Availability */}

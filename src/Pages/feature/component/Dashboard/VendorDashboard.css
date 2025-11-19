@@ -391,6 +391,7 @@
   background: #e5e7eb;
 }
 
+
 .accept-btn {
   background: #22c55e;
   color: white;
@@ -633,3 +634,228 @@
   color: white;
   font-weight: 500;
 }
+
+
+.order-card {
+  min-height: 17rem; 
+  padding: 16px;
+  border-radius: 10px;
+  background: white;
+  box-shadow: rgba(99, 99, 99, 0.15) 0px 2px 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.order-header > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Price fix (cutting off before) */
+.price {
+  font-weight: 700;
+  font-size: 1rem;
+  white-space: nowrap;
+  /* display: inline-block; */
+  min-width: 80px;
+  text-align: right;
+   position: absolute;
+    right: 160px; 
+    top: 20px;   
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    z-index: 1;
+    white-space: nowrap;
+}
+
+
+.details-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 10px;
+}
+
+
+.center-info p {
+  margin: 3px 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+
+
+/* Ensure center info does not crowd the left */
+.center-info {
+   flex: 1 1 48%;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    min-width: 0;
+}
+
+/* Address spacing */
+.address {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ------------------------------
+      BUTTON ALIGNMENT FIX
+--------------------------------*/
+.order-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.order-actions button {
+  flex: 1;
+  padding: 10px 0;
+  border-radius: 6px;
+}
+
+/* ------------------------------
+         MOBILE FIXES
+--------------------------------*/
+@media (max-width: 768px) {
+  .order-card {
+    min-height: 19rem; 
+  }
+
+  .order-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .details-row {
+    flex-direction: row;
+    gap: 8px;
+
+  }
+
+  .order-actions {
+    flex-direction: column;
+  }
+
+  .order-actions button {
+    width: 100%;
+  }
+}
+
+/* ------------------------------
+         MOBILE FIXES
+--------------------------------*/
+@media (max-width: 768px) {
+  .order-card {
+    min-height: 19rem; 
+    padding: 16px; /* keep it compact */
+  }
+
+  .order-header {
+    flex-direction: column; /* stack IDs and price */
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .price {
+    position: static; /* move price below header on mobile */
+    text-align: left;
+    margin-top: 4px;
+    min-width: auto;
+  }
+
+  .details-row {
+    flex-direction: column; /* stack left and center info */
+    gap: 8px;
+  }
+
+  .center-info {
+    flex-direction: column; /* stack items */
+    align-items: flex-start;
+    gap: 6px; /* reduce gap */
+    justify-content: flex-start;
+  }
+
+  .center-info p {
+    margin: 2px 0;
+    gap: 4px; /* tighter spacing */
+  }
+
+  .address {
+    gap: 4px; /* reduce spacing on mobile */
+  }
+
+  .order-actions {
+    flex-direction: column; /* buttons stack vertically */
+    gap: 8px;
+  }
+
+  .order-actions button {
+    width: 100%; /* full width for mobile */
+  }
+}
+
+/* ------------------------------
+       MOBILE: center-info as column
+--------------------------------*/
+@media (max-width: 768px) {
+  .center-info {
+    flex-direction: column !important; /* stack items vertically */
+    align-items: flex-start;
+    gap: 6px; /* tight spacing */
+  }
+
+  .center-info p {
+    margin: 2px 0;
+    gap: 4px;
+  }
+
+  .details-row {
+    flex-direction: column;
+    gap: 8px; /* tight spacing between left + center info */
+  }
+
+  .address {
+    gap: 4px;
+  }
+}
+
+/* ------------------------------
+       DESKTOP: reduce gap on left info
+--------------------------------*/
+@media (min-width: 769px) {
+  .left-info p {
+    margin: 2px 0;  /* less vertical spacing */
+    gap: 4px;       /* reduce gap between name, kg, etc. */
+  }
+
+  .details-row {
+    gap: 16px; /* slightly tighter spacing between left and center */
+  }
+}
+
+
+
+
+
+
