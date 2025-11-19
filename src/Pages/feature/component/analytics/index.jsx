@@ -7,15 +7,18 @@ import { FaStar } from "react-icons/fa";
 import ProgressBar from "../../ProgressBar";
 import { getAnalytics, getSummary } from "../../../../api/query";
 import { toast } from "react-toastify";
-
+import {useLoading} from "../../../../context/LoadingContext";
+import GlobalLoading from "../../../../context/GlobalLoading";
 const AnalyticsManagement = () => {
   const [reviewSummary, setReviewSummary] = useState(null);
   const [vendorAnalytics, setVendorAnalytics] = useState(null);
   const id = localStorage.getItem(import.meta.env.VITE_VENDOR_ID);
- 
+ const {loading, setLoading} = useLoading();
 
   useEffect(() => {
+
     const fetchSummary = async () => {
+      setLoading(true);
       try {
         const res = await getSummary();
         setReviewSummary(res?.data?.data);
@@ -25,6 +28,8 @@ const AnalyticsManagement = () => {
       } catch (error) {
         console.log("not working", error);
         toast.error(error.response?.data?.message || "Something went wrong!");
+      }finally {
+        setLoading(false);
       }
     };
     fetchSummary();
@@ -36,6 +41,7 @@ const AnalyticsManagement = () => {
 
   return (
     <div className="AnalyticsWrapper">
+      <GlobalLoading />
       <p className="AnalyticsWrapperHeader"> Analytics</p>
 
       {/* Summary Section */}

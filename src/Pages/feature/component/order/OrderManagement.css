@@ -410,3 +410,147 @@ button:disabled {
   }
 }
 
+/* .centerInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding-left: 50px;
+  flex-wrap: wrap;
+} */
+
+
+
+@media (min-width: 768px) {
+ 
+  .orderCard {
+    position: relative;
+    padding: 25px;
+  }
+
+ 
+  .orderTop {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    position: relative; 
+    margin-bottom: 12px;
+  }
+
+ 
+  .orderTop .orderId {
+    flex: 1 1 0;
+    min-width: 0; 
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  
+  .priceSection {
+    position: absolute;
+    right: 30px; 
+    top: 0;   
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    z-index: 1;
+    white-space: nowrap;
+  }
+
+  .price {
+    white-space: nowrap;
+    font-weight: 600;
+  }
+
+  
+  .orderDetails {
+    padding-right: 200px;/
+  }
+
+ 
+  .infoRow {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  /* left info size (pkg + address) */
+  .leftInfo {
+    flex: 0 0 32%;
+    max-width: 32%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  
+  .centerInfo {
+    flex: 1 1 48%;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center;
+    align-items: center;
+    gap: 36px;
+    min-width: 0;
+  }
+
+  .centerInfo .item {
+    white-space: nowrap;
+  }
+
+  /* right buttons: vertical, aligned to right edge (absolute) */
+  .rightBtns {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-end;
+    width: auto;
+  }
+
+  .rightBtns button {
+    width: 110px;
+    flex: 0 0 auto;
+  }
+
+  /* ensure order-actions don't push content when window shrinks */
+  .orderCard,
+  .orderDetails,
+  .orderTop,
+  .infoRow {
+    min-width: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .infoRow {
+    min-height: 95px; 
+    display: flex;
+    align-items: center; /
+  }
+}
+
+@media (min-width: 768px) {
+  .rightBtns {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%); 
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center; 
+    width: 120px; 
+  }
+
+  .rightBtns button {
+    width: 120px;   
+    text-align: center;
+  }
+}

@@ -26,6 +26,8 @@ import { useLoading } from "../../../../context/LoadingContext";
 import { useOrders } from "../../../../context/PendingOrderContext";
 import { useRefetch } from "../../../../api/refetch";
 import {MdPending} from 'react-icons/md'
+import GlobalLoading from "../../../../context/GlobalLoading";
+
 const VendorDashboard = () => {
   const nav = useNavigate();
   const [vendorSummary, setVendorSummary] = useState(null);
@@ -111,10 +113,17 @@ const VendorDashboard = () => {
   };
 
   const vendor = JSON.parse(localStorage.getItem("vendor"));
+const [pendingLoading, setPendingLoading] = useState(true);
+
+useEffect(() => {
+  if (orders) setPendingLoading(false);
+}, [orders]);
 
   return (
     <div className="vendorDashboard-wrapper" style={{ position: "relative" }}>
-      {loading && <div className="global-loading">Loading...</div>}
+       <GlobalLoading />
+       
+      
       <h2> Welcome back, {vendorInfo?.businessName || "Vendor"}!</h2>
       <span>
        Here's what's
@@ -172,96 +181,103 @@ const VendorDashboard = () => {
         </div>
       ) : (
         <div className="pending-orders">
-          <div className="pending-header">
-            <h3>Pending Orders</h3>
-            {vendorSummary?.pendingOrders > 0 && (
-              <button
-                className="view-all"
-                onClick={() => nav("/vendor-dashboard/vendor-order")}
-              >
-                View All <IoIosArrowForward />
-              </button>
-            )}
-          </div>
-          <p className="subtext">Requires immediate attention</p>
+  <div className="pending-header">
+    <h3>Pending Orders</h3>
+    {vendorSummary?.pendingOrders > 0 && (
+      <button
+        className="view-all"
+        onClick={() => nav("/vendor-dashboard/vendor-order")}
+      >
+        View All <IoIosArrowForward />
+      </button>
+    )}
+  </div>
+  <p className="subtext">Requires immediate attention</p>
 
-          {orders.length > 0 ? (
-            orders
-              .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-              .slice(0, 1)
-              .map((order, index) => (
-                <div className="order-card" key={index}>
-                  <div className="order-header">
-                    <div>
-                      <span className="order-ids">{order.orderNumber}</span>
-                      <span className="order-status">{order.status}</span>
-                    </div>
-                    <span className="price">₦{order.price}</span>
-                  </div>
-
-                  <p className="customer-name">
-                    {order.user?.firstName} {order.user?.lastName}
-                  </p>
-
-                  <div className="order-details">
-                    <div className="details-row">
-                      <div className="left-info">
-                        <p>
-                          <GoPackage /> {order.quantity}
-                        </p>
-                      </div>
-                      <div className="center-info">
-                        <p>
-                          <FaCalendarAlt />{" "}
-                          {new Date(order.createdAt).toLocaleDateString()}
-                        </p>
-                        <p>
-                          <FaClock />{" "}
-                          {new Date(order.createdAt).toLocaleTimeString()}
-                        </p>
-                        <p>
-                          <FaPhoneAlt /> {order.user?.phoneNumber}
-                        </p>
-                      </div>
-                    </div>
-
-                    <p className="address">
-                      <FaMapMarkerAlt /> {order.deliveryAddress}
-                    </p>
-                  </div>
-
-                  <div className="order-actions">
-                    <button
-                      className="view-btn"
-                      onClick={() => {
-                        setSelectedOrder(order);
-                        setShowModal(true);
-                      }}
-                    >
-                      View
-                    </button>
-                    <button
-                      className="accept-btn"
-                      onClick={() => handleOrderDecision(order, "accept")}
-                      disabled={activeProcessingOrder === order.id}
-                    >
-                      Accept
-                    </button>
-                    <button
-                      className="reject-btn"
-                      onClick={() => handleRejectClick(order)}
-                      disabled={activeProcessingOrder === order.id}
-                    >
-                      Reject
-                    </button>
-                  </div>
-                </div>
-              ))
-          ) : (
-            <div className="order-placeholder">
-              <p>No pending orders yet</p>
+  {pendingLoading ? (
+    <div className="order-placeholder">
+      <p>Loading pending orders...</p>
+    </div>
+  ) : orders.length > 0 ? (
+    orders
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      .slice(0, 1)
+      .map((order, index) => (
+        <div className="order-card" key={index}>
+          <div className="order-header">
+            <div>
+              <span className="order-ids">{order.orderNumber}</span>
+              <span className="order-status">{order.status}</span>
             </div>
-          )}
+
+            <span className="price">₦{order.price}</span>
+          </div>
+
+          <p className="customer-name">
+            {order.user?.firstName} {order.user?.lastName}
+          </p>
+
+          <div className="order-details">
+            <div className="details-row">
+              <div className="left-info">
+                <p>
+                  <GoPackage /> {order?.quantity}
+                </p>
+              </div>
+              <div className="center-info">
+                <p>
+                  <FaCalendarAlt />{" "}
+                  {new Date(order.createdAt).toLocaleDateString()}
+                </p>
+                <p>
+                  <FaClock />{" "}
+                  {new Date(order.createdAt).toLocaleTimeString()}
+                </p>
+                <p>
+                  <FaPhoneAlt /> {order?.user?.phoneNumber}
+                </p>
+              </div>
+            </div>
+
+            <p className="address">
+              <FaMapMarkerAlt /> {order.deliveryAddress}
+            </p>
+          </div>
+
+          <div className="order-actions">
+            <button
+              className="view-btn"
+              onClick={() => {
+                setSelectedOrder(order);
+                setShowModal(true);
+              }}
+            >
+              View
+            </button>
+            <button
+              className="accept-btn"
+              onClick={() => handleOrderDecision(order, "accept")}
+              disabled={activeProcessingOrder === order.id}
+            >
+              Accept
+            </button>
+            <button
+              className="reject-btn"
+              onClick={() => handleRejectClick(order)}
+              disabled={activeProcessingOrder === order.id}
+            >
+              Reject
+            </button>
+          </div>
+        </div>
+      ))
+  ) : (
+    <div className="order-placeholder">
+      <p>No pending orders yet</p>
+    </div>
+  )}
+
+
 
           {/* Reviews */}
           <div className="reviews-section">
@@ -341,7 +357,7 @@ const VendorDashboard = () => {
           </div>
         </div>
       )}
-    </div>
+       </div>
   );
 };
 

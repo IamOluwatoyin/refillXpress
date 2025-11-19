@@ -39,11 +39,19 @@ const VendorLogin = () => {
       toast.success("Login successfully created");
       const user = response?.data?.data;
 
+    //   if (
+    //   error?.response?.data?.message ===
+    //   "Vendor not verified, please verify your account"
+    // ) {
+    //   navigate("/vendor-verify-email");
+    //   return; 
+    // }
+
       if (user.showKycPage === true || user.showKycPage ==="not submitted") {
         // KYC not submitted or pending
         navigate("/vendor-kyc");
       } else if (user.showKycPage === false && user.kycStatus === "verified") {
-        // First-time onboarding for new users
+       
         if (user.isNewUser === true) {
           navigate("/vendor-dashboard/vendor-settings"); // Setup page for new users
         } else {
@@ -54,15 +62,19 @@ const VendorLogin = () => {
       }
       setShowModal(true);
 
-      setTimeout(() => {
+    
         setShowModal(false);
-      }, 2000);
+    
     } catch (error) {
       console.log("not working", error);
-
+if (
+      error.response?.data?.message ===
+      "Vendor not verified, please verify your account"
+    ) {
+      navigate("/vendor-verify-email");
+    } else {
       toast.error(error.response?.data?.message || "Something went wrong!");
-      setShowModal(false);
-      setButtonDisabled(false);
+    }
     }
   };
   return (
