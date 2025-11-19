@@ -103,7 +103,7 @@
 .form-input:focus {
   border-color: #ff7f11;
   outline: none;
-  background-color: #fff;
+  background-color: #f7f7f7;
 }
 
 .password-input-wrapper {

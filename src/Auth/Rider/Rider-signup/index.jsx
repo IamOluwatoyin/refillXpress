@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import SpinnerModal from "../../vendor-auth/spinner-modal";
+import Header from "../../../assets/Header.png";
 
 const RiderSignup = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -110,10 +111,7 @@ const RiderSignup = () => {
     <div className="rider-signup-page">
       <div className="form-wrapper">
         <header className="form-header">
-          <img src="/src/assets/logo.svg" alt="logo" className="logo-image" />
-          <h1>
-            Refill<span className="logo-span">Xpress</span>
-          </h1>
+          <img src={Header} alt="" />
         </header>
 
         <section className="card-body-wrapper">

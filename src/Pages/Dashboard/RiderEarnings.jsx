@@ -12,12 +12,13 @@ import {
 } from "react-icons/md";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import "../../styles/riderEarnings.css";
+import { TbCurrencyNaira } from "react-icons/tb";
 
 const API_BASE_URL = "https://refillexpress.onrender.com/api/v1";
 
 const WeeklyPerformanceBar = ({ day, deliveries, earnings, maxEarnings }) => {
   const safeEarnings = parseInt(earnings.replace(/[^0-9]/g, "")) || 0;
-  const widthPercent = (safeEarnings / maxEarnings) * 100;
+  const widthPercent = maxEarnings > 0 ? (safeEarnings / maxEarnings) * 100 : 0;
 
   return (
     <div className="weekly_bar_item">
@@ -94,6 +95,17 @@ const RecentDeliveryItem = ({
   </div>
 );
 
+// Helper function to parse earnings values
+const parseEarningsValue = (value) => {
+  if (typeof value === "number") return value;
+  if (typeof value === "string") {
+    // Remove currency symbols, commas, and any non-numeric characters except decimal point
+    const cleaned = value.replace(/[₦$,]/g, "").trim();
+    return Number.parseFloat(cleaned) || 0;
+  }
+  return 0;
+};
+
 function RiderEarnings() {
   const [activeTab, setActiveTab] = useState("recent");
   const [loading, setLoading] = useState(true);
@@ -121,6 +133,20 @@ function RiderEarnings() {
     const fetchEarnings = async () => {
       setLoading(true);
       try {
+        let overviewData = {};
+        try {
+          const overviewRes = await axios.get(
+            `${API_BASE_URL}/rider/dashboard/overview`,
+            { headers }
+          );
+          overviewData = overviewRes.data?.data || overviewRes.data || {};
+          console.log("[v0] Dashboard overview data:", overviewData);
+        } catch (overviewError) {
+          console.warn(
+            "[v0] Overview endpoint not available, falling back to individual endpoints"
+          );
+        }
+
         const totalRes = await axios.get(`${API_BASE_URL}/total-earnings`, {
           headers,
         });
@@ -139,24 +165,43 @@ function RiderEarnings() {
         const todayData = todayRes.data?.data || todayRes.data;
         console.log("[v0] Extracted todayData:", todayData);
 
-        setEarningsOverview({
-          today: (
+        // Parse all earnings values properly
+        const todayEarnings = parseEarningsValue(
+          overviewData?.todaysEarnings ??
             totalData?.todaysEarnings ??
             totalData?.earnings ??
+            todayData?.earnings ?? // This is where your "earnings": 2055 comes from
             0
-          ).toLocaleString(undefined, {
+        );
+
+        const weeklyEarnings = parseEarningsValue(
+          overviewData?.weeklyEarnings ?? totalData?.thisWeekEarnings ?? 0
+        );
+
+        const monthlyEarnings = parseEarningsValue(
+          overviewData?.monthlyEarnings ?? totalData?.thisMonthEarnings ?? 0
+        );
+
+        const pendingEarnings = parseEarningsValue(
+          overviewData?.pendingEarnings ?? totalData?.pendingEarnings ?? 0
+        );
+
+        setEarningsOverview({
+          today: todayEarnings.toLocaleString(undefined, {
             minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
           }),
-          thisWeek: (totalData?.thisWeekEarnings ?? 0).toLocaleString(
-            undefined,
-            { minimumFractionDigits: 2 }
-          ),
-          thisMonth: (totalData?.thisMonthEarnings ?? 0).toLocaleString(
-            undefined,
-            { minimumFractionDigits: 2 }
-          ),
-          pending: (totalData?.pendingEarnings ?? 0).toLocaleString(undefined, {
+          thisWeek: weeklyEarnings.toLocaleString(undefined, {
             minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          }),
+          thisMonth: monthlyEarnings.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          }),
+          pending: pendingEarnings.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
           }),
         });
 
@@ -183,53 +228,68 @@ function RiderEarnings() {
         }));
         setRecentDeliveries(mappedDeliveries);
 
+        // Parse weekly data properly
         setWeeklyData([
           {
             day: "Mon",
             deliveries: totalData?.monDeliveries || 0,
-            earnings: (totalData?.monEarnings || 0).toLocaleString(undefined, {
+            earnings: parseEarningsValue(
+              totalData?.monEarnings || 0
+            ).toLocaleString(undefined, {
               maximumFractionDigits: 0,
             }),
           },
           {
             day: "Tue",
             deliveries: totalData?.tueDeliveries || 0,
-            earnings: (totalData?.tueEarnings || 0).toLocaleString(undefined, {
+            earnings: parseEarningsValue(
+              totalData?.tueEarnings || 0
+            ).toLocaleString(undefined, {
               maximumFractionDigits: 0,
             }),
           },
           {
             day: "Wed",
             deliveries: totalData?.wedDeliveries || 0,
-            earnings: (totalData?.wedEarnings || 0).toLocaleString(undefined, {
+            earnings: parseEarningsValue(
+              totalData?.wedEarnings || 0
+            ).toLocaleString(undefined, {
               maximumFractionDigits: 0,
             }),
           },
           {
             day: "Thu",
             deliveries: totalData?.thuDeliveries || 0,
-            earnings: (totalData?.thuEarnings || 0).toLocaleString(undefined, {
+            earnings: parseEarningsValue(
+              totalData?.thuEarnings || 0
+            ).toLocaleString(undefined, {
               maximumFractionDigits: 0,
             }),
           },
           {
             day: "Fri",
             deliveries: totalData?.friDeliveries || 0,
-            earnings: (totalData?.friEarnings || 0).toLocaleString(undefined, {
+            earnings: parseEarningsValue(
+              totalData?.friEarnings || 0
+            ).toLocaleString(undefined, {
               maximumFractionDigits: 0,
             }),
           },
           {
             day: "Sat",
             deliveries: totalData?.satDeliveries || 0,
-            earnings: (totalData?.satEarnings || 0).toLocaleString(undefined, {
+            earnings: parseEarningsValue(
+              totalData?.satEarnings || 0
+            ).toLocaleString(undefined, {
               maximumFractionDigits: 0,
             }),
           },
           {
             day: "Sun",
             deliveries: totalData?.sunDeliveries || 0,
-            earnings: (totalData?.sunEarnings || 0).toLocaleString(undefined, {
+            earnings: parseEarningsValue(
+              totalData?.sunEarnings || 0
+            ).toLocaleString(undefined, {
               maximumFractionDigits: 0,
             }),
           },
@@ -247,7 +307,7 @@ function RiderEarnings() {
 
   const earningsData = [
     {
-      icon: MdOutlineAttachMoney,
+      icon: TbCurrencyNaira,
       title: "Today's",
       value: `₦${earningsOverview.today}`,
       color: "#4CAF50",
@@ -281,7 +341,7 @@ function RiderEarnings() {
   ];
 
   const maxEarnings = Math.max(
-    ...weeklyData.map((d) => parseInt(d.earnings.replace(/[^0-9]/g, "")))
+    ...weeklyData.map((d) => parseEarningsValue(d.earnings))
   );
 
   if (loading) {
