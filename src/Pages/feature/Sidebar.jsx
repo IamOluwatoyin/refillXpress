@@ -122,9 +122,9 @@ const Sidebar = ({ onClose }) => {
             <GoPackage className="sidebar-icon" />
             <sub>
               Orders
-             <span className="profileNotification">
+             {/* <span className="profileNotification">
                 {Array.isArray(orders) && orders.length > 0 ? orders.length : 0}
-              </span>
+              </span> */}
 
             </sub>
           </span>
