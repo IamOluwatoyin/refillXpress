@@ -5,12 +5,15 @@ import {BsArrowLeft} from "react-icons/bs"
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { orderTrack } from "../../../../../api/query";
+import UserCompletion from "./modals/userCompletion";
 
 const TrackOrder = () => {
   const [orderData, setOrderData] = useState(null);
   const [currentStep, setCurrentStep] = useState(0);
   const [hasFetchedOnce, setHasFetchedOnce] = useState(false);
   const location = useLocation();
+  const [showCompleteModal, setShowCompleteModal] = useState(false);
+
 
   const navigate = useNavigate();
 
@@ -41,6 +44,10 @@ const TrackOrder = () => {
           (s) => s === data.currentStage
         );
         setCurrentStep(currentIndex >= 0 ? currentIndex + 1 : 0);
+        if (data.currentStage === "Completed") {
+  setShowCompleteModal(true);
+}
+
       }
     } catch (err) {
       console.error("Error fetching order tracking:", err);
@@ -182,6 +189,14 @@ const TrackOrder = () => {
 
         </div>
       </div>
+      {showCompleteModal && (
+  <UserCompletion
+    onClose={() => setShowCompleteModal(false)}
+    order={orderData}
+    navigate={navigate}
+  />
+)}
+
     </div>
   );
 };

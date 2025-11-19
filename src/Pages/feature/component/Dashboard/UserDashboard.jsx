@@ -136,7 +136,7 @@ const UserDashboard = () => {
         {/* Overlay for mobile */}
         {sidebar && <div className="sidebar-overlay" onClick={closeSidebar}></div>}
         <div className={`sidebar ${sidebar ? 'sidebar-open' : ''}`}>
-          {sidebar && <img src="/public/images/dashboard_logo.jpg" alt="logo" />}
+          {sidebar && <img src="/images/dashboard_logo.jpg" alt="logo" />}
           <div className="navigation">
             <div className="sidebar-header">
               <CgClose className="close-sidebar" onClick={closeSidebar} />
