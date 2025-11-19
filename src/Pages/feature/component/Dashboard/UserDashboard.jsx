@@ -99,7 +99,7 @@ const UserDashboard = () => {
         <header className="header">
           <div className="header-content">
             <div className="header-left">
-              <img src="/public/Images/dashboard_logo.jpg" onClick={()=> nav("")} className='logo-heading' /> 
+              <img src="/Images/dashboard_logo.jpg"  className='logo-heading' /> 
             </div>
             <div className="header-right">
               <div onClick={hoverShow} onMouseLeave={()=> setTimeout(() => {
