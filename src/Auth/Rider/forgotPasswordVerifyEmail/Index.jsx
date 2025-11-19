@@ -116,7 +116,7 @@ const ForgotPasswordVerifyEmail = () => {
     <div className="verify-email-layout">
       <header className="fixed-header">
         <div className="logo-container">
-          <img src={Header} alt="RefillXpress Logo" className="logo-image" />
+          <img src={Header} alt="RefillXpress Logo" className="logo-image" onClick={()=>navigate("/")} />
         </div>
       </header>
 

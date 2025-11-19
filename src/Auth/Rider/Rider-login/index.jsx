@@ -95,7 +95,7 @@ const RiderLogin = () => {
     <div className="rider-login-page-layout">
       <header className="fixed-header">
         <div className="logo-container">
-          <img src={Header} alt="logo" className="logo-image" />
+          <img src={Header} alt="logo" className="logo-image"  onClick={()=>navigate("/")} />
         </div>
       </header>
 

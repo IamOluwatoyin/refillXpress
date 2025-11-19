@@ -9,6 +9,7 @@ import OrderModal from "./modals/OrderModal";
 import ViewVendor from "./modals/ViewVendor";
 import { getNearbyVendors } from "../../../../../api/query";
 import { useLoading } from "../../../../../context/LoadingContext";
+import GlobalLoading from "../../../../../context/GlobalLoading"; 
 
 const BrowseVendor = () => {
   const { loading, setLoading } = useLoading();
@@ -94,7 +95,7 @@ useEffect(() => {
 
   return (
     <main className="browsevendor" style={{ position: "relative" }}>
-      {loading && <div className="global-loading">Loading...</div>}
+      <GlobalLoading />
 
       {showView && (
         <ViewVendor

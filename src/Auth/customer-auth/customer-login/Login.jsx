@@ -18,14 +18,24 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
-    const success = await login(data);
-    if (success) {
-      navigate("/userdashboard");
-    }
-    
-  };
+ const onSubmit = async (data) => {
+    const result = await login(data);
+    console.log(result)
 
+    if (
+    result?.message?.toLowerCase()?.includes("session timed out")
+  ) {
+    navigate("/vendor-login");  
+    return;
+  }
+    if (result.success === false) {
+      if(result.message === "User not verified, please verify your account") {
+        console.log(result.message)
+        navigate("/userverify");
+      } 
+    } else {
+        navigate("/userdashboard");}
+};
   return (
     <div className="login">
       {loading && <SpinnerModal />}

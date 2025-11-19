@@ -6,6 +6,8 @@ import "./customeraccount.css";
 import { getUserProfile } from "../../../../../api/query";
 import { userProfileUpdate } from "../../../../../api/mutation";
 import { FiUser } from "react-icons/fi";
+import GlobalLoading from "../../../../../context/GlobalLoading"; 
+import { useLoading } from "../../../../../context/LoadingContext";
 
 
 const CustomerAccount = () => {
@@ -18,11 +20,12 @@ const CustomerAccount = () => {
     selectedFile: null,
   });
 
-  const [loading, setLoading] = useState(false);
+  const { loading, setLoading } = useLoading();
 
  
   const fetchUserProfile = async () => {
     try {
+      setLoading(true);
       const res = await getUserProfile();
       const userData = res?.data?.data;
 
@@ -59,6 +62,8 @@ const CustomerAccount = () => {
     } catch (err) {
       console.error("Profile fetch failed:", err);
       toast.error(err?.response?.data?.message || "Something went wrong!");
+    }finally {
+      setLoading(false);
     }
   };
 
@@ -77,6 +82,7 @@ const CustomerAccount = () => {
   console.log(profileAccount.profilePicture)
   
   const updateProfile = async () => {
+    setLoading(true);
   try {
     const formData = new FormData();
 
@@ -94,12 +100,15 @@ const CustomerAccount = () => {
   } catch (error) {
     console.error("Update failed", error);
     toast.error(error.response?.data?.message || "Something went wrong updating profile");
+  }finally {
+    setLoading(false);
   }
 };
 
 
   return (
     <main className="customer-account">
+      <GlobalLoading />
       <header className="heading">
         <div className="texts">
           <h3>account</h3>
@@ -270,5 +279,4 @@ const CustomerAccount = () => {
     </main>
   );
 };
-
 export default CustomerAccount;

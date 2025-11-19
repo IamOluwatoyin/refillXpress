@@ -23,11 +23,12 @@
         text-transform: capitalize;
     }
 }
-
+.search-bar {
+        width: 100%;
+    }
 /* Wrapper for input and icon */
 .searchinput-wrapper {
-  width: 95%;
-  /* background-color: #3ba865;                   */
+  width: 95%;                  
   position: relative;
   display: flex;
   align-items: center;
@@ -50,9 +51,9 @@
 .searchinput {
   width: 95%;
   max-width: 95%;
-  overflow-x: hidden;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+  overflow-x: hidden;
   font-size: 16px;
-  /* padding: 0.6rem 0.6rem 0.6rem 2.5rem;  */
+  padding: 0.6rem 0.6rem 0.6rem 2.5rem; 
   box-sizing: border-box;
   background-color: #eee;
   border-radius: 0.5rem;
@@ -242,11 +243,12 @@ input {
         height: auto;
         min-height: 12rem;
     }
-/*     
+    
     .to-view {
-        transform: translate(550%, -60%);
+        transform: translate(-5%, -55%);
         bottom: 1rem;
-    } */
+    }
+    
     
     .order-now {
         transform: translateY(-60%);
