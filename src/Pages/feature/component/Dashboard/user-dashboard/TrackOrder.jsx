@@ -4,8 +4,6 @@ import "./trackorder.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { orderTrack } from "../../../../../api/query";
-import { useLoading } from "../../../../../context/LoadingContext";
-import { useRefetch } from "../../../../../api/refetch";
 
 const TrackOrder = () => {
   const [orderData, setOrderData] = useState(null);
