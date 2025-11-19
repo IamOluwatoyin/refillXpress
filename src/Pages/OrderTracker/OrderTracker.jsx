@@ -144,7 +144,6 @@ const SkeletonLoader = () => (
       </div>
     </SkeletonCard>
 
-    {/* Details card skeleton */}
     <SkeletonCard>
       <SkeletonBase
         style={{ height: "1rem", width: "40%", marginBottom: "1rem" }}
@@ -957,7 +956,6 @@ const OrderTracker = () => {
   const [fetchError, setFetchError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
-  const [expectedCode] = useState("742891");
 
   const deliverySteps = [
     "Navigate to Customer",
@@ -1175,6 +1173,7 @@ const OrderTracker = () => {
     );
   }
 
+  // Updated mapping using actual API response data
   const orderInfo = {
     orderId: orderData.orderNumber || "N/A",
     price: orderData.totalPrice
@@ -1186,17 +1185,29 @@ const OrderTracker = () => {
   };
 
   const customerDetails = {
-    name: `Customer (ID: ${orderData.userId.substring(0, 8)})`,
+    name:
+      `${orderData.user?.firstName || ""} ${
+        orderData.user?.lastName || ""
+      }`.trim() ||
+      `Customer (ID: ${orderData.userId?.substring(0, 8) || "N/A"})`,
     address: orderData.deliveryAddress || "N/A (Missing Delivery Address)",
-    phone: "N/A (Phone Not in Response)",
+    phone: orderData.user?.phoneNumber || "N/A",
   };
 
   const vendorDetails = {
-    name: `Vendor (ID: ${orderData.vendorId.substring(0, 8)})`,
-    address: orderData.pickupAddress || "N/A (Missing Pickup Address)",
-    phone: "+234XXXXXX (Placeholder Phone)",
-    eta: "8 min • 3.7 km (Placeholder)",
+    name:
+      orderData.vendor?.businessName ||
+      `Vendor (ID: ${orderData.vendorId?.substring(0, 8) || "N/A"})`,
+    address:
+      orderData.vendor?.businessAddress ||
+      orderData.pickupAddress ||
+      "N/A (Missing Vendor Address)",
+    phone: orderData.vendor?.businessPhoneNumber || "N/A",
+    eta: "8 min • 3.7 km", // You can make this dynamic later
   };
+
+  // Use actual OTP from API response
+  const expectedCode = orderData.otp || "000000";
 
   const {
     icon: StatusIcon,
