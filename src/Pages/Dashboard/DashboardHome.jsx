@@ -16,6 +16,7 @@ import { useNavigate } from "react-router";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "../../styles/dashboardHome.css";
+import { TbCurrencyNaira } from "react-icons/tb";
 
 const API_BASE_URL = "https://refillexpress.onrender.com/api/v1";
 
@@ -94,7 +95,7 @@ export const KycStatusNotice = ({ kycStatus, navigate }) => {
       color = "#F44336";
       icon = MdOutlineRemoveCircle;
       break;
-    case "incomplete":
+    case "not completed":
       message =
         "Your KYC application is incomplete. Please submit all required details to start riding.";
       actionText = "Complete KYC Form";
@@ -384,6 +385,12 @@ const DashboardHome = () => {
     refills: 0,
     rating: 0,
   });
+  const [overviewData, setOverviewData] = useState({
+    totalEarnings: 0,
+    totalRefills: 0,
+    activeTime: "00:00",
+    averageRating: 0,
+  });
   const [loadingProfile, setLoadingProfile] = useState(true);
   const [errorProfile, setErrorProfile] = useState(null);
 
@@ -510,6 +517,52 @@ const DashboardHome = () => {
     }
   };
 
+  const fetchDashboardOverview = async () => {
+    if (!riderId || !authToken) {
+      console.error("Cannot fetch overview: Missing riderId or authToken");
+      return;
+    }
+
+    try {
+      const axiosInstance = axios.create({
+        baseURL: API_BASE_URL,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+
+      const res = await axiosInstance.get("/rider/dashboard/overview");
+      const data = res.data.data || {};
+
+      // Fix: Properly parse the formatted earnings string
+      let earningsValue = 0;
+      if (data.earnings) {
+        if (typeof data.earnings === "string") {
+          // Remove currency symbol and commas, then parse
+          earningsValue =
+            Number.parseFloat(data.earnings.replace(/[₦,]/g, "")) || 0;
+        } else if (typeof data.earnings === "number") {
+          earningsValue = data.earnings;
+        }
+      }
+
+      setOverviewData({
+        totalEarnings: earningsValue,
+        totalRefills: Number.parseInt(data.refills) || 0,
+        activeTime: data.activeTime || "00:00",
+        averageRating: Number.parseFloat(data.rating) || 0,
+      });
+
+      console.log("[v0] Dashboard overview fetched:", data);
+    } catch (err) {
+      console.error(
+        "Error fetching dashboard overview:",
+        err.response?.data?.message || err.message
+      );
+    }
+  };
+
   useEffect(() => {
     const fetchRiderProfile = async () => {
       if (!riderId || !authToken) {
@@ -533,6 +586,8 @@ const DashboardHome = () => {
           refills: Number.parseInt(data.refills) || 0,
           rating: Number.parseFloat(data.rating) || 0,
         });
+
+        await fetchDashboardOverview();
       } catch (err) {
         console.error("Error fetching rider data:", err);
         setErrorProfile("Failed to load dashboard data.");
@@ -613,9 +668,9 @@ const DashboardHome = () => {
     return <div className="dashboard_error">{errorProfile}</div>;
   }
 
-  const { firstName, kycStatus, earnings, refills, rating } = riderData;
+  const { firstName, kycStatus } = riderData;
 
-  console.log("Rider Profile Loaded. KYC Status:", kycStatus);
+  console.log("Rider Profile Loaded. KYC Status:", overviewData);
 
   return (
     <div className="dashboard_home">
@@ -625,9 +680,12 @@ const DashboardHome = () => {
         <h2 className="section_title">Today's Performance</h2>
         <div className="performance_grid">
           <PerformanceCard
-            icon={MdOutlineAttachMoney}
+            icon={TbCurrencyNaira}
             title="Earnings"
-            value={`₦${(earnings ?? 0).toFixed(2)}`}
+            value={`₦${(overviewData.totalEarnings ?? 0).toLocaleString(
+              undefined,
+              { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+            )}`}
             color="#4CAF50"
             bgColor="#e8f5e9"
             secondary="Total"
@@ -635,7 +693,7 @@ const DashboardHome = () => {
           <PerformanceCard
             icon={MdAutorenew}
             title="Refills"
-            value={refills}
+            value={(overviewData.totalRefills ?? 0).toLocaleString()}
             color="#2196F3"
             bgColor="#e3f2fd"
             secondary="Total"
@@ -643,7 +701,7 @@ const DashboardHome = () => {
           <PerformanceCard
             icon={MdOutlineTimer}
             title="Active Time"
-            value="00:00"
+            value={overviewData.activeTime}
             color="#9C27B0"
             bgColor="#f3e5f5"
             secondary=""
@@ -651,7 +709,7 @@ const DashboardHome = () => {
           <PerformanceCard
             icon={MdOutlineStar}
             title="Rating"
-            value={(rating ?? 0).toFixed(1)}
+            value={(overviewData.averageRating ?? 0).toFixed(1)}
             color="#FF9800"
             bgColor="#fff3e0"
             secondary=""
@@ -720,7 +778,7 @@ const DashboardHome = () => {
             </>
           ) : (
             <div className="empty_orders_state">
-              <FaCheckCircle size={30} color="#4CAF50" />
+              <FaCheckCircle size={30} color="#4caf4fa9" />
               <p>
                 No new refill requests available right now. Check back soon!
               </p>
@@ -728,7 +786,7 @@ const DashboardHome = () => {
           )
         ) : loadingOrders ? (
           <div className="orders_loading_state">
-            <MdAutorenew className="spin" size={30} color="#FF9800" />
+            <MdAutorenew className="spin" size={30} color="#ff990058" />
             <p>Fetching recent orders...</p>
           </div>
         ) : (

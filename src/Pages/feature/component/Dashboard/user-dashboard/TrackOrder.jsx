@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./trackorder.css";
+
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { orderTrack } from "../../../../../api/query";
@@ -11,8 +12,8 @@ const TrackOrder = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [hasFetchedOnce, setHasFetchedOnce] = useState(false);
   const location = useLocation();
+
   const navigate = useNavigate();
-  const { loading, setLoading } = useLoading(); // Loading from context
 
   const orderId = location.state?.orderId;
 
@@ -31,7 +32,9 @@ const TrackOrder = () => {
    
     try {
       const res = await orderTrack(orderId);
+
       const data = res?.data?.data;
+      console.log("Tracking data:", data);
 
       if (data) {
         setOrderData(data);
@@ -85,7 +88,7 @@ const TrackOrder = () => {
   // Render tracking info once rider is available
   return (
     <div className="orders-container">
-      <h2 className="page-title">Track Delivery</h2>
+      <i size={20} onClick={()=> navigate(-1)} style={{paddingRight: "2rem"}}><BsArrowLeft /></i><h2 className="page-title">Track Delivery</h2>
 
       <div className="orders-grid">
         {/* LEFT SIDE – DELIVERY PROGRESS */}
@@ -138,20 +141,19 @@ const TrackOrder = () => {
               <strong>Delivery Address:</strong>{" "}
               {orderData?.user?.address || "--"}
             </p>
-            <p>
-              <strong>Confirmation:</strong>{" "}
-              {orderData?.user?.otp || "--"}
-            </p>
           </div>
 
           <div className="details-card">
             <h4>Rider Information</h4>
-            {loading ? (
-              <div className="rider-skeleton">
-                {/* Simple placeholder skeleton */}
-                <div className="skeleton-avatar"></div>
-                <div className="skeleton-line"></div>
-                <div className="skeleton-line short"></div>
+            <div className="driver-info">
+              <div className="avatar">
+                {orderData?.driver?.name
+                  ? orderData.driver.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")
+                      .toUpperCase()
+                  : "RD"}
               </div>
             ) : (
               <div className="driver-info">
@@ -182,7 +184,20 @@ const TrackOrder = () => {
                     : "30 mins - 45 mins"}
                 </h3>
               </div>
-            )}
+            </div>
+
+            <p className="contact-title">Contact Rider</p>
+            <div className="contact-box">
+              <span className="phone-icon">📞</span>
+              <span>{orderData?.rider?.phoneNumber || "--"}</span>
+            </div>
+
+            <p className="arrival-title">Estimated Arrival</p>
+            <h3 className="arrival-time">
+              {orderData?.estimatedArrival
+                ? new Date(orderData.estimatedArrival).toLocaleTimeString()
+                : "—"}
+            </h3>
           </div>
         </div>
       </div>

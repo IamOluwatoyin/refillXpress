@@ -393,7 +393,7 @@ const VerificationModal = ({ expectedCode, onSubmit, onClose, loading }) => {
             disabled={loading}
           />
           <ExpectedCode>
-            Expected: <span>{expectedCode}</span>
+            Example: <span>{expectedCode}</span>
           </ExpectedCode>
 
           <ButtonGroup>
