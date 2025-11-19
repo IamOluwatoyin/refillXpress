@@ -74,7 +74,7 @@ const OrderManagement = () => {
   const handleOrderDecision = async (order, action, reason = "") => {
     try {
        setActiveProcessingOrder(order.id); 
-       refetchOrders();
+       
       const res = await vendorAcceptRejectOrder({
     orderId: order.id,
     action,

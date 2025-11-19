@@ -86,7 +86,7 @@ const VendorDashboard = () => {
         message: reason,
       });
       setVendorPendingOrders((prev) => prev.filter((o) => o.id !== order.id));
-      refetchOrders();
+      
       refetch();
       if (action === "accept") {
         toast.success(`Order ${order.orderNumber} accepted successfully!`);
@@ -349,7 +349,8 @@ useEffect(() => {
                   handleOrderDecision(selectedOrder, "reject", rejectReason)
                 }
                 style={{ backgroundColor: "red", color: "#fff" }}
-                disabled={isProcessing}
+               disabled={activeProcessingOrder === selectedOrder?.id}
+
               >
                 Reject
               </button>

@@ -64,6 +64,7 @@ const VendorLogin = () => {
 
     
         setShowModal(false);
+      
     
     } catch (error) {
       console.log("not working", error);
@@ -74,6 +75,7 @@ if (
       navigate("/vendor-verify-email");
     } else {
       toast.error(error.response?.data?.message || "Something went wrong!");
+        setButtonDisabled(false);
     }
     }
   };
@@ -157,12 +159,7 @@ if (
                         name="password"
                         {...register("password", {
                           required: "Password is required",
-                          pattern: {
-                            value:
-                              /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/,
-                            message:
-                              "Password must be at least 8 characters and include letters, numbers, and special characters.",
-                          },
+                          
                         })}
                         style={{
                           border: "none",

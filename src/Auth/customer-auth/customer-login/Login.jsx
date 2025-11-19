@@ -84,11 +84,7 @@ const Login = () => {
                 name="password"
                 {...register("password", {
                   required: "Password is required",
-                  pattern: {
-                    value: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/,
-                    message:
-                      "Password must be at least 8 characters and include letters, numbers, and special characters.",
-                  },
+                 
                 })}
               />
               <span className="eye">
