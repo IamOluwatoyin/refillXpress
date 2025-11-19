@@ -37,12 +37,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 1rem;
+   gap: 1rem;
     cursor: pointer;
 }
 
 .action {
-    width: 35rem;
+    width: 49%;
     height: 9rem;
     display: flex;
     flex-direction: column;
@@ -236,7 +236,7 @@
 }
 
 .to-view {
-    width: max-content;
+    width: 5rem;
     background-color: transparent;
     border: 1px solid #e0e0e0;
     color: #000;

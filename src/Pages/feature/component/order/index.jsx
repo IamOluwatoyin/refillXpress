@@ -327,15 +327,17 @@ const OrderManagement = () => {
               >
                 Cancel
               </button>
-              <button
+               <button
                 className="rejectBtnReject"
                 style={{ backgroundColor: "red", color: "#fff" }}
                 onClick={() =>
                   handleOrderDecision(selectedOrder, "reject", rejectReason)
-                }>
-              
+                }
+                disabled={activeProcessingOrder === selectedOrder?.id} 
+              >
                 Confirm Rejection
               </button>
+
             </div>
           </div>
         </div>

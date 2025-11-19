@@ -13,6 +13,7 @@ import OrderModal from "./modals/OrderModal";
 import { useNavigate } from "react-router";
 import { useLoading } from "../../../../../context/LoadingContext";
 import SpinnerModal from "../../../../../Auth/vendor-auth/spinner-modal";
+import GlobalLoading from "../../../../../context/GlobalLoading";
 
 const HomeContent = () => {
   const nav = useNavigate();
@@ -60,7 +61,6 @@ const HomeContent = () => {
         setLoading(true);
         const res = await getNearbyVendors();
 
-        
         const updated = res.data.data.map((vendor) => ({
           ...vendor,
           isAvailable: checkAvailability(vendor),
@@ -100,7 +100,7 @@ const HomeContent = () => {
 
   return (
     <main className="homecontent" style={{ position: "relative" }}>
-      {loading && <div className="global-loading">Loading...</div>}
+      <GlobalLoading />
 
       {order && (
         <OrderModal onClose={() => setOrder(false)} vendor={selectedVendor} />
@@ -114,12 +114,12 @@ const HomeContent = () => {
       </header>
 
       <section className="actions">
-        <div onClick={()=> nav("/userdashboard/browsevendors")} className="action">
+        <div onClick={() => nav("/userdashboard/browsevendors")} className="action">
           <GrLocation className="icon" style={{ color: "blue" }} />
           <p className="action-type">find vendors</p>
           <p>Browse gas suppliers near you</p>
         </div>
-        <div onClick={()=> nav("/userdashboard/myorders")} className="action">
+        <div onClick={() => nav("/userdashboard/myorders")} className="action">
           <FiPackage className="icon" style={{ color: "orange" }} />
           <p className="action-type">my orders</p>
           <p>Track your deliveries</p>
@@ -143,7 +143,7 @@ const HomeContent = () => {
             </button>
           </div>
         ) : (
-          recent.map((order) => (
+          recent.slice(0, 3).map((order) => (
             <div key={order.id} className="order-holder">
               <div className="my-order">
                 <p>{order.orderNumber}</p>
@@ -156,12 +156,11 @@ const HomeContent = () => {
                   })}
                 </small>
               </div>
-           <div className="right">
-              <div className={`isDelivered ${order.status?.toLowerCase()}`}>
-                {order.status}
+              <div className="right">
+                <div className={`isDelivered ${order.status?.toLowerCase()}`}>
+                  {order.status}
+                </div>
               </div>
-        </div>
-
             </div>
           ))
         )}
@@ -176,7 +175,7 @@ const HomeContent = () => {
           </button>
         </div>
 
-        {nearby?.map((vendor) => (
+        {nearby?.slice(0, 3).map((vendor) => (
           <div key={vendor.id} className="order-holder">
             <div className="my-order">
               <div className="vendor-status">

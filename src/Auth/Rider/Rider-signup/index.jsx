@@ -111,7 +111,7 @@ const RiderSignup = () => {
     <div className="rider-signup-page">
       <div className="form-wrapper">
         <header className="form-header">
-          <img src={Header} alt="" />
+          <img src={Header} alt="" onClick={()=>navigate("/")} />
         </header>
 
         <section className="card-body-wrapper">

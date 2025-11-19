@@ -61,7 +61,7 @@ const signup = async (data) => {
         console.log("error", err);
       toast.error(err?.response?.data?.message || "Something went wrong!");
 
-        return false;
+         return {success: false, message: err?.response?.data?.message};
     } finally {
       setLoading(false);
     }

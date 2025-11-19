@@ -32,7 +32,7 @@ const ForgotPassword = () => {
     <div className="forgot-password-page">
       <header className="auth-header">
         <div className="logo-placeholder">
-          <img src={Header} alt="RefillXpress Logo" />
+          <img src={Header} alt="RefillXpress Logo" onClick={()=>navigate("/")} />
         </div>
       </header>
 

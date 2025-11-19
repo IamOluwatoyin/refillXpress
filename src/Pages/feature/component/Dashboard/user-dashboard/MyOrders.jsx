@@ -14,6 +14,7 @@ import { useLoading } from "../../../../../context/LoadingContext";
 import SpinnerModal from "../../../../../Auth/vendor-auth/spinner-modal";
 import DeliveryVerification from "./modals/DeliveryVerification";
 import { useRefetch } from "../../../../../api/refetch";
+import GlobalLoading from "../../../../../context/GlobalLoading";
 
 const MyOrders = () => {
   const location = useLocation();
@@ -177,7 +178,7 @@ const MyOrders = () => {
 
   return (
     <main className="myorders" style={{ position: "relative" }}>
-      {loading && <div className="global-loading">Loading...</div>}
+     <GlobalLoading />
 
       {payLoading && <SpinnerModal message="Initializing payment..." />}
 

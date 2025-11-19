@@ -8,6 +8,8 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { BASEURL } from '../../../../../api/base';
 import ReviewModal from './modals/ReviewModal';
+import { useLoading } from '../../../../../context/LoadingContext';
+import GlobalLoading from '../../../../../context/GlobalLoading';
 const CustomerReview = () => {
 
     const [vendors, setVendors] = useState(null)
@@ -16,18 +18,23 @@ const CustomerReview = () => {
     const [text, setText] = useState("")
     const [suggest, setSuggest] = useState(false)
     const [pop, setPop] = useState(false)
+    const {loading, setLoading} = useLoading();
     useEffect(()=> {
     const getReviews = async () => {
         try {
+          setLoading(true);
             const res = await axios.get(`${BASEURL}/reviews`)
             setReviews(res.data.data)
             console.log(res.data.data)
         } catch (err) {
             toast.error("unable to fetch reviews please check your internet connection")
             console.log(err)
+        }finally {
+          setLoading(false);  
         }
     }
     const getVendors = async () => {
+      setLoading(true);
         try {
             const res = await axios.get(`${BASEURL}/vendor/getAllvendors`)
             setVendors(res.data.data)
@@ -36,6 +43,8 @@ const CustomerReview = () => {
         } catch (err) {
             toast.error("unable to fetch vendors please check your internet connection")
             console.log(err)
+        }finally {
+          setLoading(false);
         }
     }
 
@@ -49,7 +58,9 @@ useEffect(() => {
 
   return (
     <main className='customer-review'>
+      <GlobalLoading />
         {pop && <ReviewModal vendor={selectedVendor} onClose={()=> setPop(false)} />}
+          
       <header className="extremes-header">
                 <div className="review-texts">
                 <h3>vendor reviews</h3>

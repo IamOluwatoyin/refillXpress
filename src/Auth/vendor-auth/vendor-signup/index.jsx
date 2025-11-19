@@ -406,7 +406,7 @@ const VendorSignup = () => {
                   </p>
                 )}
 
-                <div style={{ display: "flex", gap: "3px" }} className="checkbox">
+                {/* <div style={{ display: "flex", gap: "3px" }} className="checkbox">
                   <input
                     type="checkbox"
                     {...register("agree", {
@@ -423,7 +423,7 @@ const VendorSignup = () => {
                       terms and conditions
                     </a>
                   </span>
-                </div>
+                </div> */}
                 {errors.agree && (
                   <p style={{ color: "red" }}>{errors.agree.message}</p>
                 )}

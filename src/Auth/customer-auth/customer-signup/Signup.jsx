@@ -99,30 +99,78 @@ const Signup = () => {
                       </p>
                     )}
                     </div>
-                    <div className="input-container small-input">
-                        <label>Phone Number</label>
-                        <div className="input-div">
-                            <input type="tel" 
-                             name='phoneNumber'
-                           {...register("phoneNumber", {
-                          required: "Phone number is required",
-                          pattern: {
-                            value: /^\d+$/,
-                            message: "Phone number must contain only digits",
-                          },
-                          validate: (value) =>
-                            value.length === 10 ||
-                            value.length === 11 ||
-                            "Phone number must be 10 or 11 digits",
-                        })}
-                            />
-                        </div>
-                        {errors.phoneNumber && (
-                      <p style={{ color: "red" }}>
-                        {errors.phoneNumber.message}
-                      </p>
-                    )}
-                    </div>
+             <div className="input-container small-input">
+  <label>Phone Number</label>
+
+  <div
+    style={{
+      display: "flex",
+      alignItems: "center",
+      border: "1px solid #ccc",
+      borderRadius: "8px",
+      overflow: "hidden",
+      paddingLeft: "8px",
+      background: "#F2F6F5",
+      boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+      height: "45px",
+    }}
+  >
+    {/* Flag section */}
+    <div style={{ display: "flex", alignItems: "center", gap: "1px" }}>
+      <img
+        src="/Images/ngflag.jpg"
+        style={{ width: "23px", height: "15px", objectFit: "cover" }}
+        alt="ng-flag"
+      />
+    </div>
+
+    {/* Divider */}
+    <div
+      style={{
+        height: "40px",
+        width: "1px",
+        backgroundColor: "#000",
+        margin: "0px 3px",
+      }}
+    ></div>
+
+    {/* Prefix */}
+    <span className="phone-prefix" style={{ marginRight: "5px" }}>
+      +234
+    </span>
+
+    {/* Input itself */}
+    <input
+      type="tel"
+      name="phoneNumber"
+      placeholder="8012345678"
+      {...register("phoneNumber", {
+        required: "Phone number is required",
+        pattern: {
+          value: /^\d+$/,
+          message: "Phone number must contain only digits",
+        },
+        validate: (value) =>
+          value.length === 10 ||
+          value.length === 11 ||
+          "Phone number must be 10 or 11 digits",
+      })}
+      style={{
+        border: "none",
+        outline: "none",
+        padding: "12px 6px",
+        fontSize: "1rem",
+        background: "#F2F6F5",
+        width: "100%",
+      }}
+    />
+  </div>
+
+  {errors.phoneNumber && (
+    <p style={{ color: "red" }}>{errors.phoneNumber.message}</p>
+  )}
+</div>
+
                     </div>
 
                     <div className="input-container">
@@ -173,14 +221,14 @@ const Signup = () => {
                   </p>
                 )}
                     </div>
-                    <div className="checkbox">
+                    {/* <div className="checkbox">
                         <input type="checkbox" name="check" id="box" 
                         {...register("check", {
                       required: "You must agree to the terms.",
                     })}
                         />
                         <p>I agree to Refillxpress <span>terms and conditions</span></p>
-                    </div>
+                    </div> */}
                     {errors.check && (
                   <p style={{ color: "red" }}>{errors.check.message}</p>
                 )}
