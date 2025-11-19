@@ -4,11 +4,11 @@ import "./trackorder.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { orderTrack } from "../../../../../api/query";
-import { BsArrowLeft } from "react-icons/bs";
 
 const TrackOrder = () => {
   const [orderData, setOrderData] = useState(null);
   const [currentStep, setCurrentStep] = useState(0);
+  const [hasFetchedOnce, setHasFetchedOnce] = useState(false);
   const location = useLocation();
 
   const navigate = useNavigate();
@@ -23,11 +23,11 @@ const TrackOrder = () => {
     "Returning to Customer",
     "Completed",
   ];
+  
 
   const userOrderTrack = async () => {
-    const token = localStorage.getItem("token");
-
-    console.log(orderId);
+    if (!orderId) return;
+   
     try {
       const res = await orderTrack(orderId);
 
@@ -46,6 +46,8 @@ const TrackOrder = () => {
       toast.error(
         err?.response?.data?.message || "Failed to fetch tracking data"
       );
+    } finally {
+      setHasFetchedOnce(true);
     }
   };
 
@@ -57,17 +59,31 @@ const TrackOrder = () => {
     }
 
     userOrderTrack();
-    const interval = setInterval(userOrderTrack, 200000); // refresh every 10s
+    const interval = setInterval(userOrderTrack, 10000); // refresh every 20s
     return () => clearInterval(interval);
   }, [orderId]);
 
-  if (orderData?.rider.name === undefined) {
-    return (
-      <div style={{ marginTop: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80vh', width: '100%'}}>
-        <p>Tracking info not available, No rider has accepted the order</p>
-      </div>
-    );
-  }
+  
+
+  // If API finished and no rider assigned
+  if (hasFetchedOnce && !orderData?.rider?.name) {
+  return (
+    <div style={{
+      marginTop: "50px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      height: "80vh",
+      width: "100%"
+    }}>
+      <p>Tracking info not available, No rider has accepted the order</p>
+    </div>
+  );
+}
+
+   
+
+  // Render tracking info once rider is available
   return (
     <div className="orders-container">
       <i size={20} onClick={()=> navigate(-1)} style={{paddingRight: "2rem"}}><BsArrowLeft /></i><h2 className="page-title">Track Delivery</h2>
@@ -137,9 +153,34 @@ const TrackOrder = () => {
                       .toUpperCase()
                   : "RD"}
               </div>
-              <div>
-                <p className="driver-name">{orderData?.rider?.name || "—"}</p>
-                <span className="driver-status">En Route</span>
+            ) : (
+              <div className="driver-info">
+                <div className="avatar">
+                  {orderData?.rider?.name
+                    ? orderData?.rider?.name
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")
+                        .toUpperCase()
+                    : "RD"}
+                </div>
+                <div>
+                  <p className="driver-name">{orderData?.rider?.name || "—"}</p>
+                  <span className="driver-status">En Route</span>
+                </div>
+
+                <p className="contact-title">Contact Rider</p>
+                <div className="contact-box">
+                  <span className="phone-icon">📞</span>
+                  <span>{orderData?.rider?.phoneNumber || "--"}</span>
+                </div>
+
+                <p className="arrival-title">Estimated Arrival</p>
+                <h3 className="arrival-time">
+                  {orderData?.estimatedArrival
+                    ? new Date(orderData?.estimatedArrival).toLocaleTimeString()
+                    : "30 mins - 45 mins"}
+                </h3>
               </div>
             </div>
 

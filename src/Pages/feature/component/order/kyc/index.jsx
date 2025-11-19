@@ -92,6 +92,9 @@ const KYC = () => {
 
   return (
     <>
+    <div className="kyc-header-logo">
+      <img src="/Images/dashboard_logo.jpg" alt="logo" className="kyc-logo" />
+        </div>
       <form onSubmit={handleSubmit(submit)}>
         <div className={`kycWrapper ${openModal ? "blurred" : ""}`}>
           <div className="kycHeader">
@@ -265,9 +268,7 @@ const KYC = () => {
                 </label>
               </div>
             </div>
-          </div>
-
-          <div className="submitContainer">
+             <div className="submitContainer">
             <button
               className="submitBtn"
               type="submit"
@@ -276,12 +277,18 @@ const KYC = () => {
               Submit
             </button>
           </div>
-        </div>
-      </form>
+          </div>
 
+         
+        </div>
+      
+      </form>
+  
       {openModal && <ModalKyc onClose={() => setOpenModal(false)} />}
     </>
   );
 };
 
 export default KYC;
+
+

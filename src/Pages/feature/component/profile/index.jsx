@@ -8,16 +8,21 @@ import BankDetails from "./BankDetails";
 import BusinessDocuments from "./BusinessDocuments";
 import { getVendorKyc } from "../../../../api/query";
 import { toast } from "react-toastify";
+import { useLoading } from "../../../../context/LoadingContext";
+import GlobalLoading from "../../../../context/GlobalLoading";
+import { set } from "react-hook-form";
 
 const ProfileManagement = () => {
   const [activeTab, setActiveTab] = useState("Profile Info");
   const [kycData, setKycData] = useState();
+  const { loading, setLoading } = useLoading();
 
   const id = localStorage.getItem(import.meta.env.VITE_VENDOR_ID);
    
   
   useEffect(() => {
     const fetchVendorKycData = async () => {
+      setLoading(true);
       try {
         const response = await getVendorKyc(id);
         console.log('response', response)
@@ -27,13 +32,14 @@ const ProfileManagement = () => {
       } catch (error) {
         console.log("no kyc", error);
         toast.error(error?.response?.data?.message || "Something went wrong!");
-      }
+      } setLoading(false);
     };
     fetchVendorKycData();
   }, []);
 
   return (
     <div className="profileWrapper">
+      <GlobalLoading />
       <div className="profileheader">
         <div>
           <h2>Profile & Verification</h2>
