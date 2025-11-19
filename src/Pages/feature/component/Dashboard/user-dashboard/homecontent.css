@@ -1,7 +1,13 @@
+.main .homecontent {
+    width: 100% !important;   
+    max-width: none;          
+    margin-left: 0;           
+    padding-left: 1rem
+   
+}
+
 .homecontent {
     width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
     height: max-content;
     display: flex;
     flex-direction: column;
@@ -35,20 +41,20 @@
     width: 95%;
     height: max-content;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-    gap: 1rem;
+    gap: 3rem; 
     cursor: pointer;
 }
 
 .action {
-    width: 35rem;
-    height: 9rem;
+    width: 50rem;
+    height: 10rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    padding-inline-start: 1rem;
+    padding-inline-start: 2rem;
     background-color: #fff;
     border-radius: 0.7rem;
     
@@ -229,6 +235,7 @@
     font-size: 0.8rem;
     background: #FF7F11;
     border-style: none;
+     cursor: pointer;
 }
 
 .order-now:hover {
@@ -236,7 +243,7 @@
 }
 
 .to-view {
-    width: max-content;
+    width: 80%;
     background-color: transparent;
     border: 1px solid #e0e0e0;
     color: #000;
@@ -247,6 +254,11 @@
     align-items: center;
     gap: 0.3rem;
     border-radius: 0.4rem;
+    cursor: pointer;
+}
+
+.to-view:hover {
+    background-color: #b6b6b6;
 }
 
 .right {
@@ -314,7 +326,6 @@
     }
     
     .actions {
-        box-sizing: border-box;
         flex-wrap: wrap;
         justify-content: center;
         gap: 1rem;
@@ -364,9 +375,8 @@
     }
     
     .actions {
-        width: 95%;
+        width: 100%;
         flex-direction: column;
-        padding-block: 0.7rem;
     }
     
     .action {
@@ -458,17 +468,12 @@
     .homecontent h3 {
         font-size: 1.3rem;
     }
-    .actions {
-        padding: 0.5rem 0;
-        gap: 0.7rem;
-    }
     
     .action {
         height: 5.5rem;
         
         .icon {
-            font-size: 1.5rem;
-            padding-top: 0.5rem;
+            font-size: 1.3rem;
         }
         
         .action-type {
@@ -482,7 +487,7 @@
     
     .isDelivered, .available, .verified, .order-now, .to-view {
         font-size: 0.7rem;
-        padding: 0.4rem 0.6rem;
+        padding: 0.4rem 0.8rem;
         min-width: auto;
     }
     

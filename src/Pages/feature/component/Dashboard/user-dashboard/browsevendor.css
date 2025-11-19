@@ -1,9 +1,9 @@
 .main .browsevendor{
-    width: 100%;   
+    width: 100% !important;   
     max-width: none;          
     margin-left: 0;           
-    padding-left: 1rem;
-   overflow-x: hidden;
+    padding-left: 1rem
+   
 }
 
 .browsevendor {
@@ -26,21 +26,16 @@
 
 /* Wrapper for input and icon */
 .searchinput-wrapper {
-  width: 95%;
-  /* background-color: #3ba865;                   */
+  width: 75%;              
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 2em;
-  box-sizing: border-box;
 }
 
 /* Position the icon inside input */
 .search-icon {
   position: absolute;
-  left: 1rem;    
-  top: 10;       
+  left: 0.8rem;           
   color: #555;
   font-size: 1.2rem;
   pointer-events: none;     
@@ -48,12 +43,8 @@
 
 /* Adjust the input to leave space for icon */
 .searchinput {
-  width: 95%;
-  max-width: 95%;
-  overflow-x: hidden;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
-  font-size: 16px;
-  /* padding: 0.6rem 0.6rem 0.6rem 2.5rem;  */
-  box-sizing: border-box;
+  width: 100%;
+  padding: 0.6rem 0.6rem 0.6rem 2.5rem; 
   background-color: #eee;
   border-radius: 0.5rem;
   border: none;
@@ -65,7 +56,6 @@ input:focus {
     outline: none;
     box-shadow: none; 
     border: none;
-    transform: scale(1);
 }
 
 .vendor-time {
@@ -94,13 +84,15 @@ input:focus {
     color: #3ba865;
 }
 .no-vendor {
-  width: 95%;
+  width: max-content;
+  padding-inline: 22rem;
   box-sizing: border-box;
   display: flex;
   justify-content: center;  
+  /* background-color: #e53935; */
   align-items: center;
   text-align: center;
-    transform: translate(90%, 50%);
+
 }
 .vendor-status-unavailable {
     background-color: #e53935; 
@@ -151,7 +143,7 @@ input:focus {
         flex-direction: column;
         height: auto;
         gap: 1rem;
-        width: 80%;
+        width: 100%;
     }
     
     .searchinput,
@@ -184,38 +176,16 @@ input:focus {
     }
     
     .search-bar {
-        width: 95%;
         gap: 0.8rem;
+        width: 95%;
     }
-    
     
     .searchinput,
     .search-drop {
-        width: 80%;
-        font-size: 16px;
         padding: 0.7rem;
         gap: 0.8rem;
-        box-sizing: border-box;
     }
-    .searchinput {
-  width: 95%;
-  max-width: 95%;
-  overflow-x: hidden;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
-  font-size: 16px;
-  /* padding: 0.6rem 0.6rem 0.6rem 2.5rem;  */
-  box-sizing: border-box;
-  background-color: #eee;
-  border-radius: 0.5rem;
-  border: none;
-  display: flex;
-  align-items: center;
-}
-input {
-    max-width: 90%;
-}
-.empty {
-    transform: translate(-30%, 50%)
-}
+    
     .vendor-time {
         gap: 4px;
     }
