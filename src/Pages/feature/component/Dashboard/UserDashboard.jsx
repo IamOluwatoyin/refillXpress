@@ -47,6 +47,7 @@ const UserDashboard = () => {
       } catch (error) {
         console.error("Invalid userInfo in localStorage:", error);
         setInfo(null);
+        
       }
     };
 
@@ -104,7 +105,7 @@ const UserDashboard = () => {
               <div onClick={hoverShow} onMouseLeave={()=> setTimeout(() => {
                 setShowMenu(false)
               }, 10000)} className="user">
-                <p className='glorys-profile img'>
+                <div className='glorys-profile img'>
                   {info?.profilePicture ? (
                     <img 
                       src={info.profilePicture} 
@@ -116,7 +117,7 @@ const UserDashboard = () => {
                     {info?.firstName?.charAt(0).toUpperCase().toString().concat(info?.lastName?.charAt(0).toUpperCase().toString()) || "U"}
                    </p>
                   )}
-                </p>
+                </div>
                 <div className="user-info">
                   <span>{info?.firstName}</span> 
                   <span>{info?.role}</span>
@@ -140,7 +141,7 @@ const UserDashboard = () => {
             <div className="sidebar-header">
               <CgClose className="close-sidebar" onClick={closeSidebar} />
             </div>
-            <nav onClick={()=>switchTab("home", "/userdashboard")} className={currentRoute.pathname === "/userdashboard" ?  "nav active" : "nav"} >
+            <nav onClick={()=>switchTab("home", "/userdashboard")} style={{marginTop: "1rem"}} className={currentRoute.pathname === "/userdashboard" ?  "nav active" : "nav"} >
               <BiHome className='nav-link'/><span>home</span></nav>
             <NavLink className={({isActive}) => isActive ? "nav active" : "nav"} to="browsevendors" onClick={closeSidebar}>
               <GrLocation className='nav-link'/><span>browse vendors</span>
@@ -155,15 +156,15 @@ const UserDashboard = () => {
               <FiUser className='nav-link'/><span>account</span>
             </NavLink>
             <span className='userDashboard-logout'>
-              {sidebar && <>
+              
               <IoIosLogOut
-                style={{ fontSize: "28px", cursor:"pointer" }}
+                style={{ fontSize: "28px", cursor:"pointer", color: "red" }}
                 onClick={() => {
                  setLogoutModal(true)
                 }}
               />
               <p onClick={()=> setLogoutModal(true)} style={{cursor: "pointer", color: "red", paddingBlock: "0.4rem"}}>Logout</p>
-              </>}
+              
             </span>
           </div>
         </div>

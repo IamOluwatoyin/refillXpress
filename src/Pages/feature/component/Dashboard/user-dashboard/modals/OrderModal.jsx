@@ -13,17 +13,26 @@ const OrderModal = ({ onClose, vendor }) => {
     quantity: "",
     deliveryAddress: "",
   });
+
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-   console.log("this is vendor", vendor)
-  
+  const [orderFromBackend, setOrderFromBackend] = useState(null);
+
+  // your manual delivery fee
+  const manualDeliveryFee = 2500;
+
+  // Calculate total dynamically
   useEffect(() => {
     const quantity = parseFloat(orderInput.quantity) || 0;
     const pricePerKg = vendor?.pricePerKg || 0;
-    const deliveryFee = vendor?.deliveryFee || 0;
+
+    // Only apply delivery fee if both quantity + address are filled
+    const deliveryFee =
+      quantity > 0 && orderInput.deliveryAddress.trim() !== "" ? manualDeliveryFee : 0;
+
     setTotal(quantity * pricePerKg + deliveryFee);
-  }, [orderInput.quantity, vendor?.pricePerKg, vendor?.deliveryFee]);
+  }, [orderInput.quantity, orderInput.deliveryAddress, vendor?.pricePerKg]);
 
   const beforeInput = (e) => {
     if (e.data && !/^\d+$/.test(e.data)) {
@@ -33,32 +42,32 @@ const OrderModal = ({ onClose, vendor }) => {
   };
 
   const handleSend = async () => {
-   
     if (!vendor?.isAvailable) {
-      toast.error("Vendor is currently unavailable. You cannot place an order.");
+      toast.error("Vendor is currently unavailable.");
       return;
     }
 
-   
     if (!vendor?.inStock) {
-      toast.error("Vendor is out of stock. You cannot place an order.");
+      toast.error("Vendor is out of stock.");
       return;
     }
 
-    
     if (vendor?.verificationStatus !== "approved") {
-      toast.error("This vendor is not verified yet.");
+      toast.error("Vendor is not verified yet.");
       return;
     }
 
-   
     if (!orderInput.cylinderSize || !orderInput.quantity || !orderInput.deliveryAddress) {
       toast.warn("Please fill all fields");
       return;
     }
 
+    if (Number(orderInput.quantity) > Number(orderInput.cylinderSize)) {
+      toast.error("Quantity cannot be greater than cylinder size");
+      return;
+    }
+
     const token = localStorage.getItem("token");
-    
     setLoading(true);
 
     try {
@@ -69,6 +78,7 @@ const OrderModal = ({ onClose, vendor }) => {
           quantity: orderInput.quantity,
           deliveryAddress: orderInput.deliveryAddress,
           vendorId: vendor?.id,
+          deliveryFee: manualDeliveryFee, // include your manual fee in payload
         },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -77,19 +87,19 @@ const OrderModal = ({ onClose, vendor }) => {
 
       if (res.status === 200 || res.status === 201) {
         toast.success(res.data.message || "Order created successfully!");
+        setOrderFromBackend(res.data.order);
+
         setTimeout(() => {
           onClose();
           navigate("/userdashboard/myorders");
         }, 1200);
       }
-    } catch (err) {
-      console.error(err);
-      toast.error(err.response?.data?.message || "Failed to create order");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to create order");
     } finally {
       setLoading(false);
     }
   };
-
 
   const isUnavailable =
     !vendor?.isAvailable ||
@@ -104,7 +114,6 @@ const OrderModal = ({ onClose, vendor }) => {
           <CgClose onClick={onClose} />
         </div>
 
-        {/* Vendor Info */}
         <div className="vendors-name">
           <p className="the-vendor-name">{vendor?.businessName}</p>
           <small>{vendor?.businessAddress}</small>
@@ -124,7 +133,6 @@ const OrderModal = ({ onClose, vendor }) => {
           </div>
         </div>
 
-        {/* Cylinder Size */}
         <div className="specs">
           <label htmlFor="size">Cylinder Size (kg)</label>
           <div className="the-spec">
@@ -133,6 +141,7 @@ const OrderModal = ({ onClose, vendor }) => {
               className="the-spec-input"
               id="size"
               maxLength={2}
+              value={orderInput.cylinderSize}
               onChange={(e) =>
                 setOrderInput({ ...orderInput, cylinderSize: e.target.value })
               }
@@ -141,7 +150,6 @@ const OrderModal = ({ onClose, vendor }) => {
           </div>
         </div>
 
-        {/* Quantity */}
         <div className="specs">
           <label htmlFor="quantity">Quantity</label>
           <div className="the-spec">
@@ -152,17 +160,25 @@ const OrderModal = ({ onClose, vendor }) => {
               value={orderInput.quantity}
               onChange={(e) => {
                 const numericValue = e.target.value.replace(/\D/g, "");
+
+                if (
+                  orderInput.cylinderSize &&
+                  Number(numericValue) > Number(orderInput.cylinderSize)
+                ) {
+                  toast.error("Quantity cannot exceed cylinder size");
+                  return;
+                }
+
                 setOrderInput({ ...orderInput, quantity: numericValue });
               }}
             />
             <small className="small">
-              price: <TbCurrencyNaira size={12} />
-              {vendor?.pricePerKg}/kg
+              price per kg: <TbCurrencyNaira size={12} />
+              {vendor?.pricePerKg || 0}
             </small>
           </div>
         </div>
 
-        {/* Delivery Address */}
         <div className="specs">
           <label htmlFor="address">Delivery Address</label>
           <textarea
@@ -174,23 +190,26 @@ const OrderModal = ({ onClose, vendor }) => {
           ></textarea>
         </div>
 
-        {/* Delivery Info */}
         <div className="vendors-name">
           <p>Service Type</p>
         </div>
-        <div className="delivery-fee-info">
-          <div className="inline-delivery-info">
-            <div className="smallblackdot-bg">
-              <div className="smallblackdot"></div>
-            </div>
-            <small>
-              Fee for this location: <TbCurrencyNaira size={12} />
-              {vendor?.deliveryFee || 0}
-            </small>
-          </div>
-        </div>
 
-        {/* Summary */}
+        {/* SHOW DELIVERY FEE ONLY AFTER quantity + address are filled */}
+        {Number(orderInput.quantity) > 0 &&
+          orderInput.deliveryAddress.trim() !== "" && (
+            <div className="delivery-fee-info">
+              <div className="inline-delivery-info">
+                <div className="smallblackdot-bg">
+                  <div className="smallblackdot"></div>
+                </div>
+                <small>
+                  Fee for this location: <TbCurrencyNaira size={12} />
+                  {manualDeliveryFee}
+                </small>
+              </div>
+            </div>
+          )}
+
         <div className="item-details">
           <div className="calc">
             <p>
@@ -206,7 +225,10 @@ const OrderModal = ({ onClose, vendor }) => {
             <p>Delivery Fee</p>
             <p>
               <TbCurrencyNaira size={20} />
-              {vendor?.deliveryFee || 0}
+              {Number(orderInput.quantity) > 0 &&
+              orderInput.deliveryAddress.trim() !== ""
+                ? manualDeliveryFee
+                : 0}
             </p>
           </div>
 
@@ -223,7 +245,6 @@ const OrderModal = ({ onClose, vendor }) => {
           </div>
         </div>
 
-        {/* Buttons */}
         <div className="choice-btns">
           <button onClick={onClose} className="cancel-order">
             cancel

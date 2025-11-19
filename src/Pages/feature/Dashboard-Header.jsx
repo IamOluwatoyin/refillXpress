@@ -10,7 +10,7 @@ const DashboardHeader = ({ isSidebarOpen, toggleSidebar }) => {
       <div className='header-wrapper'>
         <header className='header-container'>
           <div className="header-left">
-            <img src="/Images/dashboard_logo.jpg" className='imgLogo' onClick={()=>nav("/")} alt="Logo"/>
+            <img src="/Images/dashboard_logo.jpg" className='imgLogo' alt="Logo"/>
            
           </div>
           
