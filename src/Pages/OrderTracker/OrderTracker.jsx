@@ -391,9 +391,9 @@ const VerificationModal = ({ expectedCode, onSubmit, onClose, loading }) => {
             required
             disabled={loading}
           />
-          <ExpectedCode>
+          {/* <ExpectedCode>
             Example: <span>{expectedCode}</span>
-          </ExpectedCode>
+          </ExpectedCode> */}
 
           <ButtonGroup>
             <CancelButton type="button" onClick={onClose} disabled={loading}>

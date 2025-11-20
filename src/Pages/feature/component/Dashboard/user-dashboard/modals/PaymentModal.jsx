@@ -12,17 +12,17 @@ const PaymentModal = ({ paymentLink, order, onClose }) => {
 
         <section className="PaymentModalContent">
           <img src="/Images/Icon.svg" alt="KYC Success Icon" />
-          
+
+          <p>Please complete your payment for</p>
           <p>
-            Please complete your payment for 
+            <strong>Order #{order?.orderNumber}</strong>{" "}
           </p>
-          <p><strong>Order #{order?.orderNumber}</strong> </p>
           <p>
-             Total amount <strong>₦{order?.totalPrice}</strong>.
+            Total amount <strong>₦{order?.totalPrice}</strong>.
           </p>
           <a
             href={paymentLink}
-            target="_blank"
+            // target="_blank"
             rel="noopener noreferrer"
             className="proceedBtn"
           >

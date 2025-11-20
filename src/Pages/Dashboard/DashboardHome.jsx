@@ -147,7 +147,9 @@ const RefillOrderDetailsModal = ({
   const vendorStep =
     steps.find((step) => step.title.includes("Vendor")) || steps[1];
   const pickupStep =
-    steps.find((step) => step.title.includes("Pickup")) || steps[0];
+    steps.find(
+      (step) => step.title.includes("Pickup") || step.title.includes("Return")
+    ) || steps[0];
   const returnStep =
     steps.find((step) => step.title.includes("Return")) || steps[2];
 
@@ -214,7 +216,7 @@ const RefillOrderDetailsModal = ({
           <RefillStep
             icon={MdOutlineCheckCircle}
             title="3. Return Refilled Cylinder"
-            location={returnStep.location || "Location N/A"}
+            location={pickupStep.location || "Location N/A"}
             distance={returnStep.distance}
             type="Final Stop"
           />
@@ -426,7 +428,7 @@ const DashboardHome = () => {
     steps: [
       {
         title: "1. Pickup Empty Cylinder",
-        location: refill.pickupAddress,
+        location: refill.deliveryAddress,
         distance: "1.2 km",
       },
       {
