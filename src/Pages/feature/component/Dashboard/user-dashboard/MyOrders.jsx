@@ -25,13 +25,13 @@ const MyOrders = () => {
   }, [location.state]);
   const { refetch } = useRefetch(getAllOrders);
   const nav = useNavigate();
-  const { loading, setLoading } = useLoading();
+  const { setLoading } = useLoading();
   const [activeTab, setActiveTab] = useState(location.state?.tab || "Pending");
   const [orders, setOrders] = useState([]);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [paymentLink, setPaymentLink] = useState(null);
   const [selectedOrder, setSelectedOrder] = useState(null);
-  const [showCompletion, setShowCompletion] = useState(false);
+  // const [showCompletion, setShowCompletion] = useState(false);
   const [orderDetails, setOrderDetails] = useState(null);
   const [payLoading, setPayLoading] = useState(false);
   const [processingOrderId, setProcessingOrderId] = useState(null);
@@ -55,13 +55,12 @@ const MyOrders = () => {
         const data = res?.data?.data || {};
 
         setOrders([
-            ...(data.pending || []),
-            ...(data.accepted || []),
-            ...(data.active || []),
-            ...(data.completed || []),
-            ...(data.cancelled || []),
-          ]);
-
+          ...(data.pending || []),
+          ...(data.accepted || []),
+          ...(data.active || []),
+          ...(data.completed || []),
+          ...(data.cancelled || []),
+        ]);
       } catch (err) {
         console.error("Error fetching orders:", err);
         toast.error(err?.response?.data?.message || "Failed to fetch orders");
@@ -142,7 +141,7 @@ const MyOrders = () => {
 
       case "Active":
         // Orders that are paid and in-progress
-         return orders.filter((o) => o.paymentStatus === "paid");
+        return orders.filter((o) => o.paymentStatus === "paid");
 
       case "Completed":
         // Fully delivered/completed orders
@@ -178,7 +177,7 @@ const MyOrders = () => {
 
   return (
     <main className="myorders" style={{ position: "relative" }}>
-     <GlobalLoading />
+      <GlobalLoading />
 
       {payLoading && <SpinnerModal message="Initializing payment..." />}
 
@@ -325,35 +324,38 @@ const MyOrders = () => {
                 </>
               )}
 
-             {activeTab === "Active" && (
-  <>
-    <button
-      className="order-btn completed-btn"
-      onClick={() => {
-        setOrderDetails(order);
-        setDeliveryCode(order?.otp);
-        setShowDelivery(true);
-      }}
-      disabled={trackLoading === order.id}
-    >
-      Complete
-    </button>
+              {activeTab === "Active" && (
+                <>
+                  <button
+                    className="order-btn completed-btn"
+                    onClick={() => {
+                      setOrderDetails(order);
+                      setDeliveryCode(order?.otp);
+                      setShowDelivery(true);
+                    }}
+                    disabled={trackLoading === order.id}
+                  >
+                    Complete
+                  </button>
 
-    <button
-      className="order-btn track-btn"
-      onClick={async () => {
-        setTrackLoading(order.id);
-        await new Promise((res) => setTimeout(res, 500)); // simulate loading
-        nav("/userdashboard/track-order", { state: { orderId: order.id, tab: activeTab } });
-        setTrackLoading(null);
-      }}
-      disabled={trackLoading === order.id}
-    >
-      {trackLoading === order.id ? "Loading..." : "Track Delivery"}
-    </button>
-  </>
-)}
-
+                  <button
+                    className="order-btn track-btn"
+                    onClick={async () => {
+                      setTrackLoading(order.id);
+                      await new Promise((res) => setTimeout(res, 500)); // simulate loading
+                      nav("/userdashboard/track-order", {
+                        state: { orderId: order.id, tab: activeTab },
+                      });
+                      setTrackLoading(null);
+                    }}
+                    disabled={trackLoading === order.id}
+                  >
+                    {trackLoading === order.id
+                      ? "Loading..."
+                      : "Track Delivery"}
+                  </button>
+                </>
+              )}
 
               {activeTab === "Completed" && (
                 <>
